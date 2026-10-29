@@ -1,0 +1,25 @@
+2026-10-29 19:28:31 INFO    eegtraj.utils.run: Run directory: output\data-baselines\baselines\stereotypy\20261029-192827
+2026-10-29 19:28:31 INFO    eegtraj.baselines.runner: Baseline stereotypy, mode loso, 10 folds, seed 20261029, smoke False
+2026-10-29 19:28:32 INFO    eegtraj.baselines.runner: Fold loso_P1: train ('P2', 'P5', 'P8', 'P9', 'P10', 'P11', 'P12'), val ('P4', 'P7'), test ('P1',); target samples train 1335787, val 383628, test 155612
+2026-10-29 19:28:42 INFO    eegtraj.baselines.runner: Fold loso_P1 test P1: r = 0.895 (x 0.918, y 0.914, z 0.853), R2 = 0.692, NRMSE = 0.172, 294 trials
+2026-10-29 19:28:42 INFO    eegtraj.baselines.runner: Fold loso_P2: train ('P1', 'P4', 'P5', 'P8', 'P10', 'P11', 'P12'), val ('P7', 'P9'), test ('P2',); target samples train 1268758, val 398068, test 208201
+2026-10-29 19:28:53 INFO    eegtraj.baselines.runner: Fold loso_P2 test P2: r = 0.784 (x 0.827, y 0.829, z 0.697), R2 = 0.340, NRMSE = 0.239, 294 trials
+2026-10-29 19:28:53 INFO    eegtraj.baselines.runner: Fold loso_P4: train ('P1', 'P2', 'P5', 'P8', 'P10', 'P11', 'P12'), val ('P7', 'P9'), test ('P4',); target samples train 1307884, val 398068, test 169075
+2026-10-29 19:29:01 INFO    eegtraj.baselines.runner: Fold loso_P4 test P4: r = 0.880 (x 0.892, y 0.888, z 0.861), R2 = 0.563, NRMSE = 0.193, 294 trials
+2026-10-29 19:29:01 INFO    eegtraj.baselines.runner: Fold loso_P5: train ('P1', 'P7', 'P8', 'P9', 'P10', 'P11', 'P12'), val ('P2', 'P4'), test ('P5',); target samples train 1314741, val 377276, test 183010
+2026-10-29 19:29:10 INFO    eegtraj.baselines.runner: Fold loso_P5 test P5: r = 0.883 (x 0.879, y 0.898, z 0.872), R2 = 0.535, NRMSE = 0.208, 294 trials
+2026-10-29 19:29:10 INFO    eegtraj.baselines.runner: Fold loso_P7: train ('P2', 'P4', 'P5', 'P8', 'P9', 'P11', 'P12'), val ('P1', 'P10'), test ('P7',); target samples train 1315670, val 344804, test 214553
+2026-10-29 19:29:21 INFO    eegtraj.baselines.runner: Fold loso_P7 test P7: r = 0.703 (x 0.757, y 0.767, z 0.584), R2 = 0.096, NRMSE = 0.280, 294 trials
+2026-10-29 19:29:21 INFO    eegtraj.baselines.runner: Fold loso_P8: train ('P1', 'P2', 'P4', 'P7', 'P9', 'P10', 'P11'), val ('P5', 'P12'), test ('P8',); target samples train 1318415, val 393073, test 163539
+2026-10-29 19:29:30 INFO    eegtraj.baselines.runner: Fold loso_P8 test P8: r = 0.877 (x 0.889, y 0.890, z 0.851), R2 = 0.597, NRMSE = 0.196, 294 trials
+2026-10-29 19:29:30 INFO    eegtraj.baselines.runner: Fold loso_P9: train ('P1', 'P2', 'P4', 'P5', 'P7', 'P10', 'P12'), val ('P8', 'P11'), test ('P9',); target samples train 1329706, val 361806, test 183515
+2026-10-29 19:29:39 INFO    eegtraj.baselines.runner: Fold loso_P9 test P9: r = 0.855 (x 0.875, y 0.889, z 0.801), R2 = 0.581, NRMSE = 0.198, 294 trials
+2026-10-29 19:29:39 INFO    eegtraj.baselines.runner: Fold loso_P10: train ('P1', 'P2', 'P5', 'P7', 'P8', 'P9', 'P11'), val ('P4', 'P12'), test ('P10',); target samples train 1306697, val 379138, test 189192
+2026-10-29 19:29:48 INFO    eegtraj.baselines.runner: Fold loso_P10 test P10: r = 0.816 (x 0.822, y 0.828, z 0.799), R2 = 0.409, NRMSE = 0.219, 294 trials
+2026-10-29 19:29:48 INFO    eegtraj.baselines.runner: Fold loso_P11: train ('P1', 'P5', 'P7', 'P8', 'P9', 'P10', 'P12'), val ('P2', 'P4'), test ('P11',); target samples train 1299484, val 377276, test 198267
+2026-10-29 19:29:57 INFO    eegtraj.baselines.runner: Fold loso_P11 test P11: r = 0.832 (x 0.865, y 0.875, z 0.757), R2 = 0.462, NRMSE = 0.219, 294 trials
+2026-10-29 19:29:57 INFO    eegtraj.baselines.runner: Fold loso_P12: train ('P2', 'P4', 'P5', 'P7', 'P8', 'P10', 'P11'), val ('P1', 'P9'), test ('P12',); target samples train 1325837, val 339127, test 210063
+2026-10-29 19:30:07 INFO    eegtraj.baselines.runner: Fold loso_P12 test P12: r = 0.866 (x 0.887, y 0.901, z 0.812), R2 = 0.602, NRMSE = 0.186, 294 trials
+2026-10-29 19:30:07 INFO    eegtraj.baselines.runner: Aggregate over 10 test subjects: r = 0.839 +- 0.059, R2 = 0.488 +- 0.172, NRMSE = 0.211 +- 0.031
+2026-10-29 19:30:07 INFO    eegtraj.baselines.runner: Across 10 repeats: aggregate r mean 0.839, SD 0.0017, range [0.836, 0.843]
+2026-10-29 19:30:07 INFO    eegtraj.baselines.runner: Wall time 96.1 s
