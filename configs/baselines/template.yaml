@@ -1,0 +1,15 @@
+# Template floor: mean training trajectory vs time since kinematic onset (oracle timing).
+baseline:
+  name: template
+  params: {}
+data:
+  windows_config: configs/data/windows.yaml
+  band: lowfreq  # unused by the template (no EEG input); kept so all baselines share one schema
+  reference: car
+  channel_set: all
+splits:
+  config: configs/splits/default.yaml
+  mode: loso  # loso | within_subject
+seed: 20261029
+save_predictions: true
+exclude_flags: []  # e.g. [onset_mismatch, filter_transient_lowfreq] for sensitivity analyses
