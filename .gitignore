@@ -218,3 +218,24 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Agents
+.agents
+CLAUDE.md
+.claude
+
+# Dataset
+dataset/raw/
+dataset/cache/
+
+# Outputs
+output/smoke/
+*.npz
+*.npy
+*.pt
+*.ckpt
+# run.log files are tracked (overrides *.log above)
+!output/**/run.log
+
+# Claude Code local settings
+.claude/settings.local.json

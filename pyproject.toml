@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eegtraj"
+version = "0.1.0"
+description = "Physiology-guided self-supervised representation learning for continuous hand-trajectory decoding from EEG (WAY-EEG-GAL)."
+requires-python = ">=3.12"
+# Runtime dependencies are pinned in requirements.txt (torch needs a CUDA index URL).
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

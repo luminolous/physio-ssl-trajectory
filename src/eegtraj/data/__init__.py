@@ -1,0 +1,1 @@
+"""eegtraj.data subpackage."""
