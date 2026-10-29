@@ -1,0 +1,32 @@
+# ShallowConvNet (braindecode ShallowFBCSPNet) with a 3-output regression head.
+# Run 3 seeds (--seed 1/2/3) per the deep-model protocol; summarize mean +- SD.
+baseline:
+  name: shallowconvnet
+  params:
+    model:
+      # Defaults assume 250 Hz (filter 25, pool 75, stride 15 samples = 100 / 300 / 60 ms); the
+      # pool exceeds the 50-sample window. Scaled to 100 Hz keeping the same durations.
+      # Other settings are braindecode defaults (square -> mean pool -> log: band-power features).
+      filter_time_length: 10
+      pool_time_length: 30
+      pool_time_stride: 6
+    train:  # fixed budget, no hyperparameter search
+      lr: 0.001
+      weight_decay: 0.01
+      batch_size: 512
+      max_epochs: 30
+      samples_per_epoch: 200000
+      val_samples: 100000
+      patience: 5
+      amp: true
+data:
+  windows_config: configs/data/windows.yaml  # history 50 samples (500 ms), causal
+  band: broadband  # D4: 0.1-40 Hz for deep models
+  reference: car
+  channel_set: all
+splits:
+  config: configs/splits/default.yaml
+  mode: loso
+seed: 1
+save_predictions: true
+exclude_flags: []

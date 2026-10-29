@@ -27,7 +27,14 @@ def build_eegnet(n_chans: int, n_times: int, **kwargs) -> torch.nn.Module:
     return EEGNet(n_chans=n_chans, n_outputs=3, n_times=n_times, **kwargs)
 
 
-ARCHITECTURES = {"eegnet": build_eegnet}
+def build_shallowconvnet(n_chans: int, n_times: int, **kwargs) -> torch.nn.Module:
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", FutureWarning)
+        from braindecode.models import ShallowFBCSPNet
+    return ShallowFBCSPNet(n_chans=n_chans, n_outputs=3, n_times=n_times, final_conv_length="auto", **kwargs)
+
+
+ARCHITECTURES = {"eegnet": build_eegnet, "shallowconvnet": build_shallowconvnet}
 
 
 class DeepBaseline(Baseline):
@@ -73,3 +80,8 @@ class DeepBaseline(Baseline):
 @register("eegnet")
 class EEGNetBaseline(DeepBaseline):
     architecture = "eegnet"
+
+
+@register("shallowconvnet")
+class ShallowConvNetBaseline(DeepBaseline):
+    architecture = "shallowconvnet"

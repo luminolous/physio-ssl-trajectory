@@ -60,3 +60,11 @@ def test_eegnet_builds_for_window_and_regresses_three_outputs():
     m = build_eegnet(n_chans=32, n_times=50, kernel_length=50)
     out = m(torch.randn(2, 32, 50))
     assert tuple(out.shape) == (2, 3) and count_parameters(m) > 0
+
+
+def test_shallowconvnet_builds_for_window_with_scaled_pooling():
+    from eegtraj.baselines.deep import build_shallowconvnet
+
+    m = build_shallowconvnet(n_chans=32, n_times=50, filter_time_length=10, pool_time_length=30, pool_time_stride=6)
+    out = m(torch.randn(2, 32, 50))
+    assert tuple(out.shape) == (2, 3) and torch.isfinite(out).all()
