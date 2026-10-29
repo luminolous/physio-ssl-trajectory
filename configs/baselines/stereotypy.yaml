@@ -1,0 +1,16 @@
+# Stereotypy floor: another trial of the same subject, onset-aligned, as the prediction (oracle timing).
+baseline:
+  name: stereotypy
+  params:
+    n_permutations: 10
+data:
+  windows_config: configs/data/windows.yaml
+  band: lowfreq  # unused (no EEG input); kept so all baselines share one schema
+  reference: car
+  channel_set: all
+splits:
+  config: configs/splits/default.yaml
+  mode: loso
+seed: 20261029
+save_predictions: false
+exclude_flags: []

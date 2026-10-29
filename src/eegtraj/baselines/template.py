@@ -50,7 +50,7 @@ class TemplateBaseline(Baseline):
         ctx.logger.info("template: %d bins from %.2f to %.2f s after onset, %d training samples",
                         n_bins, self.bin0 / self.fs_hz, (self.bin0 + n_bins - 1) / self.fs_hz, len(tau))
 
-    def predict(self, subject: SubjectSamples, mask: np.ndarray, ctx: FitContext) -> np.ndarray:
+    def predict(self, subject: SubjectSamples, mask: np.ndarray, ctx: FitContext, repeat: int = 0) -> np.ndarray:
         b = np.round(time_since_onset(subject, mask) * self.fs_hz).astype(np.int64) - self.bin0
         b = np.clip(b, 0, self.template.shape[1] - 1)  # hold the edge values outside the training range
         return self.template[:, b].T

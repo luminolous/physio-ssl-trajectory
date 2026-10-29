@@ -73,3 +73,33 @@ def test_trial_filter_excludes_flags_and_limits():
     assert set(kept.trial_row) == {1, 2}
     kept = trial_filter(s, [], 2)
     assert set(kept.trial_row) == {0, 1}
+
+
+def test_stereotypy_uses_other_trials_and_is_seeded():
+    test = synthetic_subject("P4", [2.0, 2.3, 2.6, 2.9])
+    # Give each trial a distinct offset so the donor identity is visible in the prediction.
+    for row in range(4):
+        sl = slice(test.trials.offset_start.iat[row], test.trials.offset_end.iat[row])
+        test.target[:, sl] += 100.0 * row
+    ctx = ctx_for([test])
+    model = make_baseline("stereotypy", {"n_permutations": 3})
+    assert model.n_repeats == 3
+    model.fit([], [], ctx)
+    mask = np.ones(len(test.sample_idx), bool)
+    p0 = model.predict(test, mask, ctx, repeat=0)
+    assert np.array_equal(p0, model.predict(test, mask, ctx, repeat=0))  # deterministic per repeat
+    for row in range(4):
+        sel = test.trial_row == row
+        donor_offset = np.round((p0[sel, 0] - test.target[0, test.sample_idx[sel]] + 100.0 * row) / 100.0)
+        assert len(set(donor_offset)) == 1 and donor_offset[0] != row  # one donor, never the trial itself
+    draws = {tuple(np.round(model.predict(test, mask, ctx, repeat=k)[::200, 0], 3)) for k in range(3)}
+    assert len(draws) > 1  # repeats draw different donors
+
+
+def test_stereotypy_identical_trials_give_exact_prediction():
+    test = synthetic_subject("P5", [2.0, 2.5, 3.0])
+    ctx = ctx_for([test])
+    model = make_baseline("stereotypy", {"n_permutations": 1})
+    model.fit([], [], ctx)
+    pred = model.predict(test, np.ones(len(test.sample_idx), bool), ctx)
+    assert np.abs(pred - test.target[:, test.sample_idx].T).max() < 1e-3  # same shape, aligned on onset

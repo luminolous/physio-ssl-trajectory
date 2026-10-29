@@ -56,6 +56,7 @@ class Baseline:
 
     name: str = ""
     uses_eeg: bool = True  # False for floors that only use target timing (template, stereotypy)
+    n_repeats: int = 1  # >1 for randomized baselines; the runner scores every repeat
 
     def __init__(self, **params: Any):
         self.params = params
@@ -63,8 +64,11 @@ class Baseline:
     def fit(self, train: list[SubjectSamples], val: list[SubjectSamples], ctx: FitContext) -> None:
         raise NotImplementedError
 
-    def predict(self, subject: SubjectSamples, mask: np.ndarray, ctx: FitContext) -> np.ndarray:
-        """Predictions (n_selected, 3) in target units for ``subject.sample_idx[mask]``."""
+    def predict(self, subject: SubjectSamples, mask: np.ndarray, ctx: FitContext, repeat: int = 0) -> np.ndarray:
+        """Predictions (n_selected, 3) in target units for ``subject.sample_idx[mask]``.
+
+        ``repeat`` indexes the random draw for randomized baselines (ignored otherwise).
+        """
         raise NotImplementedError
 
     def info(self) -> dict[str, Any]:

@@ -64,6 +64,21 @@ def trial_filter(s: SubjectSamples, exclude_flags: list[str], max_trials: int | 
     return restrict(s, keep)
 
 
+def average_repeats(reps: list[dict]) -> dict:
+    """Average subject-level results over random repeats (identity for a single repeat)."""
+    if len(reps) == 1:
+        return reps[0]
+    out = {}
+    for metric, first in reps[0].items():
+        out[metric] = {
+            "per_axis": {a: float(np.nanmean([r[metric]["per_axis"][a] for r in reps])) for a in first["per_axis"]},
+            "mean": float(np.nanmean([r[metric]["mean"] for r in reps])),
+            "n_nan": int(sum(r[metric]["n_nan"] for r in reps)),
+            "sd_over_repeats": float(np.std([r[metric]["mean"] for r in reps], ddof=1)),
+        }
+    return out
+
+
 def resolve_config(path: Path, overrides: dict[str, Any]) -> dict[str, Any]:
     """Baseline config with the windows and split configs inlined, plus CLI overrides."""
     cfg = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
@@ -108,6 +123,8 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
         return loaded[subject]
 
     fold_results, subject_results, pooled, predictions, info = [], {}, {}, {}, {}
+    per_repeat_subject: dict[str, list[dict]] = {}
+    n_repeats = 1
     for fold in folds:
         t_fold = time.time()
         names = sorted(set(fold.train_subjects) | set(fold.val_subjects) | set(fold.test_subjects),
@@ -130,21 +147,28 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
                          smoke=bool(cfg.get("smoke")), run_dir=run_dir, logger=logger)
         model = make_baseline(cfg["baseline"]["name"], cfg["baseline"].get("params"))
         model.fit(train, val, ctx)
+        n_repeats = model.n_repeats
 
         fold_subjects = {}
         for s in test:
             m = masks["test"][s.subject]
-            y_pred = model.predict(s, m, ctx)
             y_true = s.target[:, s.sample_idx[m]].T
-            trial_df = per_trial_metrics(y_true, y_pred, s.trial_row[m])
-            res = aggregate_subject(trial_df)
+            reps, pooled_reps = [], []
+            for k in range(model.n_repeats):
+                y_pred = model.predict(s, m, ctx, repeat=k)
+                trial_df = per_trial_metrics(y_true, y_pred, s.trial_row[m])
+                reps.append(aggregate_subject(trial_df))
+                pooled_reps.append(pooled_r(y_true, y_pred))
+                if k == 0:
+                    predictions[s.subject] = dict(y_true=y_true.astype(np.float32), y_pred=y_pred.astype(np.float32),
+                                                  sample_idx=s.sample_idx[m], trial_row=s.trial_row[m])
+            res = average_repeats(reps)
             res["n_trials"] = int(trial_df.trial.nunique())
             res["n_samples"] = int(m.sum())
             subject_results[s.subject] = res
-            pooled[s.subject] = pooled_r(y_true, y_pred)
+            per_repeat_subject.setdefault(s.subject, reps)
+            pooled[s.subject] = {key: float(np.mean([p[key] for p in pooled_reps])) for key in pooled_reps[0]}
             fold_subjects[s.subject] = res
-            predictions[s.subject] = dict(y_true=y_true.astype(np.float32), y_pred=y_pred.astype(np.float32),
-                                          sample_idx=s.sample_idx[m], trial_row=s.trial_row[m])
             logger.info("Fold %s test %s: r = %.3f (x %.3f, y %.3f, z %.3f), R2 = %.3f, NRMSE = %.3f, %d trials",
                         fold.name, s.subject, res["r"]["mean"], *res["r"]["per_axis"].values(),
                         res["r2"]["mean"], res["nrmse"]["mean"], res["n_trials"])
@@ -157,6 +181,17 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
                              "seconds": round(time.time() - t_fold, 2)})
 
     aggregate = aggregate_across_subjects(subject_results)
+    repeat_spread = None
+    if n_repeats > 1:
+        # Aggregate across subjects separately for each random repeat, then summarize the spread.
+        per_rep = [aggregate_across_subjects({s: reps[k] for s, reps in per_repeat_subject.items()})
+                   for k in range(n_repeats)]
+        repeat_spread = {metric: {"n_repeats": n_repeats,
+                                  "mean": float(np.mean([p[metric]["mean"] for p in per_rep])),
+                                  "sd": float(np.std([p[metric]["mean"] for p in per_rep], ddof=1)),
+                                  "min": float(np.min([p[metric]["mean"] for p in per_rep])),
+                                  "max": float(np.max([p[metric]["mean"] for p in per_rep]))}
+                         for metric in ("r", "r2", "rmse", "nrmse")}
     metrics = {
         "baseline": cfg["baseline"]["name"],
         "split_mode": cfg["splits"]["mode"],
@@ -169,6 +204,8 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
         "exclude_flags": cfg.get("exclude_flags", []),
         "metric_definitions": METRIC_DEFINITIONS,
         "aggregate": aggregate,
+        "n_repeats": n_repeats,
+        "repeat_spread": repeat_spread,
         "per_subject": subject_results,
         "pooled_r_secondary": pooled,
         "per_fold": fold_results,
@@ -181,5 +218,9 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
     logger.info("Aggregate over %d test subjects: r = %.3f +- %.3f, R2 = %.3f +- %.3f, NRMSE = %.3f +- %.3f",
                 aggregate["r"]["n_subjects"], aggregate["r"]["mean"], aggregate["r"]["sd"],
                 aggregate["r2"]["mean"], aggregate["r2"]["sd"], aggregate["nrmse"]["mean"], aggregate["nrmse"]["sd"])
+    if repeat_spread:
+        logger.info("Across %d repeats: aggregate r mean %.3f, SD %.4f, range [%.3f, %.3f]", n_repeats,
+                    repeat_spread["r"]["mean"], repeat_spread["r"]["sd"], repeat_spread["r"]["min"],
+                    repeat_spread["r"]["max"])
     logger.info("Wall time %.1f s", metrics["wall_seconds"])
     return metrics
