@@ -1,0 +1,18 @@
+# Lagged ridge regression on low-frequency EEG (baselines.md: ridge-lag).
+baseline:
+  name: ridge_lag
+  params:
+    # Fixed tuning budget: 7 alphas, chosen on inner validation by per-trial r.
+    # Relative to the mean diagonal of the centered X^T X.
+    alphas: [0.0001, 0.001, 0.01, 0.1, 1.0, 10.0, 100.0]
+data:
+  windows_config: configs/data/windows.yaml  # history 50 samples, lag step 2 -> 25 lags
+  band: lowfreq  # D4: 0.1-4 Hz, causal
+  reference: car  # D5
+  channel_set: all
+splits:
+  config: configs/splits/default.yaml
+  mode: loso
+seed: 20261029
+save_predictions: true
+exclude_flags: []

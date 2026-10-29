@@ -103,3 +103,41 @@ def test_stereotypy_identical_trials_give_exact_prediction():
     model.fit([], [], ctx)
     pred = model.predict(test, np.ones(len(test.sample_idx), bool), ctx)
     assert np.abs(pred - test.target[:, test.sample_idx].T).max() < 1e-3  # same shape, aligned on onset
+
+
+def linear_subject(name: str, w_true: np.ndarray, noise: float, seed: int) -> SubjectSamples:
+    """Subject whose target is a known causal lagged linear map of its EEG plus noise."""
+    s = synthetic_subject(name, [2.0, 2.3, 2.6, 2.9])
+    rng = np.random.default_rng(seed)
+    T = s.target.shape[1]
+    eeg = rng.standard_normal((2, T)).astype(np.float32)
+    # y_a(t) = sum_c sum_l w[c, l, a] * eeg[c, t - 2 l]  (lags 0, 2, 4 samples)
+    y = np.zeros((3, T), np.float32)
+    for c in range(2):
+        for li, lag in enumerate((0, 2, 4)):
+            shifted = np.concatenate([np.zeros(lag, np.float32), eeg[c, :T - lag]])
+            y += w_true[c, li][:, None] * shifted[None, :]
+    y += noise * rng.standard_normal(y.shape).astype(np.float32)
+    s.eeg, s.target = eeg, y
+    return s
+
+
+def test_ridge_recovers_known_lagged_map_and_picks_small_alpha():
+    from eegtraj.data.windows import fit_eeg_normalizers, fit_target_normalizer
+
+    w_true = np.random.default_rng(0).standard_normal((2, 3, 3))
+    train = [linear_subject("P1", w_true, 0.05, 1), linear_subject("P2", w_true, 0.05, 2)]
+    val = [linear_subject("P4", w_true, 0.05, 3)]
+    test = linear_subject("P5", w_true, 0.05, 4)
+    subs = train + val + [test]
+    ones = {s.subject: np.ones(len(s.sample_idx), bool) for s in subs}
+    ctx = FitContext(eeg_norm=fit_eeg_normalizers(subs, ("P1", "P2"), "train_subjects"),
+                     target_norm=fit_target_normalizer(train, ("P1", "P2")), history=6, lag_step=2,
+                     seed=0, train_masks=ones, val_masks=ones)
+    model = make_baseline("ridge_lag", {"alphas": [1e-6, 1.0, 1e3]})
+    model.fit(train, val, ctx)
+    assert model.alpha == 1e-6  # nearly noise-free linear data: weakest regularization wins on val
+    assert model.info()["n_features"] == 2 * 3 and model.info()["lags_samples"] == [0, 2, 4]
+    pred = model.predict(test, ones["P5"], ctx)
+    true = test.target[:, test.sample_idx].T
+    assert min(np.corrcoef(pred[:, a], true[:, a])[0, 1] for a in range(3)) > 0.99
