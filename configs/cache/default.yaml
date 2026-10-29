@@ -1,0 +1,46 @@
+# Cache build config. Implements docs/protocol.md (D1-D5, D8). Keys under `paths` and
+# `subjects` do not enter the config hash; everything else does.
+paths:
+  raw_dir: dataset/raw
+  cache_root: dataset/cache
+  output_dir: output/data-baselines/cache-build
+subjects: [P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12]
+series: [S1, S2, S3, S4, S5, S6, S7, S8, S9]  # D8
+
+fs_out_hz: 100  # D3
+
+eeg:
+  filter_order: 2  # Butterworth, causal (D4)
+  bands_hz:  # D4
+    lowfreq: [0.1, 4.0]
+    broadband: [0.1, 40.0]
+  references: [car, orig]  # D5: CAR for main runs, original reference for artifact controls
+  antialias:  # causal, before taking every 5th sample
+    order: 4
+    frac_of_nyquist: 0.8
+
+bad_channels:  # D5, label-free
+  highpass_hz: 1.0
+  order: 4
+  flat_ratio: 0.1
+  noisy_ratio: 5.0
+
+filter_transient:  # D4
+  tolerance: 0.01  # of steady-state SD
+  probe_start_s: 120.0  # measured from a late start; capped at half the series length
+
+kinematics:  # D1, D4: zero-phase smoothing of targets
+  smooth_cutoff_hz: 10.0
+  smooth_order: 2
+
+onset:  # D2
+  threshold_frac: 0.05
+  mismatch_s: 0.3
+
+segment:  # D2, D3
+  pre_onset_margin_s: 0.5
+  history_s: 0.5
+
+emg_envelope:  # artifact control input
+  lowpass_hz: 5.0
+  order: 2

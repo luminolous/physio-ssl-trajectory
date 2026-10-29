@@ -1,0 +1,53 @@
+paths:
+  raw_dir: dataset/raw
+  cache_root: dataset/cache
+  output_dir: output/data-baselines/cache-build
+subjects:
+- P1
+series:
+- S1
+- S2
+- S3
+- S4
+- S5
+- S6
+- S7
+- S8
+- S9
+fs_out_hz: 100
+eeg:
+  filter_order: 2
+  bands_hz:
+    lowfreq:
+    - 0.1
+    - 4.0
+    broadband:
+    - 0.1
+    - 40.0
+  references:
+  - car
+  - orig
+  antialias:
+    order: 4
+    frac_of_nyquist: 0.8
+bad_channels:
+  highpass_hz: 1.0
+  order: 4
+  flat_ratio: 0.1
+  noisy_ratio: 5.0
+filter_transient:
+  tolerance: 0.01
+  probe_start_s: 120.0
+kinematics:
+  smooth_cutoff_hz: 10.0
+  smooth_order: 2
+onset:
+  threshold_frac: 0.05
+  mismatch_s: 0.3
+segment:
+  pre_onset_margin_s: 0.5
+  history_s: 0.5
+emg_envelope:
+  lowpass_hz: 5.0
+  order: 2
+config_hash: 98f5fa6e66

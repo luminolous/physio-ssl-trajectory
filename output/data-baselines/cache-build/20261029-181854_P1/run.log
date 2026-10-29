@@ -1,0 +1,23 @@
+2026-10-29 18:18:57 INFO    eegtraj.utils.run: Run directory: output\data-baselines\cache-build\20261029-181854_P1
+2026-10-29 18:18:57 INFO    build_cache: Config hash 98f5fa6e66, cache dir dataset\cache\98f5fa6e66, subjects ['P1']
+2026-10-29 18:19:03 INFO    eegtraj.data.cache: P1 bad channels: []
+2026-10-29 18:19:04 INFO    eegtraj.data.wayeeggal: Loaded P1 S1: 34 trials
+2026-10-29 18:19:04 INFO    eegtraj.data.cache: P1 S1: 34 lifts, settle times {'lowfreq': 13.13, 'broadband': 12.84} s
+2026-10-29 18:19:05 INFO    eegtraj.data.wayeeggal: Loaded P1 S2: 34 trials
+2026-10-29 18:19:06 INFO    eegtraj.data.cache: P1 S2: 34 lifts, settle times {'lowfreq': 12.61, 'broadband': 12.31} s
+2026-10-29 18:19:07 INFO    eegtraj.data.wayeeggal: Loaded P1 S3: 28 trials
+2026-10-29 18:19:08 INFO    eegtraj.data.cache: P1 S3: 28 lifts, settle times {'lowfreq': 13.29, 'broadband': 13.23} s
+2026-10-29 18:19:09 INFO    eegtraj.data.wayeeggal: Loaded P1 S4: 34 trials
+2026-10-29 18:19:09 INFO    eegtraj.data.cache: P1 S4: 34 lifts, settle times {'lowfreq': 13.41, 'broadband': 13.57} s
+2026-10-29 18:19:10 INFO    eegtraj.data.wayeeggal: Loaded P1 S5: 28 trials
+2026-10-29 18:19:11 INFO    eegtraj.data.cache: P1 S5: 28 lifts, settle times {'lowfreq': 12.81, 'broadband': 12.77} s
+2026-10-29 18:19:12 INFO    eegtraj.data.wayeeggal: Loaded P1 S6: 34 trials
+2026-10-29 18:19:13 INFO    eegtraj.data.cache: P1 S6: 34 lifts, settle times {'lowfreq': 13.17, 'broadband': 13.09} s
+2026-10-29 18:19:14 INFO    eegtraj.data.wayeeggal: Loaded P1 S7: 34 trials
+2026-10-29 18:19:14 INFO    eegtraj.data.cache: P1 S7: 34 lifts, settle times {'lowfreq': 13.03, 'broadband': 12.95} s
+2026-10-29 18:19:15 INFO    eegtraj.data.wayeeggal: Loaded P1 S8: 34 trials
+2026-10-29 18:19:15 INFO    eegtraj.data.cache: P1 S8: 34 lifts, settle times {'lowfreq': 13.31, 'broadband': 13.36} s
+2026-10-29 18:19:16 INFO    eegtraj.data.wayeeggal: Loaded P1 S9: 34 trials
+2026-10-29 18:19:16 INFO    eegtraj.data.cache: P1 S9: 34 lifts, settle times {'lowfreq': 13.3, 'broadband': 12.94} s
+2026-10-29 18:19:17 INFO    build_cache: P1 done in 19.5 s: 294 trials, 253136 samples, bad channels [], onset mismatch 0, filter transient {'lowfreq': 15, 'broadband': 15}
+2026-10-29 18:19:17 INFO    build_cache: All done in 19.5 s
