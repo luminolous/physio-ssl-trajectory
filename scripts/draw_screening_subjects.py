@@ -18,12 +18,9 @@ from pathlib import Path
 import numpy as np
 import yaml
 
+from eegtraj.data.splits import draw_screening as draw
+
 OUT_PATH = Path("output/data-baselines/splits/screening_draw.json")
-
-
-def draw(subjects: list[str], n: int, seed: int) -> list[str]:
-    idx = np.random.default_rng(seed).choice(len(subjects), size=n, replace=False)
-    return sorted((subjects[i] for i in idx), key=lambda s: int(s[1:]))
 
 
 def main() -> None:

@@ -7,3 +7,9 @@ n_inner_val: 2
 # re-draws with the seed and asserts it matches this list.
 # Drawn 2026-10-29 (output/data-baselines/splits/screening_draw.json).
 screening_subjects: [P3, P6]
+
+# Secondary diagnostic (D6). Confound: S7-S9 are always weight series; report as diagnostic only.
+within_subject:
+  train_series: [1, 2, 3, 4, 5]
+  val_series: [6]  # PROVISIONAL: not fixed by D6; confirm with the user before any within-subject run
+  test_series: [7, 8, 9]
