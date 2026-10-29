@@ -14,7 +14,9 @@ The participant reaches for an object, grasps it with thumb and index finger, li
 |---|---|---|
 | `WS_P<n>_S<k>.mat` (k = 1..9) | windowed: one struct per lift with EEG, EMG, kinematics, events, and conditions | per-lift data |
 | `HS_P<n>_S<k>.mat` (k = 1..9) | holistic: continuous signals for a whole series | continuous data |
-| `HS_P<n>_ST.mat` | continuous EEG only (~234 s), no kinematics or events | under investigation |
+| `HS_P<n>_ST.mat` | continuous EEG only (234–301 s), no kinematics or events; lower amplitude than task series, likely a non-task baseline (purpose not documented) | unlabeled only |
+
+WS windows are exact copies of HS slices (difference 0 for EEG, EMG, and kinematics; checked on P1 and P2). In weight series, the windows cover ~99.9% of HS. In friction and mixed series, they cover only 55–67%, because the gaps between lifts are longer. The pipeline reads WS for supervised decoding. HS is the source for continuous data and between-lift EEG.
 | `P<n>_AllLifts.mat` | table with one row per lift (43 columns): events, conditions, force and grip measures | trial metadata |
 
 All files are classic MATLAB v5. Load them with `scipy.io.loadmat(path, simplify_cells=True)`. Signal arrays are stored **samples × channels**.
@@ -40,7 +42,8 @@ Position units are most likely cm. The coordinate frame is a fixed lab frame, wi
 ## Events and conditions
 
 - Event times in AllLifts and WS (`tHandStart`, `tFirstDigitTouch`, `tLiftOff`, `tReplace`, `tHandStop`, …) are **seconds from the start of the lift's window**.
-- Each window starts 2 s before the LED cue (`LEDOn = 2`). `StartTime` is the window start in series time.
+- Each window starts 2 s before the LED cue (`LEDOn = 2`).
+- `StartTime` (= WS `trial_start_time`) is the LED-on time in series time. The window starts at HS sample `round((StartTime − 2) · 500)`.
 - Weight: 1 = 165 g, 2 = 330 g, 4 = 660 g. Surface: 1 = silk, 2 = suede, 3 = sandpaper.
 - Series types (`BlockType`): 1 = weight series, 2 = friction series, 3 = mixed. S7–S9 are weight series for every subject.
 

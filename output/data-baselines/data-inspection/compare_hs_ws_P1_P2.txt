@@ -1,0 +1,125 @@
+=== HS vs WS: P1
+P1 S1: HS 119496 samples (239.0 s), 34 windows
+  window start in HS samples = round((StartTime - LEDon) * fs) + offset, offsets found: EEG [0], EMG [0]
+  max |WS - HS| at that offset: EEG=0, kin(36 cols)=0, EMG=0
+  first window starts at HS sample 1 (0.002 s); last window ends at sample 119333 (238.666 s)
+  windows running past HS end: 0 (overrun s: [])
+  HS samples covered by >=1 window: 99.9%
+P1 S2: HS 271954 samples (543.9 s), 34 windows
+  window start in HS samples = round((StartTime - LEDon) * fs) + offset, offsets found: EEG [0], EMG [0]
+  max |WS - HS| at that offset: EEG=0, kin(36 cols)=0, EMG=0
+  first window starts at HS sample 1 (0.002 s); last window ends at sample 271629 (543.258 s)
+  windows running past HS end: 0 (overrun s: [])
+  HS samples covered by >=1 window: 54.5%
+P1 S3: HS 217614 samples (435.2 s), 28 windows
+  window start in HS samples = round((StartTime - LEDon) * fs) + offset, offsets found: EEG [0], EMG [0]
+  max |WS - HS| at that offset: EEG=0, kin(36 cols)=0, EMG=0
+  first window starts at HS sample 1 (0.002 s); last window ends at sample 217395 (434.790 s)
+  windows running past HS end: 0 (overrun s: [])
+  HS samples covered by >=1 window: 55.9%
+P1 S4: HS 116240 samples (232.5 s), 34 windows
+  window start in HS samples = round((StartTime - LEDon) * fs) + offset, offsets found: EEG [0], EMG [0]
+  max |WS - HS| at that offset: EEG=0, kin(36 cols)=0, EMG=0
+  first window starts at HS sample 1 (0.002 s); last window ends at sample 116088 (232.176 s)
+  windows running past HS end: 0 (overrun s: [])
+  HS samples covered by >=1 window: 99.9%
+P1 S5: HS 210644 samples (421.3 s), 28 windows
+  window start in HS samples = round((StartTime - LEDon) * fs) + offset, offsets found: EEG [0], EMG [0]
+  max |WS - HS| at that offset: EEG=0, kin(36 cols)=0, EMG=0
+  first window starts at HS sample 1 (0.002 s); last window ends at sample 210438 (420.876 s)
+  windows running past HS end: 0 (overrun s: [])
+  HS samples covered by >=1 window: 56.6%
+P1 S6: HS 249550 samples (499.1 s), 34 windows
+  window start in HS samples = round((StartTime - LEDon) * fs) + offset, offsets found: EEG [0], EMG [0]
+  max |WS - HS| at that offset: EEG=0, kin(36 cols)=0, EMG=0
+  first window starts at HS sample 1 (0.002 s); last window ends at sample 249373 (498.746 s)
+  windows running past HS end: 0 (overrun s: [])
+  HS samples covered by >=1 window: 58.5%
+P1 S7: HS 119561 samples (239.1 s), 34 windows
+  window start in HS samples = round((StartTime - LEDon) * fs) + offset, offsets found: EEG [0], EMG [0]
+  max |WS - HS| at that offset: EEG=0, kin(36 cols)=0, EMG=0
+  first window starts at HS sample 1 (0.002 s); last window ends at sample 119431 (238.862 s)
+  windows running past HS end: 0 (overrun s: [])
+  HS samples covered by >=1 window: 99.9%
+P1 S8: HS 117333 samples (234.7 s), 34 windows
+  window start in HS samples = round((StartTime - LEDon) * fs) + offset, offsets found: EEG [0], EMG [0]
+  max |WS - HS| at that offset: EEG=0, kin(36 cols)=0, EMG=0
+  first window starts at HS sample 1 (0.002 s); last window ends at sample 117097 (234.194 s)
+  windows running past HS end: 0 (overrun s: [])
+  HS samples covered by >=1 window: 99.8%
+P1 S9: HS 115953 samples (231.9 s), 34 windows
+  window start in HS samples = round((StartTime - LEDon) * fs) + offset, offsets found: EEG [0], EMG [0]
+  max |WS - HS| at that offset: EEG=0, kin(36 cols)=0, EMG=0
+  first window starts at HS sample 1 (0.002 s); last window ends at sample 115796 (231.592 s)
+  windows running past HS end: 0 (overrun s: [])
+  HS samples covered by >=1 window: 99.9%
+=== ST: P1
+P1 ST: fields=['participant', 'series', 'eeg'], series=10, EEG (117128, 32) at 500 Hz = 234.3 s, same channel names as S1: True
+  Fp1  ST: std=   214.6 delta(1-4)= 4.07e+03 alpha(8-13)=      140 beta(13-30)=     58.7 alpha/beta= 2.38 | S1: std=   373.9 delta(1-4)=  7.9e+03 alpha(8-13)=      214 beta(13-30)=      131 alpha/beta= 1.63
+  C3   ST: std=    79.5 delta(1-4)=      195 alpha(8-13)=     37.2 beta(13-30)=     23.2 alpha/beta= 1.60 | S1: std=   160.8 delta(1-4)=      243 alpha(8-13)=     33.9 beta(13-30)=     19.1 alpha/beta= 1.78
+  Cz   ST: std=    82.9 delta(1-4)=      105 alpha(8-13)=     15.7 beta(13-30)=     6.35 alpha/beta= 2.47 | S1: std=   104.5 delta(1-4)=      149 alpha(8-13)=     17.6 beta(13-30)=     6.12 alpha/beta= 2.87
+  O1   ST: std=   168.8 delta(1-4)= 1.24e+03 alpha(8-13)=      205 beta(13-30)=       81 alpha/beta= 2.53 | S1: std=   202.6 delta(1-4)= 1.38e+03 alpha(8-13)=      193 beta(13-30)=     68.8 alpha/beta= 2.81
+  Oz   ST: std=   167.0 delta(1-4)= 1.26e+03 alpha(8-13)=      190 beta(13-30)=     71.2 alpha/beta= 2.67 | S1: std=   188.1 delta(1-4)= 1.39e+03 alpha(8-13)=      185 beta(13-30)=     59.1 alpha/beta= 3.13
+
+=== HS vs WS: P2
+P2 S1: HS 291874 samples (583.7 s), 28 windows
+  window start in HS samples = round((StartTime - LEDon) * fs) + offset, offsets found: EEG [0], EMG [0]
+  max |WS - HS| at that offset: EEG=0, kin(36 cols)=0, EMG=0
+  first window starts at HS sample 1 (0.002 s); last window ends at sample 291157 (582.314 s)
+  windows running past HS end: 0 (overrun s: [])
+  HS samples covered by >=1 window: 54.6%
+P2 S2: HS 330082 samples (660.2 s), 34 windows
+  window start in HS samples = round((StartTime - LEDon) * fs) + offset, offsets found: EEG [0], EMG [0]
+  max |WS - HS| at that offset: EEG=0, kin(36 cols)=0, EMG=0
+  first window starts at HS sample 0 (0.000 s); last window ends at sample 329182 (658.364 s)
+  windows running past HS end: 0 (overrun s: [])
+  HS samples covered by >=1 window: 58.9%
+P2 S3: HS 152745 samples (305.5 s), 34 windows
+  window start in HS samples = round((StartTime - LEDon) * fs) + offset, offsets found: EEG [0], EMG [0]
+  max |WS - HS| at that offset: EEG=0, kin(36 cols)=0, EMG=0
+  first window starts at HS sample 1 (0.002 s); last window ends at sample 152236 (304.472 s)
+  windows running past HS end: 0 (overrun s: [])
+  HS samples covered by >=1 window: 99.7%
+P2 S4: HS 278114 samples (556.2 s), 34 windows
+  window start in HS samples = round((StartTime - LEDon) * fs) + offset, offsets found: EEG [0], EMG [0]
+  max |WS - HS| at that offset: EEG=0, kin(36 cols)=0, EMG=0
+  first window starts at HS sample 1 (0.002 s); last window ends at sample 277685 (555.370 s)
+  windows running past HS end: 0 (overrun s: [])
+  HS samples covered by >=1 window: 60.1%
+P2 S5: HS 151647 samples (303.3 s), 34 windows
+  window start in HS samples = round((StartTime - LEDon) * fs) + offset, offsets found: EEG [0], EMG [0]
+  max |WS - HS| at that offset: EEG=0, kin(36 cols)=0, EMG=0
+  first window starts at HS sample 1 (0.002 s); last window ends at sample 150967 (301.934 s)
+  windows running past HS end: 0 (overrun s: [])
+  HS samples covered by >=1 window: 99.6%
+P2 S6: HS 206222 samples (412.4 s), 28 windows
+  window start in HS samples = round((StartTime - LEDon) * fs) + offset, offsets found: EEG [0], EMG [0]
+  max |WS - HS| at that offset: EEG=0, kin(36 cols)=0, EMG=0
+  first window starts at HS sample 1 (0.002 s); last window ends at sample 205872 (411.744 s)
+  windows running past HS end: 0 (overrun s: [])
+  HS samples covered by >=1 window: 67.2%
+P2 S7: HS 150865 samples (301.7 s), 34 windows
+  window start in HS samples = round((StartTime - LEDon) * fs) + offset, offsets found: EEG [0], EMG [0]
+  max |WS - HS| at that offset: EEG=0, kin(36 cols)=0, EMG=0
+  first window starts at HS sample 1 (0.002 s); last window ends at sample 150512 (301.024 s)
+  windows running past HS end: 0 (overrun s: [])
+  HS samples covered by >=1 window: 99.8%
+P2 S8: HS 149945 samples (299.9 s), 34 windows
+  window start in HS samples = round((StartTime - LEDon) * fs) + offset, offsets found: EEG [0], EMG [0]
+  max |WS - HS| at that offset: EEG=0, kin(36 cols)=0, EMG=0
+  first window starts at HS sample 0 (0.000 s); last window ends at sample 149535 (299.070 s)
+  windows running past HS end: 0 (overrun s: [])
+  HS samples covered by >=1 window: 99.7%
+P2 S9: HS 147373 samples (294.7 s), 34 windows
+  window start in HS samples = round((StartTime - LEDon) * fs) + offset, offsets found: EEG [0], EMG [0]
+  max |WS - HS| at that offset: EEG=0, kin(36 cols)=0, EMG=0
+  first window starts at HS sample 1 (0.002 s); last window ends at sample 147030 (294.060 s)
+  windows running past HS end: 0 (overrun s: [])
+  HS samples covered by >=1 window: 99.8%
+=== ST: P2
+P2 ST: fields=['participant', 'series', 'eeg'], series=10, EEG (150712, 32) at 500 Hz = 301.4 s, same channel names as S1: True
+  Fp1  ST: std=   335.4 delta(1-4)= 7.37e+03 alpha(8-13)=      488 beta(13-30)=     75.6 alpha/beta= 6.46 | S1: std=   559.5 delta(1-4)= 2.91e+04 alpha(8-13)=      946 beta(13-30)=     81.2 alpha/beta=11.66
+  C3   ST: std=   139.4 delta(1-4)=      413 alpha(8-13)=      328 beta(13-30)=     53.7 alpha/beta= 6.11 | S1: std=   307.9 delta(1-4)= 1.01e+03 alpha(8-13)=      511 beta(13-30)=     65.5 alpha/beta= 7.80
+  Cz   ST: std=   100.8 delta(1-4)=      353 alpha(8-13)=      135 beta(13-30)=     21.2 alpha/beta= 6.37 | S1: std=   210.2 delta(1-4)=      989 alpha(8-13)=      174 beta(13-30)=     24.6 alpha/beta= 7.10
+  O1   ST: std=   220.3 delta(1-4)= 2.03e+03 alpha(8-13)=    1e+03 beta(13-30)=      210 alpha/beta= 4.78 | S1: std=   330.9 delta(1-4)= 3.71e+03 alpha(8-13)= 1.23e+03 beta(13-30)=      221 alpha/beta= 5.55
+  Oz   ST: std=   220.9 delta(1-4)= 2.26e+03 alpha(8-13)= 1.05e+03 beta(13-30)=      205 alpha/beta= 5.15 | S1: std=   314.7 delta(1-4)= 3.98e+03 alpha(8-13)= 1.28e+03 beta(13-30)=      212 alpha/beta= 6.02
