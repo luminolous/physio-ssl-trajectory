@@ -1,0 +1,22 @@
+# ARTIFACT CONTROL (baselines.md): central/sensorimotor channels only (intended neural source)
+# Same model and settings as configs/baselines/ridge_lag.yaml; only the input differs.
+baseline:
+  name: ridge_lag
+  params:
+    # Fixed tuning budget: 7 alphas, chosen on inner validation by per-trial r.
+    # Relative to the mean diagonal of the centered X^T X.
+    alphas: [0.0001, 0.001, 0.01, 0.1, 1.0, 10.0, 100.0]
+data:
+  windows_config: configs/data/windows.yaml  # history 50 samples, lag step 2 -> 25 lags
+  band: lowfreq  # D4: 0.1-4 Hz, causal
+  reference: orig  # D5: controls run under car and orig
+  channel_set: sensorimotor
+splits:
+  config: configs/splits/default.yaml
+  mode: loso
+seed: 20261029
+save_predictions: false
+exclude_flags: []
+output:
+  group: artifact-controls
+  name: ridge_sensorimotor_orig

@@ -4,8 +4,10 @@ Usage (from repo root):
     .venv\\Scripts\\python scripts\\run_baseline.py --config configs\\baselines\\template.yaml [--smoke]
         [--subjects P1 P2] [--seed 1] [--tag name]
 
-Normal runs write to output/data-baselines/baselines/<baseline>/<run-id>/;
-smoke runs (1 fold, 20 trials per subject) write to output/smoke/baselines/<baseline>/<run-id>/.
+Normal runs write to output/data-baselines/<group>/<name>/<run-id>/, where the optional config
+block ``output: {group, name}`` defaults to group "baselines" and the baseline name (artifact
+controls use group "artifact-controls"). Smoke runs (1 fold, 20 trials per subject) write to
+output/smoke/<group>/<name>/<run-id>/.
 """
 
 from __future__ import annotations
@@ -16,8 +18,8 @@ from pathlib import Path
 from eegtraj.baselines.runner import resolve_config, run
 from eegtraj.utils.run import setup_run
 
-OUTPUT_ROOT = Path("output/data-baselines/baselines")
-SMOKE_ROOT = Path("output/smoke/baselines")
+OUTPUT_ROOT = Path("output/data-baselines")
+SMOKE_ROOT = Path("output/smoke")
 
 
 def main() -> None:
@@ -31,7 +33,9 @@ def main() -> None:
 
     cfg = resolve_config(args.config, {"smoke": args.smoke or None, "subjects": args.subjects, "seed": args.seed})
     root = SMOKE_ROOT if cfg.get("smoke") else OUTPUT_ROOT
-    run_dir = setup_run(root / cfg["baseline"]["name"], cfg, tag=args.tag)
+    out = cfg.get("output") or {}
+    group, name = out.get("group", "baselines"), out.get("name", cfg["baseline"]["name"])
+    run_dir = setup_run(root / group / name, cfg, tag=args.tag)
     print(f"Run directory: {run_dir}")
     run(cfg, run_dir)
     print(f"Run directory: {run_dir}")
