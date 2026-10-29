@@ -11,5 +11,5 @@ screening_subjects: [P3, P6]
 # Secondary diagnostic (D6). Confound: S7-S9 are always weight series; report as diagnostic only.
 within_subject:
   train_series: [1, 2, 3, 4, 5]
-  val_series: [6]  # PROVISIONAL: not fixed by D6; confirm with the user before any within-subject run
+  val_series: [6]  # decided by the user 2026-10-29 (D6 change log)
   test_series: [7, 8, 9]

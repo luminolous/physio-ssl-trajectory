@@ -72,7 +72,7 @@ Locked on 2026-10-29. Changes are recorded with a date and reason at the bottom.
   - Used only for Exp 1 (candidate screening). Never a test fold in Exp 2.
 - **Main evaluation:** leave-one-subject-out over P1, P2, P4, P5, P7, P8, P9, P10, P11, P12.
 - **Inner validation:** 2 of the 9 training subjects in each fold, drawn deterministically from the fold seed. All tuning, early stopping, and model selection use the inner validation only.
-- **Secondary diagnostic:** within subject, train on S1–S6, test on S7–S9.
+- **Secondary diagnostic:** within subject, train on S1–S5, validate on S6, test on S7–S9.
   - Confound: S7–S9 are always weight series, while S1–S6 mix weight, friction, and mixed series. The condition distribution therefore differs between train and test.
   - Report this split as a diagnostic only.
 
@@ -107,4 +107,4 @@ Locked on 2026-10-29. Changes are recorded with a date and reason at the bottom.
 
 ## Change log
 
-(none)
+- 2026-10-29, D6: added S6 as the inner-validation series of the within-subject diagnostic (train S1–S5, val S6, test S7–S9). No runs existed under the old wording.
