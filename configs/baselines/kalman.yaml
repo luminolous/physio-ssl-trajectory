@@ -1,0 +1,18 @@
+# Kalman filter decoder (baselines.md: kalman). State: wrist position + velocity.
+# Observation: PCA components of the lagged low-frequency EEG features (same lags as ridge_lag).
+baseline:
+  name: kalman
+  params:
+    # Fixed tuning budget: number of PCA components, chosen on inner validation by per-trial r.
+    n_components: [10, 20, 50]
+data:
+  windows_config: configs/data/windows.yaml
+  band: lowfreq  # D4: 0.1-4 Hz, causal
+  reference: car
+  channel_set: all
+splits:
+  config: configs/splits/default.yaml
+  mode: loso
+seed: 20261029
+save_predictions: true
+exclude_flags: []

@@ -141,3 +141,58 @@ def test_ridge_recovers_known_lagged_map_and_picks_small_alpha():
     pred = model.predict(test, ones["P5"], ctx)
     true = test.target[:, test.sample_idx].T
     assert min(np.corrcoef(pred[:, a], true[:, a])[0, 1] for a in range(3)) > 0.99
+
+
+def observed_subject(name: str, mix: np.ndarray, noise: float, seed: int) -> SubjectSamples:
+    """Subject whose 'EEG' is a noisy linear mix of the true position and velocity (lag 0)."""
+    rng = np.random.default_rng(seed)
+    onsets = list(2.0 + 0.6 * rng.random(6))
+    s = synthetic_subject(name, onsets)
+    pos = s.target.astype(np.float64)
+    vel = np.gradient(pos, 1 / FS, axis=1)
+    state = np.vstack([pos, vel / 10.0])
+    s.eeg = (mix @ state + noise * rng.standard_normal((mix.shape[0], pos.shape[1]))).astype(np.float32)
+    return s
+
+
+def test_kalman_decodes_linear_gaussian_observations_causally():
+    from eegtraj.data.windows import fit_eeg_normalizers, fit_target_normalizer
+
+    mix = np.random.default_rng(10).standard_normal((8, 6))
+    train = [observed_subject("P1", mix, 0.5, 1), observed_subject("P2", mix, 0.5, 2)]
+    val = [observed_subject("P4", mix, 0.5, 3)]
+    test = observed_subject("P5", mix, 0.5, 4)
+    subs = train + val + [test]
+    ones = {s.subject: np.ones(len(s.sample_idx), bool) for s in subs}
+    ctx = FitContext(eeg_norm=fit_eeg_normalizers(subs, ("P1", "P2"), "train_subjects"),
+                     target_norm=fit_target_normalizer(train, ("P1", "P2")), history=2, lag_step=2,
+                     seed=0, train_masks=ones, val_masks=ones)
+    model = make_baseline("kalman", {"n_components": [2, 6]})
+    model.fit(train, val, ctx)
+    assert model.k == 6  # all 6 informative directions beat 2 on validation
+    pred = model.predict(test, ones["P5"], ctx)
+    true = test.target[:, test.sample_idx].T
+    assert min(np.corrcoef(pred[:, a], true[:, a])[0, 1] for a in range(3)) > 0.95
+    # Causality: changing EEG after a sample must not change the estimate at that sample.
+    cut = int(test.sample_idx[100])
+    test.eeg[:, cut + 1:] += 50.0
+    pred2 = model.predict(test, ones["P5"], ctx)
+    assert np.allclose(pred2[:101], pred[:101])
+
+
+def test_kalman_prior_only_ignores_eeg():
+    from eegtraj.data.windows import fit_eeg_normalizers, fit_target_normalizer
+
+    mix = np.random.default_rng(11).standard_normal((8, 6))
+    train = [observed_subject("P1", mix, 0.5, 1), observed_subject("P2", mix, 0.5, 2)]
+    test = observed_subject("P5", mix, 0.5, 4)
+    subs = train + [test]
+    ones = {s.subject: np.ones(len(s.sample_idx), bool) for s in subs}
+    ctx = FitContext(eeg_norm=fit_eeg_normalizers(subs, ("P1", "P2"), "train_subjects"),
+                     target_norm=fit_target_normalizer(train, ("P1", "P2")), history=2, lag_step=2,
+                     seed=0, train_masks=ones, val_masks=ones)
+    model = make_baseline("kalman", {"n_components": [4], "prior_only": True})
+    model.fit(train, [], ctx)
+    a = model.predict(test, ones["P5"], ctx)
+    test.eeg[:] = np.random.default_rng(0).standard_normal(test.eeg.shape)
+    assert np.allclose(model.predict(test, ones["P5"], ctx), a)

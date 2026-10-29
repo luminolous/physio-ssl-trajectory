@@ -1,0 +1,21 @@
+# CONTROL: Kalman with all gains set to 0 -> prediction from the learned dynamics and initial state only
+# (no EEG). Measures how much of the Kalman score comes from the oracle-timed dynamics prior.
+# Kalman filter decoder (baselines.md: kalman). State: wrist position + velocity.
+# Observation: PCA components of the lagged low-frequency EEG features (same lags as ridge_lag).
+baseline:
+  name: kalman
+  params:
+    # Fixed tuning budget: number of PCA components, chosen on inner validation by per-trial r.
+    n_components: [10]  # irrelevant when prior_only is true (EEG ignored)
+    prior_only: true
+data:
+  windows_config: configs/data/windows.yaml
+  band: lowfreq  # D4: 0.1-4 Hz, causal
+  reference: car
+  channel_set: all
+splits:
+  config: configs/splits/default.yaml
+  mode: loso
+seed: 20261029
+save_predictions: false
+exclude_flags: []
