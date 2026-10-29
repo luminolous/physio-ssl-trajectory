@@ -26,7 +26,7 @@ Locked on 2026-10-29. Changes are recorded with a date and reason at the bottom.
 
 - EEG and targets at **100 Hz**: anti-alias filter, then decimate 500 Hz by 5.
 - **Causal EEG history of 500 ms** (50 samples) before each target sample.
-- Ridge uses lags every 20 ms (26 lags). Deep models get the full 50-sample window.
+- Ridge uses lags every 20 ms inside the window: 0, 20, …, 480 ms (25 lags, 800 features with 32 channels). Deep models get the full 50-sample window.
 
 ## Filtering (D4)
 
@@ -108,3 +108,4 @@ Locked on 2026-10-29. Changes are recorded with a date and reason at the bottom.
 ## Change log
 
 - 2026-10-29, D6: added S6 as the inner-validation series of the within-subject diagnostic (train S1–S5, val S6, test S7–S9). No runs existed under the old wording.
+- 2026-10-29, D3: ridge lags corrected to 25 (0…480 ms) to fit the 50-sample history. It had been stated as 26. No runs existed before.

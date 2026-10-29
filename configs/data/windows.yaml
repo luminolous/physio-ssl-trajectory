@@ -1,6 +1,6 @@
 # Windowing and normalization (D3, D9). Shared by baseline configs.
 cache_dir: dataset/cache/98f5fa6e66
 history_samples: 50  # 500 ms at 100 Hz, causal, window ends at the target sample
-ridge_lag_step_samples: 2  # 20 ms -> lags 0, 20, ..., 480 ms (25 lags); see open question on 25 vs 26 lags
+ridge_lag_step_samples: 2  # 20 ms -> lags 0, 20, ..., 480 ms (25 lags; D3 as corrected 2026-10-29)
 target: position  # D1 primary; velocity is secondary
 eeg_normalization: per_subject  # D9 main (transductive); train_subjects = strict variant
