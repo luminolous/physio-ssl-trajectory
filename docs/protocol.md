@@ -38,6 +38,11 @@ Locked on 2026-10-29. Changes are recorded with a date and reason at the bottom.
   - Lifts whose first used EEG sample falls inside the measured settle time are flagged `filter_transient`. This is roughly lifts 1–3 of each series, ~4.7% of lifts.
   - The cache builder measures the settle time per series.
   - Flagged lifts are kept. Excluding them is a sensitivity analysis.
+- **Causal delay:** causal filtering delays the EEG.
+  - 0.1–4 Hz: ~74–150 ms at 0.5–2 Hz.
+  - 0.1–40 Hz: ~11–28 ms at 1–2 Hz.
+  - The 500 ms history covers this. Read decoder lag profiles as EEG lag plus filter delay.
+  - The EEG anti-alias filter before decimation is causal, order 4, at 40 Hz (~10 ms delay).
 - **Kinematics:** smoothed zero-phase (`sosfiltfilt`). Targets are not decoder inputs, so this does not leak into features.
 - **EMG** (artifact control only): rectified, causal low-pass, downsampled to 100 Hz.
 

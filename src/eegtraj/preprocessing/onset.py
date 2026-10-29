@@ -13,7 +13,8 @@ the object), so movement onset is re-derived from the wrist trajectory:
 from __future__ import annotations
 
 import numpy as np
-import scipy.signal
+
+from eegtraj.preprocessing.filters import filter_signal
 
 
 def smooth_kinematics(pos: np.ndarray, fs_hz: float, cutoff_hz: float, order: int) -> np.ndarray:
@@ -28,8 +29,7 @@ def smooth_kinematics(pos: np.ndarray, fs_hz: float, cutoff_hz: float, order: in
     Returns:
         Smoothed array with the same shape as ``pos``.
     """
-    sos = scipy.signal.butter(order, cutoff_hz, btype="lowpass", fs=fs_hz, output="sos")
-    return scipy.signal.sosfiltfilt(sos, pos, axis=0)
+    return filter_signal(pos, fs_hz, order, high_hz=cutoff_hz, causal=False, axis=0)
 
 
 def kinematic_onset(
