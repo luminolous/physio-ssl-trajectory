@@ -68,3 +68,20 @@ def test_shallowconvnet_builds_for_window_with_scaled_pooling():
     m = build_shallowconvnet(n_chans=32, n_times=50, filter_time_length=10, pool_time_length=30, pool_time_stride=6)
     out = m(torch.randn(2, 32, 50))
     assert tuple(out.shape) == (2, 3) and torch.isfinite(out).all()
+
+
+def test_cnn_lstm_shape_params_and_window_causality():
+    from eegtraj.baselines.deep import build_cnn_lstm
+
+    m = build_cnn_lstm(n_chans=32, n_times=50)
+    m.eval()
+    x = torch.randn(2, 32, 50)
+    out = m(x)
+    assert tuple(out.shape) == (2, 3)
+    n = count_parameters(m)
+    assert 1_000 < n < 60_000  # comparable to EEGNet / ShallowConvNet
+    # Output depends on the whole (past-only) window, including its first sample.
+    x2 = x.clone()
+    x2[:, :, 0] += 10.0
+    with torch.no_grad():
+        assert not torch.allclose(m(x2), m(x))

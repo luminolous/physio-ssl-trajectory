@@ -34,7 +34,13 @@ def build_shallowconvnet(n_chans: int, n_times: int, **kwargs) -> torch.nn.Modul
     return ShallowFBCSPNet(n_chans=n_chans, n_outputs=3, n_times=n_times, final_conv_length="auto", **kwargs)
 
 
-ARCHITECTURES = {"eegnet": build_eegnet, "shallowconvnet": build_shallowconvnet}
+def build_cnn_lstm(n_chans: int, n_times: int, **kwargs) -> torch.nn.Module:
+    from eegtraj.models.cnn_lstm import CNNLSTM
+
+    return CNNLSTM(n_chans=n_chans, n_times=n_times, n_outputs=3, **kwargs)
+
+
+ARCHITECTURES = {"eegnet": build_eegnet, "shallowconvnet": build_shallowconvnet, "cnn_lstm": build_cnn_lstm}
 
 
 class DeepBaseline(Baseline):
@@ -85,3 +91,8 @@ class EEGNetBaseline(DeepBaseline):
 @register("shallowconvnet")
 class ShallowConvNetBaseline(DeepBaseline):
     architecture = "shallowconvnet"
+
+
+@register("cnn_lstm")
+class CNNLSTMBaseline(DeepBaseline):
+    architecture = "cnn_lstm"

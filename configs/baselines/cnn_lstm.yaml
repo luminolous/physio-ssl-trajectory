@@ -1,0 +1,35 @@
+# CNN-LSTM (custom, eegtraj.models.cnn_lstm) with a 3-output regression head.
+# Run 3 seeds (--seed 1/2/3) per the deep-model protocol; summarize mean +- SD.
+baseline:
+  name: cnn_lstm
+  params:
+    model:
+      # temporal conv (8 x 250 ms) -> spatial conv (16) -> avg pool 2 -> 1-layer LSTM (32) -> linear 3.
+      # ~11k parameters, between EEGNet (1.6k) and ShallowConvNet (52k).
+      n_temporal: 8
+      temporal_kernel: 25
+      n_spatial: 16
+      pool: 2
+      hidden: 32
+      lstm_layers: 1
+      drop_prob: 0.25
+    train:  # fixed budget, no hyperparameter search
+      lr: 0.001
+      weight_decay: 0.01
+      batch_size: 512
+      max_epochs: 30
+      samples_per_epoch: 200000
+      val_samples: 100000
+      patience: 5
+      amp: true
+data:
+  windows_config: configs/data/windows.yaml  # history 50 samples (500 ms), causal
+  band: broadband  # D4: 0.1-40 Hz for deep models
+  reference: car
+  channel_set: all
+splits:
+  config: configs/splits/default.yaml
+  mode: loso
+seed: 1
+save_predictions: true
+exclude_flags: []
