@@ -14,12 +14,39 @@ The participant reaches for an object, grasps it with thumb and index finger, li
 |---|---|---|
 | `WS_P<n>_S<k>.mat` (k = 1..9) | windowed: one struct per lift with EEG, EMG, kinematics, events, and conditions | per-lift data |
 | `HS_P<n>_S<k>.mat` (k = 1..9) | holistic: continuous signals for a whole series | continuous data |
-| `HS_P<n>_ST.mat` | continuous EEG only (234–301 s), no kinematics or events; lower amplitude than task series, likely a non-task baseline (purpose not documented) | unlabeled only |
-
-WS windows are exact copies of HS slices (difference 0 for EEG, EMG, and kinematics; checked on P1 and P2). In weight series, the windows cover ~99.9% of HS. In friction and mixed series, they cover only 55–67%, because the gaps between lifts are longer. The pipeline reads WS for supervised decoding. HS is the source for continuous data and between-lift EEG.
+| `HS_P<n>_ST.mat` | continuous EEG only (234–301 s), no kinematics, EMG, or events | **purpose unknown**, unlabeled |
 | `P<n>_AllLifts.mat` | table with one row per lift (43 columns): events, conditions, force and grip measures | trial metadata |
 
 All files are classic MATLAB v5. Load them with `scipy.io.loadmat(path, simplify_cells=True)`. Signal arrays are stored **samples × channels**.
+
+## How WS, HS, and ST relate
+
+Verified on P1 and P2 (18 series, 600 windows) with `scripts/compare_hs_ws.py`.
+
+**WS vs HS**
+
+- Each WS window is an exact copy of a slice of the HS series. The difference is 0 for EEG, EMG, and kinematics.
+- A window starts at HS sample `round((StartTime − 2) · 500)`. The offset was 0 for every window.
+- `StartTime` (= WS `trial_start_time`) is the **LED-on time** in series time, not the window start. The window begins 2 s earlier. Using `round(StartTime · 500)` directly is off by exactly 1000 samples.
+- How much of HS the windows cover:
+  - weight series: 99.6–99.9%;
+  - friction and mixed series: only 54.5–67.2%, because the gaps between lifts last 6–8 s (likely surface changes).
+
+  The EEG in these gaps is extra unlabeled data.
+- HS has the `env` (surface, weight) and `misc` (button, LEDs, magnet, temperature) channels. WS adds 9 derived grip/load-force columns that HS lacks.
+
+**ST**
+
+- EEG only, same 32 channels as the task series: 234.3 s (P1), 301.4 s (P2).
+- Its amplitude is lower than in S1. C3 std is 80 vs 161 (P1) and 139 vs 308 (P2). Frontal delta power is also lower, so there are fewer eye/movement artifacts.
+- This is consistent with a non-task baseline recording, but the files do not document what ST is. **Its purpose is still unknown.**
+
+**Planned use** (proposal, to be confirmed when the protocol is locked):
+
+- Supervised decoding reads **WS**. Each window starts 2 s before the LED cue, and hand start is at ≥ 1.75 s, so a 500 ms EEG history before movement onset fits inside the window.
+- **HS** is used only for continuous data, between-lift EEG, and the `env`/`misc` channels.
+- Do not concatenate WS windows into a continuous stream: consecutive windows in weight series overlap by up to ~2.8 s.
+- **ST** has no labels. Whether it is used, for example as unlabeled data for self-supervised pretraining, is open.
 
 ## Signals
 
