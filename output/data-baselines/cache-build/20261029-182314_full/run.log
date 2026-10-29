@@ -1,0 +1,233 @@
+2026-10-29 18:23:44 INFO    eegtraj.utils.run: Run directory: output\data-baselines\cache-build\20261029-182314_full
+2026-10-29 18:23:44 INFO    build_cache: Config hash 98f5fa6e66, cache dir dataset\cache\98f5fa6e66, subjects ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9', 'P10', 'P11', 'P12']
+2026-10-29 18:23:44 INFO    build_cache: P1 already cached, skipping (use --force to rebuild)
+2026-10-29 18:23:52 INFO    eegtraj.data.cache: P2 bad channels: ['Fz']
+2026-10-29 18:23:53 INFO    eegtraj.data.wayeeggal: Loaded P2 S1: 28 trials
+2026-10-29 18:23:54 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-10-29 18:23:55 INFO    eegtraj.data.cache: P2 S1: 28 lifts, settle times {'lowfreq': 12.9, 'broadband': 12.88} s
+2026-10-29 18:23:57 INFO    eegtraj.data.wayeeggal: Loaded P2 S2: 34 trials
+2026-10-29 18:23:57 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-10-29 18:23:58 INFO    eegtraj.data.cache: P2 S2: 34 lifts, settle times {'lowfreq': 13.92, 'broadband': 13.81} s
+2026-10-29 18:23:59 INFO    eegtraj.data.wayeeggal: Loaded P2 S3: 34 trials
+2026-10-29 18:23:59 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-10-29 18:24:00 INFO    eegtraj.data.cache: P2 S3: 34 lifts, settle times {'lowfreq': 14.24, 'broadband': 14.44} s
+2026-10-29 18:24:01 INFO    eegtraj.data.wayeeggal: Loaded P2 S4: 34 trials
+2026-10-29 18:24:01 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-10-29 18:24:02 INFO    eegtraj.data.cache: P2 S4: 34 lifts, settle times {'lowfreq': 13.33, 'broadband': 13.11} s
+2026-10-29 18:24:03 INFO    eegtraj.data.wayeeggal: Loaded P2 S5: 34 trials
+2026-10-29 18:24:03 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-10-29 18:24:04 INFO    eegtraj.data.cache: P2 S5: 34 lifts, settle times {'lowfreq': 12.03, 'broadband': 11.11} s
+2026-10-29 18:24:05 INFO    eegtraj.data.wayeeggal: Loaded P2 S6: 28 trials
+2026-10-29 18:24:05 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-10-29 18:24:06 INFO    eegtraj.data.cache: P2 S6: 28 lifts, settle times {'lowfreq': 12.58, 'broadband': 12.33} s
+2026-10-29 18:24:09 INFO    eegtraj.data.wayeeggal: Loaded P2 S7: 34 trials
+2026-10-29 18:24:09 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-10-29 18:24:10 INFO    eegtraj.data.cache: P2 S7: 34 lifts, settle times {'lowfreq': 12.13, 'broadband': 11.91} s
+2026-10-29 18:24:12 INFO    eegtraj.data.wayeeggal: Loaded P2 S8: 34 trials
+2026-10-29 18:24:12 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-10-29 18:24:13 INFO    eegtraj.data.cache: P2 S8: 34 lifts, settle times {'lowfreq': 12.83, 'broadband': 12.33} s
+2026-10-29 18:24:15 INFO    eegtraj.data.wayeeggal: Loaded P2 S9: 34 trials
+2026-10-29 18:24:16 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-10-29 18:24:17 INFO    eegtraj.data.cache: P2 S9: 34 lifts, settle times {'lowfreq': 12.7, 'broadband': 12.64} s
+2026-10-29 18:24:18 INFO    build_cache: P2 done in 33.1 s: 294 trials, 301875 samples, bad channels ['Fz'], onset mismatch 18, filter transient {'lowfreq': 14, 'broadband': 13}
+2026-10-29 18:24:27 INFO    eegtraj.data.cache: P3 bad channels: []
+2026-10-29 18:24:28 INFO    eegtraj.data.wayeeggal: Loaded P3 S1: 34 trials
+2026-10-29 18:24:29 INFO    eegtraj.data.cache: P3 S1: 34 lifts, settle times {'lowfreq': 12.26, 'broadband': 11.65} s
+2026-10-29 18:24:30 INFO    eegtraj.data.wayeeggal: Loaded P3 S2: 28 trials
+2026-10-29 18:24:31 INFO    eegtraj.data.cache: P3 S2: 28 lifts, settle times {'lowfreq': 13.07, 'broadband': 12.67} s
+2026-10-29 18:24:33 INFO    eegtraj.data.wayeeggal: Loaded P3 S3: 34 trials
+2026-10-29 18:24:34 INFO    eegtraj.data.cache: P3 S3: 34 lifts, settle times {'lowfreq': 13.43, 'broadband': 13.5} s
+2026-10-29 18:24:35 INFO    eegtraj.data.wayeeggal: Loaded P3 S4: 28 trials
+2026-10-29 18:24:35 INFO    eegtraj.data.cache: P3 S4: 28 lifts, settle times {'lowfreq': 12.76, 'broadband': 12.62} s
+2026-10-29 18:24:36 INFO    eegtraj.data.wayeeggal: Loaded P3 S5: 34 trials
+2026-10-29 18:24:37 INFO    eegtraj.data.cache: P3 S5: 34 lifts, settle times {'lowfreq': 12.72, 'broadband': 12.68} s
+2026-10-29 18:24:38 INFO    eegtraj.data.wayeeggal: Loaded P3 S6: 34 trials
+2026-10-29 18:24:38 INFO    eegtraj.data.cache: P3 S6: 34 lifts, settle times {'lowfreq': 13.69, 'broadband': 13.61} s
+2026-10-29 18:24:39 INFO    eegtraj.data.wayeeggal: Loaded P3 S7: 34 trials
+2026-10-29 18:24:40 INFO    eegtraj.data.cache: P3 S7: 34 lifts, settle times {'lowfreq': 13.03, 'broadband': 12.83} s
+2026-10-29 18:24:40 INFO    eegtraj.data.wayeeggal: Loaded P3 S8: 34 trials
+2026-10-29 18:24:41 INFO    eegtraj.data.cache: P3 S8: 34 lifts, settle times {'lowfreq': 12.53, 'broadband': 12.13} s
+2026-10-29 18:24:41 INFO    eegtraj.data.wayeeggal: Loaded P3 S9: 34 trials
+2026-10-29 18:24:42 INFO    eegtraj.data.cache: P3 S9: 34 lifts, settle times {'lowfreq': 13.19, 'broadband': 12.83} s
+2026-10-29 18:24:42 INFO    build_cache: P3 done in 24.5 s: 294 trials, 251103 samples, bad channels [], onset mismatch 0, filter transient {'lowfreq': 14, 'broadband': 14}
+2026-10-29 18:24:48 INFO    eegtraj.data.cache: P4 bad channels: []
+2026-10-29 18:24:49 INFO    eegtraj.data.wayeeggal: Loaded P4 S1: 34 trials
+2026-10-29 18:24:50 INFO    eegtraj.data.cache: P4 S1: 34 lifts, settle times {'lowfreq': 13.68, 'broadband': 13.81} s
+2026-10-29 18:24:51 INFO    eegtraj.data.wayeeggal: Loaded P4 S2: 28 trials
+2026-10-29 18:24:52 INFO    eegtraj.data.cache: P4 S2: 28 lifts, settle times {'lowfreq': 12.54, 'broadband': 12.38} s
+2026-10-29 18:24:52 INFO    eegtraj.data.wayeeggal: Loaded P4 S3: 34 trials
+2026-10-29 18:24:53 INFO    eegtraj.data.cache: P4 S3: 34 lifts, settle times {'lowfreq': 13.67, 'broadband': 13.55} s
+2026-10-29 18:24:54 INFO    eegtraj.data.wayeeggal: Loaded P4 S4: 28 trials
+2026-10-29 18:24:54 INFO    eegtraj.data.cache: P4 S4: 28 lifts, settle times {'lowfreq': 12.69, 'broadband': 12.09} s
+2026-10-29 18:24:55 INFO    eegtraj.data.wayeeggal: Loaded P4 S5: 34 trials
+2026-10-29 18:24:56 INFO    eegtraj.data.cache: P4 S5: 34 lifts, settle times {'lowfreq': 12.54, 'broadband': 11.59} s
+2026-10-29 18:24:57 INFO    eegtraj.data.wayeeggal: Loaded P4 S6: 34 trials
+2026-10-29 18:24:58 INFO    eegtraj.data.cache: P4 S6: 34 lifts, settle times {'lowfreq': 13.35, 'broadband': 13.32} s
+2026-10-29 18:24:58 INFO    eegtraj.data.wayeeggal: Loaded P4 S7: 34 trials
+2026-10-29 18:24:59 INFO    eegtraj.data.cache: P4 S7: 34 lifts, settle times {'lowfreq': 13.27, 'broadband': 13.02} s
+2026-10-29 18:24:59 INFO    eegtraj.data.wayeeggal: Loaded P4 S8: 34 trials
+2026-10-29 18:25:00 INFO    eegtraj.data.cache: P4 S8: 34 lifts, settle times {'lowfreq': 13.25, 'broadband': 12.56} s
+2026-10-29 18:25:01 INFO    eegtraj.data.wayeeggal: Loaded P4 S9: 34 trials
+2026-10-29 18:25:01 INFO    eegtraj.data.cache: P4 S9: 34 lifts, settle times {'lowfreq': 13.57, 'broadband': 13.06} s
+2026-10-29 18:25:01 INFO    build_cache: P4 done in 19.2 s: 294 trials, 254856 samples, bad channels [], onset mismatch 1, filter transient {'lowfreq': 14, 'broadband': 14}
+2026-10-29 18:25:07 INFO    eegtraj.data.cache: P5 bad channels: []
+2026-10-29 18:25:08 INFO    eegtraj.data.wayeeggal: Loaded P5 S1: 28 trials
+2026-10-29 18:25:09 INFO    eegtraj.data.cache: P5 S1: 28 lifts, settle times {'lowfreq': 12.64, 'broadband': 12.58} s
+2026-10-29 18:25:10 INFO    eegtraj.data.wayeeggal: Loaded P5 S2: 34 trials
+2026-10-29 18:25:11 INFO    eegtraj.data.cache: P5 S2: 34 lifts, settle times {'lowfreq': 12.7, 'broadband': 12.7} s
+2026-10-29 18:25:12 INFO    eegtraj.data.wayeeggal: Loaded P5 S3: 34 trials
+2026-10-29 18:25:13 INFO    eegtraj.data.cache: P5 S3: 34 lifts, settle times {'lowfreq': 13.42, 'broadband': 13.03} s
+2026-10-29 18:25:13 INFO    eegtraj.data.wayeeggal: Loaded P5 S4: 34 trials
+2026-10-29 18:25:14 INFO    eegtraj.data.cache: P5 S4: 34 lifts, settle times {'lowfreq': 13.22, 'broadband': 13.06} s
+2026-10-29 18:25:15 INFO    eegtraj.data.wayeeggal: Loaded P5 S5: 34 trials
+2026-10-29 18:25:16 INFO    eegtraj.data.cache: P5 S5: 34 lifts, settle times {'lowfreq': 12.88, 'broadband': 12.5} s
+2026-10-29 18:25:17 INFO    eegtraj.data.wayeeggal: Loaded P5 S6: 28 trials
+2026-10-29 18:25:18 INFO    eegtraj.data.cache: P5 S6: 28 lifts, settle times {'lowfreq': 13.34, 'broadband': 12.66} s
+2026-10-29 18:25:18 INFO    eegtraj.data.wayeeggal: Loaded P5 S7: 34 trials
+2026-10-29 18:25:19 INFO    eegtraj.data.cache: P5 S7: 34 lifts, settle times {'lowfreq': 12.97, 'broadband': 12.99} s
+2026-10-29 18:25:20 INFO    eegtraj.data.wayeeggal: Loaded P5 S8: 34 trials
+2026-10-29 18:25:20 INFO    eegtraj.data.cache: P5 S8: 34 lifts, settle times {'lowfreq': 13.15, 'broadband': 13.18} s
+2026-10-29 18:25:21 INFO    eegtraj.data.wayeeggal: Loaded P5 S9: 34 trials
+2026-10-29 18:25:21 INFO    eegtraj.data.cache: P5 S9: 34 lifts, settle times {'lowfreq': 12.93, 'broadband': 12.89} s
+2026-10-29 18:25:22 INFO    build_cache: P5 done in 20.4 s: 294 trials, 276924 samples, bad channels [], onset mismatch 4, filter transient {'lowfreq': 14, 'broadband': 14}
+2026-10-29 18:25:28 INFO    eegtraj.data.cache: P6 bad channels: []
+2026-10-29 18:25:30 INFO    eegtraj.data.wayeeggal: Loaded P6 S1: 34 trials
+2026-10-29 18:25:31 INFO    eegtraj.data.cache: P6 S1: 34 lifts, settle times {'lowfreq': 12.52, 'broadband': 12.59} s
+2026-10-29 18:25:33 INFO    eegtraj.data.wayeeggal: Loaded P6 S2: 34 trials
+2026-10-29 18:25:35 INFO    eegtraj.data.cache: P6 S2: 34 lifts, settle times {'lowfreq': 12.77, 'broadband': 12.33} s
+2026-10-29 18:25:38 INFO    eegtraj.data.wayeeggal: Loaded P6 S3: 28 trials
+2026-10-29 18:25:39 INFO    eegtraj.data.cache: P6 S3: 28 lifts, settle times {'lowfreq': 12.76, 'broadband': 12.87} s
+2026-10-29 18:25:41 INFO    eegtraj.data.wayeeggal: Loaded P6 S4: 34 trials
+2026-10-29 18:25:43 INFO    eegtraj.data.cache: P6 S4: 34 lifts, settle times {'lowfreq': 12.69, 'broadband': 12.63} s
+2026-10-29 18:25:45 INFO    eegtraj.data.wayeeggal: Loaded P6 S5: 28 trials
+2026-10-29 18:25:47 INFO    eegtraj.data.cache: P6 S5: 28 lifts, settle times {'lowfreq': 12.84, 'broadband': 12.84} s
+2026-10-29 18:25:49 INFO    eegtraj.data.wayeeggal: Loaded P6 S6: 34 trials
+2026-10-29 18:25:50 INFO    eegtraj.data.cache: P6 S6: 34 lifts, settle times {'lowfreq': 12.26, 'broadband': 12.16} s
+2026-10-29 18:25:51 INFO    eegtraj.data.wayeeggal: Loaded P6 S7: 34 trials
+2026-10-29 18:25:52 INFO    eegtraj.data.cache: P6 S7: 34 lifts, settle times {'lowfreq': 12.69, 'broadband': 12.68} s
+2026-10-29 18:25:53 INFO    eegtraj.data.wayeeggal: Loaded P6 S8: 34 trials
+2026-10-29 18:25:53 INFO    eegtraj.data.cache: P6 S8: 34 lifts, settle times {'lowfreq': 13.7, 'broadband': 13.89} s
+2026-10-29 18:25:54 INFO    eegtraj.data.wayeeggal: Loaded P6 S9: 34 trials
+2026-10-29 18:25:55 INFO    eegtraj.data.cache: P6 S9: 34 lifts, settle times {'lowfreq': 13.04, 'broadband': 13.11} s
+2026-10-29 18:25:55 INFO    build_cache: P6 done in 33.2 s: 294 trials, 277332 samples, bad channels [], onset mismatch 8, filter transient {'lowfreq': 14, 'broadband': 14}
+2026-10-29 18:26:02 INFO    eegtraj.data.cache: P7 bad channels: []
+2026-10-29 18:26:03 INFO    eegtraj.data.wayeeggal: Loaded P7 S1: 34 trials
+2026-10-29 18:26:04 INFO    eegtraj.data.cache: P7 S1: 34 lifts, settle times {'lowfreq': 13.06, 'broadband': 12.91} s
+2026-10-29 18:26:06 INFO    eegtraj.data.wayeeggal: Loaded P7 S2: 34 trials
+2026-10-29 18:26:06 INFO    eegtraj.data.cache: P7 S2: 34 lifts, settle times {'lowfreq': 12.33, 'broadband': 11.95} s
+2026-10-29 18:26:07 INFO    eegtraj.data.wayeeggal: Loaded P7 S3: 28 trials
+2026-10-29 18:26:08 INFO    eegtraj.data.cache: P7 S3: 28 lifts, settle times {'lowfreq': 13.04, 'broadband': 12.79} s
+2026-10-29 18:26:09 INFO    eegtraj.data.wayeeggal: Loaded P7 S4: 34 trials
+2026-10-29 18:26:10 INFO    eegtraj.data.cache: P7 S4: 34 lifts, settle times {'lowfreq': 12.15, 'broadband': 11.86} s
+2026-10-29 18:26:11 INFO    eegtraj.data.wayeeggal: Loaded P7 S5: 28 trials
+2026-10-29 18:26:12 INFO    eegtraj.data.cache: P7 S5: 28 lifts, settle times {'lowfreq': 13.15, 'broadband': 13.31} s
+2026-10-29 18:26:13 INFO    eegtraj.data.wayeeggal: Loaded P7 S6: 34 trials
+2026-10-29 18:26:13 INFO    eegtraj.data.cache: P7 S6: 34 lifts, settle times {'lowfreq': 13.37, 'broadband': 13.3} s
+2026-10-29 18:26:14 INFO    eegtraj.data.wayeeggal: Loaded P7 S7: 34 trials
+2026-10-29 18:26:15 INFO    eegtraj.data.cache: P7 S7: 34 lifts, settle times {'lowfreq': 12.66, 'broadband': 12.73} s
+2026-10-29 18:26:16 INFO    eegtraj.data.wayeeggal: Loaded P7 S8: 34 trials
+2026-10-29 18:26:16 INFO    eegtraj.data.cache: P7 S8: 34 lifts, settle times {'lowfreq': 13.31, 'broadband': 13.15} s
+2026-10-29 18:26:17 INFO    eegtraj.data.wayeeggal: Loaded P7 S9: 34 trials
+2026-10-29 18:26:18 INFO    eegtraj.data.cache: P7 S9: 34 lifts, settle times {'lowfreq': 12.64, 'broadband': 12.36} s
+2026-10-29 18:26:18 INFO    build_cache: P7 done in 23.3 s: 294 trials, 361838 samples, bad channels [], onset mismatch 38, filter transient {'lowfreq': 13, 'broadband': 13}
+2026-10-29 18:26:24 INFO    eegtraj.data.cache: P8 bad channels: []
+2026-10-29 18:26:25 INFO    eegtraj.data.wayeeggal: Loaded P8 S1: 28 trials
+2026-10-29 18:26:26 INFO    eegtraj.data.cache: P8 S1: 28 lifts, settle times {'lowfreq': 13.12, 'broadband': 12.61} s
+2026-10-29 18:26:27 INFO    eegtraj.data.wayeeggal: Loaded P8 S2: 34 trials
+2026-10-29 18:26:28 INFO    eegtraj.data.cache: P8 S2: 34 lifts, settle times {'lowfreq': 12.53, 'broadband': 12.19} s
+2026-10-29 18:26:28 INFO    eegtraj.data.wayeeggal: Loaded P8 S3: 34 trials
+2026-10-29 18:26:29 INFO    eegtraj.data.cache: P8 S3: 34 lifts, settle times {'lowfreq': 12.76, 'broadband': 12.95} s
+2026-10-29 18:26:30 INFO    eegtraj.data.wayeeggal: Loaded P8 S4: 34 trials
+2026-10-29 18:26:31 INFO    eegtraj.data.cache: P8 S4: 34 lifts, settle times {'lowfreq': 13.15, 'broadband': 12.85} s
+2026-10-29 18:26:31 INFO    eegtraj.data.wayeeggal: Loaded P8 S5: 34 trials
+2026-10-29 18:26:32 INFO    eegtraj.data.cache: P8 S5: 34 lifts, settle times {'lowfreq': 12.72, 'broadband': 12.28} s
+2026-10-29 18:26:33 INFO    eegtraj.data.wayeeggal: Loaded P8 S6: 28 trials
+2026-10-29 18:26:33 INFO    eegtraj.data.cache: P8 S6: 28 lifts, settle times {'lowfreq': 13.5, 'broadband': 13.6} s
+2026-10-29 18:26:34 INFO    eegtraj.data.wayeeggal: Loaded P8 S7: 34 trials
+2026-10-29 18:26:34 INFO    eegtraj.data.cache: P8 S7: 34 lifts, settle times {'lowfreq': 13.05, 'broadband': 12.92} s
+2026-10-29 18:26:35 INFO    eegtraj.data.wayeeggal: Loaded P8 S8: 34 trials
+2026-10-29 18:26:36 INFO    eegtraj.data.cache: P8 S8: 34 lifts, settle times {'lowfreq': 13.14, 'broadband': 12.92} s
+2026-10-29 18:26:37 INFO    eegtraj.data.wayeeggal: Loaded P8 S9: 34 trials
+2026-10-29 18:26:37 INFO    eegtraj.data.cache: P8 S9: 34 lifts, settle times {'lowfreq': 12.72, 'broadband': 12.46} s
+2026-10-29 18:26:37 INFO    build_cache: P8 done in 19.0 s: 294 trials, 261501 samples, bad channels [], onset mismatch 0, filter transient {'lowfreq': 14, 'broadband': 14}
+2026-10-29 18:26:43 INFO    eegtraj.data.cache: P9 bad channels: []
+2026-10-29 18:26:44 INFO    eegtraj.data.wayeeggal: Loaded P9 S1: 34 trials
+2026-10-29 18:26:45 INFO    eegtraj.data.cache: P9 S1: 34 lifts, settle times {'lowfreq': 12.17, 'broadband': 12.13} s
+2026-10-29 18:26:46 INFO    eegtraj.data.wayeeggal: Loaded P9 S2: 28 trials
+2026-10-29 18:26:46 INFO    eegtraj.data.cache: P9 S2: 28 lifts, settle times {'lowfreq': 12.86, 'broadband': 12.99} s
+2026-10-29 18:26:48 INFO    eegtraj.data.wayeeggal: Loaded P9 S3: 34 trials
+2026-10-29 18:26:48 INFO    eegtraj.data.cache: P9 S3: 34 lifts, settle times {'lowfreq': 13.6, 'broadband': 13.52} s
+2026-10-29 18:26:49 INFO    eegtraj.data.wayeeggal: Loaded P9 S4: 28 trials
+2026-10-29 18:26:50 INFO    eegtraj.data.cache: P9 S4: 28 lifts, settle times {'lowfreq': 13.51, 'broadband': 13.65} s
+2026-10-29 18:26:51 INFO    eegtraj.data.wayeeggal: Loaded P9 S5: 34 trials
+2026-10-29 18:26:52 INFO    eegtraj.data.cache: P9 S5: 34 lifts, settle times {'lowfreq': 14.11, 'broadband': 14.09} s
+2026-10-29 18:26:53 INFO    eegtraj.data.wayeeggal: Loaded P9 S6: 34 trials
+2026-10-29 18:26:53 INFO    eegtraj.data.cache: P9 S6: 34 lifts, settle times {'lowfreq': 12.72, 'broadband': 12.78} s
+2026-10-29 18:26:54 INFO    eegtraj.data.wayeeggal: Loaded P9 S7: 34 trials
+2026-10-29 18:26:55 INFO    eegtraj.data.cache: P9 S7: 34 lifts, settle times {'lowfreq': 12.37, 'broadband': 12.27} s
+2026-10-29 18:26:55 INFO    eegtraj.data.wayeeggal: Loaded P9 S8: 34 trials
+2026-10-29 18:26:56 INFO    eegtraj.data.cache: P9 S8: 34 lifts, settle times {'lowfreq': 12.63, 'broadband': 12.78} s
+2026-10-29 18:26:57 INFO    eegtraj.data.wayeeggal: Loaded P9 S9: 34 trials
+2026-10-29 18:26:57 INFO    eegtraj.data.cache: P9 S9: 34 lifts, settle times {'lowfreq': 13.35, 'broadband': 13.61} s
+2026-10-29 18:26:57 INFO    build_cache: P9 done in 20.1 s: 294 trials, 270198 samples, bad channels [], onset mismatch 1, filter transient {'lowfreq': 13, 'broadband': 13}
+2026-10-29 18:27:04 INFO    eegtraj.data.cache: P10 bad channels: []
+2026-10-29 18:27:05 INFO    eegtraj.data.wayeeggal: Loaded P10 S1: 34 trials
+2026-10-29 18:27:06 INFO    eegtraj.data.cache: P10 S1: 34 lifts, settle times {'lowfreq': 13.37, 'broadband': 13.25} s
+2026-10-29 18:27:07 INFO    eegtraj.data.wayeeggal: Loaded P10 S2: 28 trials
+2026-10-29 18:27:08 INFO    eegtraj.data.cache: P10 S2: 28 lifts, settle times {'lowfreq': 12.53, 'broadband': 12.39} s
+2026-10-29 18:27:10 INFO    eegtraj.data.wayeeggal: Loaded P10 S3: 34 trials
+2026-10-29 18:27:11 INFO    eegtraj.data.cache: P10 S3: 34 lifts, settle times {'lowfreq': 13.04, 'broadband': 13.05} s
+2026-10-29 18:27:13 INFO    eegtraj.data.wayeeggal: Loaded P10 S4: 28 trials
+2026-10-29 18:27:15 INFO    eegtraj.data.cache: P10 S4: 28 lifts, settle times {'lowfreq': 12.46, 'broadband': 11.95} s
+2026-10-29 18:27:16 INFO    eegtraj.data.wayeeggal: Loaded P10 S5: 34 trials
+2026-10-29 18:27:17 INFO    eegtraj.data.cache: P10 S5: 34 lifts, settle times {'lowfreq': 13.28, 'broadband': 13.4} s
+2026-10-29 18:27:18 INFO    eegtraj.data.wayeeggal: Loaded P10 S6: 34 trials
+2026-10-29 18:27:19 INFO    eegtraj.data.cache: P10 S6: 34 lifts, settle times {'lowfreq': 13.02, 'broadband': 13.0} s
+2026-10-29 18:27:20 INFO    eegtraj.data.wayeeggal: Loaded P10 S7: 34 trials
+2026-10-29 18:27:20 INFO    eegtraj.data.cache: P10 S7: 34 lifts, settle times {'lowfreq': 13.44, 'broadband': 13.49} s
+2026-10-29 18:27:21 INFO    eegtraj.data.wayeeggal: Loaded P10 S8: 34 trials
+2026-10-29 18:27:21 INFO    eegtraj.data.cache: P10 S8: 34 lifts, settle times {'lowfreq': 13.28, 'broadband': 13.37} s
+2026-10-29 18:27:22 INFO    eegtraj.data.wayeeggal: Loaded P10 S9: 34 trials
+2026-10-29 18:27:22 INFO    eegtraj.data.cache: P10 S9: 34 lifts, settle times {'lowfreq': 13.48, 'broadband': 13.41} s
+2026-10-29 18:27:23 INFO    build_cache: P10 done in 25.3 s: 294 trials, 279137 samples, bad channels [], onset mismatch 10, filter transient {'lowfreq': 14, 'broadband': 14}
+2026-10-29 18:27:29 INFO    eegtraj.data.cache: P11 bad channels: []
+2026-10-29 18:27:30 INFO    eegtraj.data.wayeeggal: Loaded P11 S1: 28 trials
+2026-10-29 18:27:31 INFO    eegtraj.data.cache: P11 S1: 28 lifts, settle times {'lowfreq': 12.86, 'broadband': 13.0} s
+2026-10-29 18:27:32 INFO    eegtraj.data.wayeeggal: Loaded P11 S2: 34 trials
+2026-10-29 18:27:32 INFO    eegtraj.data.cache: P11 S2: 34 lifts, settle times {'lowfreq': 12.94, 'broadband': 13.23} s
+2026-10-29 18:27:34 INFO    eegtraj.data.wayeeggal: Loaded P11 S3: 34 trials
+2026-10-29 18:27:35 INFO    eegtraj.data.cache: P11 S3: 34 lifts, settle times {'lowfreq': 12.83, 'broadband': 12.82} s
+2026-10-29 18:27:35 INFO    eegtraj.data.wayeeggal: Loaded P11 S4: 34 trials
+2026-10-29 18:27:36 INFO    eegtraj.data.cache: P11 S4: 34 lifts, settle times {'lowfreq': 13.55, 'broadband': 13.81} s
+2026-10-29 18:27:37 INFO    eegtraj.data.wayeeggal: Loaded P11 S5: 34 trials
+2026-10-29 18:27:38 INFO    eegtraj.data.cache: P11 S5: 34 lifts, settle times {'lowfreq': 12.52, 'broadband': 12.55} s
+2026-10-29 18:27:39 INFO    eegtraj.data.wayeeggal: Loaded P11 S6: 28 trials
+2026-10-29 18:27:40 INFO    eegtraj.data.cache: P11 S6: 28 lifts, settle times {'lowfreq': 13.26, 'broadband': 13.5} s
+2026-10-29 18:27:40 INFO    eegtraj.data.wayeeggal: Loaded P11 S7: 34 trials
+2026-10-29 18:27:41 INFO    eegtraj.data.cache: P11 S7: 34 lifts, settle times {'lowfreq': 12.33, 'broadband': 12.38} s
+2026-10-29 18:27:42 INFO    eegtraj.data.wayeeggal: Loaded P11 S8: 34 trials
+2026-10-29 18:27:42 INFO    eegtraj.data.cache: P11 S8: 34 lifts, settle times {'lowfreq': 13.25, 'broadband': 13.15} s
+2026-10-29 18:27:43 INFO    eegtraj.data.wayeeggal: Loaded P11 S9: 34 trials
+2026-10-29 18:27:43 INFO    eegtraj.data.cache: P11 S9: 34 lifts, settle times {'lowfreq': 12.22, 'broadband': 12.09} s
+2026-10-29 18:27:44 INFO    build_cache: P11 done in 21.0 s: 294 trials, 282146 samples, bad channels [], onset mismatch 23, filter transient {'lowfreq': 14, 'broadband': 14}
+2026-10-29 18:27:50 INFO    eegtraj.data.cache: P12 bad channels: []
+2026-10-29 18:27:51 INFO    eegtraj.data.wayeeggal: Loaded P12 S1: 34 trials
+2026-10-29 18:27:52 INFO    eegtraj.data.cache: P12 S1: 34 lifts, settle times {'lowfreq': 12.19, 'broadband': 12.08} s
+2026-10-29 18:27:53 INFO    eegtraj.data.wayeeggal: Loaded P12 S2: 34 trials
+2026-10-29 18:27:54 INFO    eegtraj.data.cache: P12 S2: 34 lifts, settle times {'lowfreq': 12.61, 'broadband': 12.05} s
+2026-10-29 18:27:55 INFO    eegtraj.data.wayeeggal: Loaded P12 S3: 28 trials
+2026-10-29 18:27:56 INFO    eegtraj.data.cache: P12 S3: 28 lifts, settle times {'lowfreq': 13.17, 'broadband': 12.77} s
+2026-10-29 18:27:57 INFO    eegtraj.data.wayeeggal: Loaded P12 S4: 34 trials
+2026-10-29 18:27:57 INFO    eegtraj.data.cache: P12 S4: 34 lifts, settle times {'lowfreq': 13.23, 'broadband': 12.97} s
+2026-10-29 18:27:58 INFO    eegtraj.data.wayeeggal: Loaded P12 S5: 28 trials
+2026-10-29 18:27:59 INFO    eegtraj.data.cache: P12 S5: 28 lifts, settle times {'lowfreq': 14.15, 'broadband': 14.01} s
+2026-10-29 18:28:00 INFO    eegtraj.data.wayeeggal: Loaded P12 S6: 34 trials
+2026-10-29 18:28:01 INFO    eegtraj.data.cache: P12 S6: 34 lifts, settle times {'lowfreq': 13.21, 'broadband': 12.2} s
+2026-10-29 18:28:02 INFO    eegtraj.data.wayeeggal: Loaded P12 S7: 34 trials
+2026-10-29 18:28:02 INFO    eegtraj.data.cache: P12 S7: 34 lifts, settle times {'lowfreq': 13.11, 'broadband': 11.99} s
+2026-10-29 18:28:03 INFO    eegtraj.data.wayeeggal: Loaded P12 S8: 34 trials
+2026-10-29 18:28:04 INFO    eegtraj.data.cache: P12 S8: 34 lifts, settle times {'lowfreq': 13.37, 'broadband': 13.01} s
+2026-10-29 18:28:05 INFO    eegtraj.data.wayeeggal: Loaded P12 S9: 34 trials
+2026-10-29 18:28:05 INFO    eegtraj.data.cache: P12 S9: 34 lifts, settle times {'lowfreq': 12.57, 'broadband': 12.31} s
+2026-10-29 18:28:05 INFO    build_cache: P12 done in 21.7 s: 294 trials, 286921 samples, bad channels [], onset mismatch 10, filter transient {'lowfreq': 14, 'broadband': 14}
+2026-10-29 18:28:05 INFO    build_cache: All done in 261.0 s

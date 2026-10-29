@@ -1,0 +1,198 @@
+{
+  "subject": "P12",
+  "config_hash": "98f5fa6e66",
+  "fs_hz": 100,
+  "n_trials": 294,
+  "n_samples": 286921,
+  "eeg_names": [
+    "Fp1",
+    "Fp2",
+    "F7",
+    "F3",
+    "Fz",
+    "F4",
+    "F8",
+    "FC5",
+    "FC1",
+    "FC2",
+    "FC6",
+    "T7",
+    "C3",
+    "Cz",
+    "C4",
+    "T8",
+    "TP9",
+    "CP5",
+    "CP1",
+    "CP2",
+    "CP6",
+    "TP10",
+    "P7",
+    "P3",
+    "Pz",
+    "P4",
+    "P8",
+    "PO9",
+    "O1",
+    "Oz",
+    "O2",
+    "PO10"
+  ],
+  "emg_names": [
+    "Anterior Deltoid",
+    "Brachoradial",
+    "Flexor Digitorum",
+    "Common Extensor Digitorum",
+    "First Dorsal Interosseus"
+  ],
+  "bad_channels": [],
+  "bad_channel_ratio_median": {
+    "Fp1": 1.3198,
+    "Fp2": 1.0915,
+    "F7": 1.1867,
+    "F3": 0.6367,
+    "Fz": 0.3054,
+    "F4": 0.7063,
+    "F8": 1.0318,
+    "FC5": 0.9058,
+    "FC1": 0.3178,
+    "FC2": 0.2942,
+    "FC6": 0.7798,
+    "T7": 1.1737,
+    "C3": 0.6911,
+    "Cz": 0.3282,
+    "C4": 0.6469,
+    "T8": 1.8086,
+    "TP9": 1.1668,
+    "CP5": 1.0421,
+    "CP1": 0.6555,
+    "CP2": 0.6682,
+    "CP6": 1.0157,
+    "TP10": 1.1858,
+    "P7": 1.5392,
+    "P3": 0.9235,
+    "Pz": 0.7822,
+    "P4": 0.9608,
+    "P8": 1.2862,
+    "PO9": 1.4975,
+    "O1": 1.0936,
+    "Oz": 1.164,
+    "O2": 1.3217,
+    "PO10": 1.9918
+  },
+  "phases": [
+    "pre",
+    "reach",
+    "load",
+    "hold",
+    "replace",
+    "release",
+    "post"
+  ],
+  "filter_settle_time_s": {
+    "S1": {
+      "lowfreq": 12.19,
+      "broadband": 12.082
+    },
+    "S2": {
+      "lowfreq": 12.608,
+      "broadband": 12.048
+    },
+    "S3": {
+      "lowfreq": 13.174,
+      "broadband": 12.766
+    },
+    "S4": {
+      "lowfreq": 13.234,
+      "broadband": 12.968
+    },
+    "S5": {
+      "lowfreq": 14.146,
+      "broadband": 14.006
+    },
+    "S6": {
+      "lowfreq": 13.206,
+      "broadband": 12.2
+    },
+    "S7": {
+      "lowfreq": 13.106,
+      "broadband": 11.99
+    },
+    "S8": {
+      "lowfreq": 13.374,
+      "broadband": 13.01
+    },
+    "S9": {
+      "lowfreq": 12.572,
+      "broadband": 12.306
+    }
+  },
+  "arrays": {
+    "eeg_lowfreq_car": {
+      "shape": [
+        32,
+        286921
+      ],
+      "dtype": "float32"
+    },
+    "eeg_lowfreq_orig": {
+      "shape": [
+        32,
+        286921
+      ],
+      "dtype": "float32"
+    },
+    "eeg_broadband_car": {
+      "shape": [
+        32,
+        286921
+      ],
+      "dtype": "float32"
+    },
+    "eeg_broadband_orig": {
+      "shape": [
+        32,
+        286921
+      ],
+      "dtype": "float32"
+    },
+    "kin_pos": {
+      "shape": [
+        4,
+        3,
+        286921
+      ],
+      "dtype": "float32"
+    },
+    "wrist_vel": {
+      "shape": [
+        3,
+        286921
+      ],
+      "dtype": "float32"
+    },
+    "emg_env": {
+      "shape": [
+        5,
+        286921
+      ],
+      "dtype": "float32"
+    },
+    "phase": {
+      "shape": [
+        286921
+      ],
+      "dtype": "int8"
+    }
+  },
+  "n_onset_mismatch": 10,
+  "n_filter_transient": {
+    "lowfreq": 14,
+    "broadband": 14
+  },
+  "build_seconds": 21.7,
+  "git": {
+    "git_commit": "4f07cfe354b2b041edbe7cb1adf2418240d5733c",
+    "git_dirty": "True"
+  }
+}

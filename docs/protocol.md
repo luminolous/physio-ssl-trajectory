@@ -14,7 +14,8 @@ Locked on 2026-10-29. Changes are recorded with a date and reason at the bottom.
   - Smooth the wrist position with a zero-phase low-pass: 10 Hz, order 2.
   - Find the peak wrist speed between LED-on and first digit touch.
   - Onset is the last sample before that peak where speed drops below 5% of the peak.
-- **Why:** `tHandStart` is wrong in some lifts. The hand had already reached the object 0.9–1.9 s earlier: 18 lifts in P2 and 38 in P7, out of 294 each.
+- **Why:** `tHandStart` is wrong in some lifts. The hand had already reached the object ~1 s earlier.
+  - Full cache: 113 of 3528 lifts (3.2%). P7 38, P11 23, P2 18, P10 10, P12 10, P6 8, P5 4, P4 1, P9 1, P1/P3/P8 0.
   - In the other lifts, the kinematic onset agrees with `tHandStart` to a median of 12–44 ms.
   - Validation plots: `output/data-baselines/data-inspection/onset-validation/`.
 - Lifts with |onset − `tHandStart`| > 0.3 s are flagged `onset_mismatch` and kept.
