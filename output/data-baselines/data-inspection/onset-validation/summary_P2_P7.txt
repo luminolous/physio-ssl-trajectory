@@ -1,0 +1,8 @@
+Kinematic onset: peak search LEDOn..tFirstDigitTouch, {'threshold_frac': 0.05, 'cutoff_hz': 10.0, 'order': 2}, mismatch > 0.3 s
+P2: 18 mismatch lifts of 294, per series {'S1': 5, 'S2': 11, 'S3': 1, 'S4': 0, 'S5': 1, 'S6': 0, 'S7': 0, 'S8': 0, 'S9': 0}; NaN onsets 0; non-mismatch onset - tHandStart: median -36 ms, 5-95% [-131, -20] ms
+  mismatch onset - tHandStart: min -1.54 s, median -1.29 s, max -0.91 s
+  figure: output\data-baselines\data-inspection\onset-validation\onset_mismatch_P2_1.png
+P7: 38 mismatch lifts of 294, per series {'S1': 9, 'S2': 20, 'S3': 6, 'S4': 1, 'S5': 1, 'S6': 1, 'S7': 0, 'S8': 0, 'S9': 0}; NaN onsets 0; non-mismatch onset - tHandStart: median -32 ms, 5-95% [-161, -18] ms
+  mismatch onset - tHandStart: min -1.87 s, median -1.52 s, max -1.12 s
+  figure: output\data-baselines\data-inspection\onset-validation\onset_mismatch_P7_1.png
+  figure: output\data-baselines\data-inspection\onset-validation\onset_mismatch_P7_2.png

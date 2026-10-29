@@ -1,0 +1,10 @@
+Filter transient on P2 S2 HS EEG (660.2 s, 500 Hz), causal Butterworth order 2, late start at 120 s, tolerances ['1%', '5%', '10%'] of SD
+  lowfreq_0.1-4 @ 1%: settle time zero-state = 14.5 s, sosfilt_zi = 13.9 s, offset-removed zero-state = 13.2 s
+  lowfreq_0.1-4 @ 5%: settle time zero-state = 13.1 s, sosfilt_zi = 11.5 s, offset-removed zero-state = 8.0 s
+  lowfreq_0.1-4 @ 10%: settle time zero-state = 11.9 s, sosfilt_zi = 7.7 s, offset-removed zero-state = 7.3 s
+  broadband_0.1-40 @ 1%: settle time zero-state = 14.7 s, sosfilt_zi = 13.8 s, offset-removed zero-state = 12.9 s
+  broadband_0.1-40 @ 5%: settle time zero-state = 12.6 s, sosfilt_zi = 8.1 s, offset-removed zero-state = 7.8 s
+  broadband_0.1-40 @ 10%: settle time zero-state = 8.2 s, sosfilt_zi = 7.6 s, offset-removed zero-state = 7.1 s
+First used EEG sample per lift (series time, onset ~ tHandStart, margin 0.5 s + history 0.5 s): min 1.26 s
+  lowfreq_0.1-4: lifts with first used sample inside the 13.9 s transient: 168 of 3528 (Lift numbers: [1, 2, 3])
+  broadband_0.1-40: lifts with first used sample inside the 13.8 s transient: 168 of 3528 (Lift numbers: [1, 2, 3])

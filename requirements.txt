@@ -23,7 +23,6 @@ cycler==0.12.1
 debugpy==1.8.22
 decorator==5.3.1
 docstring-inheritance==3.0.0
--e file:///D:/research/university/Brain%20Signal%20to%203D%20Trajectory%20Representation/physio-ssl-trajectory
 einops==0.8.2
 executing==2.3.0
 fastjsonschema==2.22.2
