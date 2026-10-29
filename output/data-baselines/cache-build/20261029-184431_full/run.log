@@ -1,0 +1,15 @@
+2026-10-29 18:44:33 INFO    eegtraj.utils.run: Run directory: output\data-baselines\cache-build\20261029-184431_full
+2026-10-29 18:44:33 INFO    build_cache: Config hash 98f5fa6e66, cache dir dataset\cache\98f5fa6e66, subjects ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9', 'P10', 'P11', 'P12']
+2026-10-29 18:44:33 INFO    build_cache: P1 already cached, skipping (use --force to rebuild)
+2026-10-29 18:44:33 INFO    build_cache: P2 already cached, skipping (use --force to rebuild)
+2026-10-29 18:44:33 INFO    build_cache: P3 already cached, skipping (use --force to rebuild)
+2026-10-29 18:44:33 INFO    build_cache: P4 already cached, skipping (use --force to rebuild)
+2026-10-29 18:44:33 INFO    build_cache: P5 already cached, skipping (use --force to rebuild)
+2026-10-29 18:44:33 INFO    build_cache: P6 already cached, skipping (use --force to rebuild)
+2026-10-29 18:44:33 INFO    build_cache: P7 already cached, skipping (use --force to rebuild)
+2026-10-29 18:44:33 INFO    build_cache: P8 already cached, skipping (use --force to rebuild)
+2026-10-29 18:44:33 INFO    build_cache: P9 already cached, skipping (use --force to rebuild)
+2026-10-29 18:44:33 INFO    build_cache: P10 already cached, skipping (use --force to rebuild)
+2026-10-29 18:44:33 INFO    build_cache: P11 already cached, skipping (use --force to rebuild)
+2026-10-29 18:44:33 INFO    build_cache: P12 already cached, skipping (use --force to rebuild)
+2026-10-29 18:44:33 INFO    build_cache: All done in 0.0 s
