@@ -1,0 +1,34 @@
+2026-10-30 03:59:56 INFO    eegtraj.utils.run: Run directory: output\data-baselines\baselines\kalman\20261030-035949
+2026-10-30 03:59:56 INFO    eegtraj.baselines.runner: Baseline kalman, mode loso, 10 folds, seed 20261029, smoke False
+2026-10-30 03:59:59 INFO    eegtraj.baselines.runner: Fold loso_P1: train ('P2', 'P5', 'P8', 'P9', 'P10', 'P11', 'P12'), val ('P4', 'P7'), test ('P1',); target samples train 1335787, val 383628, test 155612
+2026-10-30 04:00:40 INFO    eegtraj.baselines.runner: kalman: 800 features -> PCA [10, 20, 50] comps (explained {10: 0.61, 20: 0.754, 50: 0.946}), 1335787 training samples, val r per k {10: 0.4508, 20: 0.4639, 50: 0.5012}, chosen k 50
+2026-10-30 04:00:41 INFO    eegtraj.baselines.runner: Fold loso_P1 test P1: r = 0.580 (x 0.564, y 0.575, z 0.602), R2 = -2.465, NRMSE = 0.564, 294 trials
+2026-10-30 04:00:41 INFO    eegtraj.baselines.runner: Fold loso_P2: train ('P1', 'P4', 'P5', 'P8', 'P10', 'P11', 'P12'), val ('P7', 'P9'), test ('P2',); target samples train 1268758, val 398068, test 208201
+2026-10-30 04:01:08 INFO    eegtraj.baselines.runner: kalman: 800 features -> PCA [10, 20, 50] comps (explained {10: 0.593, 20: 0.745, 50: 0.943}), 1268758 training samples, val r per k {10: 0.4465, 20: 0.4511, 50: 0.4713}, chosen k 50
+2026-10-30 04:01:10 INFO    eegtraj.baselines.runner: Fold loso_P2 test P2: r = 0.331 (x 0.399, y 0.321, z 0.274), R2 = -2.451, NRMSE = 0.585, 294 trials
+2026-10-30 04:01:10 INFO    eegtraj.baselines.runner: Fold loso_P4: train ('P1', 'P2', 'P5', 'P8', 'P10', 'P11', 'P12'), val ('P7', 'P9'), test ('P4',); target samples train 1307884, val 398068, test 169075
+2026-10-30 04:01:37 INFO    eegtraj.baselines.runner: kalman: 800 features -> PCA [10, 20, 50] comps (explained {10: 0.604, 20: 0.751, 50: 0.943}), 1307884 training samples, val r per k {10: 0.4575, 20: 0.4711, 50: 0.5092}, chosen k 50
+2026-10-30 04:01:38 INFO    eegtraj.baselines.runner: Fold loso_P4 test P4: r = 0.514 (x 0.474, y 0.476, z 0.593), R2 = -3.720, NRMSE = 0.680, 294 trials
+2026-10-30 04:01:38 INFO    eegtraj.baselines.runner: Fold loso_P5: train ('P1', 'P7', 'P8', 'P9', 'P10', 'P11', 'P12'), val ('P2', 'P4'), test ('P5',); target samples train 1314741, val 377276, test 183010
+2026-10-30 04:02:05 INFO    eegtraj.baselines.runner: kalman: 800 features -> PCA [10, 20, 50] comps (explained {10: 0.615, 20: 0.761, 50: 0.948}), 1314741 training samples, val r per k {10: 0.3682, 20: 0.3935, 50: 0.419}, chosen k 50
+2026-10-30 04:02:07 INFO    eegtraj.baselines.runner: Fold loso_P5 test P5: r = 0.561 (x 0.552, y 0.558, z 0.574), R2 = -1.908, NRMSE = 0.539, 294 trials
+2026-10-30 04:02:07 INFO    eegtraj.baselines.runner: Fold loso_P7: train ('P2', 'P4', 'P5', 'P8', 'P9', 'P11', 'P12'), val ('P1', 'P10'), test ('P7',); target samples train 1315670, val 344804, test 214553
+2026-10-30 04:02:32 INFO    eegtraj.baselines.runner: kalman: 800 features -> PCA [10, 20, 50] comps (explained {10: 0.613, 20: 0.756, 50: 0.946}), 1315670 training samples, val r per k {10: 0.5174, 20: 0.5236, 50: 0.5388}, chosen k 50
+2026-10-30 04:02:34 INFO    eegtraj.baselines.runner: Fold loso_P7 test P7: r = 0.488 (x 0.498, y 0.518, z 0.447), R2 = -2.003, NRMSE = 0.550, 294 trials
+2026-10-30 04:02:34 INFO    eegtraj.baselines.runner: Fold loso_P8: train ('P1', 'P2', 'P4', 'P7', 'P9', 'P10', 'P11'), val ('P5', 'P12'), test ('P8',); target samples train 1318415, val 393073, test 163539
+2026-10-30 04:03:02 INFO    eegtraj.baselines.runner: kalman: 800 features -> PCA [10, 20, 50] comps (explained {10: 0.635, 20: 0.768, 50: 0.949}), 1318415 training samples, val r per k {10: 0.4351, 20: 0.4419, 50: 0.4858}, chosen k 50
+2026-10-30 04:03:03 INFO    eegtraj.baselines.runner: Fold loso_P8 test P8: r = 0.431 (x 0.367, y 0.467, z 0.460), R2 = -3.453, NRMSE = 0.659, 294 trials
+2026-10-30 04:03:03 INFO    eegtraj.baselines.runner: Fold loso_P9: train ('P1', 'P2', 'P4', 'P5', 'P7', 'P10', 'P12'), val ('P8', 'P11'), test ('P9',); target samples train 1329706, val 361806, test 183515
+2026-10-30 04:03:29 INFO    eegtraj.baselines.runner: kalman: 800 features -> PCA [10, 20, 50] comps (explained {10: 0.647, 20: 0.777, 50: 0.945}), 1329706 training samples, val r per k {10: 0.4281, 20: 0.4193, 50: 0.4216}, chosen k 10
+2026-10-30 04:03:31 INFO    eegtraj.baselines.runner: Fold loso_P9 test P9: r = 0.468 (x 0.487, y 0.497, z 0.418), R2 = -3.003, NRMSE = 0.613, 294 trials
+2026-10-30 04:03:31 INFO    eegtraj.baselines.runner: Fold loso_P10: train ('P1', 'P2', 'P5', 'P7', 'P8', 'P9', 'P11'), val ('P4', 'P12'), test ('P10',); target samples train 1306697, val 379138, test 189192
+2026-10-30 04:03:58 INFO    eegtraj.baselines.runner: kalman: 800 features -> PCA [10, 20, 50] comps (explained {10: 0.629, 20: 0.769, 50: 0.95}), 1306697 training samples, val r per k {10: 0.4112, 20: 0.4396, 50: 0.4601}, chosen k 50
+2026-10-30 04:03:59 INFO    eegtraj.baselines.runner: Fold loso_P10 test P10: r = 0.486 (x 0.498, y 0.473, z 0.487), R2 = -1.980, NRMSE = 0.528, 294 trials
+2026-10-30 04:03:59 INFO    eegtraj.baselines.runner: Fold loso_P11: train ('P1', 'P5', 'P7', 'P8', 'P9', 'P10', 'P12'), val ('P2', 'P4'), test ('P11',); target samples train 1299484, val 377276, test 198267
+2026-10-30 04:04:26 INFO    eegtraj.baselines.runner: kalman: 800 features -> PCA [10, 20, 50] comps (explained {10: 0.631, 20: 0.771, 50: 0.947}), 1299484 training samples, val r per k {10: 0.3704, 20: 0.4012, 50: 0.424}, chosen k 50
+2026-10-30 04:04:27 INFO    eegtraj.baselines.runner: Fold loso_P11 test P11: r = 0.404 (x 0.473, y 0.431, z 0.306), R2 = -6.334, NRMSE = 0.842, 294 trials
+2026-10-30 04:04:28 INFO    eegtraj.baselines.runner: Fold loso_P12: train ('P2', 'P4', 'P5', 'P7', 'P8', 'P10', 'P11'), val ('P1', 'P9'), test ('P12',); target samples train 1325837, val 339127, test 210063
+2026-10-30 04:04:55 INFO    eegtraj.baselines.runner: kalman: 800 features -> PCA [10, 20, 50] comps (explained {10: 0.621, 20: 0.764, 50: 0.948}), 1325837 training samples, val r per k {10: 0.5189, 20: 0.5162, 50: 0.5413}, chosen k 50
+2026-10-30 04:04:57 INFO    eegtraj.baselines.runner: Fold loso_P12 test P12: r = 0.397 (x 0.374, y 0.397, z 0.420), R2 = -3.527, NRMSE = 0.665, 294 trials
+2026-10-30 04:04:59 INFO    eegtraj.baselines.runner: Aggregate over 10 test subjects: r = 0.466 +- 0.077, R2 = -3.084 +- 1.328, NRMSE = 0.623 +- 0.095
+2026-10-30 04:04:59 INFO    eegtraj.baselines.runner: Wall time 300.5 s
