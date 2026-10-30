@@ -1,0 +1,34 @@
+2026-10-30 06:52:48 INFO    eegtraj.utils.run: Run directory: output\data-baselines\artifact-controls\ridge_temporal_orig\20261030-065247
+2026-10-30 06:52:48 INFO    eegtraj.baselines.runner: Baseline ridge_lag, mode loso, 10 folds, seed 20261029, smoke False
+2026-10-30 06:52:50 INFO    eegtraj.baselines.runner: Fold loso_P1: train ('P2', 'P5', 'P8', 'P9', 'P10', 'P11', 'P12'), val ('P4', 'P7'), test ('P1',); target samples train 1335787, val 383628, test 155612
+2026-10-30 06:53:23 INFO    eegtraj.baselines.runner: ridge_lag: 100 features (25 lags), 1335787 training samples, val r per alpha {'0.0001': 0.2811, '0.001': 0.2812, '0.01': 0.2811, '0.1': 0.2822, '1': 0.2853, '10': 0.2758, '100': 0.2582}, chosen alpha 1
+2026-10-30 06:53:25 INFO    eegtraj.baselines.runner: Fold loso_P1 test P1: r = 0.242 (x 0.190, y 0.176, z 0.360), R2 = -0.041, NRMSE = 0.346, 294 trials
+2026-10-30 06:53:25 INFO    eegtraj.baselines.runner: Fold loso_P2: train ('P1', 'P4', 'P5', 'P8', 'P10', 'P11', 'P12'), val ('P7', 'P9'), test ('P2',); target samples train 1268758, val 398068, test 208201
+2026-10-30 06:53:57 INFO    eegtraj.baselines.runner: ridge_lag: 100 features (25 lags), 1268758 training samples, val r per alpha {'0.0001': 0.2543, '0.001': 0.2541, '0.01': 0.2535, '0.1': 0.2523, '1': 0.2513, '10': 0.2491, '100': 0.2414}, chosen alpha 0.0001
+2026-10-30 06:54:00 INFO    eegtraj.baselines.runner: Fold loso_P2 test P2: r = 0.213 (x 0.217, y 0.196, z 0.226), R2 = -0.022, NRMSE = 0.335, 294 trials
+2026-10-30 06:54:00 INFO    eegtraj.baselines.runner: Fold loso_P4: train ('P1', 'P2', 'P5', 'P8', 'P10', 'P11', 'P12'), val ('P7', 'P9'), test ('P4',); target samples train 1307884, val 398068, test 169075
+2026-10-30 06:54:30 INFO    eegtraj.baselines.runner: ridge_lag: 100 features (25 lags), 1307884 training samples, val r per alpha {'0.0001': 0.2637, '0.001': 0.2635, '0.01': 0.2628, '0.1': 0.2618, '1': 0.2603, '10': 0.2539, '100': 0.2427}, chosen alpha 0.0001
+2026-10-30 06:54:32 INFO    eegtraj.baselines.runner: Fold loso_P4 test P4: r = 0.272 (x 0.246, y 0.222, z 0.349), R2 = -0.101, NRMSE = 0.342, 294 trials
+2026-10-30 06:54:32 INFO    eegtraj.baselines.runner: Fold loso_P5: train ('P1', 'P7', 'P8', 'P9', 'P10', 'P11', 'P12'), val ('P2', 'P4'), test ('P5',); target samples train 1314741, val 377276, test 183010
+2026-10-30 06:55:02 INFO    eegtraj.baselines.runner: ridge_lag: 100 features (25 lags), 1314741 training samples, val r per alpha {'0.0001': 0.2427, '0.001': 0.2429, '0.01': 0.2431, '0.1': 0.2452, '1': 0.2517, '10': 0.2528, '100': 0.2406}, chosen alpha 10
+2026-10-30 06:55:03 INFO    eegtraj.baselines.runner: Fold loso_P5 test P5: r = 0.312 (x 0.293, y 0.274, z 0.368), R2 = -0.111, NRMSE = 0.354, 294 trials
+2026-10-30 06:55:04 INFO    eegtraj.baselines.runner: Fold loso_P7: train ('P2', 'P4', 'P5', 'P8', 'P9', 'P11', 'P12'), val ('P1', 'P10'), test ('P7',); target samples train 1315670, val 344804, test 214553
+2026-10-30 06:55:33 INFO    eegtraj.baselines.runner: ridge_lag: 100 features (25 lags), 1315670 training samples, val r per alpha {'0.0001': 0.2319, '0.001': 0.2315, '0.01': 0.2302, '0.1': 0.2276, '1': 0.2222, '10': 0.2104, '100': 0.1974}, chosen alpha 0.0001
+2026-10-30 06:55:35 INFO    eegtraj.baselines.runner: Fold loso_P7 test P7: r = 0.286 (x 0.268, y 0.263, z 0.327), R2 = -0.094, NRMSE = 0.345, 294 trials
+2026-10-30 06:55:35 INFO    eegtraj.baselines.runner: Fold loso_P8: train ('P1', 'P2', 'P4', 'P7', 'P9', 'P10', 'P11'), val ('P5', 'P12'), test ('P8',); target samples train 1318415, val 393073, test 163539
+2026-10-30 06:56:06 INFO    eegtraj.baselines.runner: ridge_lag: 100 features (25 lags), 1318415 training samples, val r per alpha {'0.0001': 0.2328, '0.001': 0.233, '0.01': 0.2333, '0.1': 0.2336, '1': 0.2326, '10': 0.2216, '100': 0.2089}, chosen alpha 0.1
+2026-10-30 06:56:08 INFO    eegtraj.baselines.runner: Fold loso_P8 test P8: r = 0.180 (x 0.143, y 0.150, z 0.246), R2 = -0.028, NRMSE = 0.339, 294 trials
+2026-10-30 06:56:08 INFO    eegtraj.baselines.runner: Fold loso_P9: train ('P1', 'P2', 'P4', 'P5', 'P7', 'P10', 'P12'), val ('P8', 'P11'), test ('P9',); target samples train 1329706, val 361806, test 183515
+2026-10-30 06:56:40 INFO    eegtraj.baselines.runner: ridge_lag: 100 features (25 lags), 1329706 training samples, val r per alpha {'0.0001': 0.1579, '0.001': 0.1588, '0.01': 0.1605, '0.1': 0.1641, '1': 0.1701, '10': 0.1663, '100': 0.1569}, chosen alpha 1
+2026-10-30 06:56:42 INFO    eegtraj.baselines.runner: Fold loso_P9 test P9: r = 0.243 (x 0.265, y 0.236, z 0.228), R2 = -0.005, NRMSE = 0.339, 294 trials
+2026-10-30 06:56:42 INFO    eegtraj.baselines.runner: Fold loso_P10: train ('P1', 'P2', 'P5', 'P7', 'P8', 'P9', 'P11'), val ('P4', 'P12'), test ('P10',); target samples train 1306697, val 379138, test 189192
+2026-10-30 06:57:15 INFO    eegtraj.baselines.runner: ridge_lag: 100 features (25 lags), 1306697 training samples, val r per alpha {'0.0001': 0.225, '0.001': 0.2251, '0.01': 0.2248, '0.1': 0.2241, '1': 0.2212, '10': 0.2098, '100': 0.1931}, chosen alpha 0.001
+2026-10-30 06:57:18 INFO    eegtraj.baselines.runner: Fold loso_P10 test P10: r = 0.210 (x 0.184, y 0.171, z 0.274), R2 = -0.077, NRMSE = 0.331, 294 trials
+2026-10-30 06:57:18 INFO    eegtraj.baselines.runner: Fold loso_P11: train ('P1', 'P5', 'P7', 'P8', 'P9', 'P10', 'P12'), val ('P2', 'P4'), test ('P11',); target samples train 1299484, val 377276, test 198267
+2026-10-30 06:57:55 INFO    eegtraj.baselines.runner: ridge_lag: 100 features (25 lags), 1299484 training samples, val r per alpha {'0.0001': 0.2285, '0.001': 0.229, '0.01': 0.2305, '0.1': 0.2377, '1': 0.2505, '10': 0.2517, '100': 0.2392}, chosen alpha 10
+2026-10-30 06:57:57 INFO    eegtraj.baselines.runner: Fold loso_P11 test P11: r = 0.124 (x 0.162, y 0.141, z 0.069), R2 = -0.124, NRMSE = 0.349, 294 trials
+2026-10-30 06:57:57 INFO    eegtraj.baselines.runner: Fold loso_P12: train ('P2', 'P4', 'P5', 'P7', 'P8', 'P10', 'P11'), val ('P1', 'P9'), test ('P12',); target samples train 1325837, val 339127, test 210063
+2026-10-30 06:58:26 INFO    eegtraj.baselines.runner: ridge_lag: 100 features (25 lags), 1325837 training samples, val r per alpha {'0.0001': 0.2484, '0.001': 0.2481, '0.01': 0.2471, '0.1': 0.2453, '1': 0.2434, '10': 0.2437, '100': 0.2395}, chosen alpha 0.0001
+2026-10-30 06:58:28 INFO    eegtraj.baselines.runner: Fold loso_P12 test P12: r = 0.171 (x 0.189, y 0.151, z 0.174), R2 = -0.031, NRMSE = 0.333, 294 trials
+2026-10-30 06:58:28 INFO    eegtraj.baselines.runner: Aggregate over 10 test subjects: r = 0.225 +- 0.057, R2 = -0.063 +- 0.043, NRMSE = 0.341 +- 0.007
+2026-10-30 06:58:28 INFO    eegtraj.baselines.runner: Wall time 340.3 s
