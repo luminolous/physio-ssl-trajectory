@@ -1,0 +1,2 @@
+control,n_runs,run,r_mean,r_sd,r2_mean,r2_sd,nrmse_mean,nrmse_sd,r_seed_sd,reference,delta_r_vs_all,r_ratio_vs_all
+all (car),3,"output/data-baselines/baselines/eegnet/20261030-042902_seed1, output/data-baselines/baselines/eegnet/20261030-043700_seed2, output/data-baselines/baselines/eegnet/20261030-044818_seed3",0.4489473263094047,0.07471916966126885,0.020864378982846495,0.11172309924927935,0.32271292974192545,0.017325174058735866,0.007636017595265828,car,0.0,1.0
