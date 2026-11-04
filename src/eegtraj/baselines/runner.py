@@ -144,7 +144,7 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
         target_norm = fit_target_normalizer(train, fold.train_subjects, train_masks=masks["train"])
         ctx = FitContext(eeg_norm=eeg_norm, target_norm=target_norm, history=history, lag_step=lag_step,
                          seed=seed, train_masks=masks["train"], val_masks=masks["val"],
-                         smoke=bool(cfg.get("smoke")), run_dir=run_dir, logger=logger)
+                         smoke=bool(cfg.get("smoke")), run_dir=run_dir, logger=logger, fold_name=fold.name)
         model = make_baseline(cfg["baseline"]["name"], cfg["baseline"].get("params"))
         model.fit(train, val, ctx)
         n_repeats = model.n_repeats

@@ -1,0 +1,33 @@
+# EEGNet with the tuning budget approved on 2026-11-04: lr grid per fold, chosen by inner-validation MSE.
+# Seed 1 searches the grid. Seeds 2 and 3 reuse its choices with --selection-run.
+# Model and other training settings are the same as configs/baselines/eegnet.yaml.
+baseline:
+  name: eegnet
+  params:
+    model:
+      kernel_length: 50
+    grid:
+      lr: [0.0001, 0.0003, 0.001]
+    train:
+      weight_decay: 0.01
+      batch_size: 512
+      max_epochs: 30
+      samples_per_epoch: 200000
+      val_samples: 100000
+      patience: 5
+      amp: true
+data:
+  windows_config: configs/data/windows.yaml  # history 50 samples (500 ms), causal
+  band: broadband  # D4: 0.1-40 Hz for deep models
+  reference: car
+  channel_set: all
+splits:
+  config: configs/splits/default.yaml
+  mode: loso
+seed: 1
+save_predictions: true
+exclude_flags: []
+output:
+  root: output/diagnostics
+  group: tuning
+  name: eegnet

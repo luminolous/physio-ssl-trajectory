@@ -49,6 +49,7 @@ class FitContext:
     smoke: bool = False
     run_dir: Path | None = None
     logger: logging.Logger = field(default_factory=lambda: logging.getLogger("eegtraj.baselines"))
+    fold_name: str = ""
 
 
 class Baseline:
