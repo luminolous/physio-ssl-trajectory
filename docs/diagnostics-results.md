@@ -45,3 +45,41 @@ Reaction time is LED-on to kinematic onset. "Gap" is oracle template r minus cue
 - P2 and P7 have the slowest and most variable reaction times and the two largest gaps.
 - The relationship rests mostly on those two subjects. Across the 10 subjects, the gap correlates with RT IQR at Pearson 0.73 but Spearman only 0.26.
 - 8 lifts across the 10 test subjects have a negative reaction time, meaning the detected onset comes before LED-on. They are kept, as all lifts are (D8).
+
+## Onset decoder + template
+
+Run: `output/diagnostics/baselines/onset_template/20261104-235524`. Table across models: `output/diagnostics/summary/models.md`.
+
+**The model.** LDA on lagged low-frequency EEG separates the 0.5 s before the kinematic onset from the 0.5 s after it, on training subjects. On a test lift the search starts at LED-on, and the decoded onset is the first sample whose probability exceeds a threshold chosen on inner validation by r. If nothing fires by the 95th percentile of training reaction times, that deadline is the onset. The prediction is a constant before the decoded onset and the oracle-aligned training template after it. The prediction at time t uses only EEG up to t, and tests check this. Scoring uses the same protocol segment, which is not a model input.
+
+### Result
+
+| Model | r (mean ± SD) | R² | NRMSE |
+|---|---|---|---|
+| Cue-locked template | 0.803 ± 0.100 | 0.524 | 0.216 |
+| **Onset decoder + template** | **0.754 ± 0.094** | **0.406** | **0.241** |
+| CNN-LSTM | 0.499 ± 0.091 | 0.039 | 0.317 |
+
+- This onset decoder falls below the cue-locked template in 9 of 10 subjects (mean Δr −0.049 ± 0.055). P2 is the exception: 0.682 vs 0.611.
+- It beats CNN-LSTM in 9 of 10 subjects on r and on R². P7 is the exception: 0.550 vs 0.676.
+- Thresholds on validation: detection beat the deadline-only setting in every fold (mean r 0.769 vs 0.706), and the never-firing threshold was never chosen.
+
+### Onset error
+
+Decoded minus true onset, per test subject.
+
+| Subject | r | Median (ms) | IQR (ms) | Within ±100 ms (%) | Reached deadline (%) | Fired at LED-on (%) |
+|---|---|---|---|---|---|---|
+| P1 | 0.719 | 196 | 204 | 8.5 | 17.0 | 5.8 |
+| P2 | 0.682 | −88 | 330 | 34.4 | 51.0 | 2.4 |
+| P4 | 0.712 | 322 | 224 | 5.4 | 25.2 | 2.4 |
+| P5 | 0.845 | 198 | 338 | 20.7 | 53.7 | 8.5 |
+| P7 | 0.550 | −320 | 592 | 27.9 | 7.8 | 24.5 |
+| P8 | 0.729 | 500 | 595 | 9.5 | 50.7 | 9.9 |
+| P9 | 0.822 | 2 | 342 | 40.8 | 6.5 | 18.7 |
+| P10 | 0.836 | −137 | 345 | 32.3 | 0.3 | 27.2 |
+| P11 | 0.828 | 135 | 274 | 24.5 | 20.1 | 6.5 |
+| P12 | 0.812 | 89 | 486 | 18.7 | 20.4 | 14.6 |
+
+- The onset error spread (mean IQR 373 ms) is about twice the reaction-time spread (mean IQR 166 ms). This fits the result: assuming a fixed time after LED-on is more accurate than this detector. Only 22% of lifts on average fall within ±100 ms.
+- This describes one detector: cross-subject LDA with fixed shrinkage and a single first-crossing rule. It does not show that EEG holds no better onset information.

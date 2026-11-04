@@ -1,0 +1,25 @@
+# Onset decoder + template floor: LDA on lagged low-frequency EEG finds the onset causally after LED-on,
+# then the oracle-aligned training template plays from the decoded onset. Cue timing, not oracle timing.
+baseline:
+  name: onset_template
+  params:
+    thresholds: [0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99, 1.0]  # chosen on inner validation; 1.0 never fires
+    label_window_s: 0.5  # LDA classes: this long before the kinematic onset vs this long after it
+    shrinkage: 0.1  # toward a scaled identity; the 800 lag features are highly collinear
+    deadline_quantile: 0.95  # of training reaction times; taken as the onset if nothing fired by then
+    within_ms: 100  # onset error report
+data:
+  windows_config: configs/data/windows.yaml
+  band: lowfreq  # D4: 0.1-4 Hz, causal, for linear models
+  reference: car
+  channel_set: all
+splits:
+  config: configs/splits/default.yaml
+  mode: loso
+seed: 20261029
+save_predictions: true
+exclude_flags: []
+output:
+  root: output/diagnostics
+  group: baselines
+  name: onset_template
