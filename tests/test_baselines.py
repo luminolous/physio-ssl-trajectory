@@ -10,6 +10,7 @@ from eegtraj.baselines import REGISTRY, FitContext, make_baseline
 from eegtraj.baselines.runner import trial_filter
 from eegtraj.baselines.template import time_since_onset
 from eegtraj.data.windows import Standardizer, SubjectSamples, segment_samples
+from eegtraj.metrics import aggregate_subject, per_trial_metrics
 
 FS = 100.0
 N = 700
@@ -65,6 +66,54 @@ def test_template_predicts_stereotyped_trials_with_different_onsets():
     # Errors come only from binning time-since-onset to 10 ms.
     assert np.abs(pred - true).max() < 0.35
     assert model.info()["oracle_timing"] is True
+
+
+def with_led(s: SubjectSamples, led: list[float]) -> SubjectSamples:
+    s.trials = s.trials.assign(ev_LEDOn=led)
+    return s
+
+
+def scored_r(model, s: SubjectSamples, ctx: FitContext) -> float:
+    pred = model.predict(s, np.ones(len(s.sample_idx), bool), ctx)
+    return aggregate_subject(per_trial_metrics(s.target[:, s.sample_idx].T, pred, s.trial_row))["r"]["mean"]
+
+
+def test_cue_template_equals_oracle_template_when_reaction_time_is_constant():
+    rt = 0.3
+    onsets = [[2.0, 2.4, 2.9], [2.2, 2.6], [2.13, 2.71]]
+    subjects = [with_led(synthetic_subject(n, on), [t - rt for t in on]) for n, on in zip(("P1", "P2", "P4"), onsets)]
+    train, test = subjects[:2], subjects[2]
+    ctx = ctx_for(subjects)
+    oracle, cue = make_baseline("template"), make_baseline("template_cue")
+    oracle.fit(train, [], ctx)
+    cue.fit(train, [], ctx)
+    assert scored_r(cue, test, ctx) == pytest.approx(scored_r(oracle, test, ctx), abs=1e-3)
+    info = cue.info()
+    assert info["oracle_timing"] is False and info["cue_timing"] is True
+    assert info["reaction_time"]["P4"]["median_s"] == pytest.approx(rt)
+    assert info["reaction_time"]["P4"]["iqr_s"] == pytest.approx(0)
+
+
+def test_cue_template_prediction_ignores_the_test_onset():
+    train = [with_led(synthetic_subject("P1", [2.0, 2.4, 2.9]), [1.7, 2.1, 2.6])]
+    test = with_led(synthetic_subject("P4", [2.13, 2.71]), [1.8, 2.4])
+    ctx = ctx_for(train + [test])
+    model = make_baseline("template_cue")
+    model.fit(train, [], ctx)
+    mask = np.ones(len(test.sample_idx), bool)
+    first = model.predict(test, mask, ctx)
+    test.trials = test.trials.assign(onset_s=test.trials.onset_s + 0.5)
+    assert np.array_equal(model.predict(test, mask, ctx), first)
+
+
+def test_cue_template_is_below_oracle_when_reaction_time_varies():
+    train = [with_led(synthetic_subject("P1", [2.2, 2.4, 2.9, 2.5]), [2.0] * 4)]
+    test = with_led(synthetic_subject("P4", [2.1, 2.95]), [2.0] * 2)
+    ctx = ctx_for(train + [test])
+    oracle, cue = make_baseline("template"), make_baseline("template_cue")
+    oracle.fit(train, [], ctx)
+    cue.fit(train, [], ctx)
+    assert scored_r(cue, test, ctx) < scored_r(oracle, test, ctx)
 
 
 def test_trial_filter_excludes_flags_and_limits():

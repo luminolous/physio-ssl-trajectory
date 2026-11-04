@@ -1,0 +1,27 @@
+# diagnostics summary
+
+LOSO over the 10 non-screening subjects. Per-trial Pearson r per axis, mean over trials, axes, then subjects (D7); +- SD across subjects. With n_runs > 1 (seeds) per-subject values are averaged over seeds first; r_seed_sd = SD of the aggregate r across seeds. pooled_r_secondary is pooled over concatenated trials and inflated; secondary only. delta_r_vs_X = mean over subjects of (r - r of X); n_above_X = subjects where r > r of X. oracle_timing = uses the test trial's kinematic onset. cue_timing = uses the test trial's LED-on time, which a real decoder can know.
+
+| group     | config              |   n_runs | oracle_timing   | cue_timing   | n_parameters   |   r_mean |   r_sd |   r_seed_sd |   r2_mean |   nrmse_mean |   pooled_r_secondary |   delta_r_vs_template |   n_above_template |   delta_r_vs_stereotypy |   n_above_stereotypy |   delta_r_vs_template_cue |   n_above_template_cue |
+|:----------|:--------------------|---------:|:----------------|:-------------|:---------------|---------:|-------:|------------:|----------:|-------------:|---------------------:|----------------------:|-------------------:|------------------------:|---------------------:|--------------------------:|-----------------------:|
+| baselines | template            |        1 | True            | False        | <NA>           |    0.864 |  0.042 |     nan     |     0.622 |        0.193 |                0.841 |                 0.000 |                  0 |                   0.025 |                    8 |                     0.061 |                     10 |
+| baselines | stereotypy          |        1 | True            | False        | <NA>           |    0.839 |  0.059 |     nan     |     0.488 |        0.211 |                0.777 |                -0.025 |                  2 |                   0.000 |                    0 |                     0.037 |                      7 |
+| baselines | template_cue        |        1 | False           | True         | <NA>           |    0.803 |  0.100 |     nan     |     0.524 |        0.216 |                0.781 |                -0.061 |                  0 |                  -0.037 |                    3 |                     0.000 |                      0 |
+| baselines | cnn_lstm            |        3 | False           | False        | 10843          |    0.499 |  0.091 |       0.007 |     0.039 |        0.317 |                0.472 |                -0.365 |                  0 |                  -0.340 |                    0 |                    -0.304 |                      1 |
+| baselines | kalman              |        1 | True            | False        | <NA>           |    0.466 |  0.077 |     nan     |    -3.084 |        0.623 |                0.407 |                -0.398 |                  0 |                  -0.373 |                    0 |                    -0.337 |                      0 |
+| baselines | shallowconvnet      |        3 | False           | False        | 51963          |    0.454 |  0.062 |       0.002 |     0.002 |        0.327 |                0.426 |                -0.410 |                  0 |                  -0.386 |                    0 |                    -0.349 |                      0 |
+| baselines | eegnet              |        3 | False           | False        | 1555           |    0.449 |  0.075 |       0.008 |     0.021 |        0.323 |                0.421 |                -0.415 |                  0 |                  -0.390 |                    0 |                    -0.354 |                      0 |
+| baselines | ridge_lag           |        1 | False           | False        | <NA>           |    0.331 |  0.068 |     nan     |    -0.002 |        0.330 |                0.321 |                -0.533 |                  0 |                  -0.508 |                    0 |                    -0.471 |                      0 |
+| baselines | kalman (prior_only) |        1 | True            | False        | <NA>           |    0.203 |  0.093 |     nan     |    -1.626 |        0.530 |                0.201 |                -0.661 |                  0 |                  -0.636 |                    0 |                    -0.600 |                      0 |
+
+## Run directories
+
+- `baselines/template`: output/data-baselines/baselines/template/20261029-184451
+- `baselines/stereotypy`: output/data-baselines/baselines/stereotypy/20261029-192827
+- `baselines/template_cue`: output/diagnostics/baselines/template_cue/20261104-234509
+- `baselines/cnn_lstm`: output/data-baselines/baselines/cnn_lstm/20261030-054018_seed1, output/data-baselines/baselines/cnn_lstm/20261030-054023_seed2, output/data-baselines/baselines/cnn_lstm/20261030-054029_seed3
+- `baselines/kalman`: output/data-baselines/baselines/kalman/20261030-035949
+- `baselines/shallowconvnet`: output/data-baselines/baselines/shallowconvnet/20261030-052039_seed1, output/data-baselines/baselines/shallowconvnet/20261030-052040_seed2, output/data-baselines/baselines/shallowconvnet/20261030-052044_seed3
+- `baselines/eegnet`: output/data-baselines/baselines/eegnet/20261030-042902_seed1, output/data-baselines/baselines/eegnet/20261030-043700_seed2, output/data-baselines/baselines/eegnet/20261030-044818_seed3
+- `baselines/ridge_lag`: output/data-baselines/baselines/ridge_lag/20261030-034531
+- `baselines/kalman (prior_only)`: output/data-baselines/baselines/kalman/20261030-040519_prior_only

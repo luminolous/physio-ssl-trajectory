@@ -1,23 +1,26 @@
-"""Collect every finished data-baselines run into one summary table.
+"""Collect every finished baseline run of a stage into one summary table.
 
-Reads metrics.json of every non-smoke run under output/data-baselines/baselines/ and
-output/data-baselines/artifact-controls/. Runs of one configuration are grouped by
+--stage data-baselines (default) reads metrics.json of every non-smoke run under
+output/data-baselines/baselines/ and output/data-baselines/artifact-controls/.
+--stage diagnostics reads output/data-baselines/baselines/ and output/diagnostics/baselines/.
+Runs of one configuration are grouped by
 (group, name, tag without the seed part): several runs in a group are seeds, so per-subject
 values are averaged over seeds first and the SD of the aggregate r across seeds is reported as
 ``r_seed_sd``. Paired per-subject differences are reported against the template and the
 stereotypy floor.
 
-Writes to output/data-baselines/summary/:
+Writes to output/<stage>/summary/:
     runs.csv         one row per run (aggregate metrics as logged)
     models.csv/.md   one row per configuration (seed-averaged)
     per_subject_r.csv  per-subject r (seed-averaged), one column per configuration
 
 Usage (from repo root):
-    .venv\\Scripts\\python scripts\\summarize_runs.py
+    .venv\\Scripts\\python scripts\\summarize_runs.py [--stage diagnostics]
 """
 
 from __future__ import annotations
 
+import argparse
 import json
 import re
 from pathlib import Path
@@ -25,11 +28,14 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-ROOT = Path("output/data-baselines")
-GROUPS = ("baselines", "artifact-controls")
-OUT_DIR = ROOT / "summary"
+OUTPUT = Path("output")
+# stage -> (source root, group) pairs
+SOURCES = {
+    "data-baselines": ((OUTPUT / "data-baselines", "baselines"), (OUTPUT / "data-baselines", "artifact-controls")),
+    "diagnostics": ((OUTPUT / "data-baselines", "baselines"), (OUTPUT / "diagnostics", "baselines")),
+}
 METRICS = ("r", "r2", "rmse", "nrmse")
-FLOORS = ("template", "stereotypy")
+FLOORS = ("template", "stereotypy", "template_cue")
 RUN_ID = re.compile(r"^\d{8}-\d{6}(?:_(?P<tag>.+))?$")
 SEED_TAG = re.compile(r"^seed\d+$")
 
@@ -40,10 +46,10 @@ def config_key(group: str, name: str, run_dir: Path) -> str:
     return f"{name} ({variant})" if variant else name
 
 
-def collect() -> dict[tuple[str, str], list[tuple[Path, dict]]]:
+def collect(stage: str) -> dict[tuple[str, str], list[tuple[Path, dict]]]:
     configs: dict[tuple[str, str], list[tuple[Path, dict]]] = {}
-    for group in GROUPS:
-        for f in sorted((ROOT / group).glob("*/2*/metrics.json")):
+    for root, group in SOURCES[stage]:
+        for f in sorted((root / group).glob("*/2*/metrics.json")):
             if not RUN_ID.match(f.parent.name):
                 continue
             m = json.loads(f.read_text(encoding="utf-8"))
@@ -64,6 +70,7 @@ def run_row(group: str, config: str, run_dir: Path, m: dict) -> dict:
     row["pooled_r_secondary"] = float(np.mean([v["mean"] for v in m["pooled_r_secondary"].values()]))
     row["n_parameters"] = info.get("n_parameters")
     row["oracle_timing"] = bool(info.get("oracle_timing", False))
+    row["cue_timing"] = bool(info.get("cue_timing", False))
     return row
 
 
@@ -76,7 +83,8 @@ def per_subject(runs: list[tuple[Path, dict]], metric: str) -> pd.Series:
 def model_row(group: str, config: str, runs: list[tuple[Path, dict]], floors: dict[str, pd.Series]) -> dict:
     rows = [run_row(group, config, d, m) for d, m in runs]
     row = {"group": group, "config": config, "n_runs": len(runs), "split_mode": rows[0]["split_mode"],
-           "n_parameters": rows[0]["n_parameters"], "oracle_timing": rows[0]["oracle_timing"]}
+           "n_parameters": rows[0]["n_parameters"], "oracle_timing": rows[0]["oracle_timing"],
+           "cue_timing": rows[0]["cue_timing"]}
     for k in METRICS:
         v = per_subject(runs, k)
         row[f"{k}_mean"], row[f"{k}_sd"] = float(v.mean()), float(v.std(ddof=1))
@@ -93,7 +101,11 @@ def model_row(group: str, config: str, runs: list[tuple[Path, dict]], floors: di
 
 
 def main() -> None:
-    configs = collect()
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--stage", choices=sorted(SOURCES), default="data-baselines")
+    stage = parser.parse_args().stage
+    out_dir = OUTPUT / stage / "summary"
+    configs = collect(stage)
     floors = {f: per_subject(configs[("baselines", f)], "r") for f in FLOORS if ("baselines", f) in configs}
     runs = pd.DataFrame([run_row(g, c, d, m) for (g, c), rs in configs.items() for d, m in rs])
     models = pd.DataFrame([model_row(g, c, rs, floors) for (g, c), rs in configs.items()])
@@ -101,26 +113,27 @@ def main() -> None:
     models["n_parameters"] = models["n_parameters"].astype("Int64")
     subj = pd.DataFrame({f"{g}/{c}": per_subject(rs, "r") for (g, c), rs in configs.items()})
 
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-    runs.to_csv(OUT_DIR / "runs.csv", index=False)
-    models.to_csv(OUT_DIR / "models.csv", index=False)
-    subj.to_csv(OUT_DIR / "per_subject_r.csv", index_label="subject")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    runs.to_csv(out_dir / "runs.csv", index=False)
+    models.to_csv(out_dir / "models.csv", index=False)
+    subj.to_csv(out_dir / "per_subject_r.csv", index_label="subject")
 
-    cols = ["group", "config", "n_runs", "oracle_timing", "n_parameters", "r_mean", "r_sd", "r_seed_sd",
+    cols = ["group", "config", "n_runs", "oracle_timing", "cue_timing", "n_parameters", "r_mean", "r_sd", "r_seed_sd",
             "r2_mean", "nrmse_mean", "pooled_r_secondary", "delta_r_vs_template", "n_above_template",
-            "delta_r_vs_stereotypy", "n_above_stereotypy"]
+            "delta_r_vs_stereotypy", "n_above_stereotypy", "delta_r_vs_template_cue", "n_above_template_cue"]
     md = models[[c for c in cols if c in models]].to_markdown(index=False, floatfmt=".3f")
     run_list = "\n".join(f"- `{c}`: {r}" for c, r in zip(models["group"] + "/" + models["config"], models["runs"]))
-    (OUT_DIR / "models.md").write_text(
-        "# Data-baselines summary\n\n"
+    (out_dir / "models.md").write_text(
+        f"# {stage} summary\n\n"
         "LOSO over the 10 non-screening subjects. Per-trial Pearson r per axis, mean over trials, axes, then "
         "subjects (D7); +- SD across subjects. With n_runs > 1 (seeds) per-subject values are averaged over "
         "seeds first; r_seed_sd = SD of the aggregate r across seeds. pooled_r_secondary is pooled over "
         "concatenated trials and inflated; secondary only. delta_r_vs_X = mean over subjects of (r - r of X); "
-        "n_above_X = subjects where r > r of X. oracle_timing = uses the test trial's kinematic onset.\n\n"
+        "n_above_X = subjects where r > r of X. oracle_timing = uses the test trial's kinematic onset. "
+        "cue_timing = uses the test trial's LED-on time, which a real decoder can know.\n\n"
         + md + "\n\n## Run directories\n\n" + run_list + "\n", encoding="utf-8")
     print(md)
-    print(f"\n{len(runs)} runs, {len(models)} configurations -> {OUT_DIR}")
+    print(f"\n{len(runs)} runs, {len(models)} configurations -> {out_dir}")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,20 @@
+# Cue-locked template floor: mean training trajectory vs time since LED-on (cue timing, not oracle).
+# Scored on the protocol segment [onset - 0.5 s, tHandStop]; the segment is not a model input.
+baseline:
+  name: template_cue
+  params: {}
+data:
+  windows_config: configs/data/windows.yaml
+  band: lowfreq  # unused by the template (no EEG input); kept so all baselines share one schema
+  reference: car
+  channel_set: all
+splits:
+  config: configs/splits/default.yaml
+  mode: loso  # loso | within_subject
+seed: 20261029
+save_predictions: true
+exclude_flags: []
+output:
+  root: output/diagnostics
+  group: baselines
+  name: template_cue
