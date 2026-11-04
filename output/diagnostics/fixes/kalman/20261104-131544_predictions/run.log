@@ -1,0 +1,15 @@
+2026-11-04 13:15:45 INFO    eegtraj.utils.run: Run directory: output\diagnostics\fixes\kalman\20261104-131544_predictions
+2026-11-04 13:15:49 INFO    eegtraj.diagnostics.kalman: R2 decomposition, mean over subjects and axes:
+               r      a      b     r2  term_corr  term_amp  term_offset  r2_median  a_median
+model                                                                                       
+cnn_lstm   0.505  0.582  0.019  0.037      0.611     0.366        0.209      0.110     0.580
+eegnet     0.455  0.450  0.009  0.028      0.431     0.223        0.180      0.094     0.439
+kalman     0.466  1.962 -0.006 -3.084      1.796     4.433        0.447     -2.330     1.885
+ridge_lag  0.331  0.324  0.007 -0.002      0.231     0.119        0.114      0.041     0.312
+template   0.864  0.892  0.012  0.622      1.540     0.810        0.108      0.689     0.884
+2026-11-04 13:15:49 INFO    eegtraj.diagnostics.kalman: Kalman per axis:
+          r      a      b     r2  term_corr  term_amp  term_offset  r2_median  a_median
+axis                                                                                   
+x     0.469  2.019 -0.033 -3.414      1.861     4.748        0.527     -2.532     1.933
+y     0.471  1.824  0.058 -2.641      1.655     3.878        0.418     -1.921     1.748
+z     0.458  2.043 -0.043 -3.199      1.873     4.675        0.396     -2.538     1.975
