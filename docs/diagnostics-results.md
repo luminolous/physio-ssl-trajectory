@@ -128,3 +128,30 @@ Samples before the series start hold the earliest value on the lift's grid.
 ### Fixed lr
 
 The fixed lr was chosen for this ablation only. The check on EEGNet at 3 s, seed 1, with the lr grid {1e-4, 3e-4, 1e-3} gave r 0.591 against 0.607 for fixed lr (-0.016, over the agreed 0.01 limit) and R² 0.090 against 0.097 (-0.008). The grid was worse, and the 5 folds that selected 1e-3 differ by a mean |r| of 0.022 from the initial random state alone. The user kept the fixed lr. It may still not be the best lr at 3 s: the grid selected a lower lr in 5 of 10 folds, and 9 of 30 EEGNet folds at 3 s reach their best validation at epoch 1.
+
+## Residual metric
+
+`residual_r`: per trial and axis, Pearson r between (prediction - T_cue) and (target - T_cue), aggregated as in D7. T_cue is the cue-locked template of the fold training subjects, which is known at test time. `residual_r_oracle` uses the template aligned on the kinematic onset of the test trial and is analysis only. Both are computed from saved predictions by `scripts/compute_residual_metrics.py` for 42 runs, and `scripts/summarize_runs.py --stage diagnostics` shows them. The template predictions reproduce exactly: both residuals are undefined (NaN) for the template they are measured against.
+
+| Model | History | r | R² | residual_r (mean ± SD) | residual_r_oracle |
+|---|---|---|---|---|---|
+| Ridge | 0.5 s | 0.331 | -0.002 | 0.051 ± 0.152 | 0.042 |
+| Kalman | 0.5 s | 0.466 | -3.084 | 0.181 ± 0.132 | 0.148 |
+| EEGNet | 0.5 s | 0.449 | 0.021 | 0.086 ± 0.145 | 0.066 |
+| EEGNet | 1 s | 0.520 | -0.004 | 0.116 ± 0.142 | 0.076 |
+| EEGNet | 2 s | 0.576 | 0.004 | 0.148 ± 0.144 | 0.095 |
+| EEGNet | 3 s | 0.603 | 0.125 | 0.149 ± 0.146 | 0.095 |
+| CNN-LSTM | 0.5 s | 0.499 | 0.039 | 0.154 ± 0.138 | 0.120 |
+| CNN-LSTM | 1 s | 0.532 | 0.011 | 0.182 ± 0.140 | 0.138 |
+| CNN-LSTM | 2 s | 0.588 | 0.075 | 0.237 ± 0.179 | 0.175 |
+| CNN-LSTM | 3 s | 0.579 | 0.035 | 0.237 ± 0.195 | 0.173 |
+| Onset template | n/a | 0.754 | 0.406 | 0.021 ± 0.247 | -0.123 |
+| Template (oracle timing) | n/a | 0.864 | 0.622 | 0.475 ± 0.093 | undefined |
+| Cue template | n/a | 0.803 | 0.524 | undefined | -0.180 |
+
+- EEG decoders leave most of the residual untracked. The best value is 0.237, and the subject SD is large.
+- Longer history raises residual_r up to 2 s: EEGNet 0.5 s to 3 s +0.063 (8/10 subjects up), CNN-LSTM 0.5 s to 2 s +0.083 (8/10 up). From 2 s to 3 s nothing changes (EEGNet +0.001, CNN-LSTM 0.000).
+- The oracle-aligned template reaches 0.475 because knowing the true onset explains much of the residual. The onset template gets 0.021, so its decoded onsets carry little of that timing.
+- Kalman has a high residual_r but R² -3.08. Pearson r ignores amplitude, so this metric does not mean the prediction is accurate.
+
+Limit: residual_r is not purely trial-specific. A model can correlate with the residual through what is shared across a subject's trials, such as a shape difference between that subject and the training subjects.

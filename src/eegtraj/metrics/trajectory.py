@@ -26,6 +26,10 @@ METRIC_DEFINITIONS = {
     "nrmse": "RMSE / (max - min of the true signal) per trial per axis; same aggregation",
     "pooled_r": "SECONDARY, labeled: Pearson r over all samples of all trials concatenated, per axis, "
                 "then mean over axes; inflated by trial-to-trial stereotypy",
+    "residual_r": "Pearson r per trial per axis between (prediction - T_cue) and (target - T_cue), T_cue being the "
+                  "cue-locked template of the training subjects; same aggregation; NaN if the prediction equals T_cue",
+    "residual_r_oracle": "ANALYSIS ONLY, labeled: residual_r with the template aligned on the test trial's own "
+                         "kinematic onset, which a real decoder cannot know",
 }
 
 
@@ -90,6 +94,26 @@ def per_trial_metrics(y_true: np.ndarray, y_pred: np.ndarray, trial_ids: np.ndar
             rows.append({"trial": trial, "axis": axis, "n": int(m.sum()), "r": pearson_r(t, p),
                          "r2": r2_score(t, p), "rmse": rmse(t, p), "nrmse": nrmse(t, p)})
     return pd.DataFrame(rows)
+
+
+def residual_r(y_true: np.ndarray, y_pred: np.ndarray, template: np.ndarray, trial_ids: np.ndarray) -> dict:
+    """Pearson r between (y_pred - template) and (y_true - template), per trial and axis, then aggregated as in D7.
+
+    A prediction equal to the template has no residual to correlate, so those values are NaN. Aggregation
+    skips them and counts them in ``n_nan``.
+
+    Returns ``{"per_axis": {axis: value}, "mean": value, "n_nan": count}``.
+    """
+    true_res = np.asarray(y_true, np.float64) - np.asarray(template, np.float64)
+    pred_res = np.asarray(y_pred, np.float64) - np.asarray(template, np.float64)
+    trial_ids = np.asarray(trial_ids)
+    trials = pd.unique(trial_ids)
+    values = np.array([[pearson_r(true_res[trial_ids == t, a], pred_res[trial_ids == t, a]) for a in range(true_res.shape[1])]
+                       for t in trials])
+    axes = AXES[:true_res.shape[1]]
+    per_axis = pd.DataFrame(values, columns=axes).mean(axis=0)  # pandas mean skips NaN
+    return {"per_axis": {a: float(v) for a, v in per_axis.items()}, "mean": float(per_axis.mean()),
+            "n_nan": int(np.isnan(values).sum())}
 
 
 def pooled_r(y_true: np.ndarray, y_pred: np.ndarray) -> dict[str, float]:

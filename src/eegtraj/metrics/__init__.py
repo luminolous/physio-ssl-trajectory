@@ -8,6 +8,7 @@ from eegtraj.metrics.trajectory import (
     pearson_r,
     per_trial_metrics,
     pooled_r,
+    residual_r,
     r2_score,
     rmse,
 )
@@ -20,6 +21,7 @@ __all__ = [
     "pearson_r",
     "per_trial_metrics",
     "pooled_r",
+    "residual_r",
     "r2_score",
     "rmse",
 ]
