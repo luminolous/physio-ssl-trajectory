@@ -3,6 +3,11 @@
 ``residual_r`` uses the cue-locked template and ``residual_r_oracle`` the template aligned on the test
 trial's kinematic onset (analysis only). Both templates come from the training subjects of the fold
 that tested the subject, with the same masks and code as the ``template_cue`` and ``template`` baselines.
+
+``residual_r`` also picks up what is shared across a subject's trials, such as a shape difference between
+that subject and the training subjects. ``residual_r_other_trial`` measures that part by pairing trials at
+random, and ``residual_r_specific`` is the difference. Permutations depend only on ``seed`` and the
+subject, so every run of a subject uses the same trial pairs.
 """
 
 from __future__ import annotations
@@ -14,10 +19,10 @@ import numpy as np
 
 from eegtraj.baselines.base import FitContext
 from eegtraj.baselines.runner import trial_filter
-from eegtraj.baselines.template import TemplateBaseline, TemplateCueBaseline
+from eegtraj.baselines.template import TemplateBaseline, TemplateCueBaseline, time_since_event
 from eegtraj.data.splits import load_split_config, make_folds
 from eegtraj.data.windows import SubjectSamples, load_subject_samples, sample_masks
-from eegtraj.metrics import residual_r
+from eegtraj.metrics import residual_r, residual_r_other_trial
 
 
 @dataclass
@@ -28,6 +33,7 @@ class SubjectTemplates:
     trial_row: np.ndarray  # (n,)
     cue: np.ndarray  # (n, 3)
     oracle: np.ndarray  # (n, 3)
+    time_bin: np.ndarray  # (n,) integer samples since LED-on
 
 
 def fold_templates(subjects: list[SubjectSamples], fold) -> dict[str, SubjectTemplates]:
@@ -43,8 +49,9 @@ def fold_templates(subjects: list[SubjectSamples], fold) -> dict[str, SubjectTem
     for s in subjects:
         if s.subject in fold.test_subjects:
             m = masks["test"][s.subject]
+            bins = np.round(time_since_event(s, "ev_LEDOn", m) * s.fs_hz).astype(np.int64)
             out[s.subject] = SubjectTemplates(s.target[:, s.sample_idx[m]].T, s.trial_row[m], cue.predict(s, m, ctx),
-                                           oracle.predict(s, m, ctx))
+                                              oracle.predict(s, m, ctx), bins)
     return out
 
 
@@ -62,7 +69,8 @@ def load_templates(cache_dir: str | Path, splits_config: str | Path, mode: str, 
     return out
 
 
-def score_predictions(predictions, templates: dict[str, SubjectTemplates]) -> list[dict]:
+def score_predictions(predictions, templates: dict[str, SubjectTemplates], seed: int = 0,
+                      n_permutations: int = 5) -> list[dict]:
     """One row per subject. Raises if the saved samples are not the template's samples."""
     subjects = sorted({k.split("__")[0] for k in predictions.keys()}, key=lambda s: int(s[1:]))
     rows = []
@@ -76,5 +84,9 @@ def score_predictions(predictions, templates: dict[str, SubjectTemplates]) -> li
             res = residual_r(y_true, y_pred, template, rows_saved)
             row |= {name: res["mean"], f"{name}_n_nan": res["n_nan"]}
             row |= {f"{name}_{a}": v for a, v in res["per_axis"].items()}
+        rng = np.random.default_rng([seed, int(s[1:])])
+        other = residual_r_other_trial(y_true, y_pred, t.cue, rows_saved, t.time_bin, rng, n_permutations)
+        row |= {"residual_r_other_trial": other["mean"], "residual_r_other_trial_n_nan": other["n_nan"],
+                "residual_r_specific": row["residual_r"] - other["mean"]}
         rows.append(row)
     return rows

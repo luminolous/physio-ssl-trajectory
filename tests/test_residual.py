@@ -7,7 +7,7 @@ import pandas as pd
 import pytest
 
 from eegtraj.diagnostics.residual import SubjectTemplates, score_predictions
-from eegtraj.metrics import residual_r
+from eegtraj.metrics import residual_r, residual_r_other_trial
 
 
 def trials(seed=0, n_trials=6, n=100):
@@ -56,8 +56,57 @@ def test_trials_are_scored_separately():
     assert residual_r(y, template + sign * (y - template), template, ids)["mean"] == pytest.approx(0.0)
 
 
+def time_bins(ids):
+    return np.concatenate([np.arange((ids == i).sum()) for i in pd.unique(ids)])
+
+
+def other_trial(y, pred, template, ids, bins=None, n_permutations=5):
+    bins = time_bins(ids) if bins is None else bins
+    return residual_r_other_trial(y, pred, template, ids, bins, np.random.default_rng(0), n_permutations)
+
+
+def test_other_trial_is_one_when_all_trials_share_the_residual():
+    _, template, ids = trials()
+    shared = np.tile(np.sin(np.linspace(0, 6, 100)), (3, 1)).T
+    y = template + np.tile(shared, (6, 1))
+    assert other_trial(y, y, template, ids)["mean"] == pytest.approx(1.0)
+
+
+def test_other_trial_is_small_when_residuals_are_trial_specific():
+    y, template, ids = trials(n_trials=60)
+    assert residual_r(y, y, template, ids)["mean"] == pytest.approx(1.0)
+    assert abs(other_trial(y, y, template, ids)["mean"]) < 0.15
+
+
+def test_other_trial_never_pairs_a_trial_with_itself():
+    y, template, ids = trials(n_trials=2)
+    a = other_trial(y, y, template, ids, n_permutations=20)
+    expected = np.mean([np.corrcoef((y - template)[ids == 0, k], (y - template)[ids == 1, k])[0, 1] for k in range(3)])
+    assert a["mean"] == pytest.approx(expected)
+
+
+def test_other_trial_uses_only_shared_time_bins():
+    y, template, ids = trials(n_trials=2)
+    bins = time_bins(ids)
+    bins[ids == 1] += 60  # the trials share 40 bins, below the limit
+    res = other_trial(y, y, template, ids, bins, n_permutations=1)
+    assert np.isnan(res["mean"]) and res["n_nan"] == 2 * 3
+    bins[ids == 1] -= 20  # now 60 shared bins: bin b of trial 0 meets sample b - 40 of trial 1
+    pair = residual_r_other_trial(y, y, template, ids, bins, np.random.default_rng(0), 1)
+    r = (y - template)
+    expected = np.mean([np.corrcoef(r[ids == 0, k][40:], r[ids == 1, k][:60])[0, 1] for k in range(3)])
+    expected_rev = np.mean([np.corrcoef(r[ids == 1, k][:60], r[ids == 0, k][40:])[0, 1] for k in range(3)])
+    assert pair["mean"] == pytest.approx((expected + expected_rev) / 2)
+
+
+def test_other_trial_with_one_trial_is_undefined():
+    y, template, ids = trials(n_trials=1)
+    assert np.isnan(other_trial(y, y, template, ids)["mean"])
+
+
 def templates_for(y, cue, oracle, ids):
-    return {"P1": SubjectTemplates(y.astype(np.float32), ids.astype(np.int32), cue.astype(np.float32), oracle.astype(np.float32))}
+    return {"P1": SubjectTemplates(y.astype(np.float32), ids.astype(np.int32), cue.astype(np.float32),
+                                   oracle.astype(np.float32), time_bins(ids))}
 
 
 def saved(y, pred, ids):
@@ -70,6 +119,16 @@ def test_score_predictions_uses_each_template():
     row = score_predictions(saved(y, cue, ids), templates_for(y, cue, oracle, ids))[0]
     assert np.isnan(row["residual_r"]) and row["residual_r_n_nan"] == 18
     assert row["residual_r_oracle"] == pytest.approx(-1.0, abs=1e-4)  # cue - oracle opposes y - oracle
+    assert np.isnan(row["residual_r_other_trial"]) and np.isnan(row["residual_r_specific"])
+
+
+def test_score_predictions_specific_is_the_difference_and_repeats_with_the_seed():
+    y, cue, ids = trials()
+    pred = cue + 0.5 * (y - cue)
+    a = score_predictions(saved(y, pred, ids), templates_for(y, cue, cue, ids), seed=3)[0]
+    b = score_predictions(saved(y, pred, ids), templates_for(y, cue, cue, ids), seed=3)[0]
+    assert a["residual_r_specific"] == pytest.approx(a["residual_r"] - a["residual_r_other_trial"])
+    assert a["residual_r_other_trial"] == b["residual_r_other_trial"]
 
 
 def test_score_predictions_rejects_misaligned_samples():

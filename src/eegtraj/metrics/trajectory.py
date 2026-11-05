@@ -18,6 +18,7 @@ import pandas as pd
 AXES = ("x", "y", "z")
 TRIAL_METRICS = ("r", "r2", "rmse", "nrmse")
 CONSTANT_TOL = 1e-12  # variance below this (relative to scale) counts as a constant signal
+MIN_SHARED_BINS = 50  # 0.5 s at 100 Hz; fewer shared time bins leave a trial pair undefined
 
 METRIC_DEFINITIONS = {
     "r": "Pearson correlation per trial per axis; mean over trials, then over axes, then subjects",
@@ -30,6 +31,10 @@ METRIC_DEFINITIONS = {
                   "cue-locked template of the training subjects; same aggregation; NaN if the prediction equals T_cue",
     "residual_r_oracle": "ANALYSIS ONLY, labeled: residual_r with the template aligned on the test trial's own "
                          "kinematic onset, which a real decoder cannot know",
+    "residual_r_other_trial": "CONTROL: residual_r with each trial's predicted residual paired with the target "
+                              "residual of another trial of the same subject, on their shared bins of time since "
+                              "LED-on; measures what is shared across trials",
+    "residual_r_specific": "residual_r - residual_r_other_trial per subject; the part that needs the same trial",
 }
 
 
@@ -112,6 +117,35 @@ def residual_r(y_true: np.ndarray, y_pred: np.ndarray, template: np.ndarray, tri
                        for t in trials])
     axes = AXES[:true_res.shape[1]]
     per_axis = pd.DataFrame(values, columns=axes).mean(axis=0)  # pandas mean skips NaN
+    return {"per_axis": {a: float(v) for a, v in per_axis.items()}, "mean": float(per_axis.mean()),
+            "n_nan": int(np.isnan(values).sum())}
+
+
+def residual_r_other_trial(y_true: np.ndarray, y_pred: np.ndarray, template: np.ndarray, trial_ids: np.ndarray,
+                           time_bins: np.ndarray, rng: np.random.Generator, n_permutations: int = 5,
+                           min_shared_bins: int = MIN_SHARED_BINS) -> dict:
+    """Control for ``residual_r``: pair each trial's predicted residual with another trial's target residual.
+
+    Samples are matched on ``time_bins`` (integer time since a common event), and r uses the bins both
+    trials have. Each permutation pairs every trial with the next one in a random cycle, so no trial
+    meets itself. Pairs with fewer than ``min_shared_bins`` shared bins, or a constant residual, are NaN.
+
+    Returns ``{"per_axis": {axis: value}, "mean": value, "n_nan": count}``; ``n_nan`` is over all permutations.
+    """
+    true_res = np.asarray(y_true, np.float64) - np.asarray(template, np.float64)
+    pred_res = np.asarray(y_pred, np.float64) - np.asarray(template, np.float64)
+    trial_ids, time_bins = np.asarray(trial_ids), np.asarray(time_bins)
+    masks = [trial_ids == t for t in pd.unique(trial_ids)]
+    n_axes, n_trials = true_res.shape[1], len(masks)
+    values = np.full((n_permutations, n_trials, n_axes), np.nan)
+    for k in range(n_permutations if n_trials > 1 else 0):
+        order = rng.permutation(n_trials)
+        for a, b, slot in zip(order, np.roll(order, -1), range(n_trials)):
+            _, ia, ib = np.intersect1d(time_bins[masks[a]], time_bins[masks[b]], assume_unique=True, return_indices=True)
+            if ia.size >= min_shared_bins:
+                p, t = pred_res[masks[a]][ia], true_res[masks[b]][ib]
+                values[k, slot] = [pearson_r(t[:, c], p[:, c]) for c in range(n_axes)]
+    per_axis = pd.DataFrame(values.reshape(-1, n_axes), columns=AXES[:n_axes]).mean(axis=0)
     return {"per_axis": {a: float(v) for a, v in per_axis.items()}, "mean": float(per_axis.mean()),
             "n_nan": int(np.isnan(values).sum())}
 

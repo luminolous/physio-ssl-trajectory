@@ -3,7 +3,7 @@
 --stage data-baselines (default) reads metrics.json of every non-smoke run under
 output/data-baselines/baselines/ and output/data-baselines/artifact-controls/.
 --stage diagnostics reads output/data-baselines/baselines/ and output/diagnostics/{baselines,tuning,history}/,
-and adds residual_r and residual_r_oracle from the newest output/diagnostics/residual/<run-id>/residual.csv.
+and adds the residual metrics from the newest output/diagnostics/residual/<run-id>/residual.csv.
 Runs of one configuration are grouped by
 (group, name, tag without the seed part): several runs in a group are seeds, so per-subject
 values are averaged over seeds first and the SD of the aggregate r across seeds is reported as
@@ -14,7 +14,7 @@ Writes to output/<stage>/summary/:
     runs.csv         one row per run (aggregate metrics as logged)
     models.csv/.md   one row per configuration (seed-averaged)
     per_subject_r.csv  per-subject r (seed-averaged), one column per configuration
-    per_subject_residual_r.csv  same for residual_r (diagnostics only)
+    per_subject_residual_r.csv, per_subject_residual_r_specific.csv  same for those metrics (diagnostics only)
 
 Usage (from repo root):
     .venv\\Scripts\\python scripts\\summarize_runs.py [--stage diagnostics]
@@ -38,7 +38,7 @@ SOURCES = {
                     (OUTPUT / "diagnostics", "tuning"), (OUTPUT / "diagnostics", "history")),
 }
 RESIDUAL_ROOT = OUTPUT / "diagnostics" / "residual"
-RESIDUAL_METRICS = ("residual_r", "residual_r_oracle")
+RESIDUAL_METRICS = ("residual_r", "residual_r_oracle", "residual_r_other_trial", "residual_r_specific")
 METRICS = ("r", "r2", "rmse", "nrmse")
 FLOORS = ("template", "stereotypy", "template_cue")
 RUN_ID = re.compile(r"^\d{8}-\d{6}(?:_(?P<tag>.+))?$")
@@ -144,11 +144,12 @@ def main() -> None:
     models.to_csv(out_dir / "models.csv", index=False)
     subj.to_csv(out_dir / "per_subject_r.csv", index_label="subject")
     if residuals is not None:
-        pd.DataFrame({f"{g}/{c}": residual_per_subject(residuals, [d.as_posix() for d, _ in rs], "residual_r")
-                      for (g, c), rs in configs.items()}).to_csv(out_dir / "per_subject_residual_r.csv", index_label="subject")
+        for metric in ("residual_r", "residual_r_specific"):
+            pd.DataFrame({f"{g}/{c}": residual_per_subject(residuals, [d.as_posix() for d, _ in rs], metric)
+                          for (g, c), rs in configs.items()}).to_csv(out_dir / f"per_subject_{metric}.csv", index_label="subject")
 
     cols = ["group", "config", "n_runs", "oracle_timing", "cue_timing", "n_parameters", "r_mean", "r_sd", "r_seed_sd",
-            "r2_mean", "nrmse_mean", "residual_r_mean", "residual_r_sd", "residual_r_oracle_mean", "pooled_r_secondary", "delta_r_vs_template", "n_above_template",
+            "r2_mean", "nrmse_mean", "residual_r_mean", "residual_r_sd", "residual_r_oracle_mean", "residual_r_other_trial_mean", "residual_r_specific_mean", "residual_r_specific_sd", "pooled_r_secondary", "delta_r_vs_template", "n_above_template",
             "delta_r_vs_stereotypy", "n_above_stereotypy", "delta_r_vs_template_cue", "n_above_template_cue"]
     md = models[[c for c in cols if c in models]].to_markdown(index=False, floatfmt=".3f")
     run_list = "\n".join(f"- `{c}`: {r}" for c, r in zip(models["group"] + "/" + models["config"], models["runs"]))
@@ -161,7 +162,9 @@ def main() -> None:
         "n_above_X = subjects where r > r of X. oracle_timing = uses the test trial's kinematic onset. "
         "cue_timing = uses the test trial's LED-on time, which a real decoder can know. "
         "residual_r = per-trial r after subtracting the cue-locked template from prediction and target; NaN for "
-        "the cue template itself. residual_r_oracle = same with the oracle-aligned template; analysis only.\n\n"
+        "the cue template itself. residual_r_oracle = same with the oracle-aligned template; analysis only. "
+        "residual_r_other_trial = control pairing each predicted residual with another trial of the subject. "
+        "residual_r_specific = residual_r minus that control.\n\n"
         + md + "\n\n## Run directories\n\n" + run_list + "\n", encoding="utf-8")
     print(md)
     print(f"\n{len(runs)} runs, {len(models)} configurations -> {out_dir}")

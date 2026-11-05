@@ -154,4 +154,27 @@ The fixed lr was chosen for this ablation only. The check on EEGNet at 3 s, seed
 - The oracle-aligned template reaches 0.475 because knowing the true onset explains much of the residual. The onset template gets 0.021, so its decoded onsets carry little of that timing.
 - Kalman has a high residual_r but R² -3.08. Pearson r ignores amplitude, so this metric does not mean the prediction is accurate.
 
-Limit: residual_r is not purely trial-specific. A model can correlate with the residual through what is shared across a subject's trials, such as a shape difference between that subject and the training subjects.
+### Other-trial control
+
+residual_r is not purely trial-specific. A model can correlate with the residual through what is shared across a subject's trials, such as a shape difference between that subject and the training subjects. `residual_r_other_trial` measures that part: each predicted residual is paired with the target residual of another trial of the same subject, on their shared bins of time since LED-on (at least 50). It uses 5 random trial cycles per subject, the same in every run (seed 20261106). `residual_r_specific` is residual_r minus this control.
+
+| Model | History | residual_r | Other trial | Specific (mean ± SD) | Subjects above 0 |
+|---|---|---|---|---|---|
+| Ridge | 0.5 s | 0.051 | 0.005 | 0.045 ± 0.034 | 9/10 |
+| Kalman | 0.5 s | 0.181 | 0.062 | 0.118 ± 0.046 | 10/10 |
+| EEGNet | 0.5 s | 0.086 | 0.021 | 0.065 ± 0.044 | 9/10 |
+| EEGNet | 1 s | 0.116 | 0.043 | 0.073 ± 0.044 | 9/10 |
+| EEGNet | 2 s | 0.148 | 0.058 | 0.090 ± 0.048 | 10/10 |
+| EEGNet | 3 s | 0.149 | 0.055 | 0.094 ± 0.058 | 10/10 |
+| CNN-LSTM | 0.5 s | 0.154 | 0.061 | 0.093 ± 0.050 | 10/10 |
+| CNN-LSTM | 1 s | 0.182 | 0.065 | 0.118 ± 0.058 | 10/10 |
+| CNN-LSTM | 2 s | 0.237 | 0.102 | 0.134 ± 0.064 | 10/10 |
+| CNN-LSTM | 3 s | 0.237 | 0.102 | 0.135 ± 0.073 | 10/10 |
+| Onset template | n/a | 0.021 | -0.007 | 0.029 ± 0.037 | 8/10 |
+| Template (oracle timing) | n/a | 0.475 | 0.281 | 0.195 ± 0.121 | 10/10 |
+
+- Decoders hold a small but consistent trial-specific signal: 0.134 for CNN-LSTM at 2 s, above 0 in all 10 subjects.
+- History helps this part only a little: EEGNet 0.5 s to 3 s +0.029 (7/10 subjects up), CNN-LSTM 0.5 s to 2 s +0.041 (8/10 up), against r gains of +0.154 and +0.089. These are different measures, so the sizes are not additive. From 2 s to 3 s the gain is +0.003 and 0.000.
+- CNN-LSTM is above EEGNet at 0.5 s in all 10 subjects (+0.028), and CNN-LSTM at 2 s is above EEGNet at 3 s in 8/10 (+0.041), although EEGNet at 3 s has the higher r.
+
+Not shown by this control: where the specific part comes from. It can be reaction-time timing, movement-related EEG, or artifacts, because all of them change from trial to trial. The specific value also compares different samples: residual_r uses the whole trial, and the control uses the bins two trials share.
