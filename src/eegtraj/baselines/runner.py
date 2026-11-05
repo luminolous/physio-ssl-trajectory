@@ -118,7 +118,7 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
     def get(subject: str) -> SubjectSamples:
         if subject not in loaded:
             s = load_subject_samples(w["cache_dir"], subject, cfg["data"]["band"], cfg["data"]["reference"],
-                                     cfg["data"]["channel_set"], w["target"], history)
+                                     cfg["data"]["channel_set"], w["target"], history, pre_lift=bool(w.get("pre_lift")))
             loaded[subject] = trial_filter(s, cfg.get("exclude_flags", []), max_trials)
         return loaded[subject]
 

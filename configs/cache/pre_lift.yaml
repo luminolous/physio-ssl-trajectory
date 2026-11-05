@@ -1,0 +1,6 @@
+# EEG before each lift's window, for the history-length ablation (deep models: broadband, CAR).
+cache_config: configs/cache/default.yaml
+cache_dir: dataset/cache/98f5fa6e66
+band: broadband
+reference: car
+max_history_samples: 300  # 3 s at 100 Hz

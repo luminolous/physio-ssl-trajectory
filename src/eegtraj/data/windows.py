@@ -22,6 +22,7 @@ import numpy as np
 import pandas as pd
 
 from eegtraj.data.cache import load_subject
+from eegtraj.data.pre_lift import insert_pre_lift
 from eegtraj.preprocessing.reference import channel_indices
 
 WRIST_INDEX = 3  # sensor 4 in kin_pos (4, 3, T)
@@ -36,6 +37,8 @@ class SubjectSamples:
     target: float32 (3, T): wrist position re-centered per lift at onset (cm), or velocity (cm/s).
     sample_idx: int64 (n,), indices into T of the scored target samples.
     trial_row: int32 (n,), row of ``trials`` each target sample belongs to.
+    eeg_stat_mask: bool (T,) or None. If set, EEG statistics use only these samples (the lift samples,
+        when ``eeg`` also holds EEG from before each lift).
     """
 
     subject: str
@@ -45,6 +48,10 @@ class SubjectSamples:
     trial_row: np.ndarray
     trials: pd.DataFrame
     fs_hz: float
+    eeg_stat_mask: np.ndarray | None = None
+
+    def eeg_for_stats(self) -> np.ndarray:
+        return self.eeg if self.eeg_stat_mask is None else self.eeg[:, self.eeg_stat_mask]
 
 
 def segment_samples(trials: pd.DataFrame, fs_hz: float, history: int) -> tuple[np.ndarray, np.ndarray]:
@@ -77,7 +84,7 @@ def recentered_wrist(kin_pos: np.ndarray, trials: pd.DataFrame, fs_hz: float) ->
 
 
 def load_subject_samples(cache_dir: str | Path, subject: str, band: str, reference: str,
-                         channel_set: str, target: str, history: int) -> SubjectSamples:
+                         channel_set: str, target: str, history: int, pre_lift: bool = False) -> SubjectSamples:
     """Load one subject from the cache as inputs + targets.
 
     Args:
@@ -86,6 +93,8 @@ def load_subject_samples(cache_dir: str | Path, subject: str, band: str, referen
             or ``emg`` to use the EMG envelope as input (artifact control).
         target: ``position`` (re-centered wrist) | ``velocity`` (wrist).
         history: EEG window length in samples.
+        pre_lift: also load EEG from before each lift (see ``eegtraj.data.pre_lift``), so the history
+            may start before the lift window.
     """
     arrays = ["kin_pos", "wrist_vel", "emg_env" if channel_set == "emg" else f"eeg_{band}_{reference}"]
     data, trials, manifest = load_subject(cache_dir, subject, arrays=arrays)
@@ -101,8 +110,18 @@ def load_subject_samples(cache_dir: str | Path, subject: str, band: str, referen
         y = np.asarray(data["wrist_vel"], dtype=np.float32)
     else:
         raise ValueError(f"unknown target {target!r}")
-    idx, rows = segment_samples(trials, fs, history)
-    return SubjectSamples(subject, eeg, y, idx, rows, trials, fs)
+    if not pre_lift:
+        idx, rows = segment_samples(trials, fs, history)
+        return SubjectSamples(subject, eeg, y, idx, rows, trials, fs)
+    if channel_set != "all":
+        raise ValueError("pre_lift supports only channel_set 'all'")
+    n_pre = history - 1
+    pre = np.load(Path(cache_dir) / subject / f"pre_lift_eeg_{band}_{reference}.npy", mmap_mode="r")
+    if n_pre > pre.shape[2]:
+        raise ValueError(f"history {history} needs {n_pre} pre-lift samples; the cache has {pre.shape[2]}")
+    eeg, y, trials, keep = insert_pre_lift(eeg, y, trials, pre, n_pre)
+    idx, rows = segment_samples(trials, fs, 1)
+    return SubjectSamples(subject, eeg, y, idx, rows, trials, fs, eeg_stat_mask=keep)
 
 
 @dataclass
@@ -135,9 +154,9 @@ def fit_eeg_normalizers(subjects: list[SubjectSamples], train_subjects: tuple[st
     ``train_subjects``: one standardizer fitted on the training subjects, used for all.
     """
     if mode == "per_subject":
-        return {s.subject: Standardizer.fit([s.eeg]) for s in subjects}
+        return {s.subject: Standardizer.fit([s.eeg_for_stats()]) for s in subjects}
     if mode == "train_subjects":
-        shared = Standardizer.fit([s.eeg for s in subjects if s.subject in train_subjects])
+        shared = Standardizer.fit([s.eeg_for_stats() for s in subjects if s.subject in train_subjects])
         return {s.subject: shared for s in subjects}
     raise ValueError(f"unknown EEG normalization mode {mode!r}")
 

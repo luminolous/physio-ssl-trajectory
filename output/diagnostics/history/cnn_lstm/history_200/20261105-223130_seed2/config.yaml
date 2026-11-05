@@ -1,0 +1,75 @@
+baseline:
+  name: cnn_lstm
+  params:
+    model:
+      n_temporal: 8
+      temporal_kernel: 25
+      n_spatial: 16
+      pool: 2
+      hidden: 32
+      lstm_layers: 1
+      drop_prob: 0.25
+    train:
+      lr: 0.001
+      weight_decay: 0.01
+      batch_size: 512
+      max_epochs: 30
+      samples_per_epoch: 200000
+      val_samples: 100000
+      patience: 5
+      amp: true
+data:
+  windows_config: configs/data/windows_long_history.yaml
+  band: broadband
+  reference: car
+  channel_set: all
+  windows:
+    cache_dir: dataset/cache/98f5fa6e66
+    history_samples: 200
+    pre_lift: true
+    ridge_lag_step_samples: 2
+    target: position
+    eeg_normalization: per_subject
+splits:
+  config: configs/splits/default.yaml
+  mode: loso
+  resolved:
+    seed: 20261029
+    subjects:
+    - P1
+    - P2
+    - P3
+    - P4
+    - P5
+    - P6
+    - P7
+    - P8
+    - P9
+    - P10
+    - P11
+    - P12
+    n_screening: 2
+    n_inner_val: 2
+    screening_subjects:
+    - P3
+    - P6
+    within_subject:
+      train_series:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      val_series:
+      - 6
+      test_series:
+      - 7
+      - 8
+      - 9
+seed: 2
+save_predictions: true
+exclude_flags: []
+output:
+  root: output/diagnostics
+  group: history
+  name: cnn_lstm

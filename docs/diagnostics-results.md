@@ -83,3 +83,48 @@ Decoded minus true onset, per test subject.
 
 - The onset error spread (mean IQR 373 ms) is about twice the reaction-time spread (mean IQR 166 ms). This fits the result: assuming a fixed time after LED-on is more accurate than this detector. Only 22% of lifts on average fall within ±100 ms.
 - This describes one detector: cross-subject LDA with fixed shrinkage and a single first-crossing rule. It does not show that EEG holds no better onset information.
+
+## History length
+
+Question: does a longer causal EEG history help the deep baselines? EEGNet and CNN-LSTM, LOSO over 10 subjects, 3 seeds, fixed lr 1e-3 and weight decay 0.01. The 0.5 s rows are the data-baselines runs. Full table: `output/diagnostics/history/summary/`.
+
+### Result
+
+| Model | History | r | R² | NRMSE | Peak GPU (GB) | Epoch (s) | Subjects with higher r than 0.5 s |
+|---|---|---|---|---|---|---|---|
+| EEGNet | 0.5 s | 0.449 | 0.021 | 0.323 | 0.51 | 3.2 | n/a |
+| EEGNet | 1 s | 0.520 | -0.004 | 0.323 | 0.66 | 6.1 | 10/10 |
+| EEGNet | 2 s | 0.576 | 0.004 | 0.319 | 0.94 | 11.2 | 9/10 |
+| EEGNet | 3 s | 0.603 | 0.125 | 0.301 | 1.22 | 16.4 | 9/10 |
+| CNN-LSTM | 0.5 s | 0.499 | 0.039 | 0.317 | 0.53 | see note | n/a |
+| CNN-LSTM | 1 s | 0.532 | 0.011 | 0.316 | 0.69 | 5.9 | 9/10 |
+| CNN-LSTM | 2 s | 0.588 | 0.075 | 0.300 | 0.98 | 11.5 | 9/10 |
+| CNN-LSTM | 3 s | 0.579 | 0.035 | 0.303 | 1.27 | 16.7 | 9/10 |
+
+Note: the 0.5 s CNN-LSTM seeds ran at the same time, so their 10.7 s per epoch is not comparable. Epoch time grows about linearly with history.
+
+- r rises with history in both models. EEGNet keeps rising to 3 s (2 s to 3 s: +0.027, 9/10 subjects up). CNN-LSTM stops at 2 s (2 s to 3 s: -0.009, 6/10 up).
+- R² rises much less. It stays near zero up to 2 s for EEGNet, and only EEGNet at 3 s clearly improves on 0.5 s (+0.104, 7/10 up).
+- CNN-LSTM gets less stable with history. The SD of r across subjects grows from 0.091 to 0.178, and seed means at 3 s span 0.545 to 0.609. P8 falls from r 0.420 to 0.193, and P12 reaches R² -0.88.
+- No history length reaches the cue-locked template (r 0.803, R² 0.524, NRMSE 0.216).
+
+Not yet known: how much of the gain is trial-specific. A longer window contains the LEDOn cue for more samples, so it may only give the model a better estimate of the time since the cue. The residual metric tests this.
+
+### EEG before the lift window
+
+The main cache holds only each lift's window, concatenated, and neighbouring windows overlap, so it cannot serve a history that starts before the lift. `scripts/build_pre_lift_cache.py` cuts those samples from the continuous recording, on the same 100 Hz grid and with the same causal chain. On P1, 0.5 s windows equal the main cache exactly, and 9300 pre-lift samples equal the previous lift at the same raw indices.
+
+Lifts at the first scored sample (10 test subjects). Flagged lifts are reported and stay in the scoring:
+
+| History | Filter transient | Before series start | History leaves the lift window |
+|---|---|---|---|
+| 0.5 s | 4.7% | 0% | 0% |
+| 1 s | 4.8% | 0% | 0.1% |
+| 2 s | 4.8% | 1.4% | 67.1% |
+| 3 s | 5.1% | 3.0% | 99.1% |
+
+Samples before the series start hold the earliest value on the lift's grid.
+
+### Fixed lr
+
+The fixed lr was chosen for this ablation only. The check on EEGNet at 3 s, seed 1, with the lr grid {1e-4, 3e-4, 1e-3} gave r 0.591 against 0.607 for fixed lr (-0.016, over the agreed 0.01 limit) and R² 0.090 against 0.097 (-0.008). The grid was worse, and the 5 folds that selected 1e-3 differ by a mean |r| of 0.022 from the initial random state alone. The user kept the fixed lr. It may still not be the best lr at 3 s: the grid selected a lower lr in 5 of 10 folds, and 9 of 30 EEGNet folds at 3 s reach their best validation at epoch 1.

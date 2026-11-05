@@ -1,0 +1,13 @@
+{
+  "built": [
+    {
+      "subject": "P1",
+      "shape": [
+        32,
+        294,
+        300
+      ],
+      "n_lifts_with_missing": 9
+    }
+  ]
+}

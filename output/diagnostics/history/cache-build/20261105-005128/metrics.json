@@ -1,0 +1,103 @@
+{
+  "built": [
+    {
+      "subject": "P2",
+      "shape": [
+        32,
+        294,
+        300
+      ],
+      "n_lifts_with_missing": 9
+    },
+    {
+      "subject": "P3",
+      "shape": [
+        32,
+        294,
+        300
+      ],
+      "n_lifts_with_missing": 9
+    },
+    {
+      "subject": "P4",
+      "shape": [
+        32,
+        294,
+        300
+      ],
+      "n_lifts_with_missing": 9
+    },
+    {
+      "subject": "P5",
+      "shape": [
+        32,
+        294,
+        300
+      ],
+      "n_lifts_with_missing": 9
+    },
+    {
+      "subject": "P6",
+      "shape": [
+        32,
+        294,
+        300
+      ],
+      "n_lifts_with_missing": 9
+    },
+    {
+      "subject": "P7",
+      "shape": [
+        32,
+        294,
+        300
+      ],
+      "n_lifts_with_missing": 9
+    },
+    {
+      "subject": "P8",
+      "shape": [
+        32,
+        294,
+        300
+      ],
+      "n_lifts_with_missing": 9
+    },
+    {
+      "subject": "P9",
+      "shape": [
+        32,
+        294,
+        300
+      ],
+      "n_lifts_with_missing": 9
+    },
+    {
+      "subject": "P10",
+      "shape": [
+        32,
+        294,
+        300
+      ],
+      "n_lifts_with_missing": 9
+    },
+    {
+      "subject": "P11",
+      "shape": [
+        32,
+        294,
+        300
+      ],
+      "n_lifts_with_missing": 9
+    },
+    {
+      "subject": "P12",
+      "shape": [
+        32,
+        294,
+        300
+      ],
+      "n_lifts_with_missing": 9
+    }
+  ]
+}

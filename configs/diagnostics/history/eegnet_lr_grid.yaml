@@ -1,0 +1,32 @@
+# Check of the fixed lr: EEGNet, 3 s history, seed 1, lr grid chosen per fold on inner-validation MSE.
+# Fixed lr counts as safe if r and R² of the best lr are within 0.01 of lr 1e-3.
+baseline:
+  name: eegnet
+  params:
+    model:
+      kernel_length: 50
+    grid:
+      lr: [0.0001, 0.0003, 0.001]
+    train:
+      weight_decay: 0.01
+      batch_size: 512
+      max_epochs: 30
+      samples_per_epoch: 200000
+      val_samples: 100000
+      patience: 5
+      amp: true
+data:
+  windows_config: configs/data/windows_long_history.yaml
+  band: broadband
+  reference: car
+  channel_set: all
+splits:
+  config: configs/splits/default.yaml
+  mode: loso
+seed: 1
+save_predictions: true
+exclude_flags: []
+output:
+  root: output/diagnostics
+  group: history
+  name: eegnet_lr_grid
