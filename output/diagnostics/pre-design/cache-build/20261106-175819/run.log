@@ -1,0 +1,21 @@
+2026-11-06 17:58:22 INFO    eegtraj.utils.run: Run directory: output\diagnostics\pre-design\cache-build\20261106-175819
+2026-11-06 17:58:23 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-06 17:58:24 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-06 17:58:25 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-06 17:58:26 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-06 17:58:27 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-06 17:58:28 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-06 17:58:29 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-06 17:58:30 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-06 17:58:30 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-06 17:58:31 INFO    eegtraj.data.band_variant: P2: beta_env car, eeg (32, 301875), pre (32, 294, 200), 8.8 s
+2026-11-06 17:58:37 INFO    eegtraj.data.band_variant: P3: beta_env car, eeg (32, 251103), pre (32, 294, 200), 6.2 s
+2026-11-06 17:58:43 INFO    eegtraj.data.band_variant: P4: beta_env car, eeg (32, 254856), pre (32, 294, 200), 6.6 s
+2026-11-06 17:58:51 INFO    eegtraj.data.band_variant: P5: beta_env car, eeg (32, 276924), pre (32, 294, 200), 7.1 s
+2026-11-06 17:58:58 INFO    eegtraj.data.band_variant: P6: beta_env car, eeg (32, 277332), pre (32, 294, 200), 7.2 s
+2026-11-06 17:59:06 INFO    eegtraj.data.band_variant: P7: beta_env car, eeg (32, 361838), pre (32, 294, 200), 7.8 s
+2026-11-06 17:59:12 INFO    eegtraj.data.band_variant: P8: beta_env car, eeg (32, 261501), pre (32, 294, 200), 6.5 s
+2026-11-06 17:59:19 INFO    eegtraj.data.band_variant: P9: beta_env car, eeg (32, 270198), pre (32, 294, 200), 6.8 s
+2026-11-06 17:59:26 INFO    eegtraj.data.band_variant: P10: beta_env car, eeg (32, 279137), pre (32, 294, 200), 7.0 s
+2026-11-06 17:59:33 INFO    eegtraj.data.band_variant: P11: beta_env car, eeg (32, 282146), pre (32, 294, 200), 7.2 s
+2026-11-06 17:59:41 INFO    eegtraj.data.band_variant: P12: beta_env car, eeg (32, 286921), pre (32, 294, 200), 7.8 s

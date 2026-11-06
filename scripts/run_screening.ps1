@@ -7,6 +7,7 @@ param([int]$Seed = 1, [string[]]$Configs = @())
 $ErrorActionPreference = "Stop"
 $python = ".venv\Scripts\python"
 
+$Configs = $Configs -split ","  # powershell -File passes a,b as one string
 if (-not $Configs) {
     $Configs = Get-ChildItem "configs\diagnostics\screening\*.yaml" | ForEach-Object { $_.BaseName }
 }

@@ -1,0 +1,18 @@
+seed: 20261106
+n_permutations: 5
+n_runs: 14
+runs:
+- output/diagnostics/pre-design/screening/broadband__all/20261106-180430_seed1
+- output/diagnostics/pre-design/screening/broadband__contralateral/20261106-183341_seed1
+- output/diagnostics/pre-design/screening/broadband__ipsilateral/20261106-184019_seed1
+- output/diagnostics/pre-design/screening/broadband__no_prefrontal/20261106-184624_seed1
+- output/diagnostics/pre-design/screening/broadband__prefrontal/20261106-191020_seed1
+- output/diagnostics/pre-design/screening/broadband__sensorimotor/20261106-191546_seed1
+- output/diagnostics/pre-design/screening/env__all/20261106-192718_seed1
+- output/diagnostics/pre-design/screening/env__contralateral/20261106-195940_seed1
+- output/diagnostics/pre-design/screening/env__ipsilateral/20261106-200752_seed1
+- output/diagnostics/pre-design/screening/mrcp__all/20261106-213001_seed1
+- output/diagnostics/pre-design/screening/mrcp__contralateral/20261106-220207_seed1
+- output/diagnostics/pre-design/screening/mrcp__ipsilateral/20261106-221119_seed1
+- output/diagnostics/pre-design/screening/mrcp__prefrontal/20261106-221906_seed1
+- output/diagnostics/pre-design/screening/mrcp_env__all/20261106-201552_seed1

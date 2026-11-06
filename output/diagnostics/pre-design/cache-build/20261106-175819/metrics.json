@@ -1,0 +1,400 @@
+{
+  "built": [
+    {
+      "subject": "P2",
+      "band": "beta_env",
+      "reference": "car",
+      "band_hz": [
+        13.0,
+        30.0
+      ],
+      "envelope": {
+        "lowpass_hz": 5.0,
+        "order": 2
+      },
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        301875
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 0.458,
+        "S2": 0.476,
+        "S3": 0.5940000000000001,
+        "S4": 0.422,
+        "S5": 0.5,
+        "S6": 0.44999999999999996,
+        "S7": 0.45599999999999996,
+        "S8": 0.44399999999999995,
+        "S9": 0.44
+      },
+      "build_seconds": 8.8
+    },
+    {
+      "subject": "P3",
+      "band": "beta_env",
+      "reference": "car",
+      "band_hz": [
+        13.0,
+        30.0
+      ],
+      "envelope": {
+        "lowpass_hz": 5.0,
+        "order": 2
+      },
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        251103
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 0.486,
+        "S2": 0.41800000000000004,
+        "S3": 0.516,
+        "S4": 0.42400000000000004,
+        "S5": 0.44999999999999996,
+        "S6": 0.45599999999999996,
+        "S7": 0.42600000000000005,
+        "S8": 0.46799999999999997,
+        "S9": 0.496
+      },
+      "build_seconds": 6.2
+    },
+    {
+      "subject": "P4",
+      "band": "beta_env",
+      "reference": "car",
+      "band_hz": [
+        13.0,
+        30.0
+      ],
+      "envelope": {
+        "lowpass_hz": 5.0,
+        "order": 2
+      },
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        254856
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 0.442,
+        "S2": 0.42000000000000004,
+        "S3": 0.514,
+        "S4": 0.426,
+        "S5": 0.432,
+        "S6": 0.416,
+        "S7": 0.44999999999999996,
+        "S8": 0.5,
+        "S9": 0.42200000000000004
+      },
+      "build_seconds": 6.6
+    },
+    {
+      "subject": "P5",
+      "band": "beta_env",
+      "reference": "car",
+      "band_hz": [
+        13.0,
+        30.0
+      ],
+      "envelope": {
+        "lowpass_hz": 5.0,
+        "order": 2
+      },
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        276924
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 0.446,
+        "S2": 0.43400000000000005,
+        "S3": 0.53,
+        "S4": 0.468,
+        "S5": 0.488,
+        "S6": 0.508,
+        "S7": 0.522,
+        "S8": 0.514,
+        "S9": 0.444
+      },
+      "build_seconds": 7.1
+    },
+    {
+      "subject": "P6",
+      "band": "beta_env",
+      "reference": "car",
+      "band_hz": [
+        13.0,
+        30.0
+      ],
+      "envelope": {
+        "lowpass_hz": 5.0,
+        "order": 2
+      },
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        277332
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 0.452,
+        "S2": 0.436,
+        "S3": 0.432,
+        "S4": 0.502,
+        "S5": 0.444,
+        "S6": 0.44599999999999995,
+        "S7": 0.52,
+        "S8": 0.438,
+        "S9": 0.438
+      },
+      "build_seconds": 7.2
+    },
+    {
+      "subject": "P7",
+      "band": "beta_env",
+      "reference": "car",
+      "band_hz": [
+        13.0,
+        30.0
+      ],
+      "envelope": {
+        "lowpass_hz": 5.0,
+        "order": 2
+      },
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        361838
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 0.514,
+        "S2": 0.438,
+        "S3": 0.438,
+        "S4": 0.5,
+        "S5": 0.452,
+        "S6": 0.41000000000000003,
+        "S7": 0.42000000000000004,
+        "S8": 0.42000000000000004,
+        "S9": 0.448
+      },
+      "build_seconds": 7.8
+    },
+    {
+      "subject": "P8",
+      "band": "beta_env",
+      "reference": "car",
+      "band_hz": [
+        13.0,
+        30.0
+      ],
+      "envelope": {
+        "lowpass_hz": 5.0,
+        "order": 2
+      },
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        261501
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 0.45399999999999996,
+        "S2": 0.434,
+        "S3": 0.42000000000000004,
+        "S4": 0.446,
+        "S5": 0.438,
+        "S6": 0.448,
+        "S7": 0.436,
+        "S8": 0.436,
+        "S9": 0.41800000000000004
+      },
+      "build_seconds": 6.5
+    },
+    {
+      "subject": "P9",
+      "band": "beta_env",
+      "reference": "car",
+      "band_hz": [
+        13.0,
+        30.0
+      ],
+      "envelope": {
+        "lowpass_hz": 5.0,
+        "order": 2
+      },
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        270198
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 0.454,
+        "S2": 0.45,
+        "S3": 0.452,
+        "S4": 0.504,
+        "S5": 0.46,
+        "S6": 0.448,
+        "S7": 0.53,
+        "S8": 0.536,
+        "S9": 0.45999999999999996
+      },
+      "build_seconds": 6.8
+    },
+    {
+      "subject": "P10",
+      "band": "beta_env",
+      "reference": "car",
+      "band_hz": [
+        13.0,
+        30.0
+      ],
+      "envelope": {
+        "lowpass_hz": 5.0,
+        "order": 2
+      },
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        279137
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 0.456,
+        "S2": 0.494,
+        "S3": 0.4,
+        "S4": 0.446,
+        "S5": 0.42000000000000004,
+        "S6": 0.48,
+        "S7": 0.536,
+        "S8": 0.42600000000000005,
+        "S9": 0.508
+      },
+      "build_seconds": 7.0
+    },
+    {
+      "subject": "P11",
+      "band": "beta_env",
+      "reference": "car",
+      "band_hz": [
+        13.0,
+        30.0
+      ],
+      "envelope": {
+        "lowpass_hz": 5.0,
+        "order": 2
+      },
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        282146
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 0.45999999999999996,
+        "S2": 0.518,
+        "S3": 0.46399999999999997,
+        "S4": 0.528,
+        "S5": 0.45999999999999996,
+        "S6": 0.45199999999999996,
+        "S7": 0.42000000000000004,
+        "S8": 0.518,
+        "S9": 0.5
+      },
+      "build_seconds": 7.2
+    },
+    {
+      "subject": "P12",
+      "band": "beta_env",
+      "reference": "car",
+      "band_hz": [
+        13.0,
+        30.0
+      ],
+      "envelope": {
+        "lowpass_hz": 5.0,
+        "order": 2
+      },
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        286921
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 0.486,
+        "S2": 0.434,
+        "S3": 0.45199999999999996,
+        "S4": 0.43,
+        "S5": 0.46599999999999997,
+        "S6": 0.43000000000000005,
+        "S7": 0.46399999999999997,
+        "S8": 0.45799999999999996,
+        "S9": 0.45999999999999996
+      },
+      "build_seconds": 7.8
+    }
+  ]
+}

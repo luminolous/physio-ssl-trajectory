@@ -1,0 +1,400 @@
+{
+  "built": [
+    {
+      "subject": "P2",
+      "band": "mu_env",
+      "reference": "car",
+      "band_hz": [
+        8.0,
+        12.0
+      ],
+      "envelope": {
+        "lowpass_hz": 5.0,
+        "order": 2
+      },
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        301875
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 0.958,
+        "S2": 1.074,
+        "S3": 1.116,
+        "S4": 0.858,
+        "S5": 0.874,
+        "S6": 0.89,
+        "S7": 0.908,
+        "S8": 0.872,
+        "S9": 0.866
+      },
+      "build_seconds": 15.0
+    },
+    {
+      "subject": "P3",
+      "band": "mu_env",
+      "reference": "car",
+      "band_hz": [
+        8.0,
+        12.0
+      ],
+      "envelope": {
+        "lowpass_hz": 5.0,
+        "order": 2
+      },
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        251103
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 0.942,
+        "S2": 0.864,
+        "S3": 0.8600000000000001,
+        "S4": 0.846,
+        "S5": 0.95,
+        "S6": 0.942,
+        "S7": 0.992,
+        "S8": 0.998,
+        "S9": 0.87
+      },
+      "build_seconds": 8.7
+    },
+    {
+      "subject": "P4",
+      "band": "mu_env",
+      "reference": "car",
+      "band_hz": [
+        8.0,
+        12.0
+      ],
+      "envelope": {
+        "lowpass_hz": 5.0,
+        "order": 2
+      },
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        254856
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 0.88,
+        "S2": 0.882,
+        "S3": 1.012,
+        "S4": 0.946,
+        "S5": 0.878,
+        "S6": 0.872,
+        "S7": 0.954,
+        "S8": 0.95,
+        "S9": 0.94
+      },
+      "build_seconds": 12.9
+    },
+    {
+      "subject": "P5",
+      "band": "mu_env",
+      "reference": "car",
+      "band_hz": [
+        8.0,
+        12.0
+      ],
+      "envelope": {
+        "lowpass_hz": 5.0,
+        "order": 2
+      },
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        276924
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 0.94,
+        "S2": 0.828,
+        "S3": 1.06,
+        "S4": 0.9359999999999999,
+        "S5": 0.968,
+        "S6": 1.012,
+        "S7": 0.968,
+        "S8": 0.894,
+        "S9": 0.876
+      },
+      "build_seconds": 14.7
+    },
+    {
+      "subject": "P6",
+      "band": "mu_env",
+      "reference": "car",
+      "band_hz": [
+        8.0,
+        12.0
+      ],
+      "envelope": {
+        "lowpass_hz": 5.0,
+        "order": 2
+      },
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        277332
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 0.958,
+        "S2": 0.896,
+        "S3": 0.972,
+        "S4": 1.026,
+        "S5": 0.986,
+        "S6": 0.878,
+        "S7": 0.944,
+        "S8": 1.05,
+        "S9": 0.946
+      },
+      "build_seconds": 7.8
+    },
+    {
+      "subject": "P7",
+      "band": "mu_env",
+      "reference": "car",
+      "band_hz": [
+        8.0,
+        12.0
+      ],
+      "envelope": {
+        "lowpass_hz": 5.0,
+        "order": 2
+      },
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        361838
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 0.834,
+        "S2": 0.9359999999999999,
+        "S3": 0.9319999999999999,
+        "S4": 0.952,
+        "S5": 1.034,
+        "S6": 0.862,
+        "S7": 0.896,
+        "S8": 0.878,
+        "S9": 0.924
+      },
+      "build_seconds": 7.8
+    },
+    {
+      "subject": "P8",
+      "band": "mu_env",
+      "reference": "car",
+      "band_hz": [
+        8.0,
+        12.0
+      ],
+      "envelope": {
+        "lowpass_hz": 5.0,
+        "order": 2
+      },
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        261501
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 0.988,
+        "S2": 0.962,
+        "S3": 0.876,
+        "S4": 0.888,
+        "S5": 0.9359999999999999,
+        "S6": 0.888,
+        "S7": 0.874,
+        "S8": 0.884,
+        "S9": 0.9319999999999999
+      },
+      "build_seconds": 6.4
+    },
+    {
+      "subject": "P9",
+      "band": "mu_env",
+      "reference": "car",
+      "band_hz": [
+        8.0,
+        12.0
+      ],
+      "envelope": {
+        "lowpass_hz": 5.0,
+        "order": 2
+      },
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        270198
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 0.968,
+        "S2": 0.954,
+        "S3": 1.01,
+        "S4": 0.978,
+        "S5": 1.1280000000000001,
+        "S6": 0.98,
+        "S7": 0.88,
+        "S8": 1.1280000000000001,
+        "S9": 0.97
+      },
+      "build_seconds": 6.9
+    },
+    {
+      "subject": "P10",
+      "band": "mu_env",
+      "reference": "car",
+      "band_hz": [
+        8.0,
+        12.0
+      ],
+      "envelope": {
+        "lowpass_hz": 5.0,
+        "order": 2
+      },
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        279137
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 0.996,
+        "S2": 0.868,
+        "S3": 0.85,
+        "S4": 1.008,
+        "S5": 0.9099999999999999,
+        "S6": 0.874,
+        "S7": 0.998,
+        "S8": 0.986,
+        "S9": 0.954
+      },
+      "build_seconds": 7.0
+    },
+    {
+      "subject": "P11",
+      "band": "mu_env",
+      "reference": "car",
+      "band_hz": [
+        8.0,
+        12.0
+      ],
+      "envelope": {
+        "lowpass_hz": 5.0,
+        "order": 2
+      },
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        282146
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 1.028,
+        "S2": 1.13,
+        "S3": 0.968,
+        "S4": 0.968,
+        "S5": 0.95,
+        "S6": 0.946,
+        "S7": 0.892,
+        "S8": 1.01,
+        "S9": 0.9119999999999999
+      },
+      "build_seconds": 7.2
+    },
+    {
+      "subject": "P12",
+      "band": "mu_env",
+      "reference": "car",
+      "band_hz": [
+        8.0,
+        12.0
+      ],
+      "envelope": {
+        "lowpass_hz": 5.0,
+        "order": 2
+      },
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        286921
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 0.8979999999999999,
+        "S2": 0.812,
+        "S3": 0.89,
+        "S4": 0.9219999999999999,
+        "S5": 0.9039999999999999,
+        "S6": 0.938,
+        "S7": 0.868,
+        "S8": 1.004,
+        "S9": 0.884
+      },
+      "build_seconds": 7.6
+    }
+  ]
+}
