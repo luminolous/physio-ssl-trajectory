@@ -19,7 +19,8 @@ from typing import Any
 import numpy as np
 import yaml
 
-from eegtraj.baselines.base import FitContext, make_baseline
+from eegtraj.baselines.base import Baseline, FitContext, make_baseline
+from eegtraj.baselines.template import TemplateCueBaseline, time_since_event
 from eegtraj.data.splits import Fold, load_split_config, make_folds
 from eegtraj.data.windows import (
     SubjectSamples,
@@ -28,7 +29,15 @@ from eegtraj.data.windows import (
     load_subject_samples,
     sample_masks,
 )
-from eegtraj.metrics import METRIC_DEFINITIONS, aggregate_across_subjects, aggregate_subject, per_trial_metrics, pooled_r
+from eegtraj.metrics import (
+    METRIC_DEFINITIONS,
+    aggregate_across_subjects,
+    aggregate_subject,
+    per_trial_metrics,
+    pooled_r,
+    residual_r,
+    residual_r_other_trial,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -106,6 +115,32 @@ def select_folds(cfg: dict[str, Any]) -> list[Fold]:
     return folds
 
 
+def score_inner_validation(model: Baseline, train: list[SubjectSamples], val: list[SubjectSamples], ctx: FitContext,
+                           seed: int, n_permutations: int) -> dict[str, dict[str, float]]:
+    """r, R2, NRMSE, and the residual metrics of a fitted model on the fold's inner-validation subjects.
+
+    T_cue comes from the fold's training subjects. Permutations depend only on ``seed`` and the subject, as in
+    ``eegtraj.diagnostics.residual``. Early stopping used these subjects, so the values are optimistic in the same way
+    for every configuration. They never use the fold's test subject.
+    """
+    template = TemplateCueBaseline()
+    template.fit(train, [], ctx)
+    out = {}
+    for s in val:
+        m = ctx.val_masks[s.subject]
+        y_true, rows = s.target[:, s.sample_idx[m]].T, s.trial_row[m]
+        y_pred = model.predict(s, m, ctx)
+        scores = aggregate_subject(per_trial_metrics(y_true, y_pred, rows))
+        cue = template.predict(s, m, ctx)
+        bins = np.round(time_since_event(s, "ev_LEDOn", m) * s.fs_hz).astype(np.int64)
+        res = residual_r(y_true, y_pred, cue, rows)["mean"]
+        rng = np.random.default_rng([seed, int(s.subject[1:])])
+        other = residual_r_other_trial(y_true, y_pred, cue, rows, bins, rng, n_permutations)["mean"]
+        out[s.subject] = {"r": scores["r"]["mean"], "r2": scores["r2"]["mean"], "nrmse": scores["nrmse"]["mean"],
+                          "residual_r": res, "residual_r_other_trial": other, "residual_r_specific": res - other}
+    return out
+
+
 def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
     """Run every fold and write metrics.json (and predictions.npz). Returns the metrics dict."""
     t_start = time.time()
@@ -154,6 +189,12 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
         model = make_baseline(cfg["baseline"]["name"], cfg["baseline"].get("params"))
         model.fit(train, val, ctx)
         n_repeats = model.n_repeats
+        inner_val = None
+        if cfg.get("inner_val_scoring"):
+            inner_val = score_inner_validation(model, train, val, ctx, int(cfg["inner_val_scoring"]["seed"]),
+                                               int(cfg["inner_val_scoring"]["n_permutations"]))
+            logger.info("Fold %s inner validation: %s", fold.name,
+                        {s: {k: round(v, 3) for k, v in d.items()} for s, d in inner_val.items()})
 
         fold_subjects = {}
         for s in test:
@@ -183,7 +224,7 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
                              "val_subjects": list(fold.val_subjects), "test_subjects": list(fold.test_subjects),
                              "train_series": list(fold.train_series), "val_series": list(fold.val_series),
                              "test_series": list(fold.test_series), "n_target_samples": n,
-                             "baseline_info": info[fold.name], "test": fold_subjects,
+                             "baseline_info": info[fold.name], "test": fold_subjects, "inner_val": inner_val,
                              "seconds": round(time.time() - t_fold, 2)})
 
     aggregate = aggregate_across_subjects(subject_results)

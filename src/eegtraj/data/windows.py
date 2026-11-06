@@ -15,7 +15,7 @@ Normalization (D9):
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 
 import numpy as np
@@ -83,12 +83,13 @@ def recentered_wrist(kin_pos: np.ndarray, trials: pd.DataFrame, fs_hz: float) ->
     return wrist
 
 
-def load_subject_samples(cache_dir: str | Path, subject: str, band: str, reference: str,
+def load_subject_samples(cache_dir: str | Path, subject: str, band: str | list[str], reference: str,
                          channel_set: str, target: str, history: int, pre_lift: bool = False) -> SubjectSamples:
     """Load one subject from the cache as inputs + targets.
 
     Args:
-        band: ``lowfreq`` | ``broadband``; reference: ``car`` | ``orig``.
+        band: a cached band (``lowfreq``, ``broadband``, or an extra band from ``eegtraj.data.band_variant``),
+            or a list of them, stacked along the channel axis. reference: ``car`` | ``orig``.
         channel_set: ``all`` or a key of ``eegtraj.preprocessing.reference.CHANNEL_SETS``,
             or ``emg`` to use the EMG envelope as input (artifact control).
         target: ``position`` (re-centered wrist) | ``velocity`` (wrist).
@@ -96,6 +97,9 @@ def load_subject_samples(cache_dir: str | Path, subject: str, band: str, referen
         pre_lift: also load EEG from before each lift (see ``eegtraj.data.pre_lift``), so the history
             may start before the lift window.
     """
+    if not isinstance(band, str):
+        parts = [load_subject_samples(cache_dir, subject, b, reference, channel_set, target, history, pre_lift) for b in band]
+        return replace(parts[0], eeg=np.concatenate([p.eeg for p in parts], axis=0))
     arrays = ["kin_pos", "wrist_vel", "emg_env" if channel_set == "emg" else f"eeg_{band}_{reference}"]
     data, trials, manifest = load_subject(cache_dir, subject, arrays=arrays)
     fs = float(manifest["fs_hz"])

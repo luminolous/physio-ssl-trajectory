@@ -101,11 +101,15 @@ def test_common_average_and_channel_sets():
     all_set = set()
     for name, chans in CHANNEL_SETS.items():
         assert set(chans) <= set(NAMES), name
-        if name != "prefrontal":  # a deliberate subset of frontal, checked below
+        if name not in ("prefrontal", "contralateral", "ipsilateral", "no_prefrontal"):  # deliberate overlaps, checked below
             assert not (set(chans) & all_set), "channel sets must be disjoint"
             all_set |= set(chans)
         assert [NAMES[i] for i in channel_indices(NAMES, name)] == list(chans)
     assert set(CHANNEL_SETS["prefrontal"]) < set(CHANNEL_SETS["frontal"])
+    assert set(CHANNEL_SETS["no_prefrontal"]) == set(NAMES) - set(CHANNEL_SETS["prefrontal"])
+    assert len(CHANNEL_SETS["no_prefrontal"]) == 30
+    mirror = {"C3": "C4", "FC5": "FC6", "FC1": "FC2", "CP5": "CP6", "CP1": "CP2", "Cz": "Cz"}
+    assert [mirror[c] for c in CHANNEL_SETS["contralateral"]] == list(CHANNEL_SETS["ipsilateral"])
     assert channel_indices(NAMES, "all") == list(range(32))
 
 

@@ -11,6 +11,10 @@ Arrays in ``<cache_dir>/<subject>/``:
     variant_<band>_<ref>.json         band edges, settle time per series, provenance
 
 ``eegtraj.data.windows.load_subject_samples`` reads these arrays with ``band=<band>``.
+
+An envelope variant (``envelope`` given) stores band power instead of the signal. The chain is causal:
+interpolate, band-pass, CAR, rectify, low-pass, keep every factor-th sample. CAR comes before rectifying
+because it has no meaning on envelopes. The low-pass replaces the anti-alias filter.
 """
 
 from __future__ import annotations
@@ -28,7 +32,8 @@ import pandas as pd
 from eegtraj.data.pre_lift import cut_pre_lift, eeg_stream
 from eegtraj.data.wayeeggal import load_series
 from eegtraj.preprocessing.bad_channels import interpolate_bad_channels
-from eegtraj.preprocessing.filters import butter_sos, settle_time_s
+from eegtraj.preprocessing.filters import apply_sos, butter_sos, settle_time_s
+from eegtraj.preprocessing.reference import common_average
 
 logger = logging.getLogger(__name__)
 
@@ -48,9 +53,26 @@ def lift_raw_indices(hs_start: int, factor: int, n_samples: int) -> np.ndarray:
     return hs_start + factor * np.arange(n_samples) + factor - 1
 
 
+def rectified_band(x: np.ndarray, sos: np.ndarray, reference: str) -> np.ndarray:
+    """Causal band-pass, then the reference, then rectification.
+
+    Args:
+        x: float array (C, n_raw), bad channels already interpolated. sos: band-pass sections.
+
+    Returns:
+        float64 array (C, n_raw).
+    """
+    filtered = apply_sos(x, sos, causal=True)
+    return np.abs(common_average(filtered) if reference == "car" else filtered)
+
+
 def compute_band_variant(subject: str, cfg: dict[str, Any], raw_dir: Path, cache_dir: Path, band: str, reference: str,
-                         n_pre: int) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict[str, float]]:
+                         n_pre: int, envelope: dict[str, Any] | None = None
+                         ) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict[str, float]]:
     """Compute one subject's arrays for a band defined in ``cfg``. Writes nothing.
+
+    Args:
+        envelope: ``lowpass_hz`` and ``order`` for a band-power envelope, or None for the band-passed signal.
 
     Returns:
         eeg float32 (32, T), pre float32 (32, n_lifts, n_pre), missing int32 (n_lifts,), and the
@@ -74,7 +96,14 @@ def compute_band_variant(subject: str, cfg: dict[str, Any], raw_dir: Path, cache
         probe = int(min(tc["probe_start_s"], x.shape[1] / fs / 2) * fs)
         sos = butter_sos(fs, cfg["eeg"]["filter_order"], lo, hi)
         settle[f"S{series}"] = settle_time_s(x, fs, sos, probe, tc["tolerance"])
-        stream = eeg_stream(x, hs.eeg_names, fs, cfg, [], band, reference)
+        if envelope is None:
+            stream = eeg_stream(x, hs.eeg_names, fs, cfg, [], band, reference)
+        else:
+            lowpass = butter_sos(fs, envelope["order"], high_hz=envelope["lowpass_hz"])
+            rectified = rectified_band(x, sos, reference)
+            settle[f"S{series}"] += settle_time_s(rectified, fs, lowpass, probe, tc["tolerance"])
+            stream = apply_sos(rectified, lowpass, causal=True)
+            del rectified
         for row, tr in zip(rows.index, rows.itertuples(index=False)):
             idx = lift_raw_indices(int(tr.hs_start_sample), factor, int(tr.offset_end - tr.offset_start))
             eeg[:, int(tr.offset_start):int(tr.offset_end)] = stream[:, idx].astype(np.float32)
@@ -84,7 +113,7 @@ def compute_band_variant(subject: str, cfg: dict[str, Any], raw_dir: Path, cache
 
 
 def build_band_variant(subject: str, cfg: dict[str, Any], raw_dir: Path, cache_dir: Path, band: str, reference: str,
-                       n_pre: int) -> dict[str, Any]:
+                       n_pre: int, envelope: dict[str, Any] | None = None) -> dict[str, Any]:
     """Compute and save one subject's arrays. Raises if any of them already exists."""
     subj_dir = Path(cache_dir) / subject
     paths = {"eeg": subj_dir / f"eeg_{band}_{reference}.npy",
@@ -95,12 +124,12 @@ def build_band_variant(subject: str, cfg: dict[str, Any], raw_dir: Path, cache_d
     if existing:
         raise FileExistsError(f"refusing to overwrite: {existing}")
     t_start = time.time()
-    eeg, pre, missing, settle = compute_band_variant(subject, cfg, raw_dir, cache_dir, band, reference, n_pre)
+    eeg, pre, missing, settle = compute_band_variant(subject, cfg, raw_dir, cache_dir, band, reference, n_pre, envelope)
     np.save(paths["eeg"], eeg)
     np.save(paths["pre"], pre)
     np.save(paths["missing"], missing)
     info = {"subject": subject, "band": band, "reference": reference, "band_hz": list(cfg["eeg"]["bands_hz"][band]),
-            "n_pre": n_pre, "eeg_shape": list(eeg.shape), "pre_shape": list(pre.shape),
+            "envelope": envelope, "n_pre": n_pre, "eeg_shape": list(eeg.shape), "pre_shape": list(pre.shape),
             "n_lifts_with_missing": int((missing > 0).sum()), "filter_settle_time_s": settle,
             "build_seconds": round(time.time() - t_start, 1)}
     paths["info"].write_text(json.dumps(info, indent=2) + "\n", encoding="utf-8")

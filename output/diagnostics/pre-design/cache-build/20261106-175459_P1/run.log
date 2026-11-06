@@ -1,0 +1,2 @@
+2026-11-06 17:55:01 INFO    eegtraj.utils.run: Run directory: output\diagnostics\pre-design\cache-build\20261106-175459_P1
+2026-11-06 17:55:08 INFO    eegtraj.data.band_variant: P1: beta_env car, eeg (32, 253136), pre (32, 294, 200), 6.9 s
