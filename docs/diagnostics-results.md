@@ -227,3 +227,22 @@ Residual metrics. Each split subtracts its own template, so these do not share a
 - The model order changes again: EEGNet has the higher r in all 10 subjects (0.788 against 0.687), and CNN-LSTM has the higher residual_r and specific part.
 - The specific part about doubles for EEGNet and rises by 0.078 for CNN-LSTM, so subject-specific training helps track single trials, not only the mean shape. The test-series confound still applies.
 - Ridge gains in r and residual_r, but its specific part does not change: the gain is shared across trials.
+
+## Prefrontal-only control
+
+Direct check for ocular contamination: only Fp1 and Fp2, same models and protocol, 0.5 s history (the history of the existing artifact-control tables). EEGNet has 3 seeds. Under CAR, the average is still computed over all 32 channels before the two are selected. Full tables: `output/diagnostics/artifact-controls/summary/{ridge,eegnet}_controls.md`. The other rows are the data-baselines runs and reproduce their earlier values. The ratio is control r / all-channel r under the same reference.
+
+| Input | Ridge, CAR | Ridge, orig. ref | EEGNet, CAR | EEGNet, orig. ref |
+|---|---|---|---|---|
+| All 32 channels | 0.331 | 0.324 | 0.449 | 0.460 |
+| Sensorimotor (11 ch) | 0.299 (0.90) | 0.284 (0.88) | 0.402 (0.90) | 0.401 (0.87) |
+| Frontal (7 ch) | 0.184 (0.56) | 0.229 (0.71) | 0.324 (0.72) | 0.320 (0.70) |
+| Prefrontal (Fp1, Fp2) | 0.149 (0.45) | 0.105 (0.32) | 0.261 (0.58) | 0.207 (0.45) |
+| Temporal (4 ch) | 0.143 (0.43) | 0.225 (0.70) | 0.238 (0.53) | 0.291 (0.63) |
+
+- Prefrontal channels stay below all-channel EEG: above it in at most 1 of 10 subjects, in every column.
+- They are not near zero. With EEGNet, two channels reach 0.58 (CAR) and 0.45 (original reference) of all-channel r. So an ocular share cannot be ruled out, and this control cannot bound it from above.
+- The CAR values are not pure Fp1 and Fp2, because the average mixes in the other channels. The original-reference values are lower, unlike frontal and temporal, which stay level or rise under that reference.
+- r can come from any signal locked to the cue or movement, so a prefrontal r does not by itself show eye activity, and it does not separate eye activity from a frontal brain response.
+
+Not covered: this control is at 0.5 s only, so it does not test whether the gain at 2 to 3 s comes from eye activity. The models were not rerun on prefrontal channels at those lengths, because the pre-lift cache supports all channels only.

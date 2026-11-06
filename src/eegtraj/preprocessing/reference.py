@@ -6,6 +6,7 @@ import numpy as np
 
 # Defined from the 32 WAY-EEG-GAL channel names.
 CHANNEL_SETS: dict[str, tuple[str, ...]] = {
+    "prefrontal": ("Fp1", "Fp2"),
     "frontal": ("Fp1", "Fp2", "F7", "F3", "Fz", "F4", "F8"),
     "temporal": ("T7", "T8", "TP9", "TP10"),
     "sensorimotor": ("FC5", "FC1", "FC2", "FC6", "C3", "Cz", "C4", "CP5", "CP1", "CP2", "CP6"),

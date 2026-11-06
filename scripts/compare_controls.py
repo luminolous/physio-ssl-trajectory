@@ -1,11 +1,12 @@
 """Compare artifact-control decoders with all-channel EEG using the same model.
 
 Reads every non-smoke run of each artifact control under
-output/data-baselines/artifact-controls/<name>/ (and the all-channel CAR reference from
-output/data-baselines/baselines/<model>/ when no control run exists for it). Several runs in
-one directory are seeds: per-subject values are averaged over seeds first, and the SD of the
-aggregate across seeds is reported as ``r_seed_sd``. Writes a CSV and a markdown table to
-output/data-baselines/artifact-controls/summary/.
+output/data-baselines/artifact-controls/<name>/ or output/diagnostics/artifact-controls/<name>/
+(and the all-channel CAR reference from output/data-baselines/baselines/<model>/ when no control
+run exists for it). Several runs in one directory are seeds: per-subject values are averaged over
+seeds first, and the SD of the aggregate across seeds is reported as ``r_seed_sd``. Writes a CSV and
+a markdown table to output/diagnostics/artifact-controls/summary/. The tables of the data-baselines
+stage stay as they were.
 
 Usage (from repo root):
     .venv\\Scripts\\python scripts\\compare_controls.py [--model ridge|eegnet]
@@ -22,8 +23,9 @@ import pandas as pd
 
 ROOT = Path("output/data-baselines")
 CONTROLS = ROOT / "artifact-controls"
-OUT_DIR = CONTROLS / "summary"
-SETS = ("all", "sensorimotor", "frontal", "temporal")
+DIAGNOSTIC_CONTROLS = Path("output/diagnostics/artifact-controls")
+OUT_DIR = DIAGNOSTIC_CONTROLS / "summary"
+SETS = ("all", "sensorimotor", "frontal", "prefrontal", "temporal")
 REFS = ("car", "orig")
 BASELINE_FOR_ALL_CAR = {"ridge": "ridge_lag", "eegnet": "eegnet"}
 
@@ -70,9 +72,10 @@ def main() -> None:
         all_row, all_r = row(f"all ({ref})", all_runs, None)
         rows.append({**all_row, "reference": ref, "delta_r_vs_all": 0.0, "r_ratio_vs_all": 1.0})
         for ch in SETS[1:]:
-            runs = finished_runs(CONTROLS / f"{args.model}_{ch}_{ref}")
+            name = f"{args.model}_{ch}_{ref}"
+            runs = finished_runs(CONTROLS / name) or finished_runs(DIAGNOSTIC_CONTROLS / name)
             if runs is None:
-                print(f"missing {args.model}_{ch}_{ref}")
+                print(f"missing {name}")
                 continue
             r, _ = row(f"{ch} ({ref})", runs, all_r)
             rows.append({**r, "reference": ref})
