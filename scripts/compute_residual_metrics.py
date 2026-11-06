@@ -2,13 +2,15 @@
 
 Scans output/ except output/smoke/ and leaves the runs unchanged. Writes residual.csv (one row per run
 and test subject) to output/diagnostics/residual/<run-id>/. scripts/summarize_runs.py reads the newest one.
+Runs already in the newest table keep their rows, unless --all is given.
 
 Usage (from repo root):
-    .venv\\Scripts\\python scripts\\compute_residual_metrics.py
+    .venv\\Scripts\\python scripts\\compute_residual_metrics.py [--all]
 """
 
 from __future__ import annotations
 
+import argparse
 import logging
 from pathlib import Path
 
@@ -27,7 +29,14 @@ REPORTED = ("residual_r", "residual_r_oracle", "residual_r_other_trial", "residu
 
 
 def main() -> None:
-    runs = sorted(p.parent for p in OUTPUT.rglob("predictions.npz") if OUTPUT / "smoke" not in p.parents)
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--all", action="store_true", help="also recompute runs already in the newest table")
+    args = parser.parse_args()
+    tables = sorted(OUT_DIR.glob("2*/residual.csv"))
+    kept = pd.read_csv(tables[-1]) if tables and not args.all else None
+    done = set(kept.run) if kept is not None else set()
+    runs = sorted(p.parent for p in OUTPUT.rglob("predictions.npz")
+                  if OUTPUT / "smoke" not in p.parents and p.parent.as_posix() not in done)
     run_dir = setup_run(OUT_DIR, {"seed": SEED, "n_permutations": N_PERMUTATIONS, "n_runs": len(runs),
                                   "runs": [r.as_posix() for r in runs]})
     print(f"Run directory: {run_dir}")
@@ -44,7 +53,8 @@ def main() -> None:
             scored = score_predictions(predictions, cache[key], SEED, N_PERMUTATIONS)
         rows += [{"run": path.as_posix(), **row} for row in scored]
         print(path.as_posix(), *(f"{k} {pd.Series([r[k] for r in scored]).mean():.3f}" for k in REPORTED))
-    pd.DataFrame(rows).to_csv(run_dir / "residual.csv", index=False)
+    table = pd.concat([kept, pd.DataFrame(rows)], ignore_index=True) if kept is not None else pd.DataFrame(rows)
+    table.to_csv(run_dir / "residual.csv", index=False)
     print(f"Run directory: {run_dir}")
 
 

@@ -1,0 +1,34 @@
+2026-11-06 05:31:04 INFO    eegtraj.utils.run: Run directory: output\diagnostics\within_subject\template_cue\20261106-053104
+2026-11-06 05:31:04 INFO    eegtraj.baselines.runner: Baseline template_cue, mode within_subject, 10 folds, seed 20261029, smoke False
+2026-11-06 05:31:04 INFO    eegtraj.baselines.runner: Fold within_P1: train ('P1',), val ('P1',), test ('P1',); target samples train 84506, val 17979, test 53127
+2026-11-06 05:31:04 INFO    eegtraj.baselines.runner: template_cue: 723 bins from -0.77 to 6.45 s after ev_LEDOn, 84506 training samples
+2026-11-06 05:31:04 INFO    eegtraj.baselines.runner: Fold within_P1 test P1: r = 0.935 (x 0.940, y 0.937, z 0.927), R2 = 0.837, NRMSE = 0.132, 102 trials
+2026-11-06 05:31:04 INFO    eegtraj.baselines.runner: Fold within_P2: train ('P2',), val ('P2',), test ('P2',); target samples train 120684, val 18439, test 69078
+2026-11-06 05:31:04 INFO    eegtraj.baselines.runner: template_cue: 1017 bins from -0.10 to 10.06 s after ev_LEDOn, 120684 training samples
+2026-11-06 05:31:04 INFO    eegtraj.baselines.runner: Fold within_P2 test P2: r = 0.808 (x 0.848, y 0.857, z 0.720), R2 = 0.600, NRMSE = 0.208, 102 trials
+2026-11-06 05:31:05 INFO    eegtraj.baselines.runner: Fold within_P4: train ('P4',), val ('P4',), test ('P4',); target samples train 93126, val 19586, test 56363
+2026-11-06 05:31:05 INFO    eegtraj.baselines.runner: template_cue: 734 bins from -0.44 to 6.89 s after ev_LEDOn, 93126 training samples
+2026-11-06 05:31:05 INFO    eegtraj.baselines.runner: Fold within_P4 test P4: r = 0.907 (x 0.907, y 0.911, z 0.904), R2 = 0.668, NRMSE = 0.179, 102 trials
+2026-11-06 05:31:05 INFO    eegtraj.baselines.runner: Fold within_P5: train ('P5',), val ('P5',), test ('P5',); target samples train 104419, val 17172, test 61419
+2026-11-06 05:31:05 INFO    eegtraj.baselines.runner: template_cue: 853 bins from -0.86 to 7.66 s after ev_LEDOn, 104419 training samples
+2026-11-06 05:31:05 INFO    eegtraj.baselines.runner: Fold within_P5 test P5: r = 0.908 (x 0.904, y 0.920, z 0.900), R2 = 0.501, NRMSE = 0.224, 102 trials
+2026-11-06 05:31:05 INFO    eegtraj.baselines.runner: Fold within_P7: train ('P7',), val ('P7',), test ('P7',); target samples train 128508, val 22173, test 63872
+2026-11-06 05:31:05 INFO    eegtraj.baselines.runner: template_cue: 1602 bins from -0.26 to 15.75 s after ev_LEDOn, 128508 training samples
+2026-11-06 05:31:05 INFO    eegtraj.baselines.runner: Fold within_P7 test P7: r = 0.775 (x 0.837, y 0.832, z 0.656), R2 = 0.550, NRMSE = 0.226, 102 trials
+2026-11-06 05:31:05 INFO    eegtraj.baselines.runner: Fold within_P8: train ('P8',), val ('P8',), test ('P8',); target samples train 92755, val 15513, test 55271
+2026-11-06 05:31:05 INFO    eegtraj.baselines.runner: template_cue: 710 bins from -0.45 to 6.64 s after ev_LEDOn, 92755 training samples
+2026-11-06 05:31:06 INFO    eegtraj.baselines.runner: Fold within_P8 test P8: r = 0.914 (x 0.916, y 0.921, z 0.907), R2 = 0.774, NRMSE = 0.158, 102 trials
+2026-11-06 05:31:06 INFO    eegtraj.baselines.runner: Fold within_P9: train ('P9',), val ('P9',), test ('P9',); target samples train 102694, val 20799, test 60022
+2026-11-06 05:31:06 INFO    eegtraj.baselines.runner: template_cue: 1161 bins from -0.93 to 10.67 s after ev_LEDOn, 102694 training samples
+2026-11-06 05:31:06 INFO    eegtraj.baselines.runner: Fold within_P9 test P9: r = 0.826 (x 0.843, y 0.868, z 0.767), R2 = 0.633, NRMSE = 0.203, 102 trials
+2026-11-06 05:31:06 INFO    eegtraj.baselines.runner: Fold within_P10: train ('P10',), val ('P10',), test ('P10',); target samples train 106291, val 22920, test 59981
+2026-11-06 05:31:06 INFO    eegtraj.baselines.runner: template_cue: 1090 bins from -0.44 to 10.45 s after ev_LEDOn, 106291 training samples
+2026-11-06 05:31:07 INFO    eegtraj.baselines.runner: Fold within_P10 test P10: r = 0.858 (x 0.862, y 0.879, z 0.832), R2 = 0.684, NRMSE = 0.179, 102 trials
+2026-11-06 05:31:07 INFO    eegtraj.baselines.runner: Fold within_P11: train ('P11',), val ('P11',), test ('P11',); target samples train 113591, val 19459, test 65217
+2026-11-06 05:31:07 INFO    eegtraj.baselines.runner: template_cue: 948 bins from -1.19 to 8.28 s after ev_LEDOn, 113591 training samples
+2026-11-06 05:31:07 INFO    eegtraj.baselines.runner: Fold within_P11 test P11: r = 0.821 (x 0.847, y 0.857, z 0.759), R2 = 0.497, NRMSE = 0.218, 102 trials
+2026-11-06 05:31:08 INFO    eegtraj.baselines.runner: Fold within_P12: train ('P12',), val ('P12',), test ('P12',); target samples train 114422, val 24015, test 71626
+2026-11-06 05:31:08 INFO    eegtraj.baselines.runner: template_cue: 1009 bins from -1.01 to 9.07 s after ev_LEDOn, 114422 training samples
+2026-11-06 05:31:08 INFO    eegtraj.baselines.runner: Fold within_P12 test P12: r = 0.890 (x 0.904, y 0.911, z 0.854), R2 = 0.741, NRMSE = 0.158, 102 trials
+2026-11-06 05:31:10 INFO    eegtraj.baselines.runner: Aggregate over 10 test subjects: r = 0.864 +- 0.054, R2 = 0.648 +- 0.115, NRMSE = 0.189 +- 0.032
+2026-11-06 05:31:10 INFO    eegtraj.baselines.runner: Wall time 4.2 s

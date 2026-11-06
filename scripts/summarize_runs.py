@@ -2,7 +2,7 @@
 
 --stage data-baselines (default) reads metrics.json of every non-smoke run under
 output/data-baselines/baselines/ and output/data-baselines/artifact-controls/.
---stage diagnostics reads output/data-baselines/baselines/ and output/diagnostics/{baselines,tuning,history}/,
+--stage diagnostics reads output/data-baselines/baselines/ and output/diagnostics/{baselines,tuning,history,within_subject}/,
 and adds the residual metrics from the newest output/diagnostics/residual/<run-id>/residual.csv.
 Runs of one configuration are grouped by
 (group, name, tag without the seed part): several runs in a group are seeds, so per-subject
@@ -35,7 +35,8 @@ OUTPUT = Path("output")
 SOURCES = {
     "data-baselines": ((OUTPUT / "data-baselines", "baselines"), (OUTPUT / "data-baselines", "artifact-controls")),
     "diagnostics": ((OUTPUT / "data-baselines", "baselines"), (OUTPUT / "diagnostics", "baselines"),
-                    (OUTPUT / "diagnostics", "tuning"), (OUTPUT / "diagnostics", "history")),
+                    (OUTPUT / "diagnostics", "tuning"), (OUTPUT / "diagnostics", "history"),
+                    (OUTPUT / "diagnostics", "within_subject")),
 }
 RESIDUAL_ROOT = OUTPUT / "diagnostics" / "residual"
 RESIDUAL_METRICS = ("residual_r", "residual_r_oracle", "residual_r_other_trial", "residual_r_specific")
@@ -132,9 +133,12 @@ def main() -> None:
     out_dir = OUTPUT / stage / "summary"
     configs = collect(stage)
     floors = {f: per_subject(configs[("baselines", f)], "r") for f in FLOORS if ("baselines", f) in configs}
+    # A split is compared with the floors of that same split.
+    within_floors = {f: per_subject(configs[("within_subject", f)], "r") for f in FLOORS if ("within_subject", f) in configs}
     runs = pd.DataFrame([run_row(g, c, d, m) for (g, c), rs in configs.items() for d, m in rs])
     residuals = load_residuals() if stage == "diagnostics" else None
-    models = pd.DataFrame([model_row(g, c, rs, floors, residuals) for (g, c), rs in configs.items()])
+    models = pd.DataFrame([model_row(g, c, rs, within_floors if g == "within_subject" else floors, residuals)
+                           for (g, c), rs in configs.items()])
     models = models.sort_values(["group", "r_mean"], ascending=[False, False])
     models["n_parameters"] = models["n_parameters"].astype("Int64")
     subj = pd.DataFrame({f"{g}/{c}": per_subject(rs, "r") for (g, c), rs in configs.items()})
@@ -155,7 +159,8 @@ def main() -> None:
     run_list = "\n".join(f"- `{c}`: {r}" for c, r in zip(models["group"] + "/" + models["config"], models["runs"]))
     (out_dir / "models.md").write_text(
         f"# {stage} summary\n\n"
-        "LOSO over the 10 non-screening subjects. Per-trial Pearson r per axis, mean over trials, axes, then "
+        "LOSO over the 10 non-screening subjects, except group within_subject (train S1-S5, validate S6, test "
+        "S7-S9; diagnostic only, compared with the floors of that split). Per-trial Pearson r per axis, mean over trials, axes, then "
         "subjects (D7); +- SD across subjects. With n_runs > 1 (seeds) per-subject values are averaged over "
         "seeds first; r_seed_sd = SD of the aggregate r across seeds. pooled_r_secondary is pooled over "
         "concatenated trials and inflated; secondary only. delta_r_vs_X = mean over subjects of (r - r of X); "

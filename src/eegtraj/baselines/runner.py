@@ -54,13 +54,18 @@ def restrict(s: SubjectSamples, keep_trial: np.ndarray) -> SubjectSamples:
     return replace(s, sample_idx=s.sample_idx[m], trial_row=s.trial_row[m])
 
 
-def trial_filter(s: SubjectSamples, exclude_flags: list[str], max_trials: int | None) -> SubjectSamples:
-    """Apply flag-based exclusion (sensitivity analyses) and the smoke-run trial limit."""
+def trial_filter(s: SubjectSamples, exclude_flags: list[str], max_trials: int | None,
+                 per_series: bool = False) -> SubjectSamples:
+    """Apply flag-based exclusion (sensitivity analyses) and the smoke-run trial limit.
+
+    ``per_series`` applies the limit to each series, so a split by series keeps samples in every part.
+    """
     keep = np.ones(len(s.trials), dtype=bool)
     for flag in exclude_flags:
         keep &= ~s.trials[flag].astype(bool).to_numpy()
     if max_trials is not None:
-        keep &= np.arange(len(s.trials)) < max_trials
+        order = s.trials.groupby("series").cumcount().to_numpy() if per_series else np.arange(len(s.trials))
+        keep &= order < max_trials
     return restrict(s, keep)
 
 
@@ -119,7 +124,8 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
         if subject not in loaded:
             s = load_subject_samples(w["cache_dir"], subject, cfg["data"]["band"], cfg["data"]["reference"],
                                      cfg["data"]["channel_set"], w["target"], history, pre_lift=bool(w.get("pre_lift")))
-            loaded[subject] = trial_filter(s, cfg.get("exclude_flags", []), max_trials)
+            loaded[subject] = trial_filter(s, cfg.get("exclude_flags", []), max_trials,
+                                           per_series=cfg["splits"]["mode"] == "within_subject")
         return loaded[subject]
 
     fold_results, subject_results, pooled, predictions, info = [], {}, {}, {}, {}

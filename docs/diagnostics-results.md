@@ -178,3 +178,52 @@ residual_r is not purely trial-specific. A model can correlate with the residual
 - CNN-LSTM is above EEGNet at 0.5 s in all 10 subjects (+0.028), and CNN-LSTM at 2 s is above EEGNet at 3 s in 8/10 (+0.041), although EEGNet at 3 s has the higher r.
 
 Not shown by this control: where the specific part comes from. It can be reaction-time timing, movement-related EEG, or artifacts, because all of them change from trial to trial. The specific value also compares different samples: residual_r uses the whole trial, and the control uses the bins two trials share.
+
+## Within-subject vs LOSO
+
+Diagnostic only (D6). Train S1-S5, validate S6, test S7-S9, per subject. EEGNet uses 3 s and CNN-LSTM 2 s, the best histories from the ablation, chosen on LOSO test scores. Deep models: 3 seeds, fixed lr 1e-3. Full tables: `output/diagnostics/within_subject/summary/`.
+
+Confounds:
+- S7-S9 are always weight series, while S1-S6 mix conditions.
+- LOSO scores all nine series, so LOSO is also rescored on S7-S9 only. The table compares against that.
+- A deep model trains on about 85k samples per epoch here, against 200k in LOSO, because the epoch size is capped at the training set size. Within-subject deep models therefore take fewer gradient steps per epoch.
+- EEG normalization remains transductive (D9) and includes the test series, without labels.
+
+| Model | r LOSO (all series) | r LOSO (S7-S9) | r within | Difference | Subjects up | R² LOSO (S7-S9) | R² within | NRMSE LOSO (S7-S9) | NRMSE within |
+|---|---|---|---|---|---|---|---|---|---|
+| Template (oracle timing) | 0.864 | 0.876 | 0.892 | +0.015 | 6/10 | 0.607 | 0.700 | 0.199 | 0.172 |
+| Cue template | 0.803 | 0.840 | 0.864 | +0.025 | 6/10 | 0.537 | 0.648 | 0.219 | 0.189 |
+| Ridge, 0.5 s | 0.331 | 0.276 | 0.435 | +0.159 | 9/10 | -0.068 | 0.024 | 0.344 | 0.317 |
+| EEGNet, 3 s | 0.603 | 0.618 | 0.788 | +0.171 | 9/10 | 0.101 | 0.446 | 0.308 | 0.238 |
+| CNN-LSTM, 2 s | 0.588 | 0.581 | 0.687 | +0.106 | 9/10 | -0.001 | 0.317 | 0.314 | 0.253 |
+
+r difference per subject (within minus LOSO on S7-S9):
+
+| Subject | Ridge | EEGNet | CNN-LSTM | Cue template |
+|---|---|---|---|---|
+| P1 | +0.371 | +0.261 | +0.197 | +0.163 |
+| P2 | +0.233 | +0.196 | +0.023 | -0.003 |
+| P4 | +0.313 | +0.172 | +0.122 | +0.136 |
+| P5 | +0.109 | +0.188 | +0.058 | +0.015 |
+| P7 | -0.179 | -0.100 | -0.372 | -0.060 |
+| P8 | +0.199 | +0.466 | +0.538 | +0.065 |
+| P9 | +0.023 | +0.020 | +0.019 | +0.001 |
+| P10 | +0.201 | +0.094 | +0.070 | -0.024 |
+| P11 | +0.090 | +0.161 | +0.142 | -0.062 |
+| P12 | +0.231 | +0.247 | +0.263 | +0.015 |
+
+- EEG decoders gain much more than the templates from training on the same subject. EEGNet: r +0.171 and R² +0.345, against +0.025 and +0.112 for the cue template. So part of the LOSO loss is subject transfer.
+- The within-subject split does not beat the fair floor. EEGNet is below the cue template by 0.076 (above it in 1/10 subjects), and CNN-LSTM is lower still. A subject's own cue template reaches r 0.864.
+- P7 gets worse in every model, although it is among the best LOSO subjects. P8 gains the most with deep models and P9 hardly changes.
+
+Residual metrics. Each split subtracts its own template, so these do not share a reference. Within-subject residuals are measured from the subject's own mean shape.
+
+| Model | residual_r LOSO | residual_r within | Specific LOSO | Specific within | Specific up |
+|---|---|---|---|---|---|
+| Ridge, 0.5 s | 0.051 | 0.190 | 0.045 | 0.040 | 4/10 |
+| EEGNet, 3 s | 0.149 | 0.339 | 0.094 | 0.181 | 8/10 |
+| CNN-LSTM, 2 s | 0.237 | 0.383 | 0.134 | 0.212 | 6/10 |
+
+- The model order changes again: EEGNet has the higher r in all 10 subjects (0.788 against 0.687), and CNN-LSTM has the higher residual_r and specific part.
+- The specific part about doubles for EEGNet and rises by 0.078 for CNN-LSTM, so subject-specific training helps track single trials, not only the mean shape. The test-series confound still applies.
+- Ridge gains in r and residual_r, but its specific part does not change: the gain is shared across trials.

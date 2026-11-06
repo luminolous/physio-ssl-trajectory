@@ -1,0 +1,34 @@
+2026-11-06 05:31:15 INFO    eegtraj.utils.run: Run directory: output\diagnostics\within_subject\ridge_lag\20261106-053115
+2026-11-06 05:31:15 INFO    eegtraj.baselines.runner: Baseline ridge_lag, mode within_subject, 10 folds, seed 20261029, smoke False
+2026-11-06 05:31:15 INFO    eegtraj.baselines.runner: Fold within_P1: train ('P1',), val ('P1',), test ('P1',); target samples train 84506, val 17979, test 53127
+2026-11-06 05:31:22 INFO    eegtraj.baselines.runner: ridge_lag: 800 features (25 lags), 84506 training samples, val r per alpha {'0.0001': 0.6297, '0.001': 0.6278, '0.01': 0.6236, '0.1': 0.6168, '1': 0.6044, '10': 0.5782, '100': 0.5359}, chosen alpha 0.0001
+2026-11-06 05:31:23 INFO    eegtraj.baselines.runner: Fold within_P1 test P1: r = 0.646 (x 0.641, y 0.639, z 0.658), R2 = -0.423, NRMSE = 0.299, 102 trials
+2026-11-06 05:31:23 INFO    eegtraj.baselines.runner: Fold within_P2: train ('P2',), val ('P2',), test ('P2',); target samples train 120684, val 18439, test 69078
+2026-11-06 05:31:25 INFO    eegtraj.baselines.runner: ridge_lag: 800 features (25 lags), 120684 training samples, val r per alpha {'0.0001': 0.4547, '0.001': 0.454, '0.01': 0.4518, '0.1': 0.4476, '1': 0.4316, '10': 0.3943, '100': 0.3559}, chosen alpha 0.0001
+2026-11-06 05:31:26 INFO    eegtraj.baselines.runner: Fold within_P2 test P2: r = 0.396 (x 0.404, y 0.379, z 0.405), R2 = 0.127, NRMSE = 0.312, 102 trials
+2026-11-06 05:31:26 INFO    eegtraj.baselines.runner: Fold within_P4: train ('P4',), val ('P4',), test ('P4',); target samples train 93126, val 19586, test 56363
+2026-11-06 05:31:28 INFO    eegtraj.baselines.runner: ridge_lag: 800 features (25 lags), 93126 training samples, val r per alpha {'0.0001': 0.6047, '0.001': 0.6048, '0.01': 0.6043, '0.1': 0.6045, '1': 0.6044, '10': 0.5765, '100': 0.5145}, chosen alpha 0.001
+2026-11-06 05:31:29 INFO    eegtraj.baselines.runner: Fold within_P4 test P4: r = 0.548 (x 0.522, y 0.531, z 0.591), R2 = 0.152, NRMSE = 0.301, 102 trials
+2026-11-06 05:31:29 INFO    eegtraj.baselines.runner: Fold within_P5: train ('P5',), val ('P5',), test ('P5',); target samples train 104419, val 17172, test 61419
+2026-11-06 05:31:31 INFO    eegtraj.baselines.runner: ridge_lag: 800 features (25 lags), 104419 training samples, val r per alpha {'0.0001': 0.5349, '0.001': 0.5327, '0.01': 0.5277, '0.1': 0.5139, '1': 0.4837, '10': 0.4462, '100': 0.4112}, chosen alpha 0.0001
+2026-11-06 05:31:31 INFO    eegtraj.baselines.runner: Fold within_P5 test P5: r = 0.343 (x 0.318, y 0.304, z 0.406), R2 = -0.138, NRMSE = 0.358, 102 trials
+2026-11-06 05:31:32 INFO    eegtraj.baselines.runner: Fold within_P7: train ('P7',), val ('P7',), test ('P7',); target samples train 128508, val 22173, test 63872
+2026-11-06 05:31:34 INFO    eegtraj.baselines.runner: ridge_lag: 800 features (25 lags), 128508 training samples, val r per alpha {'0.0001': 0.3149, '0.001': 0.3159, '0.01': 0.3178, '0.1': 0.3216, '1': 0.328, '10': 0.3304, '100': 0.3183}, chosen alpha 10
+2026-11-06 05:31:34 INFO    eegtraj.baselines.runner: Fold within_P7 test P7: r = 0.300 (x 0.224, y 0.187, z 0.490), R2 = 0.056, NRMSE = 0.331, 102 trials
+2026-11-06 05:31:34 INFO    eegtraj.baselines.runner: Fold within_P8: train ('P8',), val ('P8',), test ('P8',); target samples train 92755, val 15513, test 55271
+2026-11-06 05:31:37 INFO    eegtraj.baselines.runner: ridge_lag: 800 features (25 lags), 92755 training samples, val r per alpha {'0.0001': 0.4253, '0.001': 0.4249, '0.01': 0.4246, '0.1': 0.432, '1': 0.441, '10': 0.3995, '100': 0.3366}, chosen alpha 1
+2026-11-06 05:31:37 INFO    eegtraj.baselines.runner: Fold within_P8 test P8: r = 0.398 (x 0.402, y 0.395, z 0.396), R2 = 0.102, NRMSE = 0.317, 102 trials
+2026-11-06 05:31:37 INFO    eegtraj.baselines.runner: Fold within_P9: train ('P9',), val ('P9',), test ('P9',); target samples train 102694, val 20799, test 60022
+2026-11-06 05:31:53 INFO    eegtraj.baselines.runner: ridge_lag: 800 features (25 lags), 102694 training samples, val r per alpha {'0.0001': 0.4299, '0.001': 0.4288, '0.01': 0.4262, '0.1': 0.4193, '1': 0.3928, '10': 0.3669, '100': 0.3462}, chosen alpha 0.0001
+2026-11-06 05:31:53 INFO    eegtraj.baselines.runner: Fold within_P9 test P9: r = 0.349 (x 0.357, y 0.315, z 0.375), R2 = 0.034, NRMSE = 0.333, 102 trials
+2026-11-06 05:31:53 INFO    eegtraj.baselines.runner: Fold within_P10: train ('P10',), val ('P10',), test ('P10',); target samples train 106291, val 22920, test 59981
+2026-11-06 05:31:55 INFO    eegtraj.baselines.runner: ridge_lag: 800 features (25 lags), 106291 training samples, val r per alpha {'0.0001': 0.5377, '0.001': 0.5369, '0.01': 0.5345, '0.1': 0.5288, '1': 0.5119, '10': 0.4722, '100': 0.3964}, chosen alpha 0.0001
+2026-11-06 05:31:56 INFO    eegtraj.baselines.runner: Fold within_P10 test P10: r = 0.457 (x 0.470, y 0.488, z 0.414), R2 = 0.118, NRMSE = 0.300, 102 trials
+2026-11-06 05:31:56 INFO    eegtraj.baselines.runner: Fold within_P11: train ('P11',), val ('P11',), test ('P11',); target samples train 113591, val 19459, test 65217
+2026-11-06 05:31:58 INFO    eegtraj.baselines.runner: ridge_lag: 800 features (25 lags), 113591 training samples, val r per alpha {'0.0001': 0.4265, '0.001': 0.4249, '0.01': 0.4211, '0.1': 0.4107, '1': 0.373, '10': 0.3124, '100': 0.2754}, chosen alpha 0.0001
+2026-11-06 05:31:59 INFO    eegtraj.baselines.runner: Fold within_P11 test P11: r = 0.503 (x 0.480, y 0.501, z 0.529), R2 = 0.075, NRMSE = 0.310, 102 trials
+2026-11-06 05:31:59 INFO    eegtraj.baselines.runner: Fold within_P12: train ('P12',), val ('P12',), test ('P12',); target samples train 114422, val 24015, test 71626
+2026-11-06 05:32:01 INFO    eegtraj.baselines.runner: ridge_lag: 800 features (25 lags), 114422 training samples, val r per alpha {'0.0001': 0.5657, '0.001': 0.5658, '0.01': 0.5658, '0.1': 0.5661, '1': 0.5626, '10': 0.5217, '100': 0.4229}, chosen alpha 0.1
+2026-11-06 05:32:02 INFO    eegtraj.baselines.runner: Fold within_P12 test P12: r = 0.414 (x 0.463, y 0.432, z 0.347), R2 = 0.131, NRMSE = 0.303, 102 trials
+2026-11-06 05:32:03 INFO    eegtraj.baselines.runner: Aggregate over 10 test subjects: r = 0.435 +- 0.105, R2 = 0.024 +- 0.177, NRMSE = 0.317 +- 0.019
+2026-11-06 05:32:03 INFO    eegtraj.baselines.runner: Wall time 46.9 s

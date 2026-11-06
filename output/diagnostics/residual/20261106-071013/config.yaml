@@ -1,0 +1,13 @@
+seed: 20261106
+n_permutations: 5
+n_runs: 9
+runs:
+- output/diagnostics/within_subject/cnn_lstm/history_200/20261106-063243_seed1
+- output/diagnostics/within_subject/cnn_lstm/history_200/20261106-064509_seed2
+- output/diagnostics/within_subject/cnn_lstm/history_200/20261106-065642_seed3
+- output/diagnostics/within_subject/eegnet/history_300/20261106-053214_seed1
+- output/diagnostics/within_subject/eegnet/history_300/20261106-055144_seed2
+- output/diagnostics/within_subject/eegnet/history_300/20261106-060914_seed3
+- output/diagnostics/within_subject/ridge_lag/20261106-053115
+- output/diagnostics/within_subject/template/20261106-053055
+- output/diagnostics/within_subject/template_cue/20261106-053104

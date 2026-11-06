@@ -1,0 +1,37 @@
+# Within-subject diagnostic (D6): train S1-S5, validate S6, test S7-S9. Diagnostic only: S7-S9 are always weight series.
+# Best history from the ablation: run with --history-samples 200. Fixed lr 1e-3, 3 seeds.
+baseline:
+  name: cnn_lstm
+  params:
+    model:
+      n_temporal: 8
+      temporal_kernel: 25
+      n_spatial: 16
+      pool: 2
+      hidden: 32
+      lstm_layers: 1
+      drop_prob: 0.25
+    train:
+      lr: 0.001
+      weight_decay: 0.01
+      batch_size: 512
+      max_epochs: 30
+      samples_per_epoch: 200000
+      val_samples: 100000
+      patience: 5
+      amp: true
+data:
+  windows_config: configs/data/windows_long_history.yaml
+  band: broadband
+  reference: car
+  channel_set: all
+splits:
+  config: configs/splits/default.yaml
+  mode: within_subject
+seed: 1
+save_predictions: true
+exclude_flags: []
+output:
+  root: output/diagnostics
+  group: within_subject
+  name: cnn_lstm

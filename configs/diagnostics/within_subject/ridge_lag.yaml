@@ -1,0 +1,22 @@
+# Within-subject diagnostic (D6): train S1-S5, validate S6, test S7-S9. Diagnostic only: S7-S9 are always weight series.
+baseline:
+  name: ridge_lag
+  params:
+    # Fixed tuning budget: 7 alphas, chosen on inner validation by per-trial r.
+    # Relative to the mean diagonal of the centered X^T X.
+    alphas: [0.0001, 0.001, 0.01, 0.1, 1.0, 10.0, 100.0]
+data:
+  windows_config: configs/data/windows.yaml  # history 50 samples, lag step 2 -> 25 lags
+  band: lowfreq  # D4: 0.1-4 Hz, causal
+  reference: car  # D5
+  channel_set: all
+splits:
+  config: configs/splits/default.yaml
+  mode: within_subject
+seed: 20261029
+save_predictions: true
+exclude_flags: []
+output:
+  root: output/diagnostics
+  group: within_subject
+  name: ridge_lag

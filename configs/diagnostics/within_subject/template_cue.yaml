@@ -1,0 +1,19 @@
+# Within-subject diagnostic (D6): train S1-S5, validate S6, test S7-S9. Diagnostic only: S7-S9 are always weight series.
+baseline:
+  name: template_cue
+  params: {}
+data:
+  windows_config: configs/data/windows.yaml
+  band: lowfreq  # unused by the template (no EEG input); kept so all baselines share one schema
+  reference: car
+  channel_set: all
+splits:
+  config: configs/splits/default.yaml
+  mode: within_subject
+seed: 20261029
+save_predictions: true
+exclude_flags: []
+output:
+  root: output/diagnostics
+  group: within_subject
+  name: template_cue
