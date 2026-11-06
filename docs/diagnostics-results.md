@@ -1,6 +1,63 @@
 # Diagnostics results
 
-Stage `diagnostics`, in progress. Sections are added as tasks finish. Protocol: [protocol.md](protocol.md). Baselines: [baseline-results.md](baseline-results.md).
+Stage `diagnostics`. Protocol: [protocol.md](protocol.md). Baselines: [baseline-results.md](baseline-results.md).
+
+## Answers
+
+All values use per-trial Pearson r (D7), LOSO over 10 test subjects unless stated, with deep models averaged over 3 seeds. The sections below hold the detail, and [Run directories](#run-directories) lists the source of each row.
+
+**The main finding:** on average, no EEG decoder beats the fair floor. The best LOSO result is EEGNet at 3 s with r 0.603, against r 0.803 for a template that uses no EEG. P7 is the only subject above the floor, with both EEGNet at 3 s and CNN-LSTM at 2 s. Decoders do recover a small trial-specific signal, and training on the same subject increases it.
+
+### What is a fair, non-oracle floor?
+
+| Floor | Uses | r | R² | NRMSE |
+|---|---|---|---|---|
+| Cue-locked template | LED-on only, no EEG | 0.803 | 0.524 | 0.216 |
+| Onset decoder + template | EEG up to t, causally | 0.754 | 0.406 | 0.241 |
+| Oracle template (upper reference) | true kinematic onset | 0.864 | 0.622 | 0.193 |
+
+The cue-locked template is the simplest fair floor, and it beats CNN-LSTM at 0.5 s in 9 of 10 subjects. Removing oracle timing costs only 0.061 in r. Onset decoding does not help: it falls below the cue-locked template in 9 of 10 subjects.
+
+All scores use a segment derived from each lift's kinematics, for every model. So every score is measured over a window known to contain the movement.
+
+### Is the 500 ms history the bottleneck?
+
+Partly for r, but it is not the main limit.
+
+| Model | History | r | R² | residual_r | Specific |
+|---|---|---|---|---|---|
+| EEGNet | 0.5 s | 0.449 | 0.021 | 0.086 | 0.065 |
+| EEGNet | 3 s | 0.603 | 0.125 | 0.149 | 0.094 |
+| CNN-LSTM | 0.5 s | 0.499 | 0.039 | 0.154 | 0.093 |
+| CNN-LSTM | 2 s | 0.588 | 0.075 | 0.237 | 0.134 |
+
+- r rises with history, but no length reaches the floor. CNN-LSTM stops improving at 2 s.
+- The trial-specific part gains far less (+0.029 and +0.041) and stops at 2 s for both models.
+- Fp1 and Fp2 alone gain as much r as all 32 channels (+0.152 against +0.154 at 3 s). So most of the r gain does not need the whole scalp. It fits cue-locked timing or eye activity, and these are not separated.
+
+### How much trial-specific information do decoders recover?
+
+A small amount, and it is consistent across subjects. The best specific part is 0.134 (CNN-LSTM at 2 s), above 0 in all 10 subjects. It is residual_r 0.237 minus 0.102 from pairing predictions with other trials. Its source is not separated: it can be reaction-time timing, movement-related EEG, or artifacts. Prefrontal channels reach about half of the all-channel value at 3 s (0.048 against 0.094).
+
+### How much of the gap is cross-subject transfer?
+
+A large part, on this diagnostic. On S7-S9, the gap to the cue-locked template falls when training on the same subject:
+
+| Model | Gap, LOSO | Gap, within subject |
+|---|---|---|
+| EEGNet, 3 s | 0.222 | 0.076 |
+| CNN-LSTM, 2 s | 0.259 | 0.177 |
+
+The specific part also rises, from 0.094 to 0.181 for EEGNet and from 0.134 to 0.212 for CNN-LSTM, though each split uses its own template. EEGNet still stays below the subject's own cue-locked template in 9 of 10 subjects. S7-S9 are always weight series, so this is a diagnostic only.
+
+### Are there bugs or under-tuning?
+
+No bug was found, and tuning did not help.
+
+- **Kalman:** R² -3.08 is model misspecification, not a bug. Its observation noise is strongly autocorrelated while the filter assumes white noise, and predictions swing about twice as wide as the target. See `output/diagnostics/fixes/kalman/explanation.md`.
+- **Tuning (lr 1e-4, 3e-4, 1e-3):** r moved from 0.449 to 0.456 for EEGNet, 0.454 to 0.451 for ShallowConvNet, and 0.499 to 0.478 for CNN-LSTM. The selection gain is no larger than the noise from initial weights. See `output/diagnostics/tuning/summary/summary.md`.
+- **Not excluded:** lr 1e-3 is the upper edge of the grid, and EEGNet chose it in all 10 folds at 0.5 s, so higher values are untested. At 3 s the grid picked lower lr in 5 of 10 folds without a test-score gain. Architecture was not searched.
+- **Data access:** the main cache cannot serve a history that starts before a lift. The ablation uses pre-lift EEG from the continuous recording instead. Earlier 0.5 s runs are unaffected: their windows stay inside the lift.
 
 ## Cue-locked template
 
@@ -261,3 +318,38 @@ Does the gain from a longer history need the whole scalp? EEGNet on Fp1 and Fp2,
 - So raw r overstates what a longer history adds. Use it together with residual_r_specific when judging a history length.
 
 Limits: under CAR, Fp1 and Fp2 contain the average of all 32 channels, so this is not a pure prefrontal signal. The original reference was not run at 3 s because the pre-lift cache holds CAR only. There is no 0.5 s specific value for prefrontal, because those runs did not save predictions.
+
+## Run directories
+
+Each row is one configuration, with several run IDs being seeds. r is the mean over subjects, seeds averaged first. Source tables: `output/diagnostics/summary/models.md`, `output/diagnostics/history/summary/`, `output/diagnostics/within_subject/summary/`, `output/diagnostics/artifact-controls/summary/`. Residual metrics: `output/diagnostics/residual/20261106-081026/residual.csv`.
+
+| Folder | Run IDs | r |
+|---|---|---|
+| `output/data-baselines/baselines/template/` | `20261029-184451` | 0.864 |
+| `output/diagnostics/baselines/template_cue/` | `20261104-234509` | 0.803 |
+| `output/diagnostics/baselines/onset_template/` | `20261104-235524` | 0.754 |
+| `output/data-baselines/baselines/ridge_lag/` | `20261030-034531` | 0.331 |
+| `output/data-baselines/baselines/kalman/` | `20261030-035949` | 0.466 |
+| `output/data-baselines/baselines/eegnet/` | `20261030-042902_seed1`, `20261030-043700_seed2`, `20261030-044818_seed3` | 0.449 |
+| `output/data-baselines/baselines/shallowconvnet/` | `20261030-052039_seed1`, `20261030-052040_seed2`, `20261030-052044_seed3` | 0.454 |
+| `output/data-baselines/baselines/cnn_lstm/` | `20261030-054018_seed1`, `20261030-054023_seed2`, `20261030-054029_seed3` | 0.499 |
+| `output/diagnostics/tuning/eegnet/` | `20261104-154725_seed1`, `20261104-163014_seed2`, `20261104-163643_seed3` | 0.456 |
+| `output/diagnostics/tuning/shallowconvnet/` | `20261104-164437_seed1`, `20261104-170247_seed2`, `20261104-171058_seed3` | 0.451 |
+| `output/diagnostics/tuning/cnn_lstm/` | `20261104-171617_seed1`, `20261104-174108_seed2`, `20261104-174855_seed3` | 0.478 |
+| `output/diagnostics/history/eegnet/history_100/` | `20261105-010536_seed1`, `20261105-134134_seed2`, `20261105-144044_seed3` | 0.520 |
+| `output/diagnostics/history/eegnet/history_200/` | `20261105-011656_seed1`, `20261105-135359_seed2`, `20261105-145450_seed3` | 0.576 |
+| `output/diagnostics/history/eegnet/history_300/` | `20261105-013341_seed1`, `20261105-141526_seed2`, `20261105-151425_seed3` | 0.603 |
+| `output/diagnostics/history/eegnet_lr_grid/history_300/` | `20261105-093231_seed1` | 0.591 |
+| `output/diagnostics/history/cnn_lstm/history_100/` | `20261105-205741_seed1`, `20261105-222121_seed2`, `20261105-233338_seed3` | 0.532 |
+| `output/diagnostics/history/cnn_lstm/history_200/` | `20261105-210722_seed1`, `20261105-223130_seed2`, `20261105-234321_seed3` | 0.588 |
+| `output/diagnostics/history/cnn_lstm/history_300/` | `20261105-213451_seed1`, `20261105-225723_seed2`, `20261106-000701_seed3` | 0.579 |
+| `output/diagnostics/within_subject/template/` | `20261106-053055` | 0.892 |
+| `output/diagnostics/within_subject/template_cue/` | `20261106-053104` | 0.864 |
+| `output/diagnostics/within_subject/ridge_lag/` | `20261106-053115` | 0.435 |
+| `output/diagnostics/within_subject/eegnet/history_300/` | `20261106-053214_seed1`, `20261106-055144_seed2`, `20261106-060914_seed3` | 0.788 |
+| `output/diagnostics/within_subject/cnn_lstm/history_200/` | `20261106-063243_seed1`, `20261106-064509_seed2`, `20261106-065642_seed3` | 0.687 |
+| `output/diagnostics/artifact-controls/eegnet_prefrontal_car/` | `20261106-072319_seed1`, `20261106-072956_seed2`, `20261106-073453_seed3` | 0.261 |
+| `output/diagnostics/artifact-controls/eegnet_prefrontal_car/history_300/` | `20261106-075555_seed1`, `20261106-080048_seed2`, `20261106-080514_seed3` | 0.412 |
+| `output/diagnostics/artifact-controls/eegnet_prefrontal_orig/` | `20261106-073947_seed1`, `20261106-074335_seed2`, `20261106-074634_seed3` | 0.207 |
+| `output/diagnostics/artifact-controls/ridge_prefrontal_car/` | `20261106-071752` | 0.149 |
+| `output/diagnostics/artifact-controls/ridge_prefrontal_orig/` | `20261106-072013` | 0.105 |
