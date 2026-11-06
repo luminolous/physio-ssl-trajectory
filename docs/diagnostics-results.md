@@ -245,4 +245,19 @@ Direct check for ocular contamination: only Fp1 and Fp2, same models and protoco
 - The CAR values are not pure Fp1 and Fp2, because the average mixes in the other channels. The original-reference values are lower, unlike frontal and temporal, which stay level or rise under that reference.
 - r can come from any signal locked to the cue or movement, so a prefrontal r does not by itself show eye activity, and it does not separate eye activity from a frontal brain response.
 
-Not covered: this control is at 0.5 s only, so it does not test whether the gain at 2 to 3 s comes from eye activity. The models were not rerun on prefrontal channels at those lengths, because the pre-lift cache supports all channels only.
+### Prefrontal at 3 s
+
+Does the gain from a longer history need the whole scalp? EEGNet on Fp1 and Fp2, CAR, 3 s, 3 seeds, against all channels on the same seeds. Table: `output/diagnostics/history/summary/prefrontal.csv`.
+
+| Input | r at 0.5 s | r at 3 s | Gain | R² at 3 s | residual_r at 3 s | Specific at 3 s |
+|---|---|---|---|---|---|---|
+| Prefrontal (Fp1, Fp2) | 0.261 | 0.412 | +0.152 | 0.003 | 0.076 | 0.048 |
+| All 32 channels | 0.449 | 0.603 | +0.154 | 0.125 | 0.149 | 0.094 |
+| Ratio, prefrontal / all | 0.58 | 0.68 | | | 0.51 | 0.51 |
+
+- Two channels gain as much r as all 32: the gain is larger in 5 of 10 subjects, and it is positive in all 10. So the r gain from 0.5 s to 3 s does not depend on channels beyond Fp1 and Fp2 under CAR.
+- This fits a signal locked to the cue, which gives the model the time since the cue. It also fits eye activity. The control does not separate them.
+- All channels still add something: prefrontal is below all-channel r in all 10 subjects at 3 s, and above it on the specific part in 1 of 10. The specific part at 3 s is about half of the all-channel value.
+- So raw r overstates what a longer history adds. Use it together with residual_r_specific when judging a history length.
+
+Limits: under CAR, Fp1 and Fp2 contain the average of all 32 channels, so this is not a pure prefrontal signal. The original reference was not run at 3 s because the pre-lift cache holds CAR only. There is no 0.5 s specific value for prefrontal, because those runs did not save predictions.

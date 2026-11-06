@@ -1,14 +1,16 @@
 """Tests for EEG before the lift window (synthetic data)."""
 
 import importlib.util
+import json
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import pytest
 
 from eegtraj.baselines.template import time_since_onset
 from eegtraj.data.pre_lift import insert_pre_lift, pre_lift_raw_indices
-from eegtraj.data.windows import SubjectSamples, fit_eeg_normalizers, window_at
+from eegtraj.data.windows import SubjectSamples, fit_eeg_normalizers, load_subject_samples, window_at
 
 
 def two_lifts():
@@ -83,3 +85,39 @@ def test_fixed_lr_is_safe_only_if_r_and_r2_stay_within_tolerance():
     assert not check(fake_run(0.5, 0.22, [3e-4]), fixed)["safe"]
     assert not check(fake_run(0.48, 0.2, [3e-4]), fixed)["safe"]  # a worse grid also counts as a difference
     assert check(fake_run(0.5, 0.2, [1e-3, 1e-3, 3e-4]), fixed)["selected_lr_counts"] == {"0.0003": 1, "0.001": 2}
+
+
+def tiny_cache(root):
+    """Two lifts of 40 samples, 32 channels, 5 stored pre-lift samples; values differ per channel."""
+    names = [f"E{i}" for i in range(32)]
+    names[0], names[1] = "Fp1", "Fp2"
+    subject = root / "P1"
+    subject.mkdir()
+    trials = pd.DataFrame({"subject": "P1", "series": 1, "lift": [1, 2], "n_samples": 40, "segment_start_s": 0.1,
+                           "segment_end_s": 0.3, "offset_start": [0, 40], "offset_end": [40, 80]})
+    trials.to_csv(subject / "trials.csv", index=False)
+    (subject / "manifest.json").write_text(json.dumps({"fs_hz": 100.0, "eeg_names": names}), encoding="utf-8")
+    eeg = np.arange(32 * 80, dtype=np.float32).reshape(32, 80)
+    np.save(subject / "eeg_broadband_car.npy", eeg)
+    np.save(subject / "pre_lift_eeg_broadband_car.npy", -1 - np.arange(32 * 2 * 5, dtype=np.float32).reshape(32, 2, 5))
+    np.save(subject / "wrist_vel.npy", np.zeros((3, 80), np.float32))
+    np.save(subject / "kin_pos.npy", np.zeros((3, 80), np.float32))
+    return names
+
+
+def test_channel_subset_reads_the_same_channels_before_and_inside_the_lift(tmp_path):
+    tiny_cache(tmp_path)
+    args = (tmp_path, "P1", "broadband", "car")
+    every = load_subject_samples(*args, "all", "velocity", 6, pre_lift=True)
+    part = load_subject_samples(*args, "prefrontal", "velocity", 6, pre_lift=True)
+    assert part.eeg.shape[0] == 2
+    assert np.array_equal(part.eeg, every.eeg[:2])
+    assert np.array_equal(part.sample_idx, every.sample_idx)
+    assert part.eeg[0, 0] < 0  # the first samples are pre-lift
+
+
+def test_emg_is_rejected_with_pre_lift(tmp_path):
+    tiny_cache(tmp_path)
+    np.save(tmp_path / "P1" / "emg_env.npy", np.zeros((5, 80), np.float32))
+    with pytest.raises(ValueError, match="EEG only"):
+        load_subject_samples(tmp_path, "P1", "broadband", "car", "emg", "velocity", 6, pre_lift=True)

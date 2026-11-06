@@ -113,12 +113,13 @@ def load_subject_samples(cache_dir: str | Path, subject: str, band: str, referen
     if not pre_lift:
         idx, rows = segment_samples(trials, fs, history)
         return SubjectSamples(subject, eeg, y, idx, rows, trials, fs)
-    if channel_set != "all":
-        raise ValueError("pre_lift supports only channel_set 'all'")
+    if channel_set == "emg":
+        raise ValueError("pre_lift holds EEG only; channel_set 'emg' is not supported")
     n_pre = history - 1
     pre = np.load(Path(cache_dir) / subject / f"pre_lift_eeg_{band}_{reference}.npy", mmap_mode="r")
     if n_pre > pre.shape[2]:
         raise ValueError(f"history {history} needs {n_pre} pre-lift samples; the cache has {pre.shape[2]}")
+    pre = pre[channel_indices(manifest["eeg_names"], channel_set)]
     eeg, y, trials, keep = insert_pre_lift(eeg, y, trials, pre, n_pre)
     idx, rows = segment_samples(trials, fs, 1)
     return SubjectSamples(subject, eeg, y, idx, rows, trials, fs, eeg_stat_mask=keep)

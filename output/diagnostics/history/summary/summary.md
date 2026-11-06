@@ -48,3 +48,10 @@ The 0.5 s rows are the data-baselines runs. Differences use the seeds both sides
   }
 }
 ```
+
+## EEGNet on Fp1 and Fp2 against all channels (CAR)
+
+|   history_s |   n_seeds |   r_prefrontal |   r_all |   r2_prefrontal |   r2_all |   nrmse_prefrontal |   nrmse_all |   r_ratio |   n_prefrontal_above_all |
+|------------:|----------:|---------------:|--------:|----------------:|---------:|-------------------:|------------:|----------:|-------------------------:|
+|         0.5 |         3 |          0.261 |   0.449 |          -0.061 |    0.021 |              0.341 |       0.323 |     0.581 |                        1 |
+|         3   |         3 |          0.412 |   0.603 |           0.003 |    0.125 |              0.327 |       0.301 |     0.684 |                        0 |

@@ -4,7 +4,8 @@ Reads every non-smoke run under output/diagnostics/history/<model>/history_<n>/ 
 reference, the seed runs under output/data-baselines/baselines/<model>/ (same lr and weight decay).
 Per-subject values are averaged over seeds first. Each history is compared with the reference on the
 seeds it has in common, so a partly finished grid still gives a fair difference.
-Writes history.csv, per_subject.csv, flags.csv, lr_check.json, and summary.md to output/diagnostics/history/summary/.
+Writes history.csv, per_subject.csv, flags.csv, lr_check.json, prefrontal.csv, and summary.md to
+output/diagnostics/history/summary/. prefrontal.csv compares EEGNet on Fp1 and Fp2 with all channels (CAR) at 0.5 and 3 s.
 
 Usage (from repo root):
     .venv\\Scripts\\python scripts\\compare_history.py
@@ -33,6 +34,7 @@ FLAG_HISTORIES = (50, 100, 200, 300)
 FLAG_SUBJECTS = ("P1", "P2", "P4", "P5", "P7", "P8", "P9", "P10", "P11", "P12")
 LR_TOLERANCE = 0.01  # user decision: larger differences are reported before continuing
 FIXED_LR = 0.001
+PREFRONTAL = Path("output/diagnostics/artifact-controls/eegnet_prefrontal_car")
 
 
 def load_run(path: Path) -> dict | None:
@@ -92,6 +94,25 @@ def lr_check(grid: dict, fixed: dict, tolerance: float = LR_TOLERANCE) -> dict:
     return out
 
 
+def prefrontal_rows(pairs: dict[float, tuple[list[dict], list[dict]]]) -> list[dict]:
+    """Per history: prefrontal and all-channel values on the seeds both have, and their ratio."""
+    rows = []
+    for history_s, (prefrontal, every) in pairs.items():
+        seeds = {m["seed"] for m in prefrontal} & {m["seed"] for m in every}
+        p = [m for m in prefrontal if m["seed"] in seeds]
+        a = [m for m in every if m["seed"] in seeds]
+        if not p:
+            continue
+        row = {"history_s": history_s, "n_seeds": len(seeds)}
+        for metric in METRICS:
+            x, y = per_subject(p, metric), per_subject(a, metric).reindex(per_subject(p, metric).index)
+            row |= {f"{metric}_prefrontal": x.mean(), f"{metric}_all": y.mean()}
+        x, y = per_subject(p, "r"), per_subject(a, "r")
+        row |= {"r_ratio": x.mean() / y.mean(), "n_prefrontal_above_all": int((x > y.reindex(x.index)).sum())}
+        rows.append(row)
+    return rows
+
+
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     rows, subjects = [], []
@@ -126,6 +147,12 @@ def main() -> None:
         check = lr_check(grids[0], fixed[0])
         (OUT_DIR / "lr_check.json").write_text(json.dumps(check, indent=2) + "\n", encoding="utf-8")
         lines += ["## Fixed lr check (EEGNet, 3 s, seed 1)", "", f"```\n{json.dumps(check, indent=2)}\n```", ""]
+    pairs = {0.5: (load_all(PREFRONTAL), load_all(REFERENCE / "eegnet")),
+             3.0: (load_all(PREFRONTAL / "history_300"), load_all(ROOT / "eegnet" / "history_300"))}
+    prefrontal = pd.DataFrame(prefrontal_rows(pairs))
+    if len(prefrontal):
+        prefrontal.to_csv(OUT_DIR / "prefrontal.csv", index=False)
+        lines += ["## EEGNet on Fp1 and Fp2 against all channels (CAR)", "", prefrontal.round(3).to_markdown(index=False), ""]
     (OUT_DIR / "summary.md").write_text("\n".join(lines), encoding="utf-8")
     print("\n".join(lines))
 

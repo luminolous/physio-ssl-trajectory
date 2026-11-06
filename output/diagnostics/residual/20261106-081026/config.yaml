@@ -1,0 +1,7 @@
+seed: 20261106
+n_permutations: 5
+n_runs: 3
+runs:
+- output/diagnostics/artifact-controls/eegnet_prefrontal_car/history_300/20261106-075555_seed1
+- output/diagnostics/artifact-controls/eegnet_prefrontal_car/history_300/20261106-080048_seed2
+- output/diagnostics/artifact-controls/eegnet_prefrontal_car/history_300/20261106-080514_seed3

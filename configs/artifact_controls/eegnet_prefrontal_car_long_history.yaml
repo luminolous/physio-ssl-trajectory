@@ -1,0 +1,31 @@
+# ARTIFACT CONTROL: prefrontal only (Fp1, Fp2), CAR, long history. Is the gain at 3 s from eye activity?
+# Run with --history-samples 300, 3 seeds. Same settings as configs/diagnostics/history/eegnet.yaml; only the input differs.
+baseline:
+  name: eegnet
+  params:
+    model:
+      kernel_length: 50
+    train:
+      lr: 0.001
+      weight_decay: 0.01
+      batch_size: 512
+      max_epochs: 30
+      samples_per_epoch: 200000
+      val_samples: 100000
+      patience: 5
+      amp: true
+data:
+  windows_config: configs/data/windows_long_history.yaml
+  band: broadband
+  reference: car
+  channel_set: prefrontal
+splits:
+  config: configs/splits/default.yaml
+  mode: loso
+seed: 1
+save_predictions: true
+exclude_flags: []
+output:
+  root: output/diagnostics
+  group: artifact-controls
+  name: eegnet_prefrontal_car
