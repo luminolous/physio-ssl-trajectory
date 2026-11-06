@@ -1,7 +1,7 @@
-# Windowing for causal histories longer than the lift window allows (history-length ablation, diagnostic).
+# Windowing at the protocol history (D3, 2 s), which is longer than the lift window allows.
 # Same as windows.yaml, plus EEG before each lift from configs/cache/pre_lift.yaml.
 cache_dir: dataset/cache/98f5fa6e66
-history_samples: 100  # set per run with --history-samples
+history_samples: 200  # D3; --history-samples overrides it for diagnostics
 pre_lift: true
 ridge_lag_step_samples: 2  # unused by deep models
 target: position

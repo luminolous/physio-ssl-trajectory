@@ -1,5 +1,7 @@
 # Baseline results
 
+**Older protocol.** These runs use the 500 ms history and the floors and metrics before 2026-11-06. They stay valid under that protocol. Current protocol: history 2 s, cue-locked template as the main fair floor. See [protocol.md](protocol.md#runs-under-the-older-protocol) and [diagnostics-results.md](diagnostics-results.md).
+
 Stage `data-baselines`, runs of 2026-10-29/30. Protocol: [protocol.md](protocol.md). Data facts: [dataset.md](dataset.md).
 
 All numbers come from `output/data-baselines/summary/models.md`, written by `scripts/summarize_runs.py`. That file lists the run directory behind every row. Artifact-control tables: `output/data-baselines/artifact-controls/summary/{ridge,eegnet}_controls.md` (`scripts/compare_controls.py`).

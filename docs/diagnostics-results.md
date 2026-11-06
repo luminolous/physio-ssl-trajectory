@@ -33,7 +33,7 @@ Partly for r, but it is not the main limit.
 
 - r rises with history, but no length reaches the floor. CNN-LSTM stops improving at 2 s.
 - The trial-specific part gains far less (+0.029 and +0.041) and stops at 2 s for both models.
-- Fp1 and Fp2 alone gain as much r as all 32 channels (+0.152 against +0.154 at 3 s). So most of the r gain does not need the whole scalp. It fits cue-locked timing or eye activity, and these are not separated.
+- **Almost all of the r gain from a longer history is available from Fp1 and Fp2 alone: +0.152 against +0.154 on all 32 channels (EEGNet, CAR, 0.5 s to 3 s). A rise in r from history must not be claimed as motor information.** It fits cue-locked timing or eye activity, and these are not separated.
 
 ### How much trial-specific information do decoders recover?
 
@@ -58,6 +58,10 @@ No bug was found, and tuning did not help.
 - **Tuning (lr 1e-4, 3e-4, 1e-3):** r moved from 0.449 to 0.456 for EEGNet, 0.454 to 0.451 for ShallowConvNet, and 0.499 to 0.478 for CNN-LSTM. The selection gain is no larger than the noise from initial weights. See `output/diagnostics/tuning/summary/summary.md`.
 - **Not excluded:** lr 1e-3 is the upper edge of the grid, and EEGNet chose it in all 10 folds at 0.5 s, so higher values are untested. At 3 s the grid picked lower lr in 5 of 10 folds without a test-score gain. Architecture was not searched.
 - **Data access:** the main cache cannot serve a history that starts before a lift. The ablation uses pre-lift EEG from the continuous recording instead. Earlier 0.5 s runs are unaffected: their windows stay inside the lift.
+
+### Protocol decisions from these results
+
+Decided on 2026-11-06, recorded in [protocol.md](protocol.md): history 2 s at 100 Hz (D3); `residual_r` and `residual_r_specific` as secondary metrics, with `template_cue` as the main fair floor (D7); fixed budget for supervised deep models (D11); claim rules (D12). Pre-lift EEG exists for broadband CAR only. The prefrontal control was run at 0.5 and 3 s, not at the chosen 2 s.
 
 ## Cue-locked template
 
@@ -312,7 +316,7 @@ Does the gain from a longer history need the whole scalp? EEGNet on Fp1 and Fp2,
 | All 32 channels | 0.449 | 0.603 | +0.154 | 0.125 | 0.149 | 0.094 |
 | Ratio, prefrontal / all | 0.58 | 0.68 | | | 0.51 | 0.51 |
 
-- Two channels gain as much r as all 32: the gain is larger in 5 of 10 subjects, and it is positive in all 10. So the r gain from 0.5 s to 3 s does not depend on channels beyond Fp1 and Fp2 under CAR.
+- **Almost all of the r gain from a longer history is available from Fp1 and Fp2 alone: +0.152 against +0.154 on all 32 channels. A rise in r from history must not be claimed as motor information.** The prefrontal gain is larger in 5 of 10 subjects and positive in all 10.
 - This fits a signal locked to the cue, which gives the model the time since the cue. It also fits eye activity. The control does not separate them.
 - All channels still add something: prefrontal is below all-channel r in all 10 subjects at 3 s, and above it on the specific part in 1 of 10. The specific part at 3 s is about half of the all-channel value.
 - So raw r overstates what a longer history adds. Use it together with residual_r_specific when judging a history length.
