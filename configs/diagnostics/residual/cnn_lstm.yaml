@@ -1,0 +1,38 @@
+# Residual formulation, CNN-LSTM, 2 s history: predict target - T_cue, then add T_cue back.
+# Same model and fixed budget (D11) as the direct run output/diagnostics/history/cnn_lstm/history_200.
+baseline:
+  name: cnn_lstm
+  params:
+    residual: true
+    model:
+      n_temporal: 8
+      temporal_kernel: 25
+      n_spatial: 16
+      pool: 2
+      hidden: 32
+      lstm_layers: 1
+      drop_prob: 0.25
+    train:
+      lr: 0.001
+      weight_decay: 0.01
+      batch_size: 512
+      max_epochs: 30
+      samples_per_epoch: 200000
+      val_samples: 100000
+      patience: 5
+      amp: true
+data:
+  windows_config: configs/data/windows_long_history.yaml
+  band: broadband
+  reference: car
+  channel_set: all
+splits:
+  config: configs/splits/default.yaml
+  mode: loso
+seed: 1
+save_predictions: true
+exclude_flags: []
+output:
+  root: output/diagnostics/pre-design
+  group: residual
+  name: cnn_lstm

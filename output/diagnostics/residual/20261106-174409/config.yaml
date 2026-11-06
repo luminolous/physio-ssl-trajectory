@@ -1,0 +1,10 @@
+seed: 20261106
+n_permutations: 5
+n_runs: 6
+runs:
+- output/diagnostics/pre-design/residual/cnn_lstm/20261106-155151_seed1
+- output/diagnostics/pre-design/residual/cnn_lstm/20261106-163003_seed2
+- output/diagnostics/pre-design/residual/cnn_lstm/20261106-170433_seed3
+- output/diagnostics/pre-design/residual/eegnet/20261106-160658_seed1
+- output/diagnostics/pre-design/residual/eegnet/20261106-164552_seed2
+- output/diagnostics/pre-design/residual/eegnet/20261106-172022_seed3
