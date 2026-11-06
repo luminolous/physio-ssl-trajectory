@@ -37,6 +37,18 @@ def pre_lift_raw_indices(hs_start: int, factor: int, n_pre: int) -> np.ndarray:
     return hs_start + factor * np.arange(-n_pre, 0) + factor - 1
 
 
+def cut_pre_lift(stream: np.ndarray, hs_start: int, factor: int, n_pre: int) -> tuple[np.ndarray, int]:
+    """Samples j = -n_pre, ..., -1 of one lift from a continuous stream (C, n_raw).
+
+    Returns float32 (C, n_pre), oldest first, and the number of samples before the series start.
+    Those hold the earliest value on the lift's grid.
+    """
+    idx = pre_lift_raw_indices(hs_start, factor, n_pre)
+    below = idx < 0
+    idx[below] = (hs_start + factor - 1) % factor
+    return stream[:, idx].astype(np.float32), int(below.sum())
+
+
 def eeg_stream(eeg: np.ndarray, names: list[str], fs_hz: float, cfg: dict[str, Any], bad_channels: list[str], band: str,
                reference: str) -> np.ndarray:
     """Continuous EEG through the main cache's chain: interpolate, causal band-pass, reference, causal anti-alias."""
@@ -69,11 +81,7 @@ def build_pre_lift(subject: str, cfg: dict[str, Any], raw_dir: Path, cache_dir: 
             error = np.abs(stream[:, first] - cached[:, int(tr.offset_start)]).max()
             if error > ALIGN_TOL:
                 raise ValueError(f"{subject} S{series} lift {tr.lift}: first sample differs from the main cache by {error}")
-            idx = pre_lift_raw_indices(int(tr.hs_start_sample), factor, n_pre)
-            below = idx < 0
-            missing[row] = int(below.sum())
-            idx[below] = first % factor  # earliest sample on this lift's grid
-            out[:, row] = stream[:, idx].astype(np.float32)
+            out[:, row], missing[row] = cut_pre_lift(stream, int(tr.hs_start_sample), factor, n_pre)
         del stream
     np.save(subj_dir / f"pre_lift_eeg_{band}_{reference}.npy", out)
     np.save(subj_dir / f"pre_lift_missing_{band}_{reference}.npy", missing)

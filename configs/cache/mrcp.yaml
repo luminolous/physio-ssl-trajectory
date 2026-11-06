@@ -1,0 +1,7 @@
+# MRCP band added to the existing cache (pre-design checks, decided by the user on 2026-11-06).
+cache_config: configs/cache/default.yaml
+cache_dir: dataset/cache/98f5fa6e66
+band: mrcp
+band_hz: [0.1, 2.0]
+reference: car
+n_pre: 200  # 2 s at 100 Hz, the protocol history (D3)

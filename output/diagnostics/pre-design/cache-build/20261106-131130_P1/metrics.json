@@ -1,0 +1,36 @@
+{
+  "built": [
+    {
+      "subject": "P1",
+      "band": "mrcp",
+      "reference": "car",
+      "band_hz": [
+        0.1,
+        2.0
+      ],
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        253136
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 12.97,
+        "S2": 12.786,
+        "S3": 13.23,
+        "S4": 13.152,
+        "S5": 12.682,
+        "S6": 13.02,
+        "S7": 12.976,
+        "S8": 13.108,
+        "S9": 13.138
+      },
+      "build_seconds": 13.0
+    }
+  ]
+}

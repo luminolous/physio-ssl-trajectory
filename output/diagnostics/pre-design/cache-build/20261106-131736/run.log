@@ -1,0 +1,21 @@
+2026-11-06 13:17:38 INFO    eegtraj.utils.run: Run directory: output\diagnostics\pre-design\cache-build\20261106-131736
+2026-11-06 13:17:39 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-06 13:17:41 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-06 13:17:42 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-06 13:17:44 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-06 13:17:45 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-06 13:17:47 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-06 13:17:48 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-06 13:17:49 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-06 13:17:50 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-06 13:17:51 INFO    eegtraj.data.band_variant: P2: mrcp car, eeg (32, 301875), pre (32, 294, 200), 12.3 s
+2026-11-06 13:18:00 INFO    eegtraj.data.band_variant: P3: mrcp car, eeg (32, 251103), pre (32, 294, 200), 9.8 s
+2026-11-06 13:18:12 INFO    eegtraj.data.band_variant: P4: mrcp car, eeg (32, 254856), pre (32, 294, 200), 11.6 s
+2026-11-06 13:18:22 INFO    eegtraj.data.band_variant: P5: mrcp car, eeg (32, 276924), pre (32, 294, 200), 9.7 s
+2026-11-06 13:18:32 INFO    eegtraj.data.band_variant: P6: mrcp car, eeg (32, 277332), pre (32, 294, 200), 10.0 s
+2026-11-06 13:18:46 INFO    eegtraj.data.band_variant: P7: mrcp car, eeg (32, 361838), pre (32, 294, 200), 14.5 s
+2026-11-06 13:18:53 INFO    eegtraj.data.band_variant: P8: mrcp car, eeg (32, 261501), pre (32, 294, 200), 7.1 s
+2026-11-06 13:19:00 INFO    eegtraj.data.band_variant: P9: mrcp car, eeg (32, 270198), pre (32, 294, 200), 6.8 s
+2026-11-06 13:19:09 INFO    eegtraj.data.band_variant: P10: mrcp car, eeg (32, 279137), pre (32, 294, 200), 8.6 s
+2026-11-06 13:19:17 INFO    eegtraj.data.band_variant: P11: mrcp car, eeg (32, 282146), pre (32, 294, 200), 8.0 s
+2026-11-06 13:19:24 INFO    eegtraj.data.band_variant: P12: mrcp car, eeg (32, 286921), pre (32, 294, 200), 7.2 s

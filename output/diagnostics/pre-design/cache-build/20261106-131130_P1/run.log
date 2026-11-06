@@ -1,0 +1,2 @@
+2026-11-06 13:11:37 INFO    eegtraj.utils.run: Run directory: output\diagnostics\pre-design\cache-build\20261106-131130_P1
+2026-11-06 13:11:50 INFO    eegtraj.data.band_variant: P1: mrcp car, eeg (32, 253136), pre (32, 294, 200), 13.0 s
