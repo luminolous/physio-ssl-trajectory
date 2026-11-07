@@ -1,0 +1,64 @@
+2026-11-07 19:53:10 INFO    eegtraj.utils.run: Run directory: output\diagnostics\pre-design\channel-importance\ridge_lag\20261107-195309_seed1
+2026-11-07 19:53:10 INFO    eegtraj.baselines.runner: Baseline ridge_lag, mode loso, 10 folds, seed 1, smoke False
+2026-11-07 19:53:11 INFO    eegtraj.baselines.runner: Fold loso_P1: train ('P2', 'P5', 'P8', 'P9', 'P10', 'P11', 'P12'), val ('P4', 'P7'), test ('P1',); target samples train 1335787, val 383628, test 155612
+2026-11-07 19:53:46 INFO    eegtraj.baselines.runner: ridge_lag: 800 features (25 lags), 1335787 training samples, val r per alpha {'0.0001': 0.3925, '0.001': 0.3925, '0.01': 0.392, '0.1': 0.3913, '1': 0.3918, '10': 0.3909, '100': 0.3403}, chosen alpha 0.001
+2026-11-07 19:53:46 INFO    eegtraj.baselines.runner: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1335787 training samples
+2026-11-07 19:53:53 INFO    eegtraj.baselines.runner: Fold loso_P1 inner validation: {'P4': {'r': 0.331, 'r2': -0.044, 'nrmse': 0.333, 'residual_r': 0.314, 'residual_r_other_trial': 0.333, 'residual_r_specific': -0.018}, 'P7': {'r': 0.454, 'r2': 0.042, 'nrmse': 0.321, 'residual_r': 0.075, 'residual_r_other_trial': 0.007, 'residual_r_specific': 0.068}}
+2026-11-07 19:55:41 INFO    eegtraj.baselines.runner: Fold loso_P1 test P1: occlusion of 36 inputs done
+2026-11-07 19:55:41 INFO    eegtraj.baselines.runner: Fold loso_P1 test P1: r = 0.357 (x 0.341, y 0.308, z 0.423), R2 = 0.046, NRMSE = 0.331, 294 trials
+2026-11-07 19:55:41 INFO    eegtraj.baselines.runner: Fold loso_P2: train ('P1', 'P4', 'P5', 'P8', 'P10', 'P11', 'P12'), val ('P7', 'P9'), test ('P2',); target samples train 1268758, val 398068, test 208201
+2026-11-07 19:56:21 INFO    eegtraj.baselines.runner: ridge_lag: 800 features (25 lags), 1268758 training samples, val r per alpha {'0.0001': 0.4005, '0.001': 0.4008, '0.01': 0.4012, '0.1': 0.4032, '1': 0.405, '10': 0.397, '100': 0.3604}, chosen alpha 1
+2026-11-07 19:56:21 INFO    eegtraj.baselines.runner: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1268758 training samples
+2026-11-07 19:56:36 INFO    eegtraj.baselines.runner: Fold loso_P2 inner validation: {'P7': {'r': 0.45, 'r2': -0.0, 'nrmse': 0.328, 'residual_r': 0.18, 'residual_r_other_trial': 0.094, 'residual_r_specific': 0.086}, 'P9': {'r': 0.36, 'r2': 0.061, 'nrmse': 0.327, 'residual_r': -0.082, 'residual_r_other_trial': -0.138, 'residual_r_specific': 0.056}}
+2026-11-07 20:00:32 INFO    eegtraj.baselines.runner: Fold loso_P2 test P2: occlusion of 36 inputs done
+2026-11-07 20:00:32 INFO    eegtraj.baselines.runner: Fold loso_P2 test P2: r = 0.191 (x 0.219, y 0.186, z 0.168), R2 = -0.055, NRMSE = 0.338, 294 trials
+2026-11-07 20:00:32 INFO    eegtraj.baselines.runner: Fold loso_P4: train ('P1', 'P2', 'P5', 'P8', 'P10', 'P11', 'P12'), val ('P7', 'P9'), test ('P4',); target samples train 1307884, val 398068, test 169075
+2026-11-07 20:01:07 INFO    eegtraj.baselines.runner: ridge_lag: 800 features (25 lags), 1307884 training samples, val r per alpha {'0.0001': 0.4131, '0.001': 0.4129, '0.01': 0.4125, '0.1': 0.4131, '1': 0.4145, '10': 0.4082, '100': 0.3613}, chosen alpha 1
+2026-11-07 20:01:07 INFO    eegtraj.baselines.runner: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1307884 training samples
+2026-11-07 20:01:14 INFO    eegtraj.baselines.runner: Fold loso_P4 inner validation: {'P7': {'r': 0.454, 'r2': 0.047, 'nrmse': 0.321, 'residual_r': 0.059, 'residual_r_other_trial': -0.021, 'residual_r_specific': 0.08}, 'P9': {'r': 0.375, 'r2': 0.071, 'nrmse': 0.325, 'residual_r': -0.024, 'residual_r_other_trial': -0.081, 'residual_r_specific': 0.057}}
+2026-11-07 20:03:05 INFO    eegtraj.baselines.runner: Fold loso_P4 test P4: occlusion of 36 inputs done
+2026-11-07 20:03:05 INFO    eegtraj.baselines.runner: Fold loso_P4 test P4: r = 0.344 (x 0.312, y 0.296, z 0.423), R2 = -0.038, NRMSE = 0.332, 294 trials
+2026-11-07 20:03:05 INFO    eegtraj.baselines.runner: Fold loso_P5: train ('P1', 'P7', 'P8', 'P9', 'P10', 'P11', 'P12'), val ('P2', 'P4'), test ('P5',); target samples train 1314741, val 377276, test 183010
+2026-11-07 20:03:37 INFO    eegtraj.baselines.runner: ridge_lag: 800 features (25 lags), 1314741 training samples, val r per alpha {'0.0001': 0.295, '0.001': 0.2947, '0.01': 0.2934, '0.1': 0.2906, '1': 0.2884, '10': 0.2953, '100': 0.291}, chosen alpha 10
+2026-11-07 20:03:37 INFO    eegtraj.baselines.runner: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1314741 training samples
+2026-11-07 20:03:44 INFO    eegtraj.baselines.runner: Fold loso_P5 inner validation: {'P2': {'r': 0.212, 'r2': -0.001, 'nrmse': 0.33, 'residual_r': -0.018, 'residual_r_other_trial': -0.107, 'residual_r_specific': 0.089}, 'P4': {'r': 0.379, 'r2': -0.053, 'nrmse': 0.335, 'residual_r': 0.25, 'residual_r_other_trial': 0.27, 'residual_r_specific': -0.02}}
+2026-11-07 20:05:43 INFO    eegtraj.baselines.runner: Fold loso_P5 test P5: occlusion of 36 inputs done
+2026-11-07 20:05:43 INFO    eegtraj.baselines.runner: Fold loso_P5 test P5: r = 0.321 (x 0.289, y 0.253, z 0.423), R2 = -0.078, NRMSE = 0.347, 294 trials
+2026-11-07 20:05:44 INFO    eegtraj.baselines.runner: Fold loso_P7: train ('P2', 'P4', 'P5', 'P8', 'P9', 'P11', 'P12'), val ('P1', 'P10'), test ('P7',); target samples train 1315670, val 344804, test 214553
+2026-11-07 20:06:13 INFO    eegtraj.baselines.runner: ridge_lag: 800 features (25 lags), 1315670 training samples, val r per alpha {'0.0001': 0.3904, '0.001': 0.3896, '0.01': 0.3871, '0.1': 0.382, '1': 0.3717, '10': 0.3578, '100': 0.3096}, chosen alpha 0.0001
+2026-11-07 20:06:13 INFO    eegtraj.baselines.runner: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1315670 training samples
+2026-11-07 20:06:20 INFO    eegtraj.baselines.runner: Fold loso_P7 inner validation: {'P1': {'r': 0.398, 'r2': 0.073, 'nrmse': 0.327, 'residual_r': 0.273, 'residual_r_other_trial': 0.248, 'residual_r_specific': 0.025}, 'P10': {'r': 0.383, 'r2': 0.063, 'nrmse': 0.308, 'residual_r': -0.076, 'residual_r_other_trial': -0.094, 'residual_r_specific': 0.017}}
+2026-11-07 20:08:40 INFO    eegtraj.baselines.runner: Fold loso_P7 test P7: occlusion of 36 inputs done
+2026-11-07 20:08:40 INFO    eegtraj.baselines.runner: Fold loso_P7 test P7: r = 0.455 (x 0.450, y 0.440, z 0.476), R2 = 0.041, NRMSE = 0.322, 294 trials
+2026-11-07 20:08:40 INFO    eegtraj.baselines.runner: Fold loso_P8: train ('P1', 'P2', 'P4', 'P7', 'P9', 'P10', 'P11'), val ('P5', 'P12'), test ('P8',); target samples train 1318415, val 393073, test 163539
+2026-11-07 20:09:13 INFO    eegtraj.baselines.runner: ridge_lag: 800 features (25 lags), 1318415 training samples, val r per alpha {'0.0001': 0.3025, '0.001': 0.3029, '0.01': 0.3039, '0.1': 0.3068, '1': 0.31, '10': 0.3015, '100': 0.2679}, chosen alpha 1
+2026-11-07 20:09:13 INFO    eegtraj.baselines.runner: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1318415 training samples
+2026-11-07 20:09:20 INFO    eegtraj.baselines.runner: Fold loso_P8 inner validation: {'P5': {'r': 0.305, 'r2': -0.064, 'nrmse': 0.344, 'residual_r': -0.063, 'residual_r_other_trial': -0.134, 'residual_r_specific': 0.071}, 'P12': {'r': 0.315, 'r2': 0.049, 'nrmse': 0.318, 'residual_r': -0.198, 'residual_r_other_trial': -0.282, 'residual_r_specific': 0.084}}
+2026-11-07 20:11:08 INFO    eegtraj.baselines.runner: Fold loso_P8 test P8: occlusion of 36 inputs done
+2026-11-07 20:11:08 INFO    eegtraj.baselines.runner: Fold loso_P8 test P8: r = 0.270 (x 0.201, y 0.224, z 0.385), R2 = 0.019, NRMSE = 0.330, 294 trials
+2026-11-07 20:11:08 INFO    eegtraj.baselines.runner: Fold loso_P9: train ('P1', 'P2', 'P4', 'P5', 'P7', 'P10', 'P12'), val ('P8', 'P11'), test ('P9',); target samples train 1329706, val 361806, test 183515
+2026-11-07 20:11:39 INFO    eegtraj.baselines.runner: ridge_lag: 800 features (25 lags), 1329706 training samples, val r per alpha {'0.0001': 0.2495, '0.001': 0.2514, '0.01': 0.2558, '0.1': 0.2678, '1': 0.2874, '10': 0.2968, '100': 0.2594}, chosen alpha 10
+2026-11-07 20:11:40 INFO    eegtraj.baselines.runner: template_cue: 1677 bins from -1.01 to 15.75 s after ev_LEDOn, 1329706 training samples
+2026-11-07 20:11:46 INFO    eegtraj.baselines.runner: Fold loso_P9 inner validation: {'P8': {'r': 0.264, 'r2': 0.027, 'nrmse': 0.33, 'residual_r': 0.163, 'residual_r_other_trial': 0.134, 'residual_r_specific': 0.03}, 'P11': {'r': 0.329, 'r2': -0.039, 'nrmse': 0.334, 'residual_r': 0.021, 'residual_r_other_trial': -0.019, 'residual_r_specific': 0.04}}
+2026-11-07 20:13:47 INFO    eegtraj.baselines.runner: Fold loso_P9 test P9: occlusion of 36 inputs done
+2026-11-07 20:13:47 INFO    eegtraj.baselines.runner: Fold loso_P9 test P9: r = 0.365 (x 0.365, y 0.340, z 0.390), R2 = 0.054, NRMSE = 0.329, 294 trials
+2026-11-07 20:13:47 INFO    eegtraj.baselines.runner: Fold loso_P10: train ('P1', 'P2', 'P5', 'P7', 'P8', 'P9', 'P11'), val ('P4', 'P12'), test ('P10',); target samples train 1306697, val 379138, test 189192
+2026-11-07 20:14:20 INFO    eegtraj.baselines.runner: ridge_lag: 800 features (25 lags), 1306697 training samples, val r per alpha {'0.0001': 0.322, '0.001': 0.3228, '0.01': 0.3239, '0.1': 0.3261, '1': 0.3261, '10': 0.3078, '100': 0.2605}, chosen alpha 1
+2026-11-07 20:14:20 INFO    eegtraj.baselines.runner: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1306697 training samples
+2026-11-07 20:14:27 INFO    eegtraj.baselines.runner: Fold loso_P10 inner validation: {'P4': {'r': 0.362, 'r2': -0.072, 'nrmse': 0.337, 'residual_r': 0.239, 'residual_r_other_trial': 0.255, 'residual_r_specific': -0.016}, 'P12': {'r': 0.291, 'r2': 0.022, 'nrmse': 0.322, 'residual_r': -0.198, 'residual_r_other_trial': -0.277, 'residual_r_specific': 0.079}}
+2026-11-07 20:16:30 INFO    eegtraj.baselines.runner: Fold loso_P10 test P10: occlusion of 36 inputs done
+2026-11-07 20:16:30 INFO    eegtraj.baselines.runner: Fold loso_P10 test P10: r = 0.353 (x 0.339, y 0.324, z 0.396), R2 = -0.013, NRMSE = 0.319, 294 trials
+2026-11-07 20:16:30 INFO    eegtraj.baselines.runner: Fold loso_P11: train ('P1', 'P5', 'P7', 'P8', 'P9', 'P10', 'P12'), val ('P2', 'P4'), test ('P11',); target samples train 1299484, val 377276, test 198267
+2026-11-07 20:17:02 INFO    eegtraj.baselines.runner: ridge_lag: 800 features (25 lags), 1299484 training samples, val r per alpha {'0.0001': 0.2924, '0.001': 0.2923, '0.01': 0.2917, '0.1': 0.2911, '1': 0.2924, '10': 0.2977, '100': 0.2872}, chosen alpha 10
+2026-11-07 20:17:02 INFO    eegtraj.baselines.runner: template_cue: 1677 bins from -1.01 to 15.75 s after ev_LEDOn, 1299484 training samples
+2026-11-07 20:17:08 INFO    eegtraj.baselines.runner: Fold loso_P11 inner validation: {'P2': {'r': 0.219, 'r2': -0.001, 'nrmse': 0.33, 'residual_r': -0.002, 'residual_r_other_trial': -0.081, 'residual_r_specific': 0.079}, 'P4': {'r': 0.376, 'r2': -0.037, 'nrmse': 0.332, 'residual_r': 0.251, 'residual_r_other_trial': 0.274, 'residual_r_specific': -0.023}}
+2026-11-07 20:19:18 INFO    eegtraj.baselines.runner: Fold loso_P11 test P11: occlusion of 36 inputs done
+2026-11-07 20:19:18 INFO    eegtraj.baselines.runner: Fold loso_P11 test P11: r = 0.348 (x 0.413, y 0.402, z 0.227), R2 = -0.021, NRMSE = 0.331, 294 trials
+2026-11-07 20:19:18 INFO    eegtraj.baselines.runner: Fold loso_P12: train ('P2', 'P4', 'P5', 'P7', 'P8', 'P10', 'P11'), val ('P1', 'P9'), test ('P12',); target samples train 1325837, val 339127, test 210063
+2026-11-07 20:19:48 INFO    eegtraj.baselines.runner: ridge_lag: 800 features (25 lags), 1325837 training samples, val r per alpha {'0.0001': 0.3965, '0.001': 0.3955, '0.01': 0.3928, '0.1': 0.3876, '1': 0.3766, '10': 0.3673, '100': 0.3371}, chosen alpha 0.0001
+2026-11-07 20:19:48 INFO    eegtraj.baselines.runner: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1325837 training samples
+2026-11-07 20:19:54 INFO    eegtraj.baselines.runner: Fold loso_P12 inner validation: {'P1': {'r': 0.401, 'r2': 0.083, 'nrmse': 0.325, 'residual_r': 0.275, 'residual_r_other_trial': 0.241, 'residual_r_specific': 0.034}, 'P9': {'r': 0.392, 'r2': 0.065, 'nrmse': 0.325, 'residual_r': -0.019, 'residual_r_other_trial': -0.092, 'residual_r_specific': 0.073}}
+2026-11-07 20:23:21 INFO    eegtraj.baselines.runner: Fold loso_P12 test P12: occlusion of 36 inputs done
+2026-11-07 20:23:21 INFO    eegtraj.baselines.runner: Fold loso_P12 test P12: r = 0.308 (x 0.331, y 0.311, z 0.282), R2 = 0.020, NRMSE = 0.322, 294 trials
+2026-11-07 20:23:27 INFO    eegtraj.baselines.runner: Aggregate over 10 test subjects: r = 0.331 +- 0.068, R2 = -0.002 +- 0.045, NRMSE = 0.330 +- 0.008
+2026-11-07 20:23:27 INFO    eegtraj.baselines.runner: Wall time 1811.3 s
