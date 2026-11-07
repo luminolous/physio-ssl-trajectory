@@ -1,0 +1,8 @@
+# Zero-phase (forward-backward) 0.1-2 Hz EEG for the lag profile only. Uses future samples: never for decoders.
+cache_config: configs/cache/default.yaml
+cache_dir: dataset/cache/98f5fa6e66
+band: mrcp_zp
+band_hz: [0.1, 2.0]
+reference: car
+n_pre: 200
+zero_phase: true

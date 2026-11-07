@@ -67,12 +67,14 @@ def rectified_band(x: np.ndarray, sos: np.ndarray, reference: str) -> np.ndarray
 
 
 def compute_band_variant(subject: str, cfg: dict[str, Any], raw_dir: Path, cache_dir: Path, band: str, reference: str,
-                         n_pre: int, envelope: dict[str, Any] | None = None
+                         n_pre: int, envelope: dict[str, Any] | None = None, zero_phase: bool = False
                          ) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict[str, float]]:
     """Compute one subject's arrays for a band defined in ``cfg``. Writes nothing.
 
     Args:
         envelope: ``lowpass_hz`` and ``order`` for a band-power envelope, or None for the band-passed signal.
+        zero_phase: filter forward and backward. Uses future samples: analyses outside the causal protocol only.
+            The settle time is still measured for the causal filter.
 
     Returns:
         eeg float32 (32, T), pre float32 (32, n_lifts, n_pre), missing int32 (n_lifts,), and the
@@ -96,8 +98,10 @@ def compute_band_variant(subject: str, cfg: dict[str, Any], raw_dir: Path, cache
         probe = int(min(tc["probe_start_s"], x.shape[1] / fs / 2) * fs)
         sos = butter_sos(fs, cfg["eeg"]["filter_order"], lo, hi)
         settle[f"S{series}"] = settle_time_s(x, fs, sos, probe, tc["tolerance"])
+        if zero_phase and envelope is not None:
+            raise ValueError("zero_phase is not supported for envelopes")
         if envelope is None:
-            stream = eeg_stream(x, hs.eeg_names, fs, cfg, [], band, reference)
+            stream = eeg_stream(x, hs.eeg_names, fs, cfg, [], band, reference, causal=not zero_phase)
         else:
             lowpass = butter_sos(fs, envelope["order"], high_hz=envelope["lowpass_hz"])
             rectified = rectified_band(x, sos, reference)
@@ -113,7 +117,7 @@ def compute_band_variant(subject: str, cfg: dict[str, Any], raw_dir: Path, cache
 
 
 def build_band_variant(subject: str, cfg: dict[str, Any], raw_dir: Path, cache_dir: Path, band: str, reference: str,
-                       n_pre: int, envelope: dict[str, Any] | None = None) -> dict[str, Any]:
+                       n_pre: int, envelope: dict[str, Any] | None = None, zero_phase: bool = False) -> dict[str, Any]:
     """Compute and save one subject's arrays. Raises if any of them already exists."""
     subj_dir = Path(cache_dir) / subject
     paths = {"eeg": subj_dir / f"eeg_{band}_{reference}.npy",
@@ -124,12 +128,12 @@ def build_band_variant(subject: str, cfg: dict[str, Any], raw_dir: Path, cache_d
     if existing:
         raise FileExistsError(f"refusing to overwrite: {existing}")
     t_start = time.time()
-    eeg, pre, missing, settle = compute_band_variant(subject, cfg, raw_dir, cache_dir, band, reference, n_pre, envelope)
+    eeg, pre, missing, settle = compute_band_variant(subject, cfg, raw_dir, cache_dir, band, reference, n_pre, envelope, zero_phase)
     np.save(paths["eeg"], eeg)
     np.save(paths["pre"], pre)
     np.save(paths["missing"], missing)
     info = {"subject": subject, "band": band, "reference": reference, "band_hz": list(cfg["eeg"]["bands_hz"][band]),
-            "envelope": envelope, "n_pre": n_pre, "eeg_shape": list(eeg.shape), "pre_shape": list(pre.shape),
+            "envelope": envelope, "zero_phase": zero_phase, "n_pre": n_pre, "eeg_shape": list(eeg.shape), "pre_shape": list(pre.shape),
             "n_lifts_with_missing": int((missing > 0).sum()), "filter_settle_time_s": settle,
             "build_seconds": round(time.time() - t_start, 1)}
     paths["info"].write_text(json.dumps(info, indent=2) + "\n", encoding="utf-8")

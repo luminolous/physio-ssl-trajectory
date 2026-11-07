@@ -50,17 +50,21 @@ def cut_pre_lift(stream: np.ndarray, hs_start: int, factor: int, n_pre: int) -> 
 
 
 def eeg_stream(eeg: np.ndarray, names: list[str], fs_hz: float, cfg: dict[str, Any], bad_channels: list[str], band: str,
-               reference: str) -> np.ndarray:
-    """Continuous EEG through the main cache's chain: interpolate, causal band-pass, reference, causal anti-alias."""
+               reference: str, causal: bool = True) -> np.ndarray:
+    """Continuous EEG through the main cache's chain: interpolate, causal band-pass, reference, causal anti-alias.
+
+    ``causal=False`` runs both filters forward and backward (zero phase). That uses future samples, so it is for
+    analyses outside the causal protocol only, such as the lag profile.
+    """
     eeg_cfg = cfg["eeg"]
     x = interpolate_bad_channels(eeg.astype(np.float64), names, fs_hz, bad_channels)
     lo, hi = eeg_cfg["bands_hz"][band]
-    x = apply_sos(x, butter_sos(fs_hz, eeg_cfg["filter_order"], lo, hi), causal=True)
+    x = apply_sos(x, butter_sos(fs_hz, eeg_cfg["filter_order"], lo, hi), causal=causal)
     if reference == "car":
         x = common_average(x)
     aa_sos = butter_sos(fs_hz, eeg_cfg["antialias"]["order"],
                         high_hz=eeg_cfg["antialias"]["frac_of_nyquist"] * cfg["fs_out_hz"] / 2)
-    return apply_sos(x, aa_sos, causal=True)
+    return apply_sos(x, aa_sos, causal=causal)
 
 
 def build_pre_lift(subject: str, cfg: dict[str, Any], raw_dir: Path, cache_dir: Path, band: str, reference: str,
