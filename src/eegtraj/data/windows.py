@@ -16,6 +16,7 @@ Normalization (D9):
 from __future__ import annotations
 
 from dataclasses import dataclass, replace
+import json
 from pathlib import Path
 
 import numpy as np
@@ -81,6 +82,15 @@ def recentered_wrist(kin_pos: np.ndarray, trials: pd.DataFrame, fs_hz: float) ->
         ref = np.array([np.interp(tr.onset_s, t, wrist[a, sl]) for a in range(3)], dtype=np.float32)
         wrist[:, sl] -= ref[:, None]
     return wrist
+
+
+def input_channel_names(cache_dir: str | Path, subject: str, band: str | list[str], channel_set: str) -> list[str]:
+    """Names of the EEG rows that ``load_subject_samples`` returns; ``<band>:<channel>`` when bands are stacked."""
+    manifest = json.loads((Path(cache_dir) / subject / "manifest.json").read_text(encoding="utf-8"))
+    names = [manifest["eeg_names"][i] for i in channel_indices(manifest["eeg_names"], channel_set)]
+    if isinstance(band, str):
+        return names
+    return [f"{b}:{n}" for b in band for n in names]
 
 
 def load_subject_samples(cache_dir: str | Path, subject: str, band: str | list[str], reference: str,

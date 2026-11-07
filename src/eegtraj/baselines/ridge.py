@@ -21,6 +21,18 @@ from eegtraj.metrics import aggregate_subject, per_trial_metrics
 CHUNK_ROWS = 50_000
 
 
+def haufe_pattern(cov_x: np.ndarray, w: np.ndarray) -> np.ndarray:
+    """Activation pattern of a linear backward model (Haufe et al., 2014): cov(X) W cov(y_hat)^-1.
+
+    Args:
+        cov_x: (p, p) feature covariance. w: (p, k) weights.
+
+    Returns:
+        (p, k) pattern, in the units of the features per unit of each output.
+    """
+    return cov_x @ w @ np.linalg.inv(w.T @ cov_x @ w)
+
+
 def _chunks(n: int, size: int = CHUNK_ROWS):
     for start in range(0, n, size):
         yield slice(start, min(start + size, n))
@@ -74,6 +86,7 @@ class RidgeLagBaseline(Baseline):
             self.val_scores, self.alpha = {}, float(self.alphas[len(self.alphas) // 2])
         self.w = weights[self.alpha]
         self.b = my - mx @ self.w
+        self.pattern = haufe_pattern(xtx_c / (n - 1), self.w)  # training-subject covariance, normalized units
         ctx.logger.info("ridge_lag: %d features (%d lags), %d training samples, val r per alpha %s, chosen alpha %g",
                         p, len(self.lags), n, {f"{a:g}": round(v, 4) for a, v in self.val_scores.items()}, self.alpha)
 
@@ -93,6 +106,11 @@ class RidgeLagBaseline(Baseline):
     def predict(self, subject: SubjectSamples, mask: np.ndarray, ctx: FitContext, repeat: int = 0) -> np.ndarray:
         z = np.vstack([self._features(subject, mask, ctx, sl) @ self.w + self.b for sl in _chunks(int(mask.sum()))])
         return ctx.target_norm.inverse(z.T.astype(np.float32)).T
+
+    def save(self, path) -> None:
+        """Weights and Haufe patterns; feature index = channel * n_lags + lag index (channel-major)."""
+        np.savez(path.with_suffix(".npz"), w=self.w, b=self.b, pattern=self.pattern, lags_samples=self.lags,
+                 alpha=self.alpha, mx=self.mx, my=self.my)
 
     def info(self) -> dict:
         return {"alpha": self.alpha, "alpha_grid": self.alphas.tolist(), "val_r_per_alpha": self.val_scores,

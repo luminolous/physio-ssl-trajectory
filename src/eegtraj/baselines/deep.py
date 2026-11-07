@@ -160,6 +160,10 @@ class DeepBaseline(Baseline):
         out = self.output_norm.inverse(z.T.astype(np.float32)).T
         return out + self.template.predict(subject, mask, ctx) if self.residual else out
 
+    def save(self, path: Path) -> None:
+        torch.save({"architecture": self.architecture, "model_kwargs": self.model_kwargs, "residual": self.residual,
+                    "state_dict": self.model.state_dict()}, path.with_suffix(".pt"))
+
     def info(self) -> dict:
         best = min(self.history, key=lambda h: h["val_loss"])
         out = {"architecture": self.architecture, "n_parameters": self.n_params, "model_kwargs": self.model_kwargs,

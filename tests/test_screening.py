@@ -11,7 +11,7 @@ import yaml
 
 from eegtraj.baselines import FitContext
 from eegtraj.baselines.base import Baseline
-from eegtraj.baselines.runner import score_inner_validation
+from eegtraj.baselines.scoring import score_inner_validation
 from eegtraj.data.band_variant import rectified_band
 from eegtraj.data.windows import SubjectSamples, load_subject_samples, segment_samples
 from eegtraj.preprocessing.filters import apply_sos, butter_sos

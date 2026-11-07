@@ -3,7 +3,9 @@
 Writes into the run directory:
 - ``metrics.json``: metric definitions, protocol facts, per fold, per subject, aggregate
   (mean +- SD across test subjects), pooled r as a labeled secondary metric;
-- ``predictions.npz`` (optional): per test subject y_true, y_pred, sample_idx, trial_row.
+- ``predictions.npz`` (optional): per test subject y_true, y_pred, sample_idx, trial_row;
+- ``occlusion.csv`` (optional, ``channel_occlusion``): test scores with each input channel or group occluded;
+- ``models/<fold>.*`` (optional, ``save_model``): fitted weights per fold.
 """
 
 from __future__ import annotations
@@ -17,27 +19,21 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
+import pandas as pd
 import yaml
 
-from eegtraj.baselines.base import Baseline, FitContext, make_baseline
-from eegtraj.baselines.template import TemplateCueBaseline, time_since_event
+from eegtraj.baselines.base import FitContext, make_baseline
+from eegtraj.baselines.scoring import channel_occlusion, fit_cue_template, score_inner_validation
 from eegtraj.data.splits import Fold, load_split_config, make_folds
 from eegtraj.data.windows import (
     SubjectSamples,
     fit_eeg_normalizers,
     fit_target_normalizer,
+    input_channel_names,
     load_subject_samples,
     sample_masks,
 )
-from eegtraj.metrics import (
-    METRIC_DEFINITIONS,
-    aggregate_across_subjects,
-    aggregate_subject,
-    per_trial_metrics,
-    pooled_r,
-    residual_r,
-    residual_r_other_trial,
-)
+from eegtraj.metrics import METRIC_DEFINITIONS, aggregate_across_subjects, aggregate_subject, per_trial_metrics, pooled_r
 
 logger = logging.getLogger(__name__)
 
@@ -115,32 +111,6 @@ def select_folds(cfg: dict[str, Any]) -> list[Fold]:
     return folds
 
 
-def score_inner_validation(model: Baseline, train: list[SubjectSamples], val: list[SubjectSamples], ctx: FitContext,
-                           seed: int, n_permutations: int) -> dict[str, dict[str, float]]:
-    """r, R2, NRMSE, and the residual metrics of a fitted model on the fold's inner-validation subjects.
-
-    T_cue comes from the fold's training subjects. Permutations depend only on ``seed`` and the subject, as in
-    ``eegtraj.diagnostics.residual``. Early stopping used these subjects, so the values are optimistic in the same way
-    for every configuration. They never use the fold's test subject.
-    """
-    template = TemplateCueBaseline()
-    template.fit(train, [], ctx)
-    out = {}
-    for s in val:
-        m = ctx.val_masks[s.subject]
-        y_true, rows = s.target[:, s.sample_idx[m]].T, s.trial_row[m]
-        y_pred = model.predict(s, m, ctx)
-        scores = aggregate_subject(per_trial_metrics(y_true, y_pred, rows))
-        cue = template.predict(s, m, ctx)
-        bins = np.round(time_since_event(s, "ev_LEDOn", m) * s.fs_hz).astype(np.int64)
-        res = residual_r(y_true, y_pred, cue, rows)["mean"]
-        rng = np.random.default_rng([seed, int(s.subject[1:])])
-        other = residual_r_other_trial(y_true, y_pred, cue, rows, bins, rng, n_permutations)["mean"]
-        out[s.subject] = {"r": scores["r"]["mean"], "r2": scores["r2"]["mean"], "nrmse": scores["nrmse"]["mean"],
-                          "residual_r": res, "residual_r_other_trial": other, "residual_r_specific": res - other}
-    return out
-
-
 def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
     """Run every fold and write metrics.json (and predictions.npz). Returns the metrics dict."""
     t_start = time.time()
@@ -163,7 +133,7 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
                                            per_series=cfg["splits"]["mode"] == "within_subject")
         return loaded[subject]
 
-    fold_results, subject_results, pooled, predictions, info = [], {}, {}, {}, {}
+    fold_results, subject_results, pooled, predictions, info, occlusion = [], {}, {}, {}, {}, []
     per_repeat_subject: dict[str, list[dict]] = {}
     n_repeats = 1
     for fold in folds:
@@ -189,10 +159,14 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
         model = make_baseline(cfg["baseline"]["name"], cfg["baseline"].get("params"))
         model.fit(train, val, ctx)
         n_repeats = model.n_repeats
+        if cfg.get("save_model"):
+            (run_dir / "models").mkdir(exist_ok=True)
+            model.save(run_dir / "models" / fold.name)
+        template = fit_cue_template(train, ctx) if cfg.get("inner_val_scoring") or cfg.get("channel_occlusion") else None
         inner_val = None
         if cfg.get("inner_val_scoring"):
             inner_val = score_inner_validation(model, train, val, ctx, int(cfg["inner_val_scoring"]["seed"]),
-                                               int(cfg["inner_val_scoring"]["n_permutations"]))
+                                               int(cfg["inner_val_scoring"]["n_permutations"]), template)
             logger.info("Fold %s inner validation: %s", fold.name,
                         {s: {k: round(v, 3) for k, v in d.items()} for s, d in inner_val.items()})
 
@@ -216,6 +190,13 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
             per_repeat_subject.setdefault(s.subject, reps)
             pooled[s.subject] = {key: float(np.mean([p[key] for p in pooled_reps])) for key in pooled_reps[0]}
             fold_subjects[s.subject] = res
+            if cfg.get("channel_occlusion"):
+                occ = cfg["channel_occlusion"]
+                names = input_channel_names(w["cache_dir"], s.subject, cfg["data"]["band"], cfg["data"]["channel_set"])
+                rows = channel_occlusion(model, s, m, ctx, template, names, occ.get("groups", {}), int(occ["seed"]),
+                                         int(occ["n_permutations"]))
+                occlusion.extend({"fold": fold.name, **r} for r in rows)
+                logger.info("Fold %s test %s: occlusion of %d inputs done", fold.name, s.subject, len(rows) - 1)
             logger.info("Fold %s test %s: r = %.3f (x %.3f, y %.3f, z %.3f), R2 = %.3f, NRMSE = %.3f, %d trials",
                         fold.name, s.subject, res["r"]["mean"], *res["r"]["per_axis"].values(),
                         res["r2"]["mean"], res["nrmse"]["mean"], res["n_trials"])
@@ -259,6 +240,8 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
         "wall_seconds": round(time.time() - t_start, 1),
     }
     (run_dir / "metrics.json").write_text(json.dumps(metrics, indent=2) + "\n", encoding="utf-8")
+    if occlusion:
+        pd.DataFrame(occlusion).to_csv(run_dir / "occlusion.csv", index=False)
     if cfg.get("save_predictions"):
         np.savez_compressed(run_dir / "predictions.npz",
                             **{f"{s}__{k}": v for s, d in predictions.items() for k, v in d.items()})

@@ -76,6 +76,10 @@ class Baseline:
         """Extra facts for metrics.json (chosen hyperparameters, notes such as oracle timing)."""
         return {}
 
+    def save(self, path: Path) -> None:
+        """Write the fitted weights to ``path`` plus a suffix of the subclass's choice."""
+        raise NotImplementedError(f"{self.name} cannot save its weights")
+
 
 def make_baseline(name: str, params: dict[str, Any] | None = None) -> Baseline:
     if name not in REGISTRY:

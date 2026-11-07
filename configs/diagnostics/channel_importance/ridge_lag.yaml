@@ -1,0 +1,33 @@
+# Channel importance: lagged ridge as in output/data-baselines/baselines/ridge_lag (lowfreq, 500 ms, 25 lags).
+# Rerun to save weights and Haufe activation patterns per fold.
+baseline:
+  name: ridge_lag
+  params:
+    alphas: [0.0001, 0.001, 0.01, 0.1, 1.0, 10.0, 100.0]
+data:
+  windows_config: configs/data/windows.yaml
+  band: lowfreq
+  reference: car
+  channel_set: all
+splits:
+  config: configs/splits/default.yaml
+  mode: loso
+seed: 1
+save_predictions: true
+save_model: true
+exclude_flags: []
+inner_val_scoring:
+  seed: 20261106
+  n_permutations: 5
+channel_occlusion:  # test subjects; each channel and group set to its normalizer mean (zero after z-score)
+  seed: 20261106
+  n_permutations: 5
+  groups:
+    prefrontal: [Fp1, Fp2]
+    contralateral: [C3, FC5, FC1, CP5, CP1, Cz]
+    ipsilateral: [C4, FC6, FC2, CP6, CP2, Cz]
+    occipital: [O1, Oz, O2, PO9, PO10]
+output:
+  root: output/diagnostics/pre-design
+  group: channel-importance
+  name: ridge_lag
