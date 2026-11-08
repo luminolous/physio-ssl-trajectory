@@ -129,7 +129,8 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
     def get(subject: str) -> SubjectSamples:
         if subject not in loaded:
             s = load_subject_samples(w["cache_dir"], subject, cfg["data"]["band"], cfg["data"]["reference"],
-                                     cfg["data"]["channel_set"], w["target"], history, pre_lift=bool(w.get("pre_lift")))
+                                     cfg["data"]["channel_set"], w["target"], history, pre_lift=bool(w.get("pre_lift")),
+                                     rereference=cfg["data"].get("rereference"))
             if cfg["data"].get("euclidean_alignment"):  # label-free, per subject, before normalization
                 s, ea = euclidean_align(s)
                 logger.info("%s: Euclidean alignment %s", subject, ea)

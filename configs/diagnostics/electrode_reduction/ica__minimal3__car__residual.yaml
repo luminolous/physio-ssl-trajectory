@@ -1,0 +1,42 @@
+# Electrode reduction curve (final checks), CNN-LSTM, 2 s history, fixed budget (D11), residual form.
+# Data: ICA ocular-cleaned; montage minimal3; reference: CAR over 32 channels, then select (option a).
+# All-32 cleaned comparator: output/diagnostics/final-checks/ocular/cnn_lstm_residual/.
+baseline:
+  name: cnn_lstm
+  params:
+    residual: true
+    model:
+      n_temporal: 8
+      temporal_kernel: 25
+      n_spatial: 16
+      pool: 2
+      hidden: 32
+      lstm_layers: 1
+      drop_prob: 0.25
+    train:
+      lr: 0.001
+      weight_decay: 0.01
+      batch_size: 512
+      max_epochs: 30
+      samples_per_epoch: 200000
+      val_samples: 100000
+      patience: 5
+      amp: true
+data:
+  windows_config: configs/data/windows_long_history.yaml
+  band: broadband_ica  # ocular-cleaned by ICA per subject
+  reference: car
+  channel_set: minimal3
+splits:
+  config: configs/splits/default.yaml
+  mode: loso
+seed: 1
+save_predictions: true
+exclude_flags: []
+inner_val_scoring:  # the clean selection readout
+  seed: 20261106
+  n_permutations: 5
+output:
+  root: output/diagnostics/final-checks
+  group: electrode-reduction
+  name: ica__minimal3__car__residual

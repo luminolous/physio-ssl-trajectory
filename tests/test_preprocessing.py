@@ -101,7 +101,8 @@ def test_common_average_and_channel_sets():
     all_set = set()
     for name, chans in CHANNEL_SETS.items():
         assert set(chans) <= set(NAMES), name
-        if name not in ("prefrontal", "contralateral", "ipsilateral", "no_prefrontal"):  # deliberate overlaps, checked below
+        if name not in ("prefrontal", "contralateral", "ipsilateral", "no_prefrontal", "central9", "minimal3", "cz",
+                        "headband_ring"):  # deliberate overlaps, checked below or in test_electrode_reduction.py
             assert not (set(chans) & all_set), "channel sets must be disjoint"
             all_set |= set(chans)
         assert [NAMES[i] for i in channel_indices(NAMES, name)] == list(chans)

@@ -24,7 +24,7 @@ import pandas as pd
 
 from eegtraj.data.cache import load_subject
 from eegtraj.data.pre_lift import insert_pre_lift
-from eegtraj.preprocessing.reference import channel_indices
+from eegtraj.preprocessing.reference import channel_indices, rereference_rows
 
 WRIST_INDEX = 3  # sensor 4 in kin_pos (4, 3, T)
 EPS = 1e-8
@@ -94,7 +94,8 @@ def input_channel_names(cache_dir: str | Path, subject: str, band: str | list[st
 
 
 def load_subject_samples(cache_dir: str | Path, subject: str, band: str | list[str], reference: str,
-                         channel_set: str, target: str, history: int, pre_lift: bool = False) -> SubjectSamples:
+                         channel_set: str, target: str, history: int, pre_lift: bool = False,
+                         rereference: str | None = None) -> SubjectSamples:
     """Load one subject from the cache as inputs + targets.
 
     Args:
@@ -106,18 +107,23 @@ def load_subject_samples(cache_dir: str | Path, subject: str, band: str | list[s
         history: EEG window length in samples.
         pre_lift: also load EEG from before each lift (see ``eegtraj.data.pre_lift``), so the history
             may start before the lift window.
+        rereference: None, or ``linked_mastoid`` (see ``eegtraj.preprocessing.reference.rereference_rows``),
+            applied to the selected channels and to the pre-lift EEG.
     """
     if not isinstance(band, str):
-        parts = [load_subject_samples(cache_dir, subject, b, reference, channel_set, target, history, pre_lift) for b in band]
+        parts = [load_subject_samples(cache_dir, subject, b, reference, channel_set, target, history, pre_lift, rereference)
+                 for b in band]
         return replace(parts[0], eeg=np.concatenate([p.eeg for p in parts], axis=0))
     arrays = ["kin_pos", "wrist_vel", "emg_env" if channel_set == "emg" else f"eeg_{band}_{reference}"]
     data, trials, manifest = load_subject(cache_dir, subject, arrays=arrays)
     fs = float(manifest["fs_hz"])
     if channel_set == "emg":
+        if rereference is not None:
+            raise ValueError("rereference applies to EEG only; channel_set 'emg' is not supported")
         eeg = np.asarray(data["emg_env"], dtype=np.float32)
     else:
-        eeg = np.asarray(data[f"eeg_{band}_{reference}"][channel_indices(manifest["eeg_names"], channel_set)],
-                         dtype=np.float32)
+        eeg = rereference_rows(data[f"eeg_{band}_{reference}"], manifest["eeg_names"],
+                               channel_indices(manifest["eeg_names"], channel_set), rereference)
     if target == "position":
         y = recentered_wrist(data["kin_pos"], trials, fs)
     elif target == "velocity":
@@ -133,7 +139,7 @@ def load_subject_samples(cache_dir: str | Path, subject: str, band: str | list[s
     pre = np.load(Path(cache_dir) / subject / f"pre_lift_eeg_{band}_{reference}.npy", mmap_mode="r")
     if n_pre > pre.shape[2]:
         raise ValueError(f"history {history} needs {n_pre} pre-lift samples; the cache has {pre.shape[2]}")
-    pre = pre[channel_indices(manifest["eeg_names"], channel_set)]
+    pre = rereference_rows(pre, manifest["eeg_names"], channel_indices(manifest["eeg_names"], channel_set), rereference)
     eeg, y, trials, keep = insert_pre_lift(eeg, y, trials, pre, n_pre)
     idx, rows = segment_samples(trials, fs, 1)
     return SubjectSamples(subject, eeg, y, idx, rows, trials, fs, eeg_stat_mask=keep)

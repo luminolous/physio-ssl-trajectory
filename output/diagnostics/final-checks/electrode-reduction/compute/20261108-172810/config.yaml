@@ -1,0 +1,26 @@
+model_config: configs/diagnostics/electrode_reduction/ica__cz__car__direct.yaml
+architecture: cnn_lstm
+model:
+  n_temporal: 8
+  temporal_kernel: 25
+  n_spatial: 16
+  pool: 2
+  hidden: 32
+  lstm_layers: 1
+  drop_prob: 0.25
+n_times: 200
+montages:
+  all: 32
+  headband_ring: 10
+  central9: 9
+  contralateral: 6
+  minimal3: 3
+  cz: 1
+devices:
+- cpu
+- cuda
+n_warmup: 50
+n_repeat: 500
+cpu_threads: 1
+seed: 0
+gpu: NVIDIA GeForce RTX 4050 Laptop GPU
