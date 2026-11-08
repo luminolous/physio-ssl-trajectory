@@ -161,8 +161,14 @@ class DeepBaseline(Baseline):
         return out + self.template.predict(subject, mask, ctx) if self.residual else out
 
     def save(self, path: Path) -> None:
-        torch.save({"architecture": self.architecture, "model_kwargs": self.model_kwargs, "residual": self.residual,
-                    "state_dict": self.model.state_dict()}, path.with_suffix(".pt"))
+        """Weights plus what is needed to predict again: the output normalizer and, in residual form, T_cue."""
+        out = {"architecture": self.architecture, "model_kwargs": self.model_kwargs, "residual": self.residual,
+               "state_dict": self.model.state_dict(),
+               "output_norm": {"mean": self.output_norm.mean, "std": self.output_norm.std}}
+        if self.residual:
+            out["template"] = {"template": self.template.template, "bin0": self.template.bin0,
+                               "fs_hz": self.template.fs_hz, "counts": self.template.counts}
+        torch.save(out, path.with_suffix(".pt"))
 
     def info(self) -> dict:
         best = min(self.history, key=lambda h: h["val_loss"])

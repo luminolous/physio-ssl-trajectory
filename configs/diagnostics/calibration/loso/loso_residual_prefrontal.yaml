@@ -1,0 +1,39 @@
+# Calibration within subject (final pre-design checks): LOSO pretraining with saved weights.
+# CNN-LSTM residual form, 2 s history, fixed budget (D11). Data: uncleaned, prefrontal channels only (control).
+baseline:
+  name: cnn_lstm
+  params:
+    residual: true
+    model:
+      n_temporal: 8
+      temporal_kernel: 25
+      n_spatial: 16
+      pool: 2
+      hidden: 32
+      lstm_layers: 1
+      drop_prob: 0.25
+    train:
+      lr: 0.001
+      weight_decay: 0.01
+      batch_size: 512
+      max_epochs: 30
+      samples_per_epoch: 200000
+      val_samples: 100000
+      patience: 5
+      amp: true
+data:
+  windows_config: configs/data/windows_long_history.yaml
+  band: broadband
+  reference: car
+  channel_set: prefrontal
+splits:
+  config: configs/splits/default.yaml
+  mode: loso
+seed: 1
+save_predictions: true
+save_model: true  # read by scripts/run_calibration.py
+exclude_flags: []
+output:
+  root: output/diagnostics/final-checks
+  group: calibration
+  name: loso_residual_prefrontal
