@@ -3,7 +3,7 @@
 --stage data-baselines (default) reads metrics.json of every non-smoke run under
 output/data-baselines/baselines/ and output/data-baselines/artifact-controls/.
 --stage diagnostics reads output/data-baselines/baselines/, output/diagnostics/{baselines,tuning,history,within_subject,artifact-controls}/,
-and output/diagnostics/pre-design/{residual,screening}/, and adds the residual metrics from the newest output/diagnostics/residual/<run-id>/residual.csv.
+and output/diagnostics/pre-design/{residual,screening,euclidean-alignment}/, and adds the residual metrics from the newest output/diagnostics/residual/<run-id>/residual.csv.
 Runs of one configuration are grouped by
 (group, name, tag without the seed part): several runs in a group are seeds, so per-subject
 values are averaged over seeds first and the SD of the aggregate r across seeds is reported as
@@ -37,7 +37,8 @@ SOURCES = {
     "diagnostics": ((OUTPUT / "data-baselines", "baselines"), (OUTPUT / "diagnostics", "baselines"),
                     (OUTPUT / "diagnostics", "tuning"), (OUTPUT / "diagnostics", "history"),
                     (OUTPUT / "diagnostics", "within_subject"), (OUTPUT / "diagnostics", "artifact-controls"),
-                    (OUTPUT / "diagnostics" / "pre-design", "residual"), (OUTPUT / "diagnostics" / "pre-design", "screening")),
+                    (OUTPUT / "diagnostics" / "pre-design", "residual"), (OUTPUT / "diagnostics" / "pre-design", "screening"),
+                    (OUTPUT / "diagnostics" / "pre-design", "euclidean-alignment")),
 }
 RESIDUAL_ROOT = OUTPUT / "diagnostics" / "residual"
 RESIDUAL_METRICS = ("residual_r", "residual_r_oracle", "residual_r_other_trial", "residual_r_specific")

@@ -33,6 +33,7 @@ from eegtraj.data.windows import (
     load_subject_samples,
     sample_masks,
 )
+from eegtraj.preprocessing.alignment import euclidean_align
 from eegtraj.metrics import METRIC_DEFINITIONS, aggregate_across_subjects, aggregate_subject, per_trial_metrics, pooled_r
 
 logger = logging.getLogger(__name__)
@@ -129,6 +130,9 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
         if subject not in loaded:
             s = load_subject_samples(w["cache_dir"], subject, cfg["data"]["band"], cfg["data"]["reference"],
                                      cfg["data"]["channel_set"], w["target"], history, pre_lift=bool(w.get("pre_lift")))
+            if cfg["data"].get("euclidean_alignment"):  # label-free, per subject, before normalization
+                s, ea = euclidean_align(s)
+                logger.info("%s: Euclidean alignment %s", subject, ea)
             loaded[subject] = trial_filter(s, cfg.get("exclude_flags", []), max_trials,
                                            per_series=cfg["splits"]["mode"] == "within_subject")
         return loaded[subject]
