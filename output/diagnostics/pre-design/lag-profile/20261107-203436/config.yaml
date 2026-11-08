@@ -1,0 +1,29 @@
+cache_dir: dataset/cache/98f5fa6e66
+splits_config: configs/splits/default.yaml
+target: position
+reference: car
+eeg_normalization: per_subject
+bands:
+  causal: mrcp
+  zero_phase: mrcp_zp
+channel_sets:
+- all
+- sensorimotor
+- prefrontal
+lags_ms:
+  min: -500
+  max: 1000
+  step: 20
+alphas:
+- 0.0001
+- 0.001
+- 0.01
+- 0.1
+- 1.0
+- 10.0
+- 100.0
+exclude_flags: []
+scoring:
+  seed: 20261106
+  n_permutations: 5
+smoke: false

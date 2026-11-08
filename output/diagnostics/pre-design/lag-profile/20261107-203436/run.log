@@ -1,0 +1,78 @@
+2026-11-07 20:34:36 INFO    eegtraj.utils.run: Run directory: output\diagnostics\pre-design\lag-profile\20261107-203436
+2026-11-07 20:34:36 INFO    lag_profile: 10 folds, 76 lags (-50 to 100 samples), subjects ['P1', 'P2', 'P4', 'P5', 'P7', 'P8', 'P9', 'P10', 'P11', 'P12']
+2026-11-07 20:35:14 INFO    eegtraj.baselines: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1333600 training samples
+2026-11-07 20:38:35 INFO    eegtraj.baselines: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1267510 training samples
+2026-11-07 20:42:56 INFO    eegtraj.baselines: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1305697 training samples
+2026-11-07 20:49:30 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1313493 training samples
+2026-11-07 20:57:54 INFO    eegtraj.baselines: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1313649 training samples
+2026-11-07 21:06:14 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1317227 training samples
+2026-11-07 21:13:57 INFO    eegtraj.baselines: template_cue: 1677 bins from -1.01 to 15.75 s after ev_LEDOn, 1327602 training samples
+2026-11-07 21:22:12 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1305675 training samples
+2026-11-07 21:29:58 INFO    eegtraj.baselines: template_cue: 1677 bins from -1.01 to 15.75 s after ev_LEDOn, 1298319 training samples
+2026-11-07 21:36:47 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1324649 training samples
+2026-11-07 21:41:42 INFO    lag_profile: causal all done in 4023 s
+2026-11-07 21:41:56 INFO    eegtraj.baselines: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1333600 training samples
+2026-11-07 21:45:01 INFO    eegtraj.baselines: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1267510 training samples
+2026-11-07 21:48:52 INFO    eegtraj.baselines: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1305697 training samples
+2026-11-07 21:52:07 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1313493 training samples
+2026-11-07 21:55:34 INFO    eegtraj.baselines: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1313649 training samples
+2026-11-07 21:59:28 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1317227 training samples
+2026-11-07 22:02:39 INFO    eegtraj.baselines: template_cue: 1677 bins from -1.01 to 15.75 s after ev_LEDOn, 1327602 training samples
+2026-11-07 22:06:16 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1305675 training samples
+2026-11-07 22:10:52 INFO    eegtraj.baselines: template_cue: 1677 bins from -1.01 to 15.75 s after ev_LEDOn, 1298319 training samples
+2026-11-07 22:17:01 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1324649 training samples
+2026-11-07 22:22:33 INFO    lag_profile: causal sensorimotor done in 2451 s
+2026-11-07 22:22:40 INFO    eegtraj.baselines: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1333600 training samples
+2026-11-07 22:25:38 INFO    eegtraj.baselines: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1267510 training samples
+2026-11-07 22:29:21 INFO    eegtraj.baselines: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1305697 training samples
+2026-11-07 22:32:30 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1313493 training samples
+2026-11-07 22:35:51 INFO    eegtraj.baselines: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1313649 training samples
+2026-11-07 22:39:36 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1317227 training samples
+2026-11-07 22:42:40 INFO    eegtraj.baselines: template_cue: 1677 bins from -1.01 to 15.75 s after ev_LEDOn, 1327602 training samples
+2026-11-07 22:46:00 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1305675 training samples
+2026-11-07 22:49:27 INFO    eegtraj.baselines: template_cue: 1677 bins from -1.01 to 15.75 s after ev_LEDOn, 1298319 training samples
+2026-11-07 22:53:01 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1324649 training samples
+2026-11-07 22:57:07 INFO    lag_profile: causal prefrontal done in 2074 s
+2026-11-07 22:57:41 INFO    eegtraj.baselines: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1333600 training samples
+2026-11-07 23:02:08 INFO    eegtraj.baselines: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1267510 training samples
+2026-11-07 23:06:35 INFO    eegtraj.baselines: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1305697 training samples
+2026-11-07 23:10:08 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1313493 training samples
+2026-11-07 23:13:55 INFO    eegtraj.baselines: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1313649 training samples
+2026-11-07 23:18:01 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1317227 training samples
+2026-11-07 23:21:29 INFO    eegtraj.baselines: template_cue: 1677 bins from -1.01 to 15.75 s after ev_LEDOn, 1327602 training samples
+2026-11-07 23:25:12 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1305675 training samples
+2026-11-07 23:29:02 INFO    eegtraj.baselines: template_cue: 1677 bins from -1.01 to 15.75 s after ev_LEDOn, 1298319 training samples
+2026-11-07 23:32:59 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1324649 training samples
+2026-11-07 23:37:01 INFO    lag_profile: zero_phase all done in 2391 s
+2026-11-07 23:37:16 INFO    eegtraj.baselines: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1333600 training samples
+2026-11-07 23:40:18 INFO    eegtraj.baselines: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1267510 training samples
+2026-11-07 23:44:12 INFO    eegtraj.baselines: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1305697 training samples
+2026-11-07 23:47:27 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1313493 training samples
+2026-11-07 23:50:56 INFO    eegtraj.baselines: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1313649 training samples
+2026-11-07 23:54:49 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1317227 training samples
+2026-11-07 23:57:59 INFO    eegtraj.baselines: template_cue: 1677 bins from -1.01 to 15.75 s after ev_LEDOn, 1327602 training samples
+2026-11-08 00:01:27 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1305675 training samples
+2026-11-08 00:05:00 INFO    eegtraj.baselines: template_cue: 1677 bins from -1.01 to 15.75 s after ev_LEDOn, 1298319 training samples
+2026-11-08 00:08:44 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1324649 training samples
+2026-11-08 00:12:35 INFO    lag_profile: zero_phase sensorimotor done in 2133 s
+2026-11-08 00:12:42 INFO    eegtraj.baselines: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1333600 training samples
+2026-11-08 00:15:39 INFO    eegtraj.baselines: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1267510 training samples
+2026-11-08 00:19:23 INFO    eegtraj.baselines: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1305697 training samples
+2026-11-08 00:22:32 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1313493 training samples
+2026-11-08 00:25:53 INFO    eegtraj.baselines: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1313649 training samples
+2026-11-08 00:29:41 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1317227 training samples
+2026-11-08 00:32:44 INFO    eegtraj.baselines: template_cue: 1677 bins from -1.01 to 15.75 s after ev_LEDOn, 1327602 training samples
+2026-11-08 00:36:05 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1305675 training samples
+2026-11-08 00:39:31 INFO    eegtraj.baselines: template_cue: 1677 bins from -1.01 to 15.75 s after ev_LEDOn, 1298319 training samples
+2026-11-08 00:43:05 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1324649 training samples
+2026-11-08 00:46:48 INFO    lag_profile: zero_phase prefrontal done in 2053 s
+2026-11-08 00:46:48 INFO    lag_profile: Samples dropped so every lag stays inside its lift: {'P1': '0/155612', 'P10': '166/189192', 'P11': '83/198267', 'P12': '999/210063', 'P2': '939/208201', 'P4': '0/169075', 'P5': '0/183010', 'P7': '0/214553', 'P8': '0/163539', 'P9': '0/183515'}
+2026-11-08 00:46:49 INFO    lag_profile: Peaks by residual_r_specific:
+    filter     channels  lag_ms  residual_r_specific_mean  r_mean
+    causal          all     100                     0.038   0.277
+    causal   prefrontal     380                     0.015   0.054
+    causal sensorimotor      40                     0.027   0.263
+zero_phase          all     -20                     0.058   0.450
+zero_phase   prefrontal     400                     0.016   0.172
+zero_phase sensorimotor     -40                     0.046   0.423
+2026-11-08 00:46:49 INFO    lag_profile: Wall time 15132.5 s -> output\diagnostics\pre-design\lag-profile\20261107-203436

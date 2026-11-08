@@ -1,0 +1,48 @@
+{
+  "smoke": false,
+  "peaks_by_specific": [
+    {
+      "filter": "causal",
+      "channels": "all",
+      "lag_ms": 100,
+      "residual_r_specific_mean": 0.03818432122484259,
+      "r_mean": 0.2774492409429149
+    },
+    {
+      "filter": "causal",
+      "channels": "prefrontal",
+      "lag_ms": 380,
+      "residual_r_specific_mean": 0.015282516288822328,
+      "r_mean": 0.05407238019111258
+    },
+    {
+      "filter": "causal",
+      "channels": "sensorimotor",
+      "lag_ms": 40,
+      "residual_r_specific_mean": 0.026528991802975622,
+      "r_mean": 0.263405657778464
+    },
+    {
+      "filter": "zero_phase",
+      "channels": "all",
+      "lag_ms": -20,
+      "residual_r_specific_mean": 0.057805452290453085,
+      "r_mean": 0.45040271522918107
+    },
+    {
+      "filter": "zero_phase",
+      "channels": "prefrontal",
+      "lag_ms": 400,
+      "residual_r_specific_mean": 0.015950168724207514,
+      "r_mean": 0.17226279909957481
+    },
+    {
+      "filter": "zero_phase",
+      "channels": "sensorimotor",
+      "lag_ms": -40,
+      "residual_r_specific_mean": 0.04639361615372386,
+      "r_mean": 0.4229550518028061
+    }
+  ],
+  "wall_seconds": 15132.5
+}
