@@ -1,0 +1,11 @@
+seed: 20261106
+n_permutations: 5
+n_runs: 7
+runs:
+- output/diagnostics/pre-design/channel-importance/cnn_lstm_broadband/20261107-162507_seed1
+- output/diagnostics/pre-design/channel-importance/cnn_lstm_mrcp/20261107-173404_seed1
+- output/diagnostics/pre-design/channel-importance/eegnet_broadband/20261107-184217_seed1
+- output/diagnostics/pre-design/channel-importance/ridge_lag/20261107-195309_seed1
+- output/diagnostics/pre-design/euclidean-alignment/cnn_lstm_ea/20261108-072521_seed1
+- output/diagnostics/pre-design/euclidean-alignment/cnn_lstm_ea/20261108-072528_seed2
+- output/diagnostics/pre-design/euclidean-alignment/cnn_lstm_ea/20261108-072542_seed3
