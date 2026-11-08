@@ -323,6 +323,157 @@ Does the gain from a longer history need the whole scalp? EEGNet on Fp1 and Fp2,
 
 Limits: under CAR, Fp1 and Fp2 contain the average of all 32 channels, so this is not a pure prefrontal signal. The original reference was not run at 3 s because the pre-lift cache holds CAR only. There is no 0.5 s specific value for prefrontal, because those runs did not save predictions.
 
+## Pre-design checks
+
+Added on 2026-11-06 to give the SSL architecture an evidence base. Protocol as above (LOSO over 10 subjects, 2 s history, CAR, causal filters, fixed budget D11). The main readout is `residual_r_specific`, then r and R². For the screening, alignment, and channel-importance runs, inner-validation scores (the fold's validation subjects, never its test subject) are the selection readout and LOSO test scores are descriptive; inner-validation folds share subjects, so their p values are descriptive too. Formal selection stays in Exp 1 on P3 and P6. Outputs are under `output/diagnostics/pre-design/`.
+
+These checks inform the design. They do not decide it; that is discussed separately.
+
+| Check | Main result | Informs |
+|---|---|---|
+| Neurophysiology | The 0.1-2 Hz band is dominated by frontal, eye-like activity; no pre-onset MRCP; ERD bilateral; only beta is lateralized (right hand) | Target-view priors: band, lateralization |
+| Residual formulation | Predicting the residual over the cue template reaches the template, not beyond it | Residual head or direct prediction |
+| Band and channel screening | Broadband, broadband without Fp1/Fp2, and MRCP tie; envelopes carry no trial-specific signal; contra > ipsi is small | Target-view priors: band, channel set, lateralization |
+| Channel importance | Cz and the contralateral group matter, but occipital and prefrontal channels matter as much in deep models | Target-view priors: channel set, lateralization |
+| Lag profile | With true timing, trial-specific information peaks near zero lag, not with EEG leading | Target-view priors: band and timing |
+| Euclidean alignment | No gain; test scores slightly worse | Alignment |
+| Unlabeled data inventory | 11.7 h of EEG in total, 8.5 h of it in lift windows | Pretraining data |
+
+### Neurophysiology sanity check
+
+MRCP cache variant (0.1-2 Hz), event-related potentials and ERD maps, 10 LOSO subjects. Run: `output/diagnostics/pre-design/neurophysiology/20261106-132757/`.
+
+- Eye-like activity dominates 0.1-2 Hz. Fp1 and Fp2 fall to about -275 and -210 uV near 0.25 s after onset, against about -30 uV at Cz and C3. The fall starts before LED-on. There is no EOG channel, so the cause is likely but not proven.
+- No self-paced MRCP before onset: Cz +2.4 uV in the 0.5 s before onset (5/10 negative, p 0.77).
+- The C3-C4 MRCP difference (-17.5 uV, 9/10) is not motor evidence. It is part of a whole-scalp left-right gradient, largest at F7-F8 (-67 uV), and follows F7-F8 across subjects (Spearman 0.77-0.89).
+- ERD is present and bilateral: 0 to 1 s after onset, mu -25 % (left) and -27 % (right), beta -36 % and -32 %, all 10/10.
+- Only beta supports right-hand movement: before onset, the left-minus-right beta cluster is -6.5 points (10/10, p 0.002). Mu is not lateralized.
+- The causal filter delays 0.5, 1, and 2 Hz components by 224, 172, and 135 ms.
+
+Informs target-view priors. A gain from the low band cannot be read as motor without an ocular control. Beta is the cleanest lateralized signal, but it is small.
+
+### Residual formulation
+
+The model predicts the target minus the cue-locked template T_cue (fitted on the fold's training subjects), and T_cue is added back. CNN-LSTM and EEGNet, 2 s, 3 seeds. Runs: `output/diagnostics/pre-design/residual/`; comparison: `output/diagnostics/pre-design/residual/summary/`.
+
+| Model | Form | r | R² | Specific |
+|---|---|---|---|---|
+| CNN-LSTM | Direct | 0.588 | 0.075 | 0.134 |
+| CNN-LSTM | Residual | 0.813 | 0.510 | 0.192 |
+| EEGNet | Direct | 0.576 | 0.004 | 0.090 |
+| EEGNet | Residual | 0.812 | 0.497 | 0.161 |
+| `template_cue` | No EEG | 0.803 | 0.524 | |
+
+- Against `template_cue`, the residual models gain nothing reliable: CNN-LSTM r +0.010 (5/10, p 0.23), R² -0.014; EEGNet r +0.010 (6/10), R² -0.028 (2/10, p 0.064).
+- Nearly all of the gain over direct prediction comes from T_cue. The rise in specific does not prove more information: direct predictions carry a large shape error that the residual form removes.
+- Early stopping picks a very early epoch (median 1 for CNN-LSTM, 2 for EEGNet), so the residual is learned early under the fixed budget.
+- P7 is the exception: direct r 0.796, residual 0.683.
+
+Informs the choice between a residual head and direct prediction.
+
+### Band and channel screening
+
+CNN-LSTM, 2 s. 14 configurations at seed 1; 11 of them at seeds 2-3 (the envelope configurations stayed at seed 1). New cache variants: mu and beta band-power envelopes (8-12 and 13-30 Hz, rectified, causal 5 Hz low-pass). Comparison: `output/diagnostics/pre-design/screening/summary/20261107-160546/`.
+
+| Band × channels | Val specific | Val r | Test specific | Test r | Test R² |
+|---|---|---|---|---|---|
+| Broadband × all | 0.161 | 0.644 | 0.134 | 0.588 | 0.075 |
+| Broadband × no Fp1/Fp2 | 0.155 | 0.635 | 0.127 | 0.570 | 0.037 |
+| MRCP × all | 0.153 | 0.621 | 0.129 | 0.554 | 0.104 |
+| MRCP + envelopes × all | 0.142 | 0.676 | 0.135 | 0.646 | 0.202 |
+| Broadband × sensorimotor | 0.081 | 0.574 | 0.073 | 0.526 | -0.013 |
+| MRCP × contralateral | 0.077 | 0.477 | 0.072 | 0.441 | 0.051 |
+| Broadband × prefrontal | 0.071 | 0.414 | 0.062 | 0.362 | -0.028 |
+| Broadband × contralateral | 0.070 | 0.537 | 0.064 | 0.489 | -0.025 |
+| MRCP × ipsilateral | 0.065 | 0.464 | 0.061 | 0.419 | 0.021 |
+| MRCP × prefrontal | 0.065 | 0.414 | 0.059 | 0.357 | -0.006 |
+| Broadband × ipsilateral | 0.065 | 0.509 | 0.057 | 0.456 | -0.058 |
+| Envelopes × all (seed 1) | 0.022 | 0.500 | 0.018 | 0.510 | 0.044 |
+
+- Broadband, broadband without Fp1/Fp2, and MRCP do not differ on specific (differences below 0.01, no consistent direction).
+- Adding envelopes to MRCP raises test r (+0.058, 8/10, p 0.020) and R² (+0.126) but lowers specific on inner validation (-0.019 against broadband, 1/10 folds up). The gain is not trial-specific.
+- Envelopes alone carry almost no trial-specific signal.
+- Contralateral minus ipsilateral, specific: MRCP +0.012 on inner validation (9/10, p 0.006) and +0.011 on test (9/10, p 0.014); broadband +0.006 (8/10, p 0.16). Small, and Cz is in both sets.
+- Fp1 and Fp2 alone match the contralateral set on specific with broadband (0.071 vs 0.070). Dropping them from all channels costs 0.005 (not significant).
+- No configuration beats `template_cue` on test r or R².
+- Channel and parameter counts differ across configurations, so channel-set contrasts are confounded with capacity.
+
+Informs target-view priors (band, channel set, lateralization). Candidates for Exp 1: broadband × all, broadband without Fp1/Fp2, MRCP × all.
+
+### Channel importance
+
+Occlusion on test data: each channel, and each group (prefrontal, contralateral, ipsilateral, occipital), set to its normalizer mean, and the drop in r and specific measured. CNN-LSTM broadband, CNN-LSTM MRCP, and EEGNet broadband (2 s), plus lagged ridge (0.1-4 Hz, 500 ms) with Haufe activation patterns. Retrained at seed 1 because the earlier runs saved no weights. Summary and topographies: `output/diagnostics/pre-design/channel-importance/summary/20261107-202517/`.
+
+| Group occluded | CNN-LSTM broadband | CNN-LSTM MRCP | EEGNet | Ridge |
+|---|---|---|---|---|
+| Contralateral | 0.050 | 0.045 | 0.029 | 0.026 |
+| Ipsilateral | 0.028 | 0.013 | 0.005 | 0.007 |
+| Occipital | 0.065 | 0.047 | 0.041 | 0.006 |
+| Prefrontal | 0.044 | 0.022 | 0.010 | 0.003 |
+
+Values are drops in test `residual_r_specific`.
+
+- Cz is the top or second single channel in every model. Next come F7, Fp1/Fp2, and O1/Oz in the deep models. C3 alone barely matters.
+- The contralateral group beats its mirror in 10/10 subjects in every model (specific +0.020 to +0.031, p 0.002). Both groups hold Cz, so the difference comes from FC1, FC5, CP1, CP5, and C3.
+- In the deep models the occipital group matters as much as, or more than, the contralateral group. Ridge relies least on occipital and prefrontal channels.
+- Ridge Haufe patterns peak at the frontal midline (Fz) with temporal minima; no focal C3 pattern.
+- So importance does not concentrate over contralateral sensorimotor cortex. A motor contribution is present, but ocular, head-movement, or visual (LED, gaze) activity may carry much of the rest; these data cannot separate them.
+
+Limits: one seed; CAR spreads each channel into the others; occlusion moves inputs off the training distribution; groups have 2 to 6 channels.
+
+Informs target-view priors (channel set, lateralization).
+
+### Lag profile
+
+Analysis only, outside the causal protocol; these are not decoders. Ridge on 0.1-2 Hz EEG with a single lag from -500 ms (EEG after the kinematic sample) to +1000 ms (EEG before it), every 20 ms, LOSO, for all channels, sensorimotor, and prefrontal. Both the causal MRCP cache and a zero-phase (forward-backward) variant. Run: `output/diagnostics/pre-design/lag-profile/20261107-203436/`.
+
+- Zero phase (true timing), all channels: specific peaks at -20 ms (0.058), with a broad plateau from about -200 to +100 ms; per-subject peaks range from -500 to +620 ms (median -70 ms). EEG after versus before the sample: +0.009 (6/10, p 0.23). Sensorimotor has the same shape (peak -40 ms, 0.046).
+- r is highest with EEG after the kinematic sample (-320 ms, 0.503) and falls as the EEG moves earlier (0.287 at +1000 ms).
+- Causal filter: the same curves, shifted later by about 100 ms. EEG before then beats EEG after, but that is the filter delay, not a neural lead.
+- Prefrontal: specific stays at most 0.016 and peaks with EEG about 340-400 ms before the sample. That fits eye movements preceding the hand, but is small and not proven.
+- So there is no clear neural lead. Trial-specific information peaks near zero lag and is at least as large with EEG after the movement, which points to feedback, movement-related artifacts, or concurrent potentials rather than to motor planning. Slow EEG and a slow position target limit timing resolution to a few hundred ms.
+
+Informs target-view priors (band and timing).
+
+### Euclidean alignment
+
+Each subject's EEG is whitened by the mean of its per-lift spatial covariances, without labels (transductive for the test subject, like D9), before normalization. After CAR the covariance has rank 31 (30 for P2), so the inverse square root is taken on the non-null subspace. CNN-LSTM broadband, all channels, 2 s, 3 seeds, against the same configuration without alignment. Comparison: `output/diagnostics/pre-design/euclidean-alignment/summary/20261108-092151/`.
+
+| Split | Metric | Aligned | Not aligned | Difference |
+|---|---|---|---|---|
+| Inner validation | r | 0.649 | 0.644 | +0.005 (6/10, p 0.43) |
+| Inner validation | Specific | 0.162 | 0.161 | +0.001 (3/10, p 0.77) |
+| Test | r | 0.561 | 0.588 | -0.026 (2/10, p 0.084) |
+| Test | R² | -0.061 | 0.075 | -0.136 (2/10, p 0.037) |
+| Test | NRMSE | 0.317 | 0.300 | worse in 9/10 (p 0.020) |
+| Test | Specific | 0.134 | 0.134 | -0.001 |
+
+Alignment adds no trial-specific information and slightly worsens the scale and shape of test predictions (P12's R² falls to -1.56). Informs the alignment decision.
+
+### Unlabeled data inventory
+
+Hours from the raw HS files; 2 s windows on the 100 Hz grid, inside contiguous segments only. Run: `output/diagnostics/pre-design/data-inventory/20261108-093500/`.
+
+| Source | Hours (12 subjects) |
+|---|---|
+| Lift windows (merged) | 8.45 |
+| Between lifts (HS S1-S9) | 2.42 |
+| ST recording | 0.89 |
+| Total | 11.74 |
+
+- Per subject: 0.87 to 1.12 h. Between-lift segments are short (median 5.6 s, max 13.3 s).
+- 2 s windows over all subjects: 363k at 0.1 s stride, 146k at 0.25 s, 74k at 0.5 s, 38k at 1 s, 19.5k at 2 s.
+- Per LOSO fold: about 10.7 h from the other 11 subjects (including P3 and P6), and 0.9 to 1.1 h from the test subject (usable without labels for transductive pretraining).
+- Unlabeled EEG beyond the lift windows adds about 3.3 h, all from the same task sessions. The windows overlap heavily at small strides.
+- The first seconds of each recording, where causal filters settle, are included.
+
+Informs the pretraining-data decision.
+
+### Open points for the design discussion
+
+- No ocular-cleaned variant has been run. Several checks (neurophysiology, channel importance, lag profile) point to eye-like or other non-motor activity, and none can bound its share.
+- Channel importance used one seed; the screening envelope configurations used one seed.
+
 ## Run directories
 
 Each row is one configuration, with several run IDs being seeds. r is the mean over subjects, seeds averaged first. Source tables: `output/diagnostics/summary/models.md`, `output/diagnostics/history/summary/`, `output/diagnostics/within_subject/summary/`, `output/diagnostics/artifact-controls/summary/`. Residual metrics: `output/diagnostics/residual/20261106-081026/residual.csv`.
@@ -357,3 +508,31 @@ Each row is one configuration, with several run IDs being seeds. r is the mean o
 | `output/diagnostics/artifact-controls/eegnet_prefrontal_orig/` | `20261106-073947_seed1`, `20261106-074335_seed2`, `20261106-074634_seed3` | 0.207 |
 | `output/diagnostics/artifact-controls/ridge_prefrontal_car/` | `20261106-071752` | 0.149 |
 | `output/diagnostics/artifact-controls/ridge_prefrontal_orig/` | `20261106-072013` | 0.105 |
+
+### Pre-design runs
+
+r is the mean over test subjects, averaged over seeds. Analysis runs without a decoder (neurophysiology, lag profile, data inventory, cache builds) are listed in their sections.
+
+| Folder | Run IDs | r |
+|---|---|---|
+| `output/diagnostics/pre-design/channel-importance/cnn_lstm_broadband/` | `20261107-162507_seed1` | 0.601 |
+| `output/diagnostics/pre-design/channel-importance/cnn_lstm_mrcp/` | `20261107-173404_seed1` | 0.550 |
+| `output/diagnostics/pre-design/channel-importance/eegnet_broadband/` | `20261107-184217_seed1` | 0.568 |
+| `output/diagnostics/pre-design/channel-importance/ridge_lag/` | `20261107-195309_seed1` | 0.331 |
+| `output/diagnostics/pre-design/euclidean-alignment/cnn_lstm_ea/` | `20261108-072521_seed1`, `20261108-072528_seed2`, `20261108-072542_seed3` | 0.561 |
+| `output/diagnostics/pre-design/residual/cnn_lstm/` | `20261106-155151_seed1`, `20261106-163003_seed2`, `20261106-170433_seed3` | 0.813 |
+| `output/diagnostics/pre-design/residual/eegnet/` | `20261106-160658_seed1`, `20261106-164552_seed2`, `20261106-172022_seed3` | 0.812 |
+| `output/diagnostics/pre-design/screening/broadband__all/` | `20261106-180430_seed1`, `20261107-035149_seed2`, `20261107-105612_seed3` | 0.588 |
+| `output/diagnostics/pre-design/screening/broadband__contralateral/` | `20261106-183341_seed1`, `20261107-064739_seed2`, `20261107-134251_seed3` | 0.489 |
+| `output/diagnostics/pre-design/screening/broadband__ipsilateral/` | `20261106-184019_seed1`, `20261107-065636_seed2`, `20261107-135448_seed3` | 0.456 |
+| `output/diagnostics/pre-design/screening/broadband__no_prefrontal/` | `20261106-184624_seed1`, `20261107-062236_seed2`, `20261107-131901_seed3` | 0.570 |
+| `output/diagnostics/pre-design/screening/broadband__prefrontal/` | `20261106-191020_seed1`, `20261107-074411_seed2`, `20261107-144457_seed3` | 0.362 |
+| `output/diagnostics/pre-design/screening/broadband__sensorimotor/` | `20261106-191546_seed1`, `20261107-073345_seed2`, `20261107-142924_seed3` | 0.526 |
+| `output/diagnostics/pre-design/screening/env__all/` | `20261106-192718_seed1` | 0.510 |
+| `output/diagnostics/pre-design/screening/env__contralateral/` | `20261106-195940_seed1` | 0.427 |
+| `output/diagnostics/pre-design/screening/env__ipsilateral/` | `20261106-200752_seed1` | 0.414 |
+| `output/diagnostics/pre-design/screening/mrcp__all/` | `20261106-213001_seed1`, `20261107-042453_seed2`, `20261107-112411_seed3` | 0.554 |
+| `output/diagnostics/pre-design/screening/mrcp__contralateral/` | `20261106-220207_seed1`, `20261107-070759_seed2`, `20261107-140108_seed3` | 0.441 |
+| `output/diagnostics/pre-design/screening/mrcp__ipsilateral/` | `20261106-221119_seed1`, `20261107-072458_seed2`, `20261107-141704_seed3` | 0.419 |
+| `output/diagnostics/pre-design/screening/mrcp__prefrontal/` | `20261106-221906_seed1`, `20261107-075025_seed2`, `20261107-145745_seed3` | 0.357 |
+| `output/diagnostics/pre-design/screening/mrcp_env__all/` | `20261106-201552_seed1`, `20261107-050320_seed2`, `20261107-120229_seed3` | 0.646 |
