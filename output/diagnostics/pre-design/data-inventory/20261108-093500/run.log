@@ -1,0 +1,14 @@
+2026-11-08 09:35:03 INFO    eegtraj.utils.run: Run directory: output\diagnostics\pre-design\data-inventory\20261108-093500
+2026-11-08 09:35:07 INFO    inventory: P1 done (4 s)
+2026-11-08 09:35:12 INFO    inventory: P2 done (9 s)
+2026-11-08 09:35:16 INFO    inventory: P3 done (14 s)
+2026-11-08 09:35:21 INFO    inventory: P4 done (18 s)
+2026-11-08 09:35:25 INFO    inventory: P5 done (22 s)
+2026-11-08 09:35:30 INFO    inventory: P6 done (27 s)
+2026-11-08 09:35:35 INFO    inventory: P7 done (32 s)
+2026-11-08 09:35:39 INFO    inventory: P8 done (36 s)
+2026-11-08 09:35:43 INFO    inventory: P9 done (40 s)
+2026-11-08 09:35:48 INFO    inventory: P10 done (45 s)
+2026-11-08 09:35:52 INFO    inventory: P11 done (49 s)
+2026-11-08 09:35:57 INFO    inventory: P12 done (54 s)
+2026-11-08 09:35:57 INFO    inventory: Wall time 54 s -> output\diagnostics\pre-design\data-inventory\20261108-093500

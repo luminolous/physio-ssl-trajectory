@@ -1,0 +1,22 @@
+subjects:
+- P1
+- P2
+- P3
+- P4
+- P5
+- P6
+- P7
+- P8
+- P9
+- P10
+- P11
+- P12
+window_s: 2.0
+strides_s:
+- 0.1
+- 0.25
+- 0.5
+- 1.0
+- 2.0
+fs_out_hz: 100
+cache_dir: dataset\cache\98f5fa6e66
