@@ -7,6 +7,7 @@ from dataclasses import replace
 
 import numpy as np
 import pandas as pd
+import pytest
 import torch
 
 from eegtraj.data.windows import Standardizer, SubjectSamples, segment_samples
@@ -98,3 +99,20 @@ def test_no_s7_to_s9_sample_enters_training():
     assert all(torch.equal(a[0][k], b[0][k]) for k in a[0])
     assert [h["val_loss"] for h in a[1]] == [h["val_loss"] for h in b[1]]
     assert np.array_equal(a[2], b[2])
+
+
+def test_paired_comparison_averages_draws_and_counts_subjects():
+    from eegtraj.diagnostics.calibration import paired, per_subject
+
+    rows = []
+    for i, subj in enumerate(["P1", "P2", "P4"]):
+        rows.append(dict(subject=subj, condition="template", k="10", draw=0, r=0.8, r2=0.5, nrmse=0.2,
+                         residual_r_specific=float("nan")))
+        for draw, bump in enumerate([0.01, 0.03]):
+            rows.append(dict(subject=subj, condition="finetune", k="10", draw=draw, r=0.8 + bump * (i + 1), r2=0.5,
+                             nrmse=0.2 - bump, residual_r_specific=0.1))
+    t = per_subject(pd.DataFrame(rows), "uncleaned")
+    out = {r["metric"]: r for r in paired(t, ("uncleaned", "finetune"), ("uncleaned", "template"), "10")}
+    assert out["r"]["diff"] == pytest.approx(0.02 * 2) and out["r"]["n_a_better"] == 3
+    assert out["nrmse"]["n_a_better"] == 3 and out["r2"]["n_a_better"] == 0
+    assert out["residual_r_specific"]["diff"] == pytest.approx(0.1)

@@ -19,6 +19,8 @@ from dataclasses import dataclass, replace
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
+import scipy.stats
 import torch
 
 from eegtraj.baselines.base import FitContext
@@ -137,3 +139,37 @@ def predict_residual(model: torch.nn.Module, s: SubjectSamples, mask: np.ndarray
 def scratch_model(architecture: str, n_chans: int, history: int, model_kwargs: dict, seed: int) -> torch.nn.Module:
     torch.manual_seed(seed)
     return ARCHITECTURES[architecture](n_chans=n_chans, n_times=history, **model_kwargs)
+
+
+METRICS = ("r", "r2", "nrmse", "residual_r_specific")
+
+
+def per_subject(results: pd.DataFrame, data: str) -> pd.DataFrame:
+    """Mean over draws per (subject, condition, k); the template's residual_r_specific is 0 by definition."""
+    df = results.copy()
+    df.loc[df.condition == "template", "residual_r_specific"] = 0.0
+    out = df.groupby(["condition", "k", "subject"], as_index=False)[list(METRICS)].mean()
+    out.insert(0, "data", data)
+    return out
+
+
+def paired(table: pd.DataFrame, a: tuple[str, str], b: tuple[str, str], k: str) -> list[dict]:
+    """Paired comparison across subjects of (data, condition) ``a`` minus ``b`` at k: mean, diff, subjects where
+    ``a`` is better (lower for nrmse), Wilcoxon p."""
+    def series(data, condition):
+        t = table[(table.data == data) & (table.condition == condition) & (table.k == k)]
+        return t.set_index("subject")
+
+    sa, sb = series(*a), series(*b)
+    common = sa.index.intersection(sb.index)
+    rows = []
+    if len(common) < 2:
+        return rows
+    for m in METRICS:
+        d = (sa.loc[common, m] - sb.loc[common, m]).dropna()
+        better = (d < 0) if m == "nrmse" else (d > 0)
+        p = float(scipy.stats.wilcoxon(d).pvalue) if (d != 0).any() else 1.0
+        rows.append({"k": k, "a": "/".join(a), "b": "/".join(b), "metric": m, "a_mean": float(sa.loc[d.index, m].mean()),
+                     "b_mean": float(sb.loc[d.index, m].mean()), "diff": float(d.mean()), "n_a_better": int(better.sum()),
+                     "n": int(d.size), "wilcoxon_p": p})
+    return rows

@@ -1,0 +1,617 @@
+2026-11-08 14:14:49 INFO    eegtraj.utils.run: Run directory: output\diagnostics\final-checks\calibration\prefrontal\20261108-141449_seed1
+2026-11-08 14:14:49 INFO    calibration: Pretrained run output\diagnostics\final-checks\calibration\loso_residual_prefrontal\20261108-131720_seed1; subjects ['P1', 'P2', 'P4', 'P5', 'P7', 'P8', 'P9', 'P10', 'P11', 'P12']; conditions ['no_calibration', 'finetune']; ks [30, 'all']; draws {'10': 3, '30': 3}; device cuda
+2026-11-08 14:14:49 INFO    calibration: P1: 294 lifts, 17979 val samples (S6), 53127 test samples (S7-S9)
+2026-11-08 14:14:49 INFO    calibration: template_cue: 618 bins from -0.27 to 5.90 s after ev_LEDOn, 15947 training samples
+2026-11-08 14:14:50 INFO    calibration: P1: no-calibration vs saved LOSO predictions on S7-S9, max |diff| 1.05e-03
+2026-11-08 14:14:50 INFO    calibration: P1 k=30 draw 0 no_calibration: r 0.792, R2 0.536, NRMSE 0.231, specific -0.043
+2026-11-08 14:14:52 INFO    calibration: epoch 1: train MSE 0.3499, val MSE 0.3561 (0.4 s)
+2026-11-08 14:14:53 INFO    calibration: epoch 2: train MSE 0.3445, val MSE 0.3505 (0.2 s)
+2026-11-08 14:14:53 INFO    calibration: epoch 3: train MSE 0.3497, val MSE 0.3493 (0.2 s)
+2026-11-08 14:14:53 INFO    calibration: epoch 4: train MSE 0.3321, val MSE 0.3461 (0.2 s)
+2026-11-08 14:14:53 INFO    calibration: epoch 5: train MSE 0.3281, val MSE 0.3466 (0.2 s)
+2026-11-08 14:14:53 INFO    calibration: epoch 6: train MSE 0.3112, val MSE 0.3431 (0.2 s)
+2026-11-08 14:14:54 INFO    calibration: epoch 7: train MSE 0.3134, val MSE 0.3545 (0.2 s)
+2026-11-08 14:14:54 INFO    calibration: epoch 8: train MSE 0.3144, val MSE 0.3612 (0.2 s)
+2026-11-08 14:14:54 INFO    calibration: epoch 9: train MSE 0.3181, val MSE 0.3469 (0.2 s)
+2026-11-08 14:14:54 INFO    calibration: epoch 10: train MSE 0.3032, val MSE 0.3462 (0.2 s)
+2026-11-08 14:14:54 INFO    calibration: epoch 11: train MSE 0.3021, val MSE 0.3559 (0.2 s)
+2026-11-08 14:14:54 INFO    calibration: early stop at epoch 11 (best val MSE 0.3431)
+2026-11-08 14:14:55 INFO    calibration: P1 k=30 draw 0 finetune: r 0.937, R2 0.839, NRMSE 0.129, specific 0.272
+2026-11-08 14:14:55 INFO    calibration: template_cue: 635 bins from -0.27 to 6.07 s after ev_LEDOn, 16043 training samples
+2026-11-08 14:14:55 INFO    calibration: P1 k=30 draw 1 no_calibration: r 0.792, R2 0.536, NRMSE 0.231, specific -0.040
+2026-11-08 14:14:55 INFO    calibration: epoch 1: train MSE 0.3648, val MSE 0.3511 (0.2 s)
+2026-11-08 14:14:56 INFO    calibration: epoch 2: train MSE 0.3504, val MSE 0.3416 (0.2 s)
+2026-11-08 14:14:56 INFO    calibration: epoch 3: train MSE 0.3545, val MSE 0.3400 (0.2 s)
+2026-11-08 14:14:56 INFO    calibration: epoch 4: train MSE 0.3399, val MSE 0.3392 (0.2 s)
+2026-11-08 14:14:56 INFO    calibration: epoch 5: train MSE 0.3431, val MSE 0.3365 (0.2 s)
+2026-11-08 14:14:56 INFO    calibration: epoch 6: train MSE 0.3345, val MSE 0.3416 (0.2 s)
+2026-11-08 14:14:56 INFO    calibration: epoch 7: train MSE 0.3198, val MSE 0.3424 (0.2 s)
+2026-11-08 14:14:57 INFO    calibration: epoch 8: train MSE 0.3175, val MSE 0.3465 (0.2 s)
+2026-11-08 14:14:57 INFO    calibration: epoch 9: train MSE 0.3061, val MSE 0.3418 (0.2 s)
+2026-11-08 14:14:57 INFO    calibration: epoch 10: train MSE 0.3093, val MSE 0.3399 (0.2 s)
+2026-11-08 14:14:57 INFO    calibration: early stop at epoch 10 (best val MSE 0.3365)
+2026-11-08 14:14:57 INFO    calibration: P1 k=30 draw 1 finetune: r 0.937, R2 0.844, NRMSE 0.128, specific 0.240
+2026-11-08 14:14:57 INFO    calibration: template_cue: 723 bins from -0.77 to 6.45 s after ev_LEDOn, 16240 training samples
+2026-11-08 14:14:58 INFO    calibration: P1 k=30 draw 2 no_calibration: r 0.792, R2 0.536, NRMSE 0.231, specific -0.044
+2026-11-08 14:14:58 INFO    calibration: epoch 1: train MSE 0.3644, val MSE 0.3681 (0.2 s)
+2026-11-08 14:14:58 INFO    calibration: epoch 2: train MSE 0.3723, val MSE 0.3699 (0.2 s)
+2026-11-08 14:14:58 INFO    calibration: epoch 3: train MSE 0.3593, val MSE 0.3724 (0.2 s)
+2026-11-08 14:14:58 INFO    calibration: epoch 4: train MSE 0.3618, val MSE 0.3725 (0.2 s)
+2026-11-08 14:14:59 INFO    calibration: epoch 5: train MSE 0.3425, val MSE 0.3782 (0.2 s)
+2026-11-08 14:14:59 INFO    calibration: epoch 6: train MSE 0.3303, val MSE 0.3779 (0.2 s)
+2026-11-08 14:14:59 INFO    calibration: early stop at epoch 6 (best val MSE 0.3681)
+2026-11-08 14:14:59 INFO    calibration: P1 k=30 draw 2 finetune: r 0.932, R2 0.837, NRMSE 0.130, specific 0.236
+2026-11-08 14:14:59 INFO    calibration: template_cue: 723 bins from -0.77 to 6.45 s after ev_LEDOn, 84506 training samples
+2026-11-08 14:14:59 INFO    calibration: P1 k=all draw 0 no_calibration: r 0.792, R2 0.536, NRMSE 0.231, specific -0.047
+2026-11-08 14:15:00 INFO    calibration: epoch 1: train MSE 0.3937, val MSE 0.3367 (0.9 s)
+2026-11-08 14:15:01 INFO    calibration: epoch 2: train MSE 0.3796, val MSE 0.3320 (0.8 s)
+2026-11-08 14:15:02 INFO    calibration: epoch 3: train MSE 0.3620, val MSE 0.3253 (0.8 s)
+2026-11-08 14:15:03 INFO    calibration: epoch 4: train MSE 0.3610, val MSE 0.3217 (0.8 s)
+2026-11-08 14:15:04 INFO    calibration: epoch 5: train MSE 0.3551, val MSE 0.3226 (0.8 s)
+2026-11-08 14:15:04 INFO    calibration: epoch 6: train MSE 0.3505, val MSE 0.3288 (0.9 s)
+2026-11-08 14:15:05 INFO    calibration: epoch 7: train MSE 0.3410, val MSE 0.3224 (0.8 s)
+2026-11-08 14:15:06 INFO    calibration: epoch 8: train MSE 0.3378, val MSE 0.3350 (0.8 s)
+2026-11-08 14:15:07 INFO    calibration: epoch 9: train MSE 0.3332, val MSE 0.3157 (0.8 s)
+2026-11-08 14:15:08 INFO    calibration: epoch 10: train MSE 0.3243, val MSE 0.3259 (0.8 s)
+2026-11-08 14:15:08 INFO    calibration: epoch 11: train MSE 0.3235, val MSE 0.3204 (0.8 s)
+2026-11-08 14:15:09 INFO    calibration: epoch 12: train MSE 0.3178, val MSE 0.3394 (0.9 s)
+2026-11-08 14:15:10 INFO    calibration: epoch 13: train MSE 0.3132, val MSE 0.3336 (0.8 s)
+2026-11-08 14:15:11 INFO    calibration: epoch 14: train MSE 0.3121, val MSE 0.3415 (0.8 s)
+2026-11-08 14:15:11 INFO    calibration: early stop at epoch 14 (best val MSE 0.3157)
+2026-11-08 14:15:11 INFO    calibration: P1 k=all draw 0 finetune: r 0.939, R2 0.844, NRMSE 0.127, specific 0.299
+2026-11-08 14:15:11 INFO    calibration: P1 done, 0.4 min since start
+2026-11-08 14:15:12 INFO    calibration: P2: 294 lifts, 18439 val samples (S6), 69078 test samples (S7-S9)
+2026-11-08 14:15:12 INFO    calibration: template_cue: 1008 bins from -0.01 to 10.06 s after ev_LEDOn, 22768 training samples
+2026-11-08 14:15:12 INFO    calibration: P2: no-calibration vs saved LOSO predictions on S7-S9, max |diff| 2.04e-03
+2026-11-08 14:15:12 INFO    calibration: P2 k=30 draw 0 no_calibration: r 0.838, R2 0.642, NRMSE 0.190, specific 0.048
+2026-11-08 14:15:12 INFO    calibration: epoch 1: train MSE 0.9183, val MSE 0.9625 (0.2 s)
+2026-11-08 14:15:13 INFO    calibration: epoch 2: train MSE 0.8577, val MSE 0.9546 (0.2 s)
+2026-11-08 14:15:13 INFO    calibration: epoch 3: train MSE 0.8422, val MSE 0.9520 (0.2 s)
+2026-11-08 14:15:13 INFO    calibration: epoch 4: train MSE 0.8078, val MSE 0.9378 (0.2 s)
+2026-11-08 14:15:13 INFO    calibration: epoch 5: train MSE 0.7846, val MSE 0.9338 (0.2 s)
+2026-11-08 14:15:14 INFO    calibration: epoch 6: train MSE 0.7847, val MSE 0.9343 (0.3 s)
+2026-11-08 14:15:14 INFO    calibration: epoch 7: train MSE 0.7585, val MSE 0.8937 (0.3 s)
+2026-11-08 14:15:14 INFO    calibration: epoch 8: train MSE 0.7328, val MSE 0.9288 (0.3 s)
+2026-11-08 14:15:14 INFO    calibration: epoch 9: train MSE 0.7477, val MSE 0.8934 (0.2 s)
+2026-11-08 14:15:15 INFO    calibration: epoch 10: train MSE 0.7250, val MSE 0.8982 (0.2 s)
+2026-11-08 14:15:15 INFO    calibration: epoch 11: train MSE 0.6970, val MSE 0.9187 (0.2 s)
+2026-11-08 14:15:15 INFO    calibration: epoch 12: train MSE 0.6753, val MSE 0.9217 (0.2 s)
+2026-11-08 14:15:15 INFO    calibration: epoch 13: train MSE 0.6674, val MSE 0.9373 (0.2 s)
+2026-11-08 14:15:15 INFO    calibration: epoch 14: train MSE 0.6506, val MSE 0.9342 (0.2 s)
+2026-11-08 14:15:15 INFO    calibration: early stop at epoch 14 (best val MSE 0.8934)
+2026-11-08 14:15:16 INFO    calibration: P2 k=30 draw 0 finetune: r 0.840, R2 0.634, NRMSE 0.197, specific 0.272
+2026-11-08 14:15:16 INFO    calibration: template_cue: 1010 bins from -0.03 to 10.06 s after ev_LEDOn, 21729 training samples
+2026-11-08 14:15:16 INFO    calibration: P2 k=30 draw 1 no_calibration: r 0.838, R2 0.642, NRMSE 0.190, specific 0.078
+2026-11-08 14:15:17 INFO    calibration: epoch 1: train MSE 0.9020, val MSE 0.7365 (0.2 s)
+2026-11-08 14:15:17 INFO    calibration: epoch 2: train MSE 0.8500, val MSE 0.6877 (0.2 s)
+2026-11-08 14:15:17 INFO    calibration: epoch 3: train MSE 0.8059, val MSE 0.6676 (0.2 s)
+2026-11-08 14:15:17 INFO    calibration: epoch 4: train MSE 0.7700, val MSE 0.6337 (0.2 s)
+2026-11-08 14:15:18 INFO    calibration: epoch 5: train MSE 0.7554, val MSE 0.6266 (0.2 s)
+2026-11-08 14:15:18 INFO    calibration: epoch 6: train MSE 0.7294, val MSE 0.5927 (0.2 s)
+2026-11-08 14:15:18 INFO    calibration: epoch 7: train MSE 0.7167, val MSE 0.5692 (0.2 s)
+2026-11-08 14:15:18 INFO    calibration: epoch 8: train MSE 0.6894, val MSE 0.6069 (0.2 s)
+2026-11-08 14:15:18 INFO    calibration: epoch 9: train MSE 0.6965, val MSE 0.5859 (0.2 s)
+2026-11-08 14:15:19 INFO    calibration: epoch 10: train MSE 0.6696, val MSE 0.5891 (0.2 s)
+2026-11-08 14:15:19 INFO    calibration: epoch 11: train MSE 0.6568, val MSE 0.5483 (0.2 s)
+2026-11-08 14:15:19 INFO    calibration: epoch 12: train MSE 0.6702, val MSE 0.5447 (0.2 s)
+2026-11-08 14:15:19 INFO    calibration: epoch 13: train MSE 0.6555, val MSE 0.5607 (0.2 s)
+2026-11-08 14:15:20 INFO    calibration: epoch 14: train MSE 0.6381, val MSE 0.6353 (0.2 s)
+2026-11-08 14:15:20 INFO    calibration: epoch 15: train MSE 0.6475, val MSE 0.5786 (0.2 s)
+2026-11-08 14:15:20 INFO    calibration: epoch 16: train MSE 0.6257, val MSE 0.6046 (0.2 s)
+2026-11-08 14:15:20 INFO    calibration: epoch 17: train MSE 0.6271, val MSE 0.5706 (0.2 s)
+2026-11-08 14:15:20 INFO    calibration: early stop at epoch 17 (best val MSE 0.5447)
+2026-11-08 14:15:21 INFO    calibration: P2 k=30 draw 1 finetune: r 0.874, R2 0.702, NRMSE 0.176, specific 0.337
+2026-11-08 14:15:21 INFO    calibration: template_cue: 1010 bins from -0.03 to 10.06 s after ev_LEDOn, 22479 training samples
+2026-11-08 14:15:21 INFO    calibration: P2 k=30 draw 2 no_calibration: r 0.838, R2 0.642, NRMSE 0.190, specific 0.054
+2026-11-08 14:15:21 INFO    calibration: epoch 1: train MSE 0.8882, val MSE 0.9186 (0.2 s)
+2026-11-08 14:15:22 INFO    calibration: epoch 2: train MSE 0.8295, val MSE 0.8814 (0.2 s)
+2026-11-08 14:15:22 INFO    calibration: epoch 3: train MSE 0.7916, val MSE 0.8528 (0.2 s)
+2026-11-08 14:15:22 INFO    calibration: epoch 4: train MSE 0.7553, val MSE 0.8379 (0.2 s)
+2026-11-08 14:15:22 INFO    calibration: epoch 5: train MSE 0.7310, val MSE 0.8038 (0.2 s)
+2026-11-08 14:15:23 INFO    calibration: epoch 6: train MSE 0.6960, val MSE 0.7773 (0.2 s)
+2026-11-08 14:15:23 INFO    calibration: epoch 7: train MSE 0.6905, val MSE 0.8829 (0.2 s)
+2026-11-08 14:15:23 INFO    calibration: epoch 8: train MSE 0.6668, val MSE 0.8145 (0.2 s)
+2026-11-08 14:15:23 INFO    calibration: epoch 9: train MSE 0.6536, val MSE 0.7878 (0.2 s)
+2026-11-08 14:15:23 INFO    calibration: epoch 10: train MSE 0.6329, val MSE 0.8256 (0.2 s)
+2026-11-08 14:15:24 INFO    calibration: epoch 11: train MSE 0.6079, val MSE 0.8007 (0.2 s)
+2026-11-08 14:15:24 INFO    calibration: early stop at epoch 11 (best val MSE 0.7773)
+2026-11-08 14:15:24 INFO    calibration: P2 k=30 draw 2 finetune: r 0.850, R2 0.651, NRMSE 0.193, specific 0.323
+2026-11-08 14:15:24 INFO    calibration: template_cue: 1017 bins from -0.10 to 10.06 s after ev_LEDOn, 120684 training samples
+2026-11-08 14:15:25 INFO    calibration: P2 k=all draw 0 no_calibration: r 0.838, R2 0.642, NRMSE 0.190, specific 0.062
+2026-11-08 14:15:26 INFO    calibration: epoch 1: train MSE 0.8831, val MSE 0.7269 (1.1 s)
+2026-11-08 14:15:27 INFO    calibration: epoch 2: train MSE 0.8344, val MSE 0.6586 (1.2 s)
+2026-11-08 14:15:28 INFO    calibration: epoch 3: train MSE 0.8055, val MSE 0.6252 (1.2 s)
+2026-11-08 14:15:29 INFO    calibration: epoch 4: train MSE 0.7882, val MSE 0.5979 (1.2 s)
+2026-11-08 14:15:31 INFO    calibration: epoch 5: train MSE 0.7653, val MSE 0.6053 (1.2 s)
+2026-11-08 14:15:32 INFO    calibration: epoch 6: train MSE 0.7501, val MSE 0.5708 (1.2 s)
+2026-11-08 14:15:33 INFO    calibration: epoch 7: train MSE 0.7370, val MSE 0.5308 (1.2 s)
+2026-11-08 14:15:34 INFO    calibration: epoch 8: train MSE 0.7233, val MSE 0.5462 (1.2 s)
+2026-11-08 14:15:35 INFO    calibration: epoch 9: train MSE 0.7136, val MSE 0.5468 (1.3 s)
+2026-11-08 14:15:37 INFO    calibration: epoch 10: train MSE 0.6954, val MSE 0.5343 (1.3 s)
+2026-11-08 14:15:38 INFO    calibration: epoch 11: train MSE 0.6961, val MSE 0.5378 (1.3 s)
+2026-11-08 14:15:39 INFO    calibration: epoch 12: train MSE 0.6798, val MSE 0.5769 (1.3 s)
+2026-11-08 14:15:39 INFO    calibration: early stop at epoch 12 (best val MSE 0.5308)
+2026-11-08 14:15:40 INFO    calibration: P2 k=all draw 0 finetune: r 0.879, R2 0.718, NRMSE 0.170, specific 0.309
+2026-11-08 14:15:40 INFO    calibration: P2 done, 0.8 min since start
+2026-11-08 14:15:40 INFO    calibration: P4: 294 lifts, 19586 val samples (S6), 56363 test samples (S7-S9)
+2026-11-08 14:15:40 INFO    calibration: template_cue: 734 bins from -0.44 to 6.89 s after ev_LEDOn, 17544 training samples
+2026-11-08 14:15:40 INFO    calibration: P4: no-calibration vs saved LOSO predictions on S7-S9, max |diff| 1.98e-03
+2026-11-08 14:15:41 INFO    calibration: P4 k=30 draw 0 no_calibration: r 0.807, R2 0.398, NRMSE 0.251, specific 0.008
+2026-11-08 14:15:41 INFO    calibration: epoch 1: train MSE 0.5362, val MSE 0.3801 (0.3 s)
+2026-11-08 14:15:41 INFO    calibration: epoch 2: train MSE 0.4876, val MSE 0.3710 (0.2 s)
+2026-11-08 14:15:42 INFO    calibration: epoch 3: train MSE 0.4788, val MSE 0.3718 (0.2 s)
+2026-11-08 14:15:42 INFO    calibration: epoch 4: train MSE 0.4726, val MSE 0.3666 (0.2 s)
+2026-11-08 14:15:42 INFO    calibration: epoch 5: train MSE 0.4655, val MSE 0.3674 (0.2 s)
+2026-11-08 14:15:42 INFO    calibration: epoch 6: train MSE 0.4658, val MSE 0.3611 (0.2 s)
+2026-11-08 14:15:42 INFO    calibration: epoch 7: train MSE 0.4469, val MSE 0.3577 (0.2 s)
+2026-11-08 14:15:43 INFO    calibration: epoch 8: train MSE 0.4470, val MSE 0.3607 (0.2 s)
+2026-11-08 14:15:43 INFO    calibration: epoch 9: train MSE 0.4502, val MSE 0.3565 (0.2 s)
+2026-11-08 14:15:43 INFO    calibration: epoch 10: train MSE 0.4439, val MSE 0.3548 (0.2 s)
+2026-11-08 14:15:43 INFO    calibration: epoch 11: train MSE 0.4420, val MSE 0.3595 (0.2 s)
+2026-11-08 14:15:43 INFO    calibration: epoch 12: train MSE 0.4327, val MSE 0.3709 (0.2 s)
+2026-11-08 14:15:44 INFO    calibration: epoch 13: train MSE 0.4190, val MSE 0.3757 (0.2 s)
+2026-11-08 14:15:44 INFO    calibration: epoch 14: train MSE 0.4252, val MSE 0.3809 (0.2 s)
+2026-11-08 14:15:44 INFO    calibration: epoch 15: train MSE 0.4226, val MSE 0.3824 (0.2 s)
+2026-11-08 14:15:44 INFO    calibration: early stop at epoch 15 (best val MSE 0.3548)
+2026-11-08 14:15:44 INFO    calibration: P4 k=30 draw 0 finetune: r 0.925, R2 0.709, NRMSE 0.168, specific 0.214
+2026-11-08 14:15:44 INFO    calibration: template_cue: 673 bins from -0.25 to 6.47 s after ev_LEDOn, 17716 training samples
+2026-11-08 14:15:45 INFO    calibration: P4 k=30 draw 1 no_calibration: r 0.807, R2 0.398, NRMSE 0.251, specific 0.016
+2026-11-08 14:15:45 INFO    calibration: epoch 1: train MSE 0.4538, val MSE 0.4049 (0.3 s)
+2026-11-08 14:15:45 INFO    calibration: epoch 2: train MSE 0.4122, val MSE 0.3953 (0.2 s)
+2026-11-08 14:15:46 INFO    calibration: epoch 3: train MSE 0.4217, val MSE 0.3967 (0.2 s)
+2026-11-08 14:15:46 INFO    calibration: epoch 4: train MSE 0.4137, val MSE 0.4005 (0.2 s)
+2026-11-08 14:15:46 INFO    calibration: epoch 5: train MSE 0.4042, val MSE 0.4048 (0.2 s)
+2026-11-08 14:15:46 INFO    calibration: epoch 6: train MSE 0.3966, val MSE 0.4077 (0.2 s)
+2026-11-08 14:15:46 INFO    calibration: epoch 7: train MSE 0.3894, val MSE 0.4106 (0.2 s)
+2026-11-08 14:15:46 INFO    calibration: early stop at epoch 7 (best val MSE 0.3953)
+2026-11-08 14:15:47 INFO    calibration: P4 k=30 draw 1 finetune: r 0.912, R2 0.660, NRMSE 0.180, specific 0.110
+2026-11-08 14:15:47 INFO    calibration: template_cue: 722 bins from -0.32 to 6.89 s after ev_LEDOn, 17637 training samples
+2026-11-08 14:15:47 INFO    calibration: P4 k=30 draw 2 no_calibration: r 0.807, R2 0.398, NRMSE 0.251, specific 0.033
+2026-11-08 14:15:48 INFO    calibration: epoch 1: train MSE 0.8226, val MSE 0.4077 (0.2 s)
+2026-11-08 14:15:48 INFO    calibration: epoch 2: train MSE 0.7400, val MSE 0.4047 (0.2 s)
+2026-11-08 14:15:48 INFO    calibration: epoch 3: train MSE 0.7228, val MSE 0.4020 (0.2 s)
+2026-11-08 14:15:48 INFO    calibration: epoch 4: train MSE 0.6827, val MSE 0.4074 (0.2 s)
+2026-11-08 14:15:48 INFO    calibration: epoch 5: train MSE 0.6832, val MSE 0.4103 (0.2 s)
+2026-11-08 14:15:49 INFO    calibration: epoch 6: train MSE 0.6862, val MSE 0.4204 (0.2 s)
+2026-11-08 14:15:49 INFO    calibration: epoch 7: train MSE 0.6406, val MSE 0.4196 (0.2 s)
+2026-11-08 14:15:49 INFO    calibration: epoch 8: train MSE 0.6403, val MSE 0.4382 (0.2 s)
+2026-11-08 14:15:49 INFO    calibration: early stop at epoch 8 (best val MSE 0.4020)
+2026-11-08 14:15:49 INFO    calibration: P4 k=30 draw 2 finetune: r 0.918, R2 0.704, NRMSE 0.171, specific 0.136
+2026-11-08 14:15:49 INFO    calibration: template_cue: 734 bins from -0.44 to 6.89 s after ev_LEDOn, 93126 training samples
+2026-11-08 14:15:50 INFO    calibration: P4 k=all draw 0 no_calibration: r 0.807, R2 0.398, NRMSE 0.251, specific 0.024
+2026-11-08 14:15:51 INFO    calibration: epoch 1: train MSE 0.5124, val MSE 0.3828 (0.9 s)
+2026-11-08 14:15:52 INFO    calibration: epoch 2: train MSE 0.4930, val MSE 0.3809 (0.9 s)
+2026-11-08 14:15:53 INFO    calibration: epoch 3: train MSE 0.4754, val MSE 0.3842 (1.0 s)
+2026-11-08 14:15:54 INFO    calibration: epoch 4: train MSE 0.4740, val MSE 0.3844 (0.9 s)
+2026-11-08 14:15:55 INFO    calibration: epoch 5: train MSE 0.4740, val MSE 0.3801 (0.9 s)
+2026-11-08 14:15:55 INFO    calibration: epoch 6: train MSE 0.4622, val MSE 0.3945 (0.9 s)
+2026-11-08 14:15:56 INFO    calibration: epoch 7: train MSE 0.4603, val MSE 0.3908 (0.9 s)
+2026-11-08 14:15:57 INFO    calibration: epoch 8: train MSE 0.4583, val MSE 0.3975 (1.0 s)
+2026-11-08 14:15:58 INFO    calibration: epoch 9: train MSE 0.4546, val MSE 0.3944 (0.9 s)
+2026-11-08 14:15:59 INFO    calibration: epoch 10: train MSE 0.4431, val MSE 0.3849 (0.9 s)
+2026-11-08 14:15:59 INFO    calibration: early stop at epoch 10 (best val MSE 0.3801)
+2026-11-08 14:16:00 INFO    calibration: P4 k=all draw 0 finetune: r 0.916, R2 0.674, NRMSE 0.177, specific 0.184
+2026-11-08 14:16:00 INFO    calibration: P4 done, 1.2 min since start
+2026-11-08 14:16:00 INFO    calibration: P5: 294 lifts, 17172 val samples (S6), 61419 test samples (S7-S9)
+2026-11-08 14:16:00 INFO    calibration: template_cue: 808 bins from -0.86 to 7.21 s after ev_LEDOn, 19087 training samples
+2026-11-08 14:16:00 INFO    calibration: P5: no-calibration vs saved LOSO predictions on S7-S9, max |diff| 1.29e-02
+2026-11-08 14:16:00 INFO    calibration: P5 k=30 draw 0 no_calibration: r 0.888, R2 0.221, NRMSE 0.284, specific -0.043
+2026-11-08 14:16:01 INFO    calibration: epoch 1: train MSE 0.5589, val MSE 0.7311 (0.2 s)
+2026-11-08 14:16:01 INFO    calibration: epoch 2: train MSE 0.5056, val MSE 0.7505 (0.2 s)
+2026-11-08 14:16:01 INFO    calibration: epoch 3: train MSE 0.4810, val MSE 0.7729 (0.2 s)
+2026-11-08 14:16:01 INFO    calibration: epoch 4: train MSE 0.4738, val MSE 0.7985 (0.2 s)
+2026-11-08 14:16:01 INFO    calibration: epoch 5: train MSE 0.4587, val MSE 0.8019 (0.2 s)
+2026-11-08 14:16:02 INFO    calibration: epoch 6: train MSE 0.4627, val MSE 0.8133 (0.2 s)
+2026-11-08 14:16:02 INFO    calibration: early stop at epoch 6 (best val MSE 0.7311)
+2026-11-08 14:16:02 INFO    calibration: P5 k=30 draw 0 finetune: r 0.900, R2 0.425, NRMSE 0.240, specific 0.016
+2026-11-08 14:16:02 INFO    calibration: template_cue: 788 bins from -0.26 to 7.61 s after ev_LEDOn, 19248 training samples
+2026-11-08 14:16:03 INFO    calibration: P5 k=30 draw 1 no_calibration: r 0.888, R2 0.221, NRMSE 0.284, specific -0.034
+2026-11-08 14:16:03 INFO    calibration: epoch 1: train MSE 0.4883, val MSE 0.7343 (0.2 s)
+2026-11-08 14:16:03 INFO    calibration: epoch 2: train MSE 0.4607, val MSE 0.7140 (0.2 s)
+2026-11-08 14:16:03 INFO    calibration: epoch 3: train MSE 0.4228, val MSE 0.7524 (0.2 s)
+2026-11-08 14:16:03 INFO    calibration: epoch 4: train MSE 0.4023, val MSE 0.7336 (0.2 s)
+2026-11-08 14:16:04 INFO    calibration: epoch 5: train MSE 0.4012, val MSE 0.7442 (0.2 s)
+2026-11-08 14:16:04 INFO    calibration: epoch 6: train MSE 0.3830, val MSE 0.7529 (0.2 s)
+2026-11-08 14:16:04 INFO    calibration: epoch 7: train MSE 0.3812, val MSE 0.7504 (0.2 s)
+2026-11-08 14:16:04 INFO    calibration: early stop at epoch 7 (best val MSE 0.7140)
+2026-11-08 14:16:04 INFO    calibration: P5 k=30 draw 1 finetune: r 0.897, R2 0.461, NRMSE 0.234, specific 0.030
+2026-11-08 14:16:04 INFO    calibration: template_cue: 780 bins from -0.19 to 7.60 s after ev_LEDOn, 19023 training samples
+2026-11-08 14:16:05 INFO    calibration: P5 k=30 draw 2 no_calibration: r 0.888, R2 0.221, NRMSE 0.284, specific -0.046
+2026-11-08 14:16:05 INFO    calibration: epoch 1: train MSE 0.4654, val MSE 0.7888 (0.2 s)
+2026-11-08 14:16:05 INFO    calibration: epoch 2: train MSE 0.4307, val MSE 0.7772 (0.2 s)
+2026-11-08 14:16:05 INFO    calibration: epoch 3: train MSE 0.3969, val MSE 0.7644 (0.2 s)
+2026-11-08 14:16:06 INFO    calibration: epoch 4: train MSE 0.3936, val MSE 0.7666 (0.2 s)
+2026-11-08 14:16:06 INFO    calibration: epoch 5: train MSE 0.3875, val MSE 0.7625 (0.2 s)
+2026-11-08 14:16:06 INFO    calibration: epoch 6: train MSE 0.3817, val MSE 0.7577 (0.2 s)
+2026-11-08 14:16:06 INFO    calibration: epoch 7: train MSE 0.3757, val MSE 0.7694 (0.2 s)
+2026-11-08 14:16:07 INFO    calibration: epoch 8: train MSE 0.3771, val MSE 0.7674 (0.2 s)
+2026-11-08 14:16:07 INFO    calibration: epoch 9: train MSE 0.3653, val MSE 0.7496 (0.3 s)
+2026-11-08 14:16:07 INFO    calibration: epoch 10: train MSE 0.3623, val MSE 0.7664 (0.2 s)
+2026-11-08 14:16:07 INFO    calibration: epoch 11: train MSE 0.3525, val MSE 0.7995 (0.2 s)
+2026-11-08 14:16:08 INFO    calibration: epoch 12: train MSE 0.3421, val MSE 0.7928 (0.2 s)
+2026-11-08 14:16:08 INFO    calibration: epoch 13: train MSE 0.3328, val MSE 0.7874 (0.2 s)
+2026-11-08 14:16:08 INFO    calibration: epoch 14: train MSE 0.3306, val MSE 0.7853 (0.2 s)
+2026-11-08 14:16:08 INFO    calibration: early stop at epoch 14 (best val MSE 0.7496)
+2026-11-08 14:16:09 INFO    calibration: P5 k=30 draw 2 finetune: r 0.901, R2 0.430, NRMSE 0.239, specific 0.051
+2026-11-08 14:16:09 INFO    calibration: template_cue: 853 bins from -0.86 to 7.66 s after ev_LEDOn, 104419 training samples
+2026-11-08 14:16:09 INFO    calibration: P5 k=all draw 0 no_calibration: r 0.888, R2 0.221, NRMSE 0.284, specific -0.048
+2026-11-08 14:16:10 INFO    calibration: epoch 1: train MSE 0.5308, val MSE 0.6849 (1.0 s)
+2026-11-08 14:16:11 INFO    calibration: epoch 2: train MSE 0.5116, val MSE 0.6863 (1.1 s)
+2026-11-08 14:16:12 INFO    calibration: epoch 3: train MSE 0.4952, val MSE 0.7054 (1.1 s)
+2026-11-08 14:16:13 INFO    calibration: epoch 4: train MSE 0.4904, val MSE 0.6898 (1.0 s)
+2026-11-08 14:16:14 INFO    calibration: epoch 5: train MSE 0.4857, val MSE 0.7156 (1.1 s)
+2026-11-08 14:16:15 INFO    calibration: epoch 6: train MSE 0.4837, val MSE 0.6997 (1.0 s)
+2026-11-08 14:16:15 INFO    calibration: early stop at epoch 6 (best val MSE 0.6849)
+2026-11-08 14:16:16 INFO    calibration: P5 k=all draw 0 finetune: r 0.910, R2 0.495, NRMSE 0.225, specific 0.066
+2026-11-08 14:16:16 INFO    calibration: P5 done, 1.4 min since start
+2026-11-08 14:16:16 INFO    calibration: P7: 294 lifts, 22173 val samples (S6), 63872 test samples (S7-S9)
+2026-11-08 14:16:16 INFO    calibration: template_cue: 1117 bins from -0.14 to 11.02 s after ev_LEDOn, 23765 training samples
+2026-11-08 14:16:16 INFO    calibration: P7: no-calibration vs saved LOSO predictions on S7-S9, max |diff| 3.07e-03
+2026-11-08 14:16:17 INFO    calibration: P7 k=30 draw 0 no_calibration: r 0.849, R2 0.499, NRMSE 0.229, specific 0.076
+2026-11-08 14:16:17 INFO    calibration: epoch 1: train MSE 0.9883, val MSE 0.9162 (0.2 s)
+2026-11-08 14:16:17 INFO    calibration: epoch 2: train MSE 0.9505, val MSE 0.9220 (0.2 s)
+2026-11-08 14:16:17 INFO    calibration: epoch 3: train MSE 0.9233, val MSE 0.8986 (0.2 s)
+2026-11-08 14:16:18 INFO    calibration: epoch 4: train MSE 0.8997, val MSE 0.9068 (0.2 s)
+2026-11-08 14:16:18 INFO    calibration: epoch 5: train MSE 0.8797, val MSE 0.9127 (0.3 s)
+2026-11-08 14:16:18 INFO    calibration: epoch 6: train MSE 0.8588, val MSE 0.8982 (0.3 s)
+2026-11-08 14:16:18 INFO    calibration: epoch 7: train MSE 0.8407, val MSE 0.9002 (0.2 s)
+2026-11-08 14:16:19 INFO    calibration: epoch 8: train MSE 0.8180, val MSE 0.8975 (0.2 s)
+2026-11-08 14:16:19 INFO    calibration: epoch 9: train MSE 0.8543, val MSE 0.9154 (0.2 s)
+2026-11-08 14:16:19 INFO    calibration: epoch 10: train MSE 0.8024, val MSE 0.9184 (0.2 s)
+2026-11-08 14:16:19 INFO    calibration: epoch 11: train MSE 0.7919, val MSE 0.9385 (0.2 s)
+2026-11-08 14:16:20 INFO    calibration: epoch 12: train MSE 0.7867, val MSE 0.9347 (0.2 s)
+2026-11-08 14:16:20 INFO    calibration: epoch 13: train MSE 0.7994, val MSE 0.9456 (0.2 s)
+2026-11-08 14:16:20 INFO    calibration: early stop at epoch 13 (best val MSE 0.8975)
+2026-11-08 14:16:20 INFO    calibration: P7 k=30 draw 0 finetune: r 0.825, R2 0.609, NRMSE 0.206, specific 0.238
+2026-11-08 14:16:20 INFO    calibration: template_cue: 1206 bins from -0.22 to 11.83 s after ev_LEDOn, 23777 training samples
+2026-11-08 14:16:21 INFO    calibration: P7 k=30 draw 1 no_calibration: r 0.849, R2 0.499, NRMSE 0.229, specific 0.096
+2026-11-08 14:16:21 INFO    calibration: epoch 1: train MSE 0.9220, val MSE 0.8247 (0.2 s)
+2026-11-08 14:16:21 INFO    calibration: epoch 2: train MSE 0.8545, val MSE 0.8233 (0.2 s)
+2026-11-08 14:16:21 INFO    calibration: epoch 3: train MSE 0.8406, val MSE 0.8366 (0.2 s)
+2026-11-08 14:16:22 INFO    calibration: epoch 4: train MSE 0.7998, val MSE 0.8255 (0.2 s)
+2026-11-08 14:16:22 INFO    calibration: epoch 5: train MSE 0.8049, val MSE 0.8590 (0.2 s)
+2026-11-08 14:16:22 INFO    calibration: epoch 6: train MSE 0.7671, val MSE 0.8968 (0.3 s)
+2026-11-08 14:16:22 INFO    calibration: epoch 7: train MSE 0.7450, val MSE 0.8952 (0.2 s)
+2026-11-08 14:16:22 INFO    calibration: early stop at epoch 7 (best val MSE 0.8233)
+2026-11-08 14:16:23 INFO    calibration: P7 k=30 draw 1 finetune: r 0.846, R2 0.652, NRMSE 0.194, specific 0.266
+2026-11-08 14:16:23 INFO    calibration: template_cue: 1074 bins from -0.26 to 10.47 s after ev_LEDOn, 23354 training samples
+2026-11-08 14:16:23 INFO    calibration: P7 k=30 draw 2 no_calibration: r 0.849, R2 0.499, NRMSE 0.229, specific 0.093
+2026-11-08 14:16:24 INFO    calibration: epoch 1: train MSE 0.7808, val MSE 0.8307 (0.3 s)
+2026-11-08 14:16:24 INFO    calibration: epoch 2: train MSE 0.7740, val MSE 0.8262 (0.2 s)
+2026-11-08 14:16:24 INFO    calibration: epoch 3: train MSE 0.7612, val MSE 0.8266 (0.2 s)
+2026-11-08 14:16:24 INFO    calibration: epoch 4: train MSE 0.7640, val MSE 0.8153 (0.2 s)
+2026-11-08 14:16:25 INFO    calibration: epoch 5: train MSE 0.7515, val MSE 0.8489 (0.2 s)
+2026-11-08 14:16:25 INFO    calibration: epoch 6: train MSE 0.7405, val MSE 0.8573 (0.2 s)
+2026-11-08 14:16:25 INFO    calibration: epoch 7: train MSE 0.7137, val MSE 0.8500 (0.3 s)
+2026-11-08 14:16:25 INFO    calibration: epoch 8: train MSE 0.7004, val MSE 0.8577 (0.3 s)
+2026-11-08 14:16:26 INFO    calibration: epoch 9: train MSE 0.7047, val MSE 0.8818 (0.2 s)
+2026-11-08 14:16:26 INFO    calibration: early stop at epoch 9 (best val MSE 0.8153)
+2026-11-08 14:16:26 INFO    calibration: P7 k=30 draw 2 finetune: r 0.849, R2 0.668, NRMSE 0.190, specific 0.260
+2026-11-08 14:16:26 INFO    calibration: template_cue: 1602 bins from -0.26 to 15.75 s after ev_LEDOn, 128508 training samples
+2026-11-08 14:16:27 INFO    calibration: P7 k=all draw 0 no_calibration: r 0.849, R2 0.499, NRMSE 0.229, specific 0.075
+2026-11-08 14:16:28 INFO    calibration: epoch 1: train MSE 1.0447, val MSE 0.9121 (1.2 s)
+2026-11-08 14:16:29 INFO    calibration: epoch 2: train MSE 1.0192, val MSE 0.9019 (1.3 s)
+2026-11-08 14:16:30 INFO    calibration: epoch 3: train MSE 1.0142, val MSE 0.8901 (1.2 s)
+2026-11-08 14:16:32 INFO    calibration: epoch 4: train MSE 0.9804, val MSE 0.9057 (1.3 s)
+2026-11-08 14:16:33 INFO    calibration: epoch 5: train MSE 0.9680, val MSE 0.9442 (1.3 s)
+2026-11-08 14:16:34 INFO    calibration: epoch 6: train MSE 0.9423, val MSE 1.0177 (1.2 s)
+2026-11-08 14:16:35 INFO    calibration: epoch 7: train MSE 0.9334, val MSE 1.0586 (1.3 s)
+2026-11-08 14:16:37 INFO    calibration: epoch 8: train MSE 0.9165, val MSE 1.1021 (1.3 s)
+2026-11-08 14:16:37 INFO    calibration: early stop at epoch 8 (best val MSE 0.8901)
+2026-11-08 14:16:37 INFO    calibration: P7 k=all draw 0 finetune: r 0.818, R2 0.606, NRMSE 0.207, specific 0.246
+2026-11-08 14:16:37 INFO    calibration: P7 done, 1.8 min since start
+2026-11-08 14:16:37 INFO    calibration: P8: 294 lifts, 15513 val samples (S6), 55271 test samples (S7-S9)
+2026-11-08 14:16:37 INFO    calibration: template_cue: 710 bins from -0.45 to 6.64 s after ev_LEDOn, 17178 training samples
+2026-11-08 14:16:38 INFO    calibration: P8: no-calibration vs saved LOSO predictions on S7-S9, max |diff| 2.22e-03
+2026-11-08 14:16:38 INFO    calibration: P8 k=30 draw 0 no_calibration: r 0.852, R2 0.600, NRMSE 0.211, specific 0.008
+2026-11-08 14:16:38 INFO    calibration: epoch 1: train MSE 0.4306, val MSE 0.3671 (0.2 s)
+2026-11-08 14:16:38 INFO    calibration: epoch 2: train MSE 0.3842, val MSE 0.3627 (0.2 s)
+2026-11-08 14:16:39 INFO    calibration: epoch 3: train MSE 0.3674, val MSE 0.3787 (0.2 s)
+2026-11-08 14:16:39 INFO    calibration: epoch 4: train MSE 0.3540, val MSE 0.3857 (0.2 s)
+2026-11-08 14:16:39 INFO    calibration: epoch 5: train MSE 0.3409, val MSE 0.4013 (0.2 s)
+2026-11-08 14:16:39 INFO    calibration: epoch 6: train MSE 0.3231, val MSE 0.4082 (0.2 s)
+2026-11-08 14:16:39 INFO    calibration: epoch 7: train MSE 0.3172, val MSE 0.4181 (0.2 s)
+2026-11-08 14:16:39 INFO    calibration: early stop at epoch 7 (best val MSE 0.3627)
+2026-11-08 14:16:40 INFO    calibration: P8 k=30 draw 0 finetune: r 0.910, R2 0.762, NRMSE 0.162, specific 0.098
+2026-11-08 14:16:40 INFO    calibration: template_cue: 696 bins from -0.45 to 6.50 s after ev_LEDOn, 17220 training samples
+2026-11-08 14:16:40 INFO    calibration: P8 k=30 draw 1 no_calibration: r 0.852, R2 0.600, NRMSE 0.211, specific 0.016
+2026-11-08 14:16:40 INFO    calibration: epoch 1: train MSE 0.4487, val MSE 0.3982 (0.2 s)
+2026-11-08 14:16:41 INFO    calibration: epoch 2: train MSE 0.4138, val MSE 0.3805 (0.2 s)
+2026-11-08 14:16:41 INFO    calibration: epoch 3: train MSE 0.3963, val MSE 0.3765 (0.2 s)
+2026-11-08 14:16:41 INFO    calibration: epoch 4: train MSE 0.3951, val MSE 0.3888 (0.2 s)
+2026-11-08 14:16:41 INFO    calibration: epoch 5: train MSE 0.3797, val MSE 0.3819 (0.2 s)
+2026-11-08 14:16:41 INFO    calibration: epoch 6: train MSE 0.3809, val MSE 0.3574 (0.2 s)
+2026-11-08 14:16:42 INFO    calibration: epoch 7: train MSE 0.3665, val MSE 0.3639 (0.2 s)
+2026-11-08 14:16:42 INFO    calibration: epoch 8: train MSE 0.3614, val MSE 0.3684 (0.2 s)
+2026-11-08 14:16:42 INFO    calibration: epoch 9: train MSE 0.3559, val MSE 0.3716 (0.2 s)
+2026-11-08 14:16:42 INFO    calibration: epoch 10: train MSE 0.3533, val MSE 0.3729 (0.2 s)
+2026-11-08 14:16:42 INFO    calibration: epoch 11: train MSE 0.3335, val MSE 0.3914 (0.2 s)
+2026-11-08 14:16:42 INFO    calibration: early stop at epoch 11 (best val MSE 0.3574)
+2026-11-08 14:16:43 INFO    calibration: P8 k=30 draw 1 finetune: r 0.908, R2 0.758, NRMSE 0.163, specific 0.149
+2026-11-08 14:16:43 INFO    calibration: template_cue: 649 bins from -0.25 to 6.23 s after ev_LEDOn, 16793 training samples
+2026-11-08 14:16:43 INFO    calibration: P8 k=30 draw 2 no_calibration: r 0.852, R2 0.600, NRMSE 0.211, specific -0.007
+2026-11-08 14:16:43 INFO    calibration: epoch 1: train MSE 0.3795, val MSE 0.3467 (0.2 s)
+2026-11-08 14:16:43 INFO    calibration: epoch 2: train MSE 0.3634, val MSE 0.3362 (0.2 s)
+2026-11-08 14:16:44 INFO    calibration: epoch 3: train MSE 0.3447, val MSE 0.3350 (0.2 s)
+2026-11-08 14:16:44 INFO    calibration: epoch 4: train MSE 0.3364, val MSE 0.3269 (0.2 s)
+2026-11-08 14:16:44 INFO    calibration: epoch 5: train MSE 0.3409, val MSE 0.3237 (0.2 s)
+2026-11-08 14:16:44 INFO    calibration: epoch 6: train MSE 0.3227, val MSE 0.3052 (0.2 s)
+2026-11-08 14:16:44 INFO    calibration: epoch 7: train MSE 0.3166, val MSE 0.3277 (0.2 s)
+2026-11-08 14:16:45 INFO    calibration: epoch 8: train MSE 0.2938, val MSE 0.3320 (0.2 s)
+2026-11-08 14:16:45 INFO    calibration: epoch 9: train MSE 0.2922, val MSE 0.3330 (0.2 s)
+2026-11-08 14:16:45 INFO    calibration: epoch 10: train MSE 0.2884, val MSE 0.3560 (0.2 s)
+2026-11-08 14:16:45 INFO    calibration: epoch 11: train MSE 0.2773, val MSE 0.3460 (0.2 s)
+2026-11-08 14:16:45 INFO    calibration: early stop at epoch 11 (best val MSE 0.3052)
+2026-11-08 14:16:46 INFO    calibration: P8 k=30 draw 2 finetune: r 0.917, R2 0.771, NRMSE 0.157, specific 0.120
+2026-11-08 14:16:46 INFO    calibration: template_cue: 710 bins from -0.45 to 6.64 s after ev_LEDOn, 92755 training samples
+2026-11-08 14:16:46 INFO    calibration: P8 k=all draw 0 no_calibration: r 0.852, R2 0.600, NRMSE 0.211, specific -0.003
+2026-11-08 14:16:47 INFO    calibration: epoch 1: train MSE 0.3940, val MSE 0.3374 (0.9 s)
+2026-11-08 14:16:48 INFO    calibration: epoch 2: train MSE 0.3736, val MSE 0.3317 (0.9 s)
+2026-11-08 14:16:49 INFO    calibration: epoch 3: train MSE 0.3672, val MSE 0.3342 (0.9 s)
+2026-11-08 14:16:50 INFO    calibration: epoch 4: train MSE 0.3575, val MSE 0.3336 (1.0 s)
+2026-11-08 14:16:51 INFO    calibration: epoch 5: train MSE 0.3476, val MSE 0.3226 (0.9 s)
+2026-11-08 14:16:52 INFO    calibration: epoch 6: train MSE 0.3490, val MSE 0.3183 (0.9 s)
+2026-11-08 14:16:53 INFO    calibration: epoch 7: train MSE 0.3441, val MSE 0.3644 (0.9 s)
+2026-11-08 14:16:53 INFO    calibration: epoch 8: train MSE 0.3372, val MSE 0.3423 (0.9 s)
+2026-11-08 14:16:54 INFO    calibration: epoch 9: train MSE 0.3304, val MSE 0.3102 (0.9 s)
+2026-11-08 14:16:55 INFO    calibration: epoch 10: train MSE 0.3334, val MSE 0.3261 (0.9 s)
+2026-11-08 14:16:56 INFO    calibration: epoch 11: train MSE 0.3238, val MSE 0.3295 (0.9 s)
+2026-11-08 14:16:57 INFO    calibration: epoch 12: train MSE 0.3241, val MSE 0.3394 (0.9 s)
+2026-11-08 14:16:58 INFO    calibration: epoch 13: train MSE 0.3202, val MSE 0.3266 (0.9 s)
+2026-11-08 14:16:59 INFO    calibration: epoch 14: train MSE 0.3171, val MSE 0.3345 (0.9 s)
+2026-11-08 14:16:59 INFO    calibration: early stop at epoch 14 (best val MSE 0.3102)
+2026-11-08 14:16:59 INFO    calibration: P8 k=all draw 0 finetune: r 0.921, R2 0.784, NRMSE 0.153, specific 0.232
+2026-11-08 14:16:59 INFO    calibration: P8 done, 2.2 min since start
+2026-11-08 14:16:59 INFO    calibration: P9: 294 lifts, 20799 val samples (S6), 60022 test samples (S7-S9)
+2026-11-08 14:16:59 INFO    calibration: template_cue: 782 bins from -0.88 to 6.93 s after ev_LEDOn, 19572 training samples
+2026-11-08 14:17:00 INFO    calibration: P9: no-calibration vs saved LOSO predictions on S7-S9, max |diff| 4.76e-03
+2026-11-08 14:17:00 INFO    calibration: P9 k=30 draw 0 no_calibration: r 0.832, R2 0.579, NRMSE 0.219, specific -0.024
+2026-11-08 14:17:00 INFO    calibration: epoch 1: train MSE 0.4394, val MSE 0.6980 (0.2 s)
+2026-11-08 14:17:00 INFO    calibration: epoch 2: train MSE 0.3889, val MSE 0.6974 (0.2 s)
+2026-11-08 14:17:01 INFO    calibration: epoch 3: train MSE 0.3820, val MSE 0.6981 (0.2 s)
+2026-11-08 14:17:01 INFO    calibration: epoch 4: train MSE 0.3666, val MSE 0.7003 (0.2 s)
+2026-11-08 14:17:01 INFO    calibration: epoch 5: train MSE 0.3800, val MSE 0.7067 (0.2 s)
+2026-11-08 14:17:01 INFO    calibration: epoch 6: train MSE 0.3753, val MSE 0.7012 (0.2 s)
+2026-11-08 14:17:02 INFO    calibration: epoch 7: train MSE 0.3526, val MSE 0.7015 (0.2 s)
+2026-11-08 14:17:02 INFO    calibration: early stop at epoch 7 (best val MSE 0.6974)
+2026-11-08 14:17:02 INFO    calibration: P9 k=30 draw 0 finetune: r 0.824, R2 0.628, NRMSE 0.204, specific 0.046
+2026-11-08 14:17:02 INFO    calibration: template_cue: 772 bins from -0.26 to 7.45 s after ev_LEDOn, 19648 training samples
+2026-11-08 14:17:02 INFO    calibration: P9 k=30 draw 1 no_calibration: r 0.832, R2 0.579, NRMSE 0.219, specific -0.045
+2026-11-08 14:17:03 INFO    calibration: epoch 1: train MSE 0.4016, val MSE 0.6700 (0.2 s)
+2026-11-08 14:17:03 INFO    calibration: epoch 2: train MSE 0.3358, val MSE 0.6599 (0.2 s)
+2026-11-08 14:17:03 INFO    calibration: epoch 3: train MSE 0.3306, val MSE 0.6520 (0.2 s)
+2026-11-08 14:17:03 INFO    calibration: epoch 4: train MSE 0.3190, val MSE 0.6458 (0.2 s)
+2026-11-08 14:17:03 INFO    calibration: epoch 5: train MSE 0.3260, val MSE 0.6523 (0.2 s)
+2026-11-08 14:17:04 INFO    calibration: epoch 6: train MSE 0.3083, val MSE 0.6458 (0.2 s)
+2026-11-08 14:17:04 INFO    calibration: epoch 7: train MSE 0.3104, val MSE 0.6488 (0.2 s)
+2026-11-08 14:17:04 INFO    calibration: epoch 8: train MSE 0.2994, val MSE 0.6463 (0.2 s)
+2026-11-08 14:17:04 INFO    calibration: epoch 9: train MSE 0.3053, val MSE 0.6447 (0.2 s)
+2026-11-08 14:17:05 INFO    calibration: epoch 10: train MSE 0.2904, val MSE 0.6478 (0.2 s)
+2026-11-08 14:17:05 INFO    calibration: epoch 11: train MSE 0.2871, val MSE 0.6456 (0.2 s)
+2026-11-08 14:17:05 INFO    calibration: epoch 12: train MSE 0.2915, val MSE 0.6427 (0.2 s)
+2026-11-08 14:17:05 INFO    calibration: epoch 13: train MSE 0.2884, val MSE 0.6448 (0.2 s)
+2026-11-08 14:17:05 INFO    calibration: epoch 14: train MSE 0.2792, val MSE 0.6496 (0.2 s)
+2026-11-08 14:17:06 INFO    calibration: epoch 15: train MSE 0.2831, val MSE 0.6460 (0.2 s)
+2026-11-08 14:17:06 INFO    calibration: epoch 16: train MSE 0.2755, val MSE 0.6438 (0.2 s)
+2026-11-08 14:17:06 INFO    calibration: epoch 17: train MSE 0.2787, val MSE 0.6556 (0.2 s)
+2026-11-08 14:17:06 INFO    calibration: early stop at epoch 17 (best val MSE 0.6427)
+2026-11-08 14:17:07 INFO    calibration: P9 k=30 draw 1 finetune: r 0.830, R2 0.612, NRMSE 0.208, specific 0.050
+2026-11-08 14:17:07 INFO    calibration: template_cue: 702 bins from -0.30 to 6.71 s after ev_LEDOn, 19218 training samples
+2026-11-08 14:17:07 INFO    calibration: P9 k=30 draw 2 no_calibration: r 0.832, R2 0.579, NRMSE 0.219, specific -0.037
+2026-11-08 14:17:08 INFO    calibration: epoch 1: train MSE 0.4322, val MSE 0.6535 (0.3 s)
+2026-11-08 14:17:08 INFO    calibration: epoch 2: train MSE 0.3947, val MSE 0.6440 (0.3 s)
+2026-11-08 14:17:08 INFO    calibration: epoch 3: train MSE 0.3763, val MSE 0.6385 (0.3 s)
+2026-11-08 14:17:08 INFO    calibration: epoch 4: train MSE 0.3801, val MSE 0.6381 (0.2 s)
+2026-11-08 14:17:09 INFO    calibration: epoch 5: train MSE 0.3771, val MSE 0.6360 (0.2 s)
+2026-11-08 14:17:09 INFO    calibration: epoch 6: train MSE 0.3631, val MSE 0.6378 (0.2 s)
+2026-11-08 14:17:09 INFO    calibration: epoch 7: train MSE 0.3679, val MSE 0.6408 (0.2 s)
+2026-11-08 14:17:09 INFO    calibration: epoch 8: train MSE 0.3587, val MSE 0.6371 (0.2 s)
+2026-11-08 14:17:10 INFO    calibration: epoch 9: train MSE 0.3716, val MSE 0.6314 (0.2 s)
+2026-11-08 14:17:10 INFO    calibration: epoch 10: train MSE 0.3637, val MSE 0.6308 (0.2 s)
+2026-11-08 14:17:10 INFO    calibration: epoch 11: train MSE 0.3541, val MSE 0.6257 (0.2 s)
+2026-11-08 14:17:10 INFO    calibration: epoch 12: train MSE 0.3515, val MSE 0.6228 (0.2 s)
+2026-11-08 14:17:10 INFO    calibration: epoch 13: train MSE 0.3474, val MSE 0.6316 (0.2 s)
+2026-11-08 14:17:11 INFO    calibration: epoch 14: train MSE 0.3413, val MSE 0.6287 (0.2 s)
+2026-11-08 14:17:11 INFO    calibration: epoch 15: train MSE 0.3420, val MSE 0.6145 (0.2 s)
+2026-11-08 14:17:11 INFO    calibration: epoch 16: train MSE 0.3292, val MSE 0.6248 (0.2 s)
+2026-11-08 14:17:11 INFO    calibration: epoch 17: train MSE 0.3249, val MSE 0.6247 (0.2 s)
+2026-11-08 14:17:11 INFO    calibration: epoch 18: train MSE 0.3092, val MSE 0.6388 (0.2 s)
+2026-11-08 14:17:12 INFO    calibration: epoch 19: train MSE 0.3047, val MSE 0.6404 (0.2 s)
+2026-11-08 14:17:12 INFO    calibration: epoch 20: train MSE 0.3010, val MSE 0.6307 (0.2 s)
+2026-11-08 14:17:12 INFO    calibration: early stop at epoch 20 (best val MSE 0.6145)
+2026-11-08 14:17:12 INFO    calibration: P9 k=30 draw 2 finetune: r 0.841, R2 0.648, NRMSE 0.198, specific 0.024
+2026-11-08 14:17:12 INFO    calibration: template_cue: 1161 bins from -0.93 to 10.67 s after ev_LEDOn, 102694 training samples
+2026-11-08 14:17:13 INFO    calibration: P9 k=all draw 0 no_calibration: r 0.832, R2 0.579, NRMSE 0.219, specific -0.041
+2026-11-08 14:17:14 INFO    calibration: epoch 1: train MSE 0.4893, val MSE 0.6010 (1.1 s)
+2026-11-08 14:17:15 INFO    calibration: epoch 2: train MSE 0.4553, val MSE 0.5907 (1.1 s)
+2026-11-08 14:17:16 INFO    calibration: epoch 3: train MSE 0.4400, val MSE 0.5893 (1.1 s)
+2026-11-08 14:17:17 INFO    calibration: epoch 4: train MSE 0.4276, val MSE 0.5799 (1.0 s)
+2026-11-08 14:17:18 INFO    calibration: epoch 5: train MSE 0.4302, val MSE 0.5790 (1.0 s)
+2026-11-08 14:17:19 INFO    calibration: epoch 6: train MSE 0.4134, val MSE 0.5715 (1.0 s)
+2026-11-08 14:17:20 INFO    calibration: epoch 7: train MSE 0.4099, val MSE 0.5807 (1.0 s)
+2026-11-08 14:17:21 INFO    calibration: epoch 8: train MSE 0.4042, val MSE 0.5757 (1.0 s)
+2026-11-08 14:17:22 INFO    calibration: epoch 9: train MSE 0.3943, val MSE 0.5713 (1.0 s)
+2026-11-08 14:17:23 INFO    calibration: epoch 10: train MSE 0.3840, val MSE 0.5696 (1.0 s)
+2026-11-08 14:17:24 INFO    calibration: epoch 11: train MSE 0.3738, val MSE 0.5820 (1.0 s)
+2026-11-08 14:17:25 INFO    calibration: epoch 12: train MSE 0.3723, val MSE 0.5744 (1.1 s)
+2026-11-08 14:17:26 INFO    calibration: epoch 13: train MSE 0.3623, val MSE 0.5840 (1.0 s)
+2026-11-08 14:17:27 INFO    calibration: epoch 14: train MSE 0.3608, val MSE 0.5625 (1.0 s)
+2026-11-08 14:17:28 INFO    calibration: epoch 15: train MSE 0.3586, val MSE 0.5837 (1.0 s)
+2026-11-08 14:17:29 INFO    calibration: epoch 16: train MSE 0.3552, val MSE 0.5928 (1.0 s)
+2026-11-08 14:17:30 INFO    calibration: epoch 17: train MSE 0.3466, val MSE 0.5830 (1.0 s)
+2026-11-08 14:17:31 INFO    calibration: epoch 18: train MSE 0.3423, val MSE 0.5834 (1.1 s)
+2026-11-08 14:17:32 INFO    calibration: epoch 19: train MSE 0.3424, val MSE 0.5978 (1.0 s)
+2026-11-08 14:17:32 INFO    calibration: early stop at epoch 19 (best val MSE 0.5625)
+2026-11-08 14:17:33 INFO    calibration: P9 k=all draw 0 finetune: r 0.843, R2 0.657, NRMSE 0.194, specific 0.121
+2026-11-08 14:17:33 INFO    calibration: P9 done, 2.7 min since start
+2026-11-08 14:17:33 INFO    calibration: P10: 294 lifts, 22920 val samples (S6), 59981 test samples (S7-S9)
+2026-11-08 14:17:33 INFO    calibration: template_cue: 834 bins from -0.23 to 8.10 s after ev_LEDOn, 20404 training samples
+2026-11-08 14:17:33 INFO    calibration: P10: no-calibration vs saved LOSO predictions on S7-S9, max |diff| 4.49e-03
+2026-11-08 14:17:33 INFO    calibration: P10 k=30 draw 0 no_calibration: r 0.887, R2 0.633, NRMSE 0.186, specific 0.163
+2026-11-08 14:17:34 INFO    calibration: epoch 1: train MSE 0.4147, val MSE 0.3525 (0.2 s)
+2026-11-08 14:17:34 INFO    calibration: epoch 2: train MSE 0.4000, val MSE 0.3556 (0.2 s)
+2026-11-08 14:17:34 INFO    calibration: epoch 3: train MSE 0.3783, val MSE 0.3573 (0.2 s)
+2026-11-08 14:17:34 INFO    calibration: epoch 4: train MSE 0.3869, val MSE 0.3556 (0.2 s)
+2026-11-08 14:17:34 INFO    calibration: epoch 5: train MSE 0.3828, val MSE 0.3554 (0.2 s)
+2026-11-08 14:17:35 INFO    calibration: epoch 6: train MSE 0.3654, val MSE 0.3667 (0.2 s)
+2026-11-08 14:17:35 INFO    calibration: early stop at epoch 6 (best val MSE 0.3525)
+2026-11-08 14:17:35 INFO    calibration: P10 k=30 draw 0 finetune: r 0.867, R2 0.701, NRMSE 0.172, specific 0.126
+2026-11-08 14:17:35 INFO    calibration: template_cue: 834 bins from -0.23 to 8.10 s after ev_LEDOn, 20413 training samples
+2026-11-08 14:17:36 INFO    calibration: P10 k=30 draw 1 no_calibration: r 0.887, R2 0.633, NRMSE 0.186, specific 0.182
+2026-11-08 14:17:36 INFO    calibration: epoch 1: train MSE 0.4224, val MSE 0.3650 (0.2 s)
+2026-11-08 14:17:36 INFO    calibration: epoch 2: train MSE 0.4223, val MSE 0.3627 (0.2 s)
+2026-11-08 14:17:36 INFO    calibration: epoch 3: train MSE 0.3970, val MSE 0.3723 (0.2 s)
+2026-11-08 14:17:36 INFO    calibration: epoch 4: train MSE 0.3900, val MSE 0.3686 (0.2 s)
+2026-11-08 14:17:37 INFO    calibration: epoch 5: train MSE 0.3768, val MSE 0.3860 (0.2 s)
+2026-11-08 14:17:37 INFO    calibration: epoch 6: train MSE 0.3800, val MSE 0.3836 (0.2 s)
+2026-11-08 14:17:37 INFO    calibration: epoch 7: train MSE 0.3743, val MSE 0.3981 (0.2 s)
+2026-11-08 14:17:37 INFO    calibration: early stop at epoch 7 (best val MSE 0.3627)
+2026-11-08 14:17:38 INFO    calibration: P10 k=30 draw 1 finetune: r 0.872, R2 0.712, NRMSE 0.169, specific 0.143
+2026-11-08 14:17:38 INFO    calibration: template_cue: 830 bins from -0.16 to 8.13 s after ev_LEDOn, 20639 training samples
+2026-11-08 14:17:38 INFO    calibration: P10 k=30 draw 2 no_calibration: r 0.887, R2 0.633, NRMSE 0.186, specific 0.109
+2026-11-08 14:17:38 INFO    calibration: epoch 1: train MSE 0.4237, val MSE 0.3587 (0.2 s)
+2026-11-08 14:17:38 INFO    calibration: epoch 2: train MSE 0.3967, val MSE 0.3543 (0.2 s)
+2026-11-08 14:17:39 INFO    calibration: epoch 3: train MSE 0.3850, val MSE 0.3563 (0.3 s)
+2026-11-08 14:17:39 INFO    calibration: epoch 4: train MSE 0.3864, val MSE 0.3551 (0.2 s)
+2026-11-08 14:17:39 INFO    calibration: epoch 5: train MSE 0.3827, val MSE 0.3585 (0.3 s)
+2026-11-08 14:17:39 INFO    calibration: epoch 6: train MSE 0.3780, val MSE 0.3607 (0.2 s)
+2026-11-08 14:17:40 INFO    calibration: epoch 7: train MSE 0.3648, val MSE 0.3657 (0.2 s)
+2026-11-08 14:17:40 INFO    calibration: early stop at epoch 7 (best val MSE 0.3543)
+2026-11-08 14:17:40 INFO    calibration: P10 k=30 draw 2 finetune: r 0.846, R2 0.654, NRMSE 0.186, specific 0.169
+2026-11-08 14:17:40 INFO    calibration: template_cue: 1090 bins from -0.44 to 10.45 s after ev_LEDOn, 106291 training samples
+2026-11-08 14:17:41 INFO    calibration: P10 k=all draw 0 no_calibration: r 0.887, R2 0.633, NRMSE 0.186, specific 0.153
+2026-11-08 14:17:42 INFO    calibration: epoch 1: train MSE 0.4537, val MSE 0.3356 (1.2 s)
+2026-11-08 14:17:43 INFO    calibration: epoch 2: train MSE 0.4249, val MSE 0.3288 (1.1 s)
+2026-11-08 14:17:44 INFO    calibration: epoch 3: train MSE 0.4159, val MSE 0.3282 (1.3 s)
+2026-11-08 14:17:45 INFO    calibration: epoch 4: train MSE 0.4022, val MSE 0.3273 (1.2 s)
+2026-11-08 14:17:47 INFO    calibration: epoch 5: train MSE 0.3937, val MSE 0.3240 (1.1 s)
+2026-11-08 14:17:48 INFO    calibration: epoch 6: train MSE 0.3965, val MSE 0.3250 (1.1 s)
+2026-11-08 14:17:49 INFO    calibration: epoch 7: train MSE 0.3897, val MSE 0.3238 (1.1 s)
+2026-11-08 14:17:50 INFO    calibration: epoch 8: train MSE 0.3832, val MSE 0.3293 (1.0 s)
+2026-11-08 14:17:51 INFO    calibration: epoch 9: train MSE 0.3819, val MSE 0.3322 (1.0 s)
+2026-11-08 14:17:52 INFO    calibration: epoch 10: train MSE 0.3757, val MSE 0.3252 (1.1 s)
+2026-11-08 14:17:53 INFO    calibration: epoch 11: train MSE 0.3760, val MSE 0.3260 (1.0 s)
+2026-11-08 14:17:54 INFO    calibration: epoch 12: train MSE 0.3729, val MSE 0.3235 (1.0 s)
+2026-11-08 14:17:55 INFO    calibration: epoch 13: train MSE 0.3679, val MSE 0.3205 (1.0 s)
+2026-11-08 14:17:56 INFO    calibration: epoch 14: train MSE 0.3684, val MSE 0.3212 (1.0 s)
+2026-11-08 14:17:57 INFO    calibration: epoch 15: train MSE 0.3631, val MSE 0.3191 (1.0 s)
+2026-11-08 14:17:58 INFO    calibration: epoch 16: train MSE 0.3592, val MSE 0.3195 (1.0 s)
+2026-11-08 14:17:59 INFO    calibration: epoch 17: train MSE 0.3550, val MSE 0.3211 (1.0 s)
+2026-11-08 14:18:00 INFO    calibration: epoch 18: train MSE 0.3571, val MSE 0.3264 (1.0 s)
+2026-11-08 14:18:01 INFO    calibration: epoch 19: train MSE 0.3506, val MSE 0.3224 (1.0 s)
+2026-11-08 14:18:02 INFO    calibration: epoch 20: train MSE 0.3464, val MSE 0.3289 (1.1 s)
+2026-11-08 14:18:02 INFO    calibration: early stop at epoch 20 (best val MSE 0.3191)
+2026-11-08 14:18:03 INFO    calibration: P10 k=all draw 0 finetune: r 0.880, R2 0.725, NRMSE 0.164, specific 0.168
+2026-11-08 14:18:03 INFO    calibration: P10 done, 3.2 min since start
+2026-11-08 14:18:03 INFO    calibration: P11: 294 lifts, 19459 val samples (S6), 65217 test samples (S7-S9)
+2026-11-08 14:18:03 INFO    calibration: template_cue: 846 bins from -0.17 to 8.28 s after ev_LEDOn, 21168 training samples
+2026-11-08 14:18:03 INFO    calibration: P11: no-calibration vs saved LOSO predictions on S7-S9, max |diff| 1.11e-03
+2026-11-08 14:18:03 INFO    calibration: P11 k=30 draw 0 no_calibration: r 0.890, R2 0.581, NRMSE 0.192, specific 0.041
+2026-11-08 14:18:04 INFO    calibration: epoch 1: train MSE 0.5306, val MSE 0.5268 (0.2 s)
+2026-11-08 14:18:04 INFO    calibration: epoch 2: train MSE 0.4775, val MSE 0.5149 (0.2 s)
+2026-11-08 14:18:04 INFO    calibration: epoch 3: train MSE 0.4508, val MSE 0.5046 (0.2 s)
+2026-11-08 14:18:04 INFO    calibration: epoch 4: train MSE 0.4246, val MSE 0.5055 (0.3 s)
+2026-11-08 14:18:04 INFO    calibration: epoch 5: train MSE 0.4198, val MSE 0.4996 (0.2 s)
+2026-11-08 14:18:05 INFO    calibration: epoch 6: train MSE 0.4006, val MSE 0.5400 (0.3 s)
+2026-11-08 14:18:05 INFO    calibration: epoch 7: train MSE 0.3880, val MSE 0.5228 (0.2 s)
+2026-11-08 14:18:05 INFO    calibration: epoch 8: train MSE 0.3818, val MSE 0.5240 (0.2 s)
+2026-11-08 14:18:05 INFO    calibration: epoch 9: train MSE 0.3739, val MSE 0.5171 (0.2 s)
+2026-11-08 14:18:06 INFO    calibration: epoch 10: train MSE 0.3646, val MSE 0.5316 (0.2 s)
+2026-11-08 14:18:06 INFO    calibration: early stop at epoch 10 (best val MSE 0.4996)
+2026-11-08 14:18:06 INFO    calibration: P11 k=30 draw 0 finetune: r 0.809, R2 0.484, NRMSE 0.222, specific 0.132
+2026-11-08 14:18:06 INFO    calibration: template_cue: 810 bins from -0.27 to 7.82 s after ev_LEDOn, 20730 training samples
+2026-11-08 14:18:07 INFO    calibration: P11 k=30 draw 1 no_calibration: r 0.890, R2 0.581, NRMSE 0.192, specific 0.054
+2026-11-08 14:18:07 INFO    calibration: epoch 1: train MSE 0.6101, val MSE 0.5125 (0.2 s)
+2026-11-08 14:18:07 INFO    calibration: epoch 2: train MSE 0.5526, val MSE 0.5017 (0.2 s)
+2026-11-08 14:18:07 INFO    calibration: epoch 3: train MSE 0.5213, val MSE 0.5007 (0.2 s)
+2026-11-08 14:18:07 INFO    calibration: epoch 4: train MSE 0.5057, val MSE 0.4991 (0.2 s)
+2026-11-08 14:18:08 INFO    calibration: epoch 5: train MSE 0.4896, val MSE 0.5118 (0.2 s)
+2026-11-08 14:18:08 INFO    calibration: epoch 6: train MSE 0.4769, val MSE 0.5168 (0.2 s)
+2026-11-08 14:18:08 INFO    calibration: epoch 7: train MSE 0.4700, val MSE 0.5055 (0.2 s)
+2026-11-08 14:18:08 INFO    calibration: epoch 8: train MSE 0.4500, val MSE 0.5107 (0.2 s)
+2026-11-08 14:18:08 INFO    calibration: epoch 9: train MSE 0.4452, val MSE 0.5043 (0.2 s)
+2026-11-08 14:18:08 INFO    calibration: early stop at epoch 9 (best val MSE 0.4991)
+2026-11-08 14:18:09 INFO    calibration: P11 k=30 draw 1 finetune: r 0.846, R2 0.570, NRMSE 0.201, specific 0.166
+2026-11-08 14:18:09 INFO    calibration: template_cue: 948 bins from -1.19 to 8.28 s after ev_LEDOn, 21156 training samples
+2026-11-08 14:18:09 INFO    calibration: P11 k=30 draw 2 no_calibration: r 0.890, R2 0.581, NRMSE 0.192, specific 0.033
+2026-11-08 14:18:10 INFO    calibration: epoch 1: train MSE 0.6089, val MSE 0.4766 (0.2 s)
+2026-11-08 14:18:10 INFO    calibration: epoch 2: train MSE 0.5366, val MSE 0.4862 (0.3 s)
+2026-11-08 14:18:10 INFO    calibration: epoch 3: train MSE 0.5236, val MSE 0.4765 (0.2 s)
+2026-11-08 14:18:10 INFO    calibration: epoch 4: train MSE 0.5027, val MSE 0.4830 (0.2 s)
+2026-11-08 14:18:11 INFO    calibration: epoch 5: train MSE 0.4830, val MSE 0.4954 (0.2 s)
+2026-11-08 14:18:11 INFO    calibration: epoch 6: train MSE 0.4688, val MSE 0.4894 (0.2 s)
+2026-11-08 14:18:11 INFO    calibration: epoch 7: train MSE 0.4717, val MSE 0.5030 (0.2 s)
+2026-11-08 14:18:11 INFO    calibration: epoch 8: train MSE 0.4589, val MSE 0.4916 (0.2 s)
+2026-11-08 14:18:11 INFO    calibration: early stop at epoch 8 (best val MSE 0.4765)
+2026-11-08 14:18:12 INFO    calibration: P11 k=30 draw 2 finetune: r 0.825, R2 0.497, NRMSE 0.217, specific 0.102
+2026-11-08 14:18:12 INFO    calibration: template_cue: 948 bins from -1.19 to 8.28 s after ev_LEDOn, 113591 training samples
+2026-11-08 14:18:12 INFO    calibration: P11 k=all draw 0 no_calibration: r 0.890, R2 0.581, NRMSE 0.192, specific 0.027
+2026-11-08 14:18:13 INFO    calibration: epoch 1: train MSE 0.5313, val MSE 0.4057 (1.1 s)
+2026-11-08 14:18:14 INFO    calibration: epoch 2: train MSE 0.4986, val MSE 0.3915 (1.1 s)
+2026-11-08 14:18:16 INFO    calibration: epoch 3: train MSE 0.4847, val MSE 0.3960 (1.2 s)
+2026-11-08 14:18:17 INFO    calibration: epoch 4: train MSE 0.4701, val MSE 0.4024 (1.1 s)
+2026-11-08 14:18:18 INFO    calibration: epoch 5: train MSE 0.4659, val MSE 0.4132 (1.1 s)
+2026-11-08 14:18:19 INFO    calibration: epoch 6: train MSE 0.4626, val MSE 0.4233 (1.1 s)
+2026-11-08 14:18:20 INFO    calibration: epoch 7: train MSE 0.4520, val MSE 0.4125 (1.1 s)
+2026-11-08 14:18:20 INFO    calibration: early stop at epoch 7 (best val MSE 0.3915)
+2026-11-08 14:18:21 INFO    calibration: P11 k=all draw 0 finetune: r 0.845, R2 0.549, NRMSE 0.205, specific 0.151
+2026-11-08 14:18:21 INFO    calibration: P11 done, 3.5 min since start
+2026-11-08 14:18:21 INFO    calibration: P12: 294 lifts, 24015 val samples (S6), 71626 test samples (S7-S9)
+2026-11-08 14:18:21 INFO    calibration: template_cue: 878 bins from -0.24 to 8.53 s after ev_LEDOn, 21378 training samples
+2026-11-08 14:18:21 INFO    calibration: P12: no-calibration vs saved LOSO predictions on S7-S9, max |diff| 4.23e-03
+2026-11-08 14:18:21 INFO    calibration: P12 k=30 draw 0 no_calibration: r 0.869, R2 0.671, NRMSE 0.184, specific 0.019
+2026-11-08 14:18:22 INFO    calibration: epoch 1: train MSE 0.5200, val MSE 0.3726 (0.2 s)
+2026-11-08 14:18:22 INFO    calibration: epoch 2: train MSE 0.4767, val MSE 0.3719 (0.2 s)
+2026-11-08 14:18:22 INFO    calibration: epoch 3: train MSE 0.4658, val MSE 0.3725 (0.2 s)
+2026-11-08 14:18:22 INFO    calibration: epoch 4: train MSE 0.4636, val MSE 0.3673 (0.2 s)
+2026-11-08 14:18:23 INFO    calibration: epoch 5: train MSE 0.4669, val MSE 0.3719 (0.2 s)
+2026-11-08 14:18:23 INFO    calibration: epoch 6: train MSE 0.4491, val MSE 0.3715 (0.3 s)
+2026-11-08 14:18:23 INFO    calibration: epoch 7: train MSE 0.4424, val MSE 0.3912 (0.2 s)
+2026-11-08 14:18:23 INFO    calibration: epoch 8: train MSE 0.4374, val MSE 0.3880 (0.3 s)
+2026-11-08 14:18:23 INFO    calibration: epoch 9: train MSE 0.4408, val MSE 0.3897 (0.2 s)
+2026-11-08 14:18:23 INFO    calibration: early stop at epoch 9 (best val MSE 0.3673)
+2026-11-08 14:18:24 INFO    calibration: P12 k=30 draw 0 finetune: r 0.898, R2 0.754, NRMSE 0.151, specific 0.288
+2026-11-08 14:18:24 INFO    calibration: template_cue: 868 bins from -0.24 to 8.43 s after ev_LEDOn, 21611 training samples
+2026-11-08 14:18:25 INFO    calibration: P12 k=30 draw 1 no_calibration: r 0.869, R2 0.671, NRMSE 0.184, specific 0.027
+2026-11-08 14:18:25 INFO    calibration: epoch 1: train MSE 0.5168, val MSE 0.3936 (0.2 s)
+2026-11-08 14:18:25 INFO    calibration: epoch 2: train MSE 0.4954, val MSE 0.3912 (0.2 s)
+2026-11-08 14:18:25 INFO    calibration: epoch 3: train MSE 0.4817, val MSE 0.3938 (0.2 s)
+2026-11-08 14:18:25 INFO    calibration: epoch 4: train MSE 0.4743, val MSE 0.4025 (0.2 s)
+2026-11-08 14:18:26 INFO    calibration: epoch 5: train MSE 0.4694, val MSE 0.3902 (0.2 s)
+2026-11-08 14:18:26 INFO    calibration: epoch 6: train MSE 0.4515, val MSE 0.4111 (0.2 s)
+2026-11-08 14:18:26 INFO    calibration: epoch 7: train MSE 0.4422, val MSE 0.4465 (0.2 s)
+2026-11-08 14:18:26 INFO    calibration: epoch 8: train MSE 0.4240, val MSE 0.4351 (0.2 s)
+2026-11-08 14:18:27 INFO    calibration: epoch 9: train MSE 0.4198, val MSE 0.4444 (0.2 s)
+2026-11-08 14:18:27 INFO    calibration: epoch 10: train MSE 0.3979, val MSE 0.4321 (0.2 s)
+2026-11-08 14:18:27 INFO    calibration: early stop at epoch 10 (best val MSE 0.3902)
+2026-11-08 14:18:27 INFO    calibration: P12 k=30 draw 1 finetune: r 0.907, R2 0.768, NRMSE 0.148, specific 0.311
+2026-11-08 14:18:27 INFO    calibration: template_cue: 829 bins from -0.26 to 8.02 s after ev_LEDOn, 21519 training samples
+2026-11-08 14:18:28 INFO    calibration: P12 k=30 draw 2 no_calibration: r 0.869, R2 0.671, NRMSE 0.184, specific 0.037
+2026-11-08 14:18:28 INFO    calibration: epoch 1: train MSE 0.5685, val MSE 0.4639 (0.2 s)
+2026-11-08 14:18:28 INFO    calibration: epoch 2: train MSE 0.5169, val MSE 0.4774 (0.2 s)
+2026-11-08 14:18:29 INFO    calibration: epoch 3: train MSE 0.5114, val MSE 0.4778 (0.2 s)
+2026-11-08 14:18:29 INFO    calibration: epoch 4: train MSE 0.5016, val MSE 0.4836 (0.2 s)
+2026-11-08 14:18:29 INFO    calibration: epoch 5: train MSE 0.4826, val MSE 0.4818 (0.2 s)
+2026-11-08 14:18:29 INFO    calibration: epoch 6: train MSE 0.4711, val MSE 0.4997 (0.2 s)
+2026-11-08 14:18:29 INFO    calibration: early stop at epoch 6 (best val MSE 0.4639)
+2026-11-08 14:18:30 INFO    calibration: P12 k=30 draw 2 finetune: r 0.899, R2 0.749, NRMSE 0.155, specific 0.258
+2026-11-08 14:18:30 INFO    calibration: template_cue: 1009 bins from -1.01 to 9.07 s after ev_LEDOn, 114422 training samples
+2026-11-08 14:18:30 INFO    calibration: P12 k=all draw 0 no_calibration: r 0.869, R2 0.671, NRMSE 0.184, specific 0.008
+2026-11-08 14:18:32 INFO    calibration: epoch 1: train MSE 0.5056, val MSE 0.4260 (1.1 s)
+2026-11-08 14:18:33 INFO    calibration: epoch 2: train MSE 0.4752, val MSE 0.4205 (1.2 s)
+2026-11-08 14:18:34 INFO    calibration: epoch 3: train MSE 0.4649, val MSE 0.4321 (1.2 s)
+2026-11-08 14:18:35 INFO    calibration: epoch 4: train MSE 0.4493, val MSE 0.4474 (1.2 s)
+2026-11-08 14:18:36 INFO    calibration: epoch 5: train MSE 0.4461, val MSE 0.4340 (1.1 s)
+2026-11-08 14:18:37 INFO    calibration: epoch 6: train MSE 0.4479, val MSE 0.4440 (1.1 s)
+2026-11-08 14:18:38 INFO    calibration: epoch 7: train MSE 0.4360, val MSE 0.4360 (1.1 s)
+2026-11-08 14:18:38 INFO    calibration: early stop at epoch 7 (best val MSE 0.4205)
+2026-11-08 14:18:39 INFO    calibration: P12 k=all draw 0 finetune: r 0.901, R2 0.754, NRMSE 0.152, specific 0.297
+2026-11-08 14:18:39 INFO    calibration: P12 done, 3.8 min since start
+2026-11-08 14:18:39 INFO    calibration: Mean over subjects and draws:
+                        r     r2  nrmse  residual_r_specific
+condition      k                                            
+finetune       30   0.878  0.663  0.183                0.173
+               all  0.885  0.681  0.177                0.207
+no_calibration 30   0.850  0.536  0.218                0.028
+               all  0.850  0.536  0.218                0.021
+2026-11-08 14:18:39 INFO    calibration: Wall time 3.8 min

@@ -1,0 +1,60 @@
+data:
+  windows_config: configs/data/windows_long_history.yaml
+  band: broadband
+  reference: car
+  channel_set: all
+splits:
+  config: configs/splits/default.yaml
+pretrained: output/diagnostics/final-checks/calibration/loso_residual
+conditions:
+- template
+- no_calibration
+- finetune
+- scratch
+ks:
+- 10
+- 30
+- all
+n_draws:
+  10: 3
+  30: 3
+draw_seed: 20261108
+seed: 1
+train:
+  weight_decay: 0.01
+  batch_size: 512
+  max_epochs: 30
+  samples_per_epoch: 200000
+  val_samples: 10000
+  patience: 5
+  amp: true
+lr:
+  finetune: 0.0003
+  scratch: 0.001
+scoring:
+  seed: 20261106
+  n_permutations: 5
+output:
+  root: output/diagnostics/final-checks
+  group: calibration
+  name: uncleaned
+smoke: false
+pretrained_run: output/diagnostics/final-checks/calibration/loso_residual/20261108-121237_seed1
+windows:
+  cache_dir: dataset/cache/98f5fa6e66
+  history_samples: 200
+  pre_lift: true
+  ridge_lag_step_samples: 2
+  target: position
+  eeg_normalization: per_subject
+subjects:
+- P1
+- P2
+- P4
+- P5
+- P7
+- P8
+- P9
+- P10
+- P11
+- P12
