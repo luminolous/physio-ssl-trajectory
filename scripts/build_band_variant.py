@@ -42,7 +42,7 @@ def main() -> None:
             continue
         built.append(build_band_variant(subject, base, Path(base["paths"]["raw_dir"]), cache_dir, band, ref,
                                         int(cfg["n_pre"]), cfg.get("envelope"),
-                                        bool(cfg.get("zero_phase", False))))
+                                        bool(cfg.get("zero_phase", False)), cfg.get("cleaning")))
     (run_dir / "metrics.json").write_text(json.dumps({"built": built}, indent=2) + "\n", encoding="utf-8")
     print(f"Run directory: {run_dir}")
 

@@ -15,6 +15,10 @@ Arrays in ``<cache_dir>/<subject>/``:
 An envelope variant (``envelope`` given) stores band power instead of the signal. The chain is causal:
 interpolate, band-pass, CAR, rectify, low-pass, keep every factor-th sample. CAR comes before rectifying
 because it has no meaning on envelopes. The low-pass replaces the anti-alias filter.
+
+A cleaned variant (``cleaning`` given) fits an ocular ICA per subject (``eegtraj.preprocessing.ocular``) and removes
+the marked components right after bad-channel interpolation, before the band-pass and CAR. The ICA is saved as
+``ica_<band>_<ref>.npz``.
 """
 
 from __future__ import annotations
@@ -33,6 +37,7 @@ from eegtraj.data.pre_lift import cut_pre_lift, eeg_stream
 from eegtraj.data.wayeeggal import load_series
 from eegtraj.preprocessing.bad_channels import interpolate_bad_channels
 from eegtraj.preprocessing.filters import apply_sos, butter_sos, settle_time_s
+from eegtraj.preprocessing.ocular import OcularICA, fit_data, fit_ocular_ica, remove_components
 from eegtraj.preprocessing.reference import common_average
 
 logger = logging.getLogger(__name__)
@@ -66,15 +71,34 @@ def rectified_band(x: np.ndarray, sos: np.ndarray, reference: str) -> np.ndarray
     return np.abs(common_average(filtered) if reference == "car" else filtered)
 
 
+def fit_subject_ica(subject: str, cfg: dict[str, Any], raw_dir: Path, cache_dir: Path, cleaning: dict[str, Any]) -> OcularICA:
+    """Fit the ocular ICA on all series of one subject (interpolated, before CAR), without labels."""
+    subj_dir = Path(cache_dir) / subject
+    manifest = json.loads((subj_dir / "manifest.json").read_text(encoding="utf-8"))
+    trials = pd.read_csv(subj_dir / "trials.csv")
+    parts, names = [], None
+    for series in trials.series.unique():
+        hs = load_series(subject, f"S{series}", raw_dir)
+        x = interpolate_bad_channels(hs.eeg.astype(np.float64), hs.eeg_names, hs.eeg_fs_hz, manifest["bad_channels"])
+        parts.append(fit_data(x, hs.eeg_fs_hz, int(round(hs.eeg_fs_hz / cleaning["fit_fs_hz"])), tuple(cleaning["fit_band_hz"])))
+        names = hs.eeg_names
+        del x
+    ica = fit_ocular_ica(np.concatenate(parts, axis=1), names, float(cleaning["threshold"]), int(cleaning["max_components"]),
+                         int(cleaning["random_state"]))
+    ica.info.update(n_fit_samples=int(sum(p.shape[1] for p in parts)), fit_fs_hz=cleaning["fit_fs_hz"], names=names)
+    return ica
+
+
 def compute_band_variant(subject: str, cfg: dict[str, Any], raw_dir: Path, cache_dir: Path, band: str, reference: str,
-                         n_pre: int, envelope: dict[str, Any] | None = None, zero_phase: bool = False
-                         ) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict[str, float]]:
+                         n_pre: int, envelope: dict[str, Any] | None = None, zero_phase: bool = False,
+                         ica: OcularICA | None = None) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict[str, float]]:
     """Compute one subject's arrays for a band defined in ``cfg``. Writes nothing.
 
     Args:
         envelope: ``lowpass_hz`` and ``order`` for a band-power envelope, or None for the band-passed signal.
         zero_phase: filter forward and backward. Uses future samples: analyses outside the causal protocol only.
             The settle time is still measured for the causal filter.
+        ica: ocular ICA whose marked components are removed after interpolation, or None.
 
     Returns:
         eeg float32 (32, T), pre float32 (32, n_lifts, n_pre), missing int32 (n_lifts,), and the
@@ -95,6 +119,7 @@ def compute_band_variant(subject: str, cfg: dict[str, Any], raw_dir: Path, cache
         fs = hs.eeg_fs_hz
         factor = int(round(fs / cfg["fs_out_hz"]))
         x = interpolate_bad_channels(hs.eeg.astype(np.float64), hs.eeg_names, fs, manifest["bad_channels"])
+        x = remove_components(x, ica)
         probe = int(min(tc["probe_start_s"], x.shape[1] / fs / 2) * fs)
         sos = butter_sos(fs, cfg["eeg"]["filter_order"], lo, hi)
         settle[f"S{series}"] = settle_time_s(x, fs, sos, probe, tc["tolerance"])
@@ -117,23 +142,36 @@ def compute_band_variant(subject: str, cfg: dict[str, Any], raw_dir: Path, cache
 
 
 def build_band_variant(subject: str, cfg: dict[str, Any], raw_dir: Path, cache_dir: Path, band: str, reference: str,
-                       n_pre: int, envelope: dict[str, Any] | None = None, zero_phase: bool = False) -> dict[str, Any]:
+                       n_pre: int, envelope: dict[str, Any] | None = None, zero_phase: bool = False,
+                       cleaning: dict[str, Any] | None = None) -> dict[str, Any]:
     """Compute and save one subject's arrays. Raises if any of them already exists."""
     subj_dir = Path(cache_dir) / subject
     paths = {"eeg": subj_dir / f"eeg_{band}_{reference}.npy",
              "pre": subj_dir / f"pre_lift_eeg_{band}_{reference}.npy",
              "missing": subj_dir / f"pre_lift_missing_{band}_{reference}.npy",
              "info": subj_dir / f"variant_{band}_{reference}.json"}
+    if cleaning:
+        paths["ica"] = subj_dir / f"ica_{band}_{reference}.npz"
     existing = [str(p) for p in paths.values() if p.exists()]
     if existing:
         raise FileExistsError(f"refusing to overwrite: {existing}")
     t_start = time.time()
-    eeg, pre, missing, settle = compute_band_variant(subject, cfg, raw_dir, cache_dir, band, reference, n_pre, envelope, zero_phase)
+    ica = fit_subject_ica(subject, cfg, raw_dir, cache_dir, cleaning) if cleaning else None
+    eeg, pre, missing, settle = compute_band_variant(subject, cfg, raw_dir, cache_dir, band, reference, n_pre, envelope,
+                                                     zero_phase, ica)
+    if ica is not None:
+        np.savez(paths["ica"], mixing=ica.mixing, unmixing=ica.unmixing, selected=np.array(ica.selected, dtype=np.int64),
+                 corr_veog=np.array(ica.correlations["VEOG"]), corr_heog=np.array(ica.correlations["HEOG"]),
+                 names=np.array(ica.info["names"]))
     np.save(paths["eeg"], eeg)
     np.save(paths["pre"], pre)
     np.save(paths["missing"], missing)
     info = {"subject": subject, "band": band, "reference": reference, "band_hz": list(cfg["eeg"]["bands_hz"][band]),
-            "envelope": envelope, "zero_phase": zero_phase, "n_pre": n_pre, "eeg_shape": list(eeg.shape), "pre_shape": list(pre.shape),
+            "envelope": envelope, "zero_phase": zero_phase,
+            "cleaning": None if ica is None else {**cleaning, "rank": ica.rank, "selected": ica.selected,
+                                                  "removed_variance_fit_data": ica.removed_variance,
+                                                  "corr_selected": {p: [c[i] for i in ica.selected] for p, c in ica.correlations.items()},
+                                                  "n_iter": ica.info["n_iter"], "n_fit_samples": ica.info["n_fit_samples"]}, "n_pre": n_pre, "eeg_shape": list(eeg.shape), "pre_shape": list(pre.shape),
             "n_lifts_with_missing": int((missing > 0).sum()), "filter_settle_time_s": settle,
             "build_seconds": round(time.time() - t_start, 1)}
     paths["info"].write_text(json.dumps(info, indent=2) + "\n", encoding="utf-8")

@@ -38,7 +38,8 @@ SOURCES = {
                     (OUTPUT / "diagnostics", "tuning"), (OUTPUT / "diagnostics", "history"),
                     (OUTPUT / "diagnostics", "within_subject"), (OUTPUT / "diagnostics", "artifact-controls"),
                     (OUTPUT / "diagnostics" / "pre-design", "residual"), (OUTPUT / "diagnostics" / "pre-design", "screening"),
-                    (OUTPUT / "diagnostics" / "pre-design", "euclidean-alignment")),
+                    (OUTPUT / "diagnostics" / "pre-design", "euclidean-alignment"),
+                    (OUTPUT / "diagnostics" / "final-checks", "ocular")),
 }
 RESIDUAL_ROOT = OUTPUT / "diagnostics" / "residual"
 RESIDUAL_METRICS = ("residual_r", "residual_r_oracle", "residual_r_other_trial", "residual_r_specific")

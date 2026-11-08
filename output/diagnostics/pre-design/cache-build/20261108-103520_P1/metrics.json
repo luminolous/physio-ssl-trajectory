@@ -1,0 +1,67 @@
+{
+  "built": [
+    {
+      "subject": "P1",
+      "band": "broadband_ica",
+      "reference": "car",
+      "band_hz": [
+        0.1,
+        40.0
+      ],
+      "envelope": null,
+      "zero_phase": false,
+      "cleaning": {
+        "method": "fastica",
+        "fit_band_hz": [
+          1.0,
+          40.0
+        ],
+        "fit_fs_hz": 100,
+        "threshold": 0.4,
+        "max_components": 4,
+        "random_state": 20261108,
+        "rank": 32,
+        "selected": [
+          5,
+          10
+        ],
+        "removed_variance_fit_data": 0.47976388796810526,
+        "corr_selected": {
+          "VEOG": [
+            0.03192543684747304,
+            0.9760422642792154
+          ],
+          "HEOG": [
+            0.8683213705049929,
+            0.05634555363302935
+          ]
+        },
+        "n_iter": 44,
+        "n_fit_samples": 307672
+      },
+      "n_pre": 200,
+      "eeg_shape": [
+        32,
+        253136
+      ],
+      "pre_shape": [
+        32,
+        294,
+        200
+      ],
+      "n_lifts_with_missing": 9,
+      "filter_settle_time_s": {
+        "S1": 13.15,
+        "S2": 12.876,
+        "S3": 13.182,
+        "S4": 13.46,
+        "S5": 12.78,
+        "S6": 13.026,
+        "S7": 12.758,
+        "S8": 12.364,
+        "S9": 12.96
+      },
+      "build_seconds": 22.0
+    }
+  ]
+}

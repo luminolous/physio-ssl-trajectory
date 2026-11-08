@@ -1,0 +1,19 @@
+cache_config: configs/cache/default.yaml
+cache_dir: dataset/cache/98f5fa6e66
+band: broadband_ica
+band_hz:
+- 0.1
+- 40.0
+reference: car
+n_pre: 200
+cleaning:
+  method: fastica
+  fit_band_hz:
+  - 1.0
+  - 40.0
+  fit_fs_hz: 100
+  threshold: 0.4
+  max_components: 4
+  random_state: 20261108
+subjects:
+- P1

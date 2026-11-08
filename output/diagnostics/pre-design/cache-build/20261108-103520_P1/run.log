@@ -1,0 +1,2 @@
+2026-11-08 10:35:24 INFO    eegtraj.utils.run: Run directory: output\diagnostics\pre-design\cache-build\20261108-103520_P1
+2026-11-08 10:35:46 INFO    eegtraj.data.band_variant: P1: broadband_ica car, eeg (32, 253136), pre (32, 294, 200), 22.0 s

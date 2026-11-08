@@ -1,0 +1,16 @@
+# Ocular-cleaned broadband EEG (final pre-design checks, decided by the user on 2026-11-08: ICA per subject).
+# Order: bad-channel interpolation, ICA cleaning, causal band-pass, CAR, anti-alias. The ICA is fitted per subject on all
+# of its HS series without labels (transductive for the test subject, like D9).
+cache_config: configs/cache/default.yaml
+cache_dir: dataset/cache/98f5fa6e66
+band: broadband_ica
+band_hz: [0.1, 40.0]
+reference: car
+n_pre: 200
+cleaning:
+  method: fastica
+  fit_band_hz: [1.0, 40.0]  # zero phase, for fitting only
+  fit_fs_hz: 100
+  threshold: 0.4  # |r| of a source with VEOG = mean(Fp1, Fp2) or HEOG = F7 - F8 (proposed, not yet confirmed)
+  max_components: 4
+  random_state: 20261108
