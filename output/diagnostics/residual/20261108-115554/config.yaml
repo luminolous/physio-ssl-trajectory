@@ -1,0 +1,7 @@
+seed: 20261106
+n_permutations: 5
+n_runs: 3
+runs:
+- output/diagnostics/final-checks/ocular/cnn_lstm_direct/20261108-105229_seed1
+- output/diagnostics/final-checks/ocular/cnn_lstm_prefrontal/20261108-110406_seed1
+- output/diagnostics/final-checks/ocular/cnn_lstm_residual/20261108-110400_seed1
