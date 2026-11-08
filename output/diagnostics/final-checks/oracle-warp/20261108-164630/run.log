@@ -1,0 +1,33 @@
+2026-11-08 16:46:30 INFO    eegtraj.utils.run: Run directory: output\diagnostics\final-checks\oracle-warp\20261108-164630
+2026-11-08 16:46:32 INFO    eegtraj.diagnostics.oracle_warp_report: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1335787 training samples
+2026-11-08 16:46:33 INFO    eegtraj.diagnostics.oracle_warp_report: template: 954 bins from -0.50 to 9.03 s after onset_s, 1335787 training samples
+2026-11-08 16:46:33 INFO    eegtraj.diagnostics.oracle_warp_report: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1268758 training samples
+2026-11-08 16:46:33 INFO    eegtraj.diagnostics.oracle_warp_report: template: 913 bins from -0.50 to 8.62 s after onset_s, 1268758 training samples
+2026-11-08 16:46:33 INFO    eegtraj.diagnostics.oracle_warp_report: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1307884 training samples
+2026-11-08 16:46:34 INFO    eegtraj.diagnostics.oracle_warp_report: template: 954 bins from -0.50 to 9.03 s after onset_s, 1307884 training samples
+2026-11-08 16:46:34 INFO    eegtraj.diagnostics.oracle_warp_report: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1314741 training samples
+2026-11-08 16:46:34 INFO    eegtraj.diagnostics.oracle_warp_report: template: 1268 bins from -0.50 to 12.17 s after onset_s, 1314741 training samples
+2026-11-08 16:46:34 INFO    eegtraj.diagnostics.oracle_warp_report: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1315670 training samples
+2026-11-08 16:46:34 INFO    eegtraj.diagnostics.oracle_warp_report: template: 954 bins from -0.50 to 9.03 s after onset_s, 1315670 training samples
+2026-11-08 16:46:35 INFO    eegtraj.diagnostics.oracle_warp_report: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1318415 training samples
+2026-11-08 16:46:35 INFO    eegtraj.diagnostics.oracle_warp_report: template: 1268 bins from -0.50 to 12.17 s after onset_s, 1318415 training samples
+2026-11-08 16:46:35 INFO    eegtraj.diagnostics.oracle_warp_report: template_cue: 1677 bins from -1.01 to 15.75 s after ev_LEDOn, 1329706 training samples
+2026-11-08 16:46:35 INFO    eegtraj.diagnostics.oracle_warp_report: template: 1268 bins from -0.50 to 12.17 s after onset_s, 1329706 training samples
+2026-11-08 16:46:36 INFO    eegtraj.diagnostics.oracle_warp_report: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1306697 training samples
+2026-11-08 16:46:36 INFO    eegtraj.diagnostics.oracle_warp_report: template: 1268 bins from -0.50 to 12.17 s after onset_s, 1306697 training samples
+2026-11-08 16:46:36 INFO    eegtraj.diagnostics.oracle_warp_report: template_cue: 1677 bins from -1.01 to 15.75 s after ev_LEDOn, 1299484 training samples
+2026-11-08 16:46:36 INFO    eegtraj.diagnostics.oracle_warp_report: template: 1268 bins from -0.50 to 12.17 s after onset_s, 1299484 training samples
+2026-11-08 16:46:36 INFO    eegtraj.diagnostics.oracle_warp_report: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1325837 training samples
+2026-11-08 16:46:37 INFO    eegtraj.diagnostics.oracle_warp_report: template: 1268 bins from -0.50 to 12.17 s after onset_s, 1325837 training samples
+2026-11-08 16:55:57 INFO    eegtraj.diagnostics.oracle_warp_report: P1: 294 trials fitted in 202 s (worker time)
+2026-11-08 16:55:57 INFO    eegtraj.diagnostics.oracle_warp_report: P2: 294 trials fitted in 244 s (worker time)
+2026-11-08 16:55:57 INFO    eegtraj.diagnostics.oracle_warp_report: P4: 294 trials fitted in 217 s (worker time)
+2026-11-08 16:55:57 INFO    eegtraj.diagnostics.oracle_warp_report: P5: 294 trials fitted in 225 s (worker time)
+2026-11-08 16:55:57 INFO    eegtraj.diagnostics.oracle_warp_report: P7: 294 trials fitted in 212 s (worker time)
+2026-11-08 16:55:57 INFO    eegtraj.diagnostics.oracle_warp_report: P8: 294 trials fitted in 168 s (worker time)
+2026-11-08 16:55:57 INFO    eegtraj.diagnostics.oracle_warp_report: P9: 294 trials fitted in 184 s (worker time)
+2026-11-08 16:55:57 INFO    eegtraj.diagnostics.oracle_warp_report: P10: 294 trials fitted in 187 s (worker time)
+2026-11-08 16:55:57 INFO    eegtraj.diagnostics.oracle_warp_report: P11: 294 trials fitted in 139 s (worker time)
+2026-11-08 16:55:57 INFO    eegtraj.diagnostics.oracle_warp_report: P12: 294 trials fitted in 138 s (worker time)
+2026-11-08 16:55:57 INFO    eegtraj.diagnostics.oracle_warp_report: All fits: 560 s with n_jobs=4
+2026-11-08 17:06:57 INFO    eegtraj.diagnostics.oracle_warp_report: Wall time 1227 s

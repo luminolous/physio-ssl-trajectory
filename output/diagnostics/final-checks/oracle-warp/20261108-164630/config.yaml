@@ -1,0 +1,68 @@
+cache_dir: dataset/cache/98f5fa6e66
+target: position
+exclude_flags: []
+splits:
+  config: configs/splits/default.yaml
+  mode: loso
+bounds:
+  tau_s:
+  - -1.0
+  - 2.0
+  scale:
+  - 0.5
+  - 2.0
+  amp:
+  - 0.3
+  - 3.0
+  offset_cm:
+  - -10.0
+  - 10.0
+  breakpoint_shift_s: 0.3
+  mj_start_shift_s: 0.5
+  mj_duration_s:
+  - 0.1
+  - 3.0
+  mj_init_lift_lower_s: 0.5
+fit:
+  tau_grid_step_s: 0.01
+  scale_grid:
+  - 0.5
+  - 0.6
+  - 0.7
+  - 0.8
+  - 0.9
+  - 1.0
+  - 1.1
+  - 1.25
+  - 1.4
+  - 1.6
+  - 1.8
+  - 2.0
+  diff_step: 0.001
+  max_nfev: 200
+residual:
+  seed: 20261106
+  n_permutations: 5
+overlay_quantiles:
+- 0.05
+- 0.5
+- 0.95
+reference_runs:
+  cnn_lstm_direct_2s:
+  - output/diagnostics/history/cnn_lstm/history_200/20261105-210722_seed1
+  - output/diagnostics/history/cnn_lstm/history_200/20261105-223130_seed2
+  - output/diagnostics/history/cnn_lstm/history_200/20261105-234321_seed3
+  cnn_lstm_residual_2s:
+  - output/diagnostics/pre-design/residual/cnn_lstm/20261106-155151_seed1
+  - output/diagnostics/pre-design/residual/cnn_lstm/20261106-163003_seed2
+  - output/diagnostics/pre-design/residual/cnn_lstm/20261106-170433_seed3
+  cnn_lstm_direct_2s_ica:
+  - output/diagnostics/final-checks/ocular/cnn_lstm_direct/20261108-105229_seed1
+  cnn_lstm_residual_2s_ica:
+  - output/diagnostics/final-checks/ocular/cnn_lstm_residual/20261108-110400_seed1
+output:
+  root: output/diagnostics/final-checks/oracle-warp
+n_jobs: 4
+subjects: null
+max_trials: null
+smoke: false
