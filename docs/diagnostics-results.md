@@ -471,8 +471,78 @@ Informs the pretraining-data decision.
 
 ### Open points for the design discussion
 
-- No ocular-cleaned variant has been run. Several checks (neurophysiology, channel importance, lag profile) point to eye-like or other non-motor activity, and none can bound its share.
+- Ocular share: addressed by the ocular-cleaned variant in "Final pre-design checks" below.
 - Channel importance used one seed; the screening envelope configurations used one seed.
+
+## Final pre-design checks
+
+Added on 2026-11-08. The pre-design checks pointed to eye-like and other non-motor activity, and LOSO decoders did not beat `template_cue`. Two checks follow, to inform the project framing. Same protocol as the pre-design checks. Outputs are under `output/diagnostics/final-checks/`. Both checks use seed 1 only (seeds 2-3 on cleaned data are deferred to the final-numbers stage of the report).
+
+These results inform the framing. They do not decide it or the architecture; that is discussed separately.
+
+| Check | Main result |
+|---|---|
+| Ocular-cleaned variant | ICA removes 2-3 eye components per subject; the trial-specific readout of every decoder falls by about half, and prefrontal-only falls to near zero |
+| Calibration within subject | A subject's own cue template from 10 lifts is already strong; decoders add r +0.01 to +0.02 over it, R² mostly not significant; cross-subject pretraining does not beat scratch on the main metrics; two prefrontal channels match all 32 |
+
+### Ocular-cleaned variant
+
+- Method (decided by the user): FastICA per subject, fitted without labels on all of that subject's HS EEG after bad-channel interpolation and before CAR (1-40 Hz zero-phase fit data at 100 Hz). A component is removed when its source correlates with an EOG proxy at |r| >= 0.4 (VEOG = mean(Fp1, Fp2), HEOG = F7 - F8), at most 4. Cleaning is a static spatial filter applied before the causal band-pass, so the causal chain is unchanged. Transductive for the test subject, like D9. The proxies also carry frontal brain activity, so a little of it may be removed.
+- Removed: 2 components in 7 subjects, 3 in P4, P5, P11 (a second horizontal one). VEOG |r| 0.79-0.98, HEOG |r| 0.57-0.88. Removed variance of the fit data 0.17-0.52.
+- Onset-aligned averages, 0-0.5 s after onset, 10 subjects: Fp1 -193.7 uV uncleaned vs -21.4 uV cleaned; Cz -29.8 vs -43.1 uV. The Cz movement potential survives.
+- CNN-LSTM, cleaned (seed 1) vs uncleaned (seeds 1-3), paired over 10 subjects:
+
+| Model | Readout | Uncleaned | Cleaned | Subjects higher after cleaning | p |
+|---|---|---|---|---|---|
+| Direct | inner-val `residual_r_specific` | 0.161 | 0.062 | 0/10 | 0.002 |
+| Direct | inner-val r | 0.644 | 0.540 | 0/10 | 0.002 |
+| Direct | test `residual_r_specific` | 0.134 | 0.068 | 0/10 | 0.002 |
+| Direct | test r / R² | 0.588 / 0.075 | 0.485 / -0.083 | 1/10 | 0.006 / 0.049 |
+| Residual | test `residual_r_specific` | 0.192 | 0.080 | 0/10 | 0.002 |
+| Residual | test r | 0.813 | 0.796 | 3/10 | 0.027 |
+| Prefrontal only (direct) | inner-val / test `residual_r_specific` | 0.071 / 0.062 | 0.015 / 0.015 | 0/10 | 0.002 |
+
+- Occlusion (direct, test, drop in `residual_r_specific` when a group is occluded), uncleaned to cleaned: prefrontal 0.044 to -0.004, occipital 0.065 to 0.039, contralateral 0.050 to 0.033, ipsilateral 0.028 to 0.022. The contralateral drop in r rises (0.130 to 0.218).
+- Run folders: cache build `output/diagnostics/pre-design/cache-build/20261108-104617/`; runs `output/diagnostics/final-checks/ocular/{cnn_lstm_direct,cnn_lstm_residual,cnn_lstm_prefrontal}/`; report `output/diagnostics/final-checks/ocular/summary/20261108-115730/`.
+
+### Calibration within subject
+
+- Split inside each LOSO test subject (D6 within-subject split): k calibration lifts drawn from S1-S5 (k in {10, 30, all}, 3 draws for 10 and 30), early stopping on S6, test on S7-S9. Confound: S7-S9 are always weight series.
+- Floor: the subject cue template from the same k lifts. CNN-LSTM in residual form over it. Fine-tune starts from the LOSO model (fixed lr 3e-4, decided by the user); scratch uses the D11 lr 1e-3. Budget D11 (max 30 epochs, patience 5).
+- Subject template on S7-S9 (k = 10 / 30 / all): r 0.859 / 0.863 / 0.864, R² 0.630 / 0.645 / 0.648. Already above LOSO `template_cue` (r 0.803, R² 0.524) at k = 10.
+- Difference to the subject template, mean over 10 subjects (draws averaged first), Wilcoxon paired; * p < 0.05:
+
+| Condition | Δr (k 10 / 30 / all) | ΔR² (k 10 / 30 / all) | `residual_r_specific` |
+|---|---|---|---|
+| LOSO model, no calibration (uncleaned) | -0.016 / -0.020 / -0.021 | -0.115* / -0.130* / -0.133* | 0.062 / 0.067 / 0.062 |
+| Fine-tune, uncleaned | +0.011 / +0.017* / +0.023* | -0.002 / +0.015 / +0.018 | 0.164 / 0.196 / 0.258 |
+| Scratch, uncleaned | +0.006* / +0.013* / +0.021* | +0.007 / +0.014* / +0.022 | 0.080 / 0.139 / 0.248 |
+| Fine-tune, cleaned | +0.003 / +0.004* / +0.012* | -0.009 / -0.004 / +0.002 | 0.070 / 0.088 / 0.158 |
+| Scratch, cleaned | +0.003 / +0.004 / +0.009* | +0.003 / -0.002 / +0.001 | 0.055 / 0.081 / 0.165 |
+| Fine-tune, uncleaned, Fp1/Fp2 only | - / +0.015* / +0.021* | - / +0.018 / +0.032* | - / 0.173 / 0.207 |
+
+- Fine-tune vs scratch: higher `residual_r_specific` on uncleaned data at k = 10 and 30 (+0.084, +0.057, p <= 0.01); no difference in r, R², or NRMSE at any k; no difference on cleaned data.
+- Cleaned vs uncleaned: `residual_r_specific` falls by 0.06-0.10 for every trained condition; r and R² by about 0.01-0.02.
+- Run folders: LOSO pretraining `output/diagnostics/final-checks/calibration/{loso_residual,loso_residual_ica,loso_residual_prefrontal}/`; calibration `output/diagnostics/final-checks/calibration/{uncleaned,cleaned,prefrontal}/`; comparison `output/diagnostics/final-checks/calibration/summary/20261108-142101/`.
+
+### Implications for the framing
+
+(A) Physiologically plausible representation:
+
+- About half or more of the trial-specific information that current decoders recover depends on ocular components. On uncleaned data, a "neural" claim would mostly rest on eye activity.
+- What survives cleaning is small (`residual_r_specific` about 0.06-0.08 LOSO) and leans contralateral in occlusion. Priors such as contralateral sensorimotor channels and Cz are consistent with it, but the effect a physiology-guided model would act on is small.
+- After cleaning, LOSO decoders sit further below `template_cue` on r and R². A plausibility framing would be judged mainly on the residual readouts and on artifact controls, not on beating the floor.
+- If chosen, it implies cleaned inputs (or an explicit ocular control) for every reported result.
+
+(B) Calibration efficiency:
+
+- Most of the within-subject gain comes from the subject's own template, which uses no EEG and is strong from 10 lifts.
+- EEG decoders add r +0.01 to +0.02 over that template. R² gains are mostly not significant, and on cleaned data only r at k = all is.
+- Supervised cross-subject pretraining does not beat training from scratch on r, R², or NRMSE at any k. A pretrained (for example self-supervised) model would have to show a gain this baseline does not.
+- Two prefrontal channels match all 32 channels after calibration, so on uncleaned data a calibration gain is largely ocular.
+- If chosen, the floor is the subject cue template from the same k lifts, and the headroom above it is small.
+
+Caveats for both: seed 1 only for the cleaned runs and the calibration grid; one draw at k = all; ICA fitting is transductive; the within-subject test series are all weight series.
 
 ## Run directories
 
@@ -536,3 +606,16 @@ r is the mean over test subjects, averaged over seeds. Analysis runs without a d
 | `output/diagnostics/pre-design/screening/mrcp__ipsilateral/` | `20261106-221119_seed1`, `20261107-072458_seed2`, `20261107-141704_seed3` | 0.419 |
 | `output/diagnostics/pre-design/screening/mrcp__prefrontal/` | `20261106-221906_seed1`, `20261107-075025_seed2`, `20261107-145745_seed3` | 0.357 |
 | `output/diagnostics/pre-design/screening/mrcp_env__all/` | `20261106-201552_seed1`, `20261107-050320_seed2`, `20261107-120229_seed3` | 0.646 |
+
+### Final-check runs
+
+r is the mean over test subjects (LOSO). Calibration runs are listed in their section.
+
+| Folder | Run IDs | r |
+|---|---|---|
+| `output/diagnostics/final-checks/ocular/cnn_lstm_direct/` | `20261108-105229_seed1` | 0.485 |
+| `output/diagnostics/final-checks/ocular/cnn_lstm_residual/` | `20261108-110400_seed1` | 0.796 |
+| `output/diagnostics/final-checks/ocular/cnn_lstm_prefrontal/` | `20261108-110406_seed1` | 0.156 |
+| `output/diagnostics/final-checks/calibration/loso_residual/` | `20261108-121237_seed1` | 0.812 |
+| `output/diagnostics/final-checks/calibration/loso_residual_ica/` | `20261108-125017_seed1` | 0.796 |
+| `output/diagnostics/final-checks/calibration/loso_residual_prefrontal/` | `20261108-131720_seed1` | 0.816 |

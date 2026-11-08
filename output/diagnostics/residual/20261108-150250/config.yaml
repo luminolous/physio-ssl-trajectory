@@ -1,0 +1,7 @@
+seed: 20261106
+n_permutations: 5
+n_runs: 3
+runs:
+- output/diagnostics/final-checks/calibration/loso_residual/20261108-121237_seed1
+- output/diagnostics/final-checks/calibration/loso_residual_ica/20261108-125017_seed1
+- output/diagnostics/final-checks/calibration/loso_residual_prefrontal/20261108-131720_seed1
