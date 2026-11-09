@@ -1,0 +1,5 @@
+rule,subject,row,series,lift,weight_g,surface,rt_s
+typical,P8,23,1,24,165,sandpaper,0.39400000000000013
+slow reaction,P2,42,2,15,330,suede,1.1219999999999999
+P7,P7,222,7,31,330,sandpaper,0.7160000000000002
+heavy weight,P11,113,4,18,660,sandpaper,0.40600000000000014
