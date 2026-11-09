@@ -1,0 +1,155 @@
+2026-11-08 18:06:38 INFO    eegtraj.utils.run: Run directory: output\diagnostics\final-checks\electrode-reduction\ica__contralateral__mastoid__direct\20261108-180638_seed1
+2026-11-08 18:06:38 INFO    eegtraj.baselines.runner: Baseline cnn_lstm, mode loso, 10 folds, seed 1, smoke False
+2026-11-08 18:06:39 INFO    eegtraj.baselines.runner: Fold loso_P1: train ('P2', 'P5', 'P8', 'P9', 'P10', 'P11', 'P12'), val ('P4', 'P7'), test ('P1',); target samples train 1335787, val 383628, test 155612
+2026-11-08 18:06:39 INFO    eegtraj.baselines.runner: cnn_lstm: 7515 parameters, device cuda, 1335787 train windows, 383628 val windows, config TrainConfig(lr=0.001, weight_decay=0.01, batch_size=512, max_epochs=30, samples_per_epoch=200000, val_samples=100000, patience=5, amp=True)
+2026-11-08 18:06:45 INFO    eegtraj.baselines.runner: epoch 1: train MSE 0.9360, val MSE 0.9156 (3.6 s)
+2026-11-08 18:06:48 INFO    eegtraj.baselines.runner: epoch 2: train MSE 0.8472, val MSE 0.8667 (3.2 s)
+2026-11-08 18:06:51 INFO    eegtraj.baselines.runner: epoch 3: train MSE 0.7853, val MSE 0.8488 (3.2 s)
+2026-11-08 18:06:54 INFO    eegtraj.baselines.runner: epoch 4: train MSE 0.7552, val MSE 0.9892 (3.1 s)
+2026-11-08 18:06:57 INFO    eegtraj.baselines.runner: epoch 5: train MSE 0.7367, val MSE 1.1911 (3.1 s)
+2026-11-08 18:07:00 INFO    eegtraj.baselines.runner: epoch 6: train MSE 0.7189, val MSE 1.0977 (3.2 s)
+2026-11-08 18:07:04 INFO    eegtraj.baselines.runner: epoch 7: train MSE 0.7083, val MSE 1.0336 (3.1 s)
+2026-11-08 18:07:07 INFO    eegtraj.baselines.runner: epoch 8: train MSE 0.6933, val MSE 1.2478 (3.1 s)
+2026-11-08 18:07:07 INFO    eegtraj.baselines.runner: early stop at epoch 8 (best val MSE 0.8488)
+2026-11-08 18:07:07 INFO    eegtraj.baselines.runner: peak GPU memory 0.48 GB
+2026-11-08 18:07:07 INFO    eegtraj.baselines.runner: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1335787 training samples
+2026-11-08 18:07:13 INFO    eegtraj.baselines.runner: Fold loso_P1 inner validation: {'P4': {'r': 0.506, 'r2': 0.039, 'nrmse': 0.315, 'residual_r': 0.308, 'residual_r_other_trial': 0.333, 'residual_r_specific': -0.025}, 'P7': {'r': 0.603, 'r2': 0.107, 'nrmse': 0.299, 'residual_r': 0.131, 'residual_r_other_trial': 0.105, 'residual_r_specific': 0.027}}
+2026-11-08 18:07:15 INFO    eegtraj.baselines.runner: Fold loso_P1 test P1: r = 0.382 (x 0.434, y 0.416, z 0.296), R2 = 0.039, NRMSE = 0.332, 294 trials
+2026-11-08 18:07:15 INFO    eegtraj.baselines.runner: Fold loso_P2: train ('P1', 'P4', 'P5', 'P8', 'P10', 'P11', 'P12'), val ('P7', 'P9'), test ('P2',); target samples train 1268758, val 398068, test 208201
+2026-11-08 18:07:15 INFO    eegtraj.baselines.runner: cnn_lstm: 7515 parameters, device cuda, 1268758 train windows, 398068 val windows, config TrainConfig(lr=0.001, weight_decay=0.01, batch_size=512, max_epochs=30, samples_per_epoch=200000, val_samples=100000, patience=5, amp=True)
+2026-11-08 18:07:18 INFO    eegtraj.baselines.runner: epoch 1: train MSE 0.9475, val MSE 1.0659 (3.1 s)
+2026-11-08 18:07:21 INFO    eegtraj.baselines.runner: epoch 2: train MSE 0.9301, val MSE 1.0139 (3.1 s)
+2026-11-08 18:07:24 INFO    eegtraj.baselines.runner: epoch 3: train MSE 0.9339, val MSE 1.0425 (3.1 s)
+2026-11-08 18:07:28 INFO    eegtraj.baselines.runner: epoch 4: train MSE 0.9292, val MSE 1.0200 (3.1 s)
+2026-11-08 18:07:31 INFO    eegtraj.baselines.runner: epoch 5: train MSE 0.8930, val MSE 0.9905 (3.1 s)
+2026-11-08 18:07:34 INFO    eegtraj.baselines.runner: epoch 6: train MSE 0.8341, val MSE 0.9436 (3.1 s)
+2026-11-08 18:07:37 INFO    eegtraj.baselines.runner: epoch 7: train MSE 0.7337, val MSE 0.9894 (3.3 s)
+2026-11-08 18:07:40 INFO    eegtraj.baselines.runner: epoch 8: train MSE 0.6956, val MSE 0.9918 (3.2 s)
+2026-11-08 18:07:43 INFO    eegtraj.baselines.runner: epoch 9: train MSE 0.6691, val MSE 1.1013 (3.2 s)
+2026-11-08 18:07:47 INFO    eegtraj.baselines.runner: epoch 10: train MSE 0.6582, val MSE 1.0413 (3.2 s)
+2026-11-08 18:07:50 INFO    eegtraj.baselines.runner: epoch 11: train MSE 0.6480, val MSE 1.0817 (3.2 s)
+2026-11-08 18:07:50 INFO    eegtraj.baselines.runner: early stop at epoch 11 (best val MSE 0.9436)
+2026-11-08 18:07:50 INFO    eegtraj.baselines.runner: peak GPU memory 0.48 GB
+2026-11-08 18:07:50 INFO    eegtraj.baselines.runner: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1268758 training samples
+2026-11-08 18:07:57 INFO    eegtraj.baselines.runner: Fold loso_P2 inner validation: {'P7': {'r': 0.543, 'r2': 0.037, 'nrmse': 0.314, 'residual_r': 0.244, 'residual_r_other_trial': 0.229, 'residual_r_specific': 0.015}, 'P9': {'r': 0.35, 'r2': 0.024, 'nrmse': 0.33, 'residual_r': -0.073, 'residual_r_other_trial': -0.122, 'residual_r_specific': 0.049}}
+2026-11-08 18:07:58 INFO    eegtraj.baselines.runner: Fold loso_P2 test P2: r = 0.465 (x 0.498, y 0.513, z 0.384), R2 = -0.040, NRMSE = 0.323, 294 trials
+2026-11-08 18:07:58 INFO    eegtraj.baselines.runner: Fold loso_P4: train ('P1', 'P2', 'P5', 'P8', 'P10', 'P11', 'P12'), val ('P7', 'P9'), test ('P4',); target samples train 1307884, val 398068, test 169075
+2026-11-08 18:07:59 INFO    eegtraj.baselines.runner: cnn_lstm: 7515 parameters, device cuda, 1307884 train windows, 398068 val windows, config TrainConfig(lr=0.001, weight_decay=0.01, batch_size=512, max_epochs=30, samples_per_epoch=200000, val_samples=100000, patience=5, amp=True)
+2026-11-08 18:08:02 INFO    eegtraj.baselines.runner: epoch 1: train MSE 0.9309, val MSE 0.9320 (3.1 s)
+2026-11-08 18:08:05 INFO    eegtraj.baselines.runner: epoch 2: train MSE 0.7917, val MSE 0.9850 (3.1 s)
+2026-11-08 18:08:08 INFO    eegtraj.baselines.runner: epoch 3: train MSE 0.7554, val MSE 1.1315 (3.1 s)
+2026-11-08 18:08:11 INFO    eegtraj.baselines.runner: epoch 4: train MSE 0.7399, val MSE 1.1682 (3.1 s)
+2026-11-08 18:08:14 INFO    eegtraj.baselines.runner: epoch 5: train MSE 0.7278, val MSE 1.0346 (3.2 s)
+2026-11-08 18:08:17 INFO    eegtraj.baselines.runner: epoch 6: train MSE 0.7195, val MSE 1.1130 (3.1 s)
+2026-11-08 18:08:17 INFO    eegtraj.baselines.runner: early stop at epoch 6 (best val MSE 0.9320)
+2026-11-08 18:08:17 INFO    eegtraj.baselines.runner: peak GPU memory 0.48 GB
+2026-11-08 18:08:18 INFO    eegtraj.baselines.runner: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1307884 training samples
+2026-11-08 18:08:24 INFO    eegtraj.baselines.runner: Fold loso_P4 inner validation: {'P7': {'r': 0.563, 'r2': 0.109, 'nrmse': 0.304, 'residual_r': 0.078, 'residual_r_other_trial': 0.038, 'residual_r_specific': 0.041}, 'P9': {'r': 0.312, 'r2': -0.004, 'nrmse': 0.336, 'residual_r': -0.008, 'residual_r_other_trial': -0.068, 'residual_r_specific': 0.06}}
+2026-11-08 18:08:25 INFO    eegtraj.baselines.runner: Fold loso_P4 test P4: r = 0.461 (x 0.442, y 0.443, z 0.498), R2 = 0.006, NRMSE = 0.322, 294 trials
+2026-11-08 18:08:25 INFO    eegtraj.baselines.runner: Fold loso_P5: train ('P1', 'P7', 'P8', 'P9', 'P10', 'P11', 'P12'), val ('P2', 'P4'), test ('P5',); target samples train 1314741, val 377276, test 183010
+2026-11-08 18:08:26 INFO    eegtraj.baselines.runner: cnn_lstm: 7515 parameters, device cuda, 1314741 train windows, 377276 val windows, config TrainConfig(lr=0.001, weight_decay=0.01, batch_size=512, max_epochs=30, samples_per_epoch=200000, val_samples=100000, patience=5, amp=True)
+2026-11-08 18:08:29 INFO    eegtraj.baselines.runner: epoch 1: train MSE 0.9328, val MSE 0.9089 (3.1 s)
+2026-11-08 18:08:32 INFO    eegtraj.baselines.runner: epoch 2: train MSE 0.8174, val MSE 0.9857 (3.1 s)
+2026-11-08 18:08:35 INFO    eegtraj.baselines.runner: epoch 3: train MSE 0.7643, val MSE 1.0220 (3.0 s)
+2026-11-08 18:08:38 INFO    eegtraj.baselines.runner: epoch 4: train MSE 0.7355, val MSE 1.0906 (3.0 s)
+2026-11-08 18:08:41 INFO    eegtraj.baselines.runner: epoch 5: train MSE 0.7181, val MSE 0.9559 (3.0 s)
+2026-11-08 18:08:44 INFO    eegtraj.baselines.runner: epoch 6: train MSE 0.7057, val MSE 1.0134 (3.1 s)
+2026-11-08 18:08:44 INFO    eegtraj.baselines.runner: early stop at epoch 6 (best val MSE 0.9089)
+2026-11-08 18:08:44 INFO    eegtraj.baselines.runner: peak GPU memory 0.48 GB
+2026-11-08 18:08:44 INFO    eegtraj.baselines.runner: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1314741 training samples
+2026-11-08 18:08:50 INFO    eegtraj.baselines.runner: Fold loso_P5 inner validation: {'P2': {'r': 0.348, 'r2': 0.037, 'nrmse': 0.322, 'residual_r': -0.033, 'residual_r_other_trial': -0.12, 'residual_r_specific': 0.087}, 'P4': {'r': 0.441, 'r2': -0.07, 'nrmse': 0.337, 'residual_r': 0.255, 'residual_r_other_trial': 0.28, 'residual_r_specific': -0.025}}
+2026-11-08 18:08:52 INFO    eegtraj.baselines.runner: Fold loso_P5 test P5: r = 0.376 (x 0.358, y 0.346, z 0.424), R2 = -0.148, NRMSE = 0.357, 294 trials
+2026-11-08 18:08:52 INFO    eegtraj.baselines.runner: Fold loso_P7: train ('P2', 'P4', 'P5', 'P8', 'P9', 'P11', 'P12'), val ('P1', 'P10'), test ('P7',); target samples train 1315670, val 344804, test 214553
+2026-11-08 18:08:52 INFO    eegtraj.baselines.runner: cnn_lstm: 7515 parameters, device cuda, 1315670 train windows, 344804 val windows, config TrainConfig(lr=0.001, weight_decay=0.01, batch_size=512, max_epochs=30, samples_per_epoch=200000, val_samples=100000, patience=5, amp=True)
+2026-11-08 18:08:55 INFO    eegtraj.baselines.runner: epoch 1: train MSE 0.9424, val MSE 0.9523 (3.0 s)
+2026-11-08 18:08:59 INFO    eegtraj.baselines.runner: epoch 2: train MSE 0.9116, val MSE 0.9315 (3.0 s)
+2026-11-08 18:09:02 INFO    eegtraj.baselines.runner: epoch 3: train MSE 0.8288, val MSE 0.8357 (3.1 s)
+2026-11-08 18:09:05 INFO    eegtraj.baselines.runner: epoch 4: train MSE 0.7843, val MSE 0.8979 (3.1 s)
+2026-11-08 18:09:08 INFO    eegtraj.baselines.runner: epoch 5: train MSE 0.7571, val MSE 0.8608 (3.1 s)
+2026-11-08 18:09:11 INFO    eegtraj.baselines.runner: epoch 6: train MSE 0.7365, val MSE 0.8658 (3.1 s)
+2026-11-08 18:09:14 INFO    eegtraj.baselines.runner: epoch 7: train MSE 0.7193, val MSE 0.8591 (3.1 s)
+2026-11-08 18:09:17 INFO    eegtraj.baselines.runner: epoch 8: train MSE 0.7148, val MSE 0.8199 (3.1 s)
+2026-11-08 18:09:20 INFO    eegtraj.baselines.runner: epoch 9: train MSE 0.7059, val MSE 0.7866 (3.0 s)
+2026-11-08 18:09:23 INFO    eegtraj.baselines.runner: epoch 10: train MSE 0.6912, val MSE 0.8150 (3.0 s)
+2026-11-08 18:09:26 INFO    eegtraj.baselines.runner: epoch 11: train MSE 0.6824, val MSE 0.8113 (3.0 s)
+2026-11-08 18:09:29 INFO    eegtraj.baselines.runner: epoch 12: train MSE 0.6743, val MSE 0.7944 (3.1 s)
+2026-11-08 18:09:32 INFO    eegtraj.baselines.runner: epoch 13: train MSE 0.6645, val MSE 0.7913 (3.1 s)
+2026-11-08 18:09:35 INFO    eegtraj.baselines.runner: epoch 14: train MSE 0.6520, val MSE 0.8078 (3.1 s)
+2026-11-08 18:09:35 INFO    eegtraj.baselines.runner: early stop at epoch 14 (best val MSE 0.7866)
+2026-11-08 18:09:35 INFO    eegtraj.baselines.runner: peak GPU memory 0.48 GB
+2026-11-08 18:09:36 INFO    eegtraj.baselines.runner: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1315670 training samples
+2026-11-08 18:09:41 INFO    eegtraj.baselines.runner: Fold loso_P7 inner validation: {'P1': {'r': 0.419, 'r2': 0.067, 'nrmse': 0.328, 'residual_r': 0.225, 'residual_r_other_trial': 0.209, 'residual_r_specific': 0.015}, 'P10': {'r': 0.528, 'r2': 0.208, 'nrmse': 0.278, 'residual_r': -0.099, 'residual_r_other_trial': -0.082, 'residual_r_specific': -0.017}}
+2026-11-08 18:09:43 INFO    eegtraj.baselines.runner: Fold loso_P7 test P7: r = 0.537 (x 0.590, y 0.601, z 0.421), R2 = -0.040, NRMSE = 0.325, 294 trials
+2026-11-08 18:09:43 INFO    eegtraj.baselines.runner: Fold loso_P8: train ('P1', 'P2', 'P4', 'P7', 'P9', 'P10', 'P11'), val ('P5', 'P12'), test ('P8',); target samples train 1318415, val 393073, test 163539
+2026-11-08 18:09:43 INFO    eegtraj.baselines.runner: cnn_lstm: 7515 parameters, device cuda, 1318415 train windows, 393073 val windows, config TrainConfig(lr=0.001, weight_decay=0.01, batch_size=512, max_epochs=30, samples_per_epoch=200000, val_samples=100000, patience=5, amp=True)
+2026-11-08 18:09:47 INFO    eegtraj.baselines.runner: epoch 1: train MSE 0.9253, val MSE 0.9784 (3.1 s)
+2026-11-08 18:09:50 INFO    eegtraj.baselines.runner: epoch 2: train MSE 0.8845, val MSE 1.0611 (3.1 s)
+2026-11-08 18:09:53 INFO    eegtraj.baselines.runner: epoch 3: train MSE 0.7862, val MSE 0.9308 (3.1 s)
+2026-11-08 18:09:56 INFO    eegtraj.baselines.runner: epoch 4: train MSE 0.7440, val MSE 0.9252 (3.1 s)
+2026-11-08 18:09:59 INFO    eegtraj.baselines.runner: epoch 5: train MSE 0.7115, val MSE 0.9306 (3.1 s)
+2026-11-08 18:10:02 INFO    eegtraj.baselines.runner: epoch 6: train MSE 0.6916, val MSE 0.9802 (3.2 s)
+2026-11-08 18:10:05 INFO    eegtraj.baselines.runner: epoch 7: train MSE 0.6677, val MSE 0.9630 (3.1 s)
+2026-11-08 18:10:08 INFO    eegtraj.baselines.runner: epoch 8: train MSE 0.6522, val MSE 0.9547 (3.1 s)
+2026-11-08 18:10:11 INFO    eegtraj.baselines.runner: epoch 9: train MSE 0.6422, val MSE 0.9640 (3.2 s)
+2026-11-08 18:10:11 INFO    eegtraj.baselines.runner: early stop at epoch 9 (best val MSE 0.9252)
+2026-11-08 18:10:11 INFO    eegtraj.baselines.runner: peak GPU memory 0.48 GB
+2026-11-08 18:10:12 INFO    eegtraj.baselines.runner: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1318415 training samples
+2026-11-08 18:10:18 INFO    eegtraj.baselines.runner: Fold loso_P8 inner validation: {'P5': {'r': 0.457, 'r2': -0.074, 'nrmse': 0.341, 'residual_r': -0.079, 'residual_r_other_trial': -0.136, 'residual_r_specific': 0.057}, 'P12': {'r': 0.465, 'r2': 0.112, 'nrmse': 0.303, 'residual_r': -0.17, 'residual_r_other_trial': -0.21, 'residual_r_specific': 0.04}}
+2026-11-08 18:10:19 INFO    eegtraj.baselines.runner: Fold loso_P8 test P8: r = 0.236 (x 0.245, y 0.256, z 0.208), R2 = -0.123, NRMSE = 0.350, 294 trials
+2026-11-08 18:10:19 INFO    eegtraj.baselines.runner: Fold loso_P9: train ('P1', 'P2', 'P4', 'P5', 'P7', 'P10', 'P12'), val ('P8', 'P11'), test ('P9',); target samples train 1329706, val 361806, test 183515
+2026-11-08 18:10:20 INFO    eegtraj.baselines.runner: cnn_lstm: 7515 parameters, device cuda, 1329706 train windows, 361806 val windows, config TrainConfig(lr=0.001, weight_decay=0.01, batch_size=512, max_epochs=30, samples_per_epoch=200000, val_samples=100000, patience=5, amp=True)
+2026-11-08 18:10:23 INFO    eegtraj.baselines.runner: epoch 1: train MSE 0.9337, val MSE 0.9207 (3.1 s)
+2026-11-08 18:10:26 INFO    eegtraj.baselines.runner: epoch 2: train MSE 0.9238, val MSE 0.9079 (3.1 s)
+2026-11-08 18:10:29 INFO    eegtraj.baselines.runner: epoch 3: train MSE 0.8959, val MSE 0.9268 (3.1 s)
+2026-11-08 18:10:32 INFO    eegtraj.baselines.runner: epoch 4: train MSE 0.8494, val MSE 0.9800 (3.1 s)
+2026-11-08 18:10:35 INFO    eegtraj.baselines.runner: epoch 5: train MSE 0.8010, val MSE 0.9803 (3.2 s)
+2026-11-08 18:10:39 INFO    eegtraj.baselines.runner: epoch 6: train MSE 0.7536, val MSE 0.9465 (3.1 s)
+2026-11-08 18:10:42 INFO    eegtraj.baselines.runner: epoch 7: train MSE 0.7212, val MSE 0.9678 (3.1 s)
+2026-11-08 18:10:42 INFO    eegtraj.baselines.runner: early stop at epoch 7 (best val MSE 0.9079)
+2026-11-08 18:10:42 INFO    eegtraj.baselines.runner: peak GPU memory 0.48 GB
+2026-11-08 18:10:42 INFO    eegtraj.baselines.runner: template_cue: 1677 bins from -1.01 to 15.75 s after ev_LEDOn, 1329706 training samples
+2026-11-08 18:10:48 INFO    eegtraj.baselines.runner: Fold loso_P9 inner validation: {'P8': {'r': 0.166, 'r2': -0.052, 'nrmse': 0.342, 'residual_r': 0.156, 'residual_r_other_trial': 0.136, 'residual_r_specific': 0.02}, 'P11': {'r': 0.236, 'r2': -0.131, 'nrmse': 0.348, 'residual_r': 0.01, 'residual_r_other_trial': -0.006, 'residual_r_specific': 0.016}}
+2026-11-08 18:10:49 INFO    eegtraj.baselines.runner: Fold loso_P9 test P9: r = 0.291 (x 0.302, y 0.290, z 0.280), R2 = 0.018, NRMSE = 0.334, 294 trials
+2026-11-08 18:10:49 INFO    eegtraj.baselines.runner: Fold loso_P10: train ('P1', 'P2', 'P5', 'P7', 'P8', 'P9', 'P11'), val ('P4', 'P12'), test ('P10',); target samples train 1306697, val 379138, test 189192
+2026-11-08 18:10:50 INFO    eegtraj.baselines.runner: cnn_lstm: 7515 parameters, device cuda, 1306697 train windows, 379138 val windows, config TrainConfig(lr=0.001, weight_decay=0.01, batch_size=512, max_epochs=30, samples_per_epoch=200000, val_samples=100000, patience=5, amp=True)
+2026-11-08 18:10:53 INFO    eegtraj.baselines.runner: epoch 1: train MSE 0.9268, val MSE 1.0260 (3.1 s)
+2026-11-08 18:10:56 INFO    eegtraj.baselines.runner: epoch 2: train MSE 0.8377, val MSE 1.1876 (3.1 s)
+2026-11-08 18:10:59 INFO    eegtraj.baselines.runner: epoch 3: train MSE 0.7740, val MSE 1.0527 (3.4 s)
+2026-11-08 18:11:03 INFO    eegtraj.baselines.runner: epoch 4: train MSE 0.7485, val MSE 1.1255 (3.2 s)
+2026-11-08 18:11:06 INFO    eegtraj.baselines.runner: epoch 5: train MSE 0.7231, val MSE 1.2199 (3.1 s)
+2026-11-08 18:11:09 INFO    eegtraj.baselines.runner: epoch 6: train MSE 0.7060, val MSE 1.2450 (3.1 s)
+2026-11-08 18:11:09 INFO    eegtraj.baselines.runner: early stop at epoch 6 (best val MSE 1.0260)
+2026-11-08 18:11:09 INFO    eegtraj.baselines.runner: peak GPU memory 0.48 GB
+2026-11-08 18:11:09 INFO    eegtraj.baselines.runner: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1306697 training samples
+2026-11-08 18:11:15 INFO    eegtraj.baselines.runner: Fold loso_P10 inner validation: {'P4': {'r': 0.345, 'r2': -0.124, 'nrmse': 0.346, 'residual_r': 0.234, 'residual_r_other_trial': 0.258, 'residual_r_specific': -0.025}, 'P12': {'r': 0.32, 'r2': 0.026, 'nrmse': 0.322, 'residual_r': -0.229, 'residual_r_other_trial': -0.271, 'residual_r_specific': 0.042}}
+2026-11-08 18:11:17 INFO    eegtraj.baselines.runner: Fold loso_P10 test P10: r = 0.238 (x 0.238, y 0.220, z 0.255), R2 = -0.045, NRMSE = 0.325, 294 trials
+2026-11-08 18:11:17 INFO    eegtraj.baselines.runner: Fold loso_P11: train ('P1', 'P5', 'P7', 'P8', 'P9', 'P10', 'P12'), val ('P2', 'P4'), test ('P11',); target samples train 1299484, val 377276, test 198267
+2026-11-08 18:11:17 INFO    eegtraj.baselines.runner: cnn_lstm: 7515 parameters, device cuda, 1299484 train windows, 377276 val windows, config TrainConfig(lr=0.001, weight_decay=0.01, batch_size=512, max_epochs=30, samples_per_epoch=200000, val_samples=100000, patience=5, amp=True)
+2026-11-08 18:11:20 INFO    eegtraj.baselines.runner: epoch 1: train MSE 0.9242, val MSE 0.8758 (3.1 s)
+2026-11-08 18:11:23 INFO    eegtraj.baselines.runner: epoch 2: train MSE 0.8020, val MSE 0.9506 (3.1 s)
+2026-11-08 18:11:26 INFO    eegtraj.baselines.runner: epoch 3: train MSE 0.7465, val MSE 0.9841 (3.1 s)
+2026-11-08 18:11:30 INFO    eegtraj.baselines.runner: epoch 4: train MSE 0.7157, val MSE 1.0629 (3.1 s)
+2026-11-08 18:11:33 INFO    eegtraj.baselines.runner: epoch 5: train MSE 0.7008, val MSE 0.9630 (3.1 s)
+2026-11-08 18:11:36 INFO    eegtraj.baselines.runner: epoch 6: train MSE 0.6834, val MSE 1.0079 (3.1 s)
+2026-11-08 18:11:36 INFO    eegtraj.baselines.runner: early stop at epoch 6 (best val MSE 0.8758)
+2026-11-08 18:11:36 INFO    eegtraj.baselines.runner: peak GPU memory 0.48 GB
+2026-11-08 18:11:36 INFO    eegtraj.baselines.runner: template_cue: 1677 bins from -1.01 to 15.75 s after ev_LEDOn, 1299484 training samples
+2026-11-08 18:11:42 INFO    eegtraj.baselines.runner: Fold loso_P11 inner validation: {'P2': {'r': 0.417, 'r2': 0.071, 'nrmse': 0.312, 'residual_r': 0.044, 'residual_r_other_trial': -0.002, 'residual_r_specific': 0.046}, 'P4': {'r': 0.386, 'r2': -0.089, 'nrmse': 0.338, 'residual_r': 0.238, 'residual_r_other_trial': 0.265, 'residual_r_specific': -0.027}}
+2026-11-08 18:11:44 INFO    eegtraj.baselines.runner: Fold loso_P11 test P11: r = 0.206 (x 0.224, y 0.230, z 0.164), R2 = -0.298, NRMSE = 0.370, 294 trials
+2026-11-08 18:11:44 INFO    eegtraj.baselines.runner: Fold loso_P12: train ('P2', 'P4', 'P5', 'P7', 'P8', 'P10', 'P11'), val ('P1', 'P9'), test ('P12',); target samples train 1325837, val 339127, test 210063
+2026-11-08 18:11:44 INFO    eegtraj.baselines.runner: cnn_lstm: 7515 parameters, device cuda, 1325837 train windows, 339127 val windows, config TrainConfig(lr=0.001, weight_decay=0.01, batch_size=512, max_epochs=30, samples_per_epoch=200000, val_samples=100000, patience=5, amp=True)
+2026-11-08 18:11:47 INFO    eegtraj.baselines.runner: epoch 1: train MSE 0.9217, val MSE 1.0551 (3.1 s)
+2026-11-08 18:11:50 INFO    eegtraj.baselines.runner: epoch 2: train MSE 0.8060, val MSE 0.9758 (3.1 s)
+2026-11-08 18:11:54 INFO    eegtraj.baselines.runner: epoch 3: train MSE 0.7682, val MSE 0.9479 (3.1 s)
+2026-11-08 18:11:57 INFO    eegtraj.baselines.runner: epoch 4: train MSE 0.7397, val MSE 0.9802 (3.1 s)
+2026-11-08 18:12:00 INFO    eegtraj.baselines.runner: epoch 5: train MSE 0.7264, val MSE 0.9725 (3.1 s)
+2026-11-08 18:12:03 INFO    eegtraj.baselines.runner: epoch 6: train MSE 0.7032, val MSE 0.9839 (3.1 s)
+2026-11-08 18:12:06 INFO    eegtraj.baselines.runner: epoch 7: train MSE 0.6823, val MSE 0.9840 (3.1 s)
+2026-11-08 18:12:09 INFO    eegtraj.baselines.runner: epoch 8: train MSE 0.6741, val MSE 0.9807 (3.1 s)
+2026-11-08 18:12:09 INFO    eegtraj.baselines.runner: early stop at epoch 8 (best val MSE 0.9479)
+2026-11-08 18:12:09 INFO    eegtraj.baselines.runner: peak GPU memory 0.48 GB
+2026-11-08 18:12:09 INFO    eegtraj.baselines.runner: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1325837 training samples
+2026-11-08 18:12:15 INFO    eegtraj.baselines.runner: Fold loso_P12 inner validation: {'P1': {'r': 0.491, 'r2': 0.118, 'nrmse': 0.318, 'residual_r': 0.233, 'residual_r_other_trial': 0.207, 'residual_r_specific': 0.025}, 'P9': {'r': 0.354, 'r2': 0.04, 'nrmse': 0.329, 'residual_r': -0.035, 'residual_r_other_trial': -0.099, 'residual_r_specific': 0.064}}
+2026-11-08 18:12:16 INFO    eegtraj.baselines.runner: Fold loso_P12 test P12: r = 0.399 (x 0.417, y 0.428, z 0.352), R2 = -0.340, NRMSE = 0.366, 294 trials
+2026-11-08 18:12:19 INFO    eegtraj.baselines.runner: Aggregate over 10 test subjects: r = 0.359 +- 0.112, R2 = -0.097 +- 0.131, NRMSE = 0.340 +- 0.019
+2026-11-08 18:12:19 INFO    eegtraj.baselines.runner: Wall time 338.0 s

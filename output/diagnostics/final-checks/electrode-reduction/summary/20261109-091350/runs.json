@@ -1,0 +1,90 @@
+{
+  "ica__all__car__direct": [
+    "output/diagnostics/final-checks/ocular/cnn_lstm_direct/20261108-105229_seed1"
+  ],
+  "ica__all__car__residual": [
+    "output/diagnostics/final-checks/ocular/cnn_lstm_residual/20261108-110400_seed1",
+    "output/diagnostics/final-checks/ocular/cnn_lstm_residual/20261108-232336_seed2",
+    "output/diagnostics/final-checks/ocular/cnn_lstm_residual/20261108-234735_seed3"
+  ],
+  "raw__all__car__direct": [
+    "output/diagnostics/pre-design/screening/broadband__all/20261106-180430_seed1",
+    "output/diagnostics/pre-design/screening/broadband__all/20261107-035149_seed2",
+    "output/diagnostics/pre-design/screening/broadband__all/20261107-105612_seed3"
+  ],
+  "raw__all__car__residual": [
+    "output/diagnostics/pre-design/residual/cnn_lstm/20261106-155151_seed1",
+    "output/diagnostics/pre-design/residual/cnn_lstm/20261106-163003_seed2",
+    "output/diagnostics/pre-design/residual/cnn_lstm/20261106-170433_seed3"
+  ],
+  "ica__central9__car__direct": [
+    "output/diagnostics/final-checks/electrode-reduction/ica__central9__car__direct/20261108-174117_seed1"
+  ],
+  "ica__central9__car__residual": [
+    "output/diagnostics/final-checks/electrode-reduction/ica__central9__car__residual/20261108-174856_seed1"
+  ],
+  "ica__contralateral__car__direct": [
+    "output/diagnostics/final-checks/electrode-reduction/ica__contralateral__car__direct/20261108-175619_seed1"
+  ],
+  "ica__contralateral__car__residual": [
+    "output/diagnostics/final-checks/electrode-reduction/ica__contralateral__car__residual/20261108-180154_seed1",
+    "output/diagnostics/final-checks/electrode-reduction/ica__contralateral__car__residual/20261108-233819_seed2",
+    "output/diagnostics/final-checks/electrode-reduction/ica__contralateral__car__residual/20261109-000211_seed3"
+  ],
+  "ica__contralateral__mastoid__direct": [
+    "output/diagnostics/final-checks/electrode-reduction/ica__contralateral__mastoid__direct/20261108-180638_seed1"
+  ],
+  "ica__contralateral__mastoid__residual": [
+    "output/diagnostics/final-checks/electrode-reduction/ica__contralateral__mastoid__residual/20261108-181224_seed1"
+  ],
+  "ica__cz__car__direct": [
+    "output/diagnostics/final-checks/electrode-reduction/ica__cz__car__direct/20261108-181715_seed1"
+  ],
+  "ica__cz__car__residual": [
+    "output/diagnostics/final-checks/electrode-reduction/ica__cz__car__residual/20261108-182240_seed1"
+  ],
+  "ica__cz__mastoid__direct": [
+    "output/diagnostics/final-checks/electrode-reduction/ica__cz__mastoid__direct/20261108-182710_seed1"
+  ],
+  "ica__cz__mastoid__residual": [
+    "output/diagnostics/final-checks/electrode-reduction/ica__cz__mastoid__residual/20261108-183251_seed1",
+    "output/diagnostics/final-checks/electrode-reduction/ica__cz__mastoid__residual/20261108-234259_seed2",
+    "output/diagnostics/final-checks/electrode-reduction/ica__cz__mastoid__residual/20261109-000704_seed3"
+  ],
+  "ica__headband_ring__car__direct": [
+    "output/diagnostics/final-checks/electrode-reduction/ica__headband_ring__car__direct/20261108-183750_seed1"
+  ],
+  "ica__headband_ring__car__residual": [
+    "output/diagnostics/final-checks/electrode-reduction/ica__headband_ring__car__residual/20261108-184739_seed1"
+  ],
+  "ica__headband_ring__mastoid__direct": [
+    "output/diagnostics/final-checks/electrode-reduction/ica__headband_ring__mastoid__direct/20261108-185458_seed1"
+  ],
+  "ica__headband_ring__mastoid__residual": [
+    "output/diagnostics/final-checks/electrode-reduction/ica__headband_ring__mastoid__residual/20261108-190546_seed1"
+  ],
+  "ica__minimal3__car__direct": [
+    "output/diagnostics/final-checks/electrode-reduction/ica__minimal3__car__direct/20261108-191354_seed1"
+  ],
+  "ica__minimal3__car__residual": [
+    "output/diagnostics/final-checks/electrode-reduction/ica__minimal3__car__residual/20261108-191909_seed1"
+  ],
+  "ica__minimal3__mastoid__direct": [
+    "output/diagnostics/final-checks/electrode-reduction/ica__minimal3__mastoid__direct/20261108-192254_seed1"
+  ],
+  "ica__minimal3__mastoid__residual": [
+    "output/diagnostics/final-checks/electrode-reduction/ica__minimal3__mastoid__residual/20261108-192728_seed1"
+  ],
+  "raw__headband_ring__car__direct": [
+    "output/diagnostics/final-checks/electrode-reduction/raw__headband_ring__car__direct/20261108-193127_seed1"
+  ],
+  "raw__headband_ring__car__residual": [
+    "output/diagnostics/final-checks/electrode-reduction/raw__headband_ring__car__residual/20261108-194414_seed1"
+  ],
+  "raw__headband_ring__mastoid__direct": [
+    "output/diagnostics/final-checks/electrode-reduction/raw__headband_ring__mastoid__direct/20261108-195339_seed1"
+  ],
+  "raw__headband_ring__mastoid__residual": [
+    "output/diagnostics/final-checks/electrode-reduction/raw__headband_ring__mastoid__residual/20261108-200703_seed1"
+  ]
+}

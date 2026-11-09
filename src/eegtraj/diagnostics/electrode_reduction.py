@@ -98,7 +98,11 @@ def group_scores(group: Group, templates: dict[str, SubjectTemplates], residual_
     test = pd.concat([p[0] for p in parts]).groupby(level=0).mean()
     inner = pd.concat([p[1] for p in parts]).groupby(level=0).mean() if any(len(p[1]) for p in parts) else pd.DataFrame()
     cost = pd.DataFrame([p[2] for p in parts]).mean().to_dict()
-    return {"test": test, "inner": inner, "cost": cost, "n_seeds": len(runs), "runs": [r.as_posix() for r in runs]}
+    per_run = [{"group": group.name, "run": r.as_posix(), **{f"test_{k}": float(p[0][k].mean()) for k in METRICS},
+                **{f"inner_{k}": float(p[1][k].mean()) if k in p[1] else np.nan for k in METRICS}}
+               for r, p in zip(runs, parts)]
+    return {"test": test, "inner": inner, "cost": cost, "n_seeds": len(runs), "runs": [r.as_posix() for r in runs],
+            "per_run": per_run}
 
 
 def paired(a: pd.Series, b: pd.Series) -> dict:

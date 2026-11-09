@@ -79,6 +79,7 @@ def main() -> None:
         c = pd.read_csv(compute[-1])[["n_chans", "latency_cpu_median_ms", "latency_cuda_median_ms", "inference_peak_gpu_mb"]]
         table = table.merge(c.drop_duplicates("n_chans"), on="n_chans", how="left")
     table.to_csv(run_dir / "table.csv", index=False)
+    pd.DataFrame([r for v in scores.values() for r in v["per_run"]]).to_csv(run_dir / "per_run.csv", index=False)
     (run_dir / "runs.json").write_text(json.dumps({k: v["runs"] for k, v in scores.items()}, indent=2), encoding="utf-8")
     er.plot_curve(table, run_dir / "specific_vs_channels.png")
     names = json.loads((Path(CACHE) / "P1" / "manifest.json").read_text(encoding="utf-8"))["eeg_names"]

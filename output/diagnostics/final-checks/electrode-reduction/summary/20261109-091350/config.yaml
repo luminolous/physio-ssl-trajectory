@@ -1,0 +1,32 @@
+runs_root: output\diagnostics\final-checks\electrode-reduction
+seeds: null
+include_smoke: false
+residual_seed: 20261106
+n_permutations: 5
+groups:
+  ica__all__car__direct: output/diagnostics/final-checks/ocular/cnn_lstm_direct
+  ica__all__car__residual: output/diagnostics/final-checks/ocular/cnn_lstm_residual
+  raw__all__car__direct: output/diagnostics/pre-design/screening/broadband__all
+  raw__all__car__residual: output/diagnostics/pre-design/residual/cnn_lstm
+  ica__central9__car__direct: output/diagnostics/final-checks/electrode-reduction/ica__central9__car__direct
+  ica__central9__car__residual: output/diagnostics/final-checks/electrode-reduction/ica__central9__car__residual
+  ica__contralateral__car__direct: output/diagnostics/final-checks/electrode-reduction/ica__contralateral__car__direct
+  ica__contralateral__car__residual: output/diagnostics/final-checks/electrode-reduction/ica__contralateral__car__residual
+  ica__contralateral__mastoid__direct: output/diagnostics/final-checks/electrode-reduction/ica__contralateral__mastoid__direct
+  ica__contralateral__mastoid__residual: output/diagnostics/final-checks/electrode-reduction/ica__contralateral__mastoid__residual
+  ica__cz__car__direct: output/diagnostics/final-checks/electrode-reduction/ica__cz__car__direct
+  ica__cz__car__residual: output/diagnostics/final-checks/electrode-reduction/ica__cz__car__residual
+  ica__cz__mastoid__direct: output/diagnostics/final-checks/electrode-reduction/ica__cz__mastoid__direct
+  ica__cz__mastoid__residual: output/diagnostics/final-checks/electrode-reduction/ica__cz__mastoid__residual
+  ica__headband_ring__car__direct: output/diagnostics/final-checks/electrode-reduction/ica__headband_ring__car__direct
+  ica__headband_ring__car__residual: output/diagnostics/final-checks/electrode-reduction/ica__headband_ring__car__residual
+  ica__headband_ring__mastoid__direct: output/diagnostics/final-checks/electrode-reduction/ica__headband_ring__mastoid__direct
+  ica__headband_ring__mastoid__residual: output/diagnostics/final-checks/electrode-reduction/ica__headband_ring__mastoid__residual
+  ica__minimal3__car__direct: output/diagnostics/final-checks/electrode-reduction/ica__minimal3__car__direct
+  ica__minimal3__car__residual: output/diagnostics/final-checks/electrode-reduction/ica__minimal3__car__residual
+  ica__minimal3__mastoid__direct: output/diagnostics/final-checks/electrode-reduction/ica__minimal3__mastoid__direct
+  ica__minimal3__mastoid__residual: output/diagnostics/final-checks/electrode-reduction/ica__minimal3__mastoid__residual
+  raw__headband_ring__car__direct: output/diagnostics/final-checks/electrode-reduction/raw__headband_ring__car__direct
+  raw__headband_ring__car__residual: output/diagnostics/final-checks/electrode-reduction/raw__headband_ring__car__residual
+  raw__headband_ring__mastoid__direct: output/diagnostics/final-checks/electrode-reduction/raw__headband_ring__mastoid__direct
+  raw__headband_ring__mastoid__residual: output/diagnostics/final-checks/electrode-reduction/raw__headband_ring__mastoid__residual

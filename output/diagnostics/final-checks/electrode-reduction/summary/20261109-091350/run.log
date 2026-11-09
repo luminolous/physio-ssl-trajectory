@@ -1,0 +1,21 @@
+2026-11-09 09:13:51 INFO    eegtraj.utils.run: Run directory: output\diagnostics\final-checks\electrode-reduction\summary\20261109-091350
+2026-11-09 09:13:55 INFO    eegtraj.baselines: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1335787 training samples
+2026-11-09 09:13:56 INFO    eegtraj.baselines: template: 954 bins from -0.50 to 9.03 s after onset_s, 1335787 training samples
+2026-11-09 09:13:56 INFO    eegtraj.baselines: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1268758 training samples
+2026-11-09 09:13:56 INFO    eegtraj.baselines: template: 913 bins from -0.50 to 8.62 s after onset_s, 1268758 training samples
+2026-11-09 09:13:57 INFO    eegtraj.baselines: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1307884 training samples
+2026-11-09 09:13:57 INFO    eegtraj.baselines: template: 954 bins from -0.50 to 9.03 s after onset_s, 1307884 training samples
+2026-11-09 09:13:57 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1314741 training samples
+2026-11-09 09:13:57 INFO    eegtraj.baselines: template: 1268 bins from -0.50 to 12.17 s after onset_s, 1314741 training samples
+2026-11-09 09:13:57 INFO    eegtraj.baselines: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1315670 training samples
+2026-11-09 09:13:58 INFO    eegtraj.baselines: template: 954 bins from -0.50 to 9.03 s after onset_s, 1315670 training samples
+2026-11-09 09:13:58 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1318415 training samples
+2026-11-09 09:13:58 INFO    eegtraj.baselines: template: 1268 bins from -0.50 to 12.17 s after onset_s, 1318415 training samples
+2026-11-09 09:13:58 INFO    eegtraj.baselines: template_cue: 1677 bins from -1.01 to 15.75 s after ev_LEDOn, 1329706 training samples
+2026-11-09 09:13:59 INFO    eegtraj.baselines: template: 1268 bins from -0.50 to 12.17 s after onset_s, 1329706 training samples
+2026-11-09 09:13:59 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1306697 training samples
+2026-11-09 09:13:59 INFO    eegtraj.baselines: template: 1268 bins from -0.50 to 12.17 s after onset_s, 1306697 training samples
+2026-11-09 09:13:59 INFO    eegtraj.baselines: template_cue: 1677 bins from -1.01 to 15.75 s after ev_LEDOn, 1299484 training samples
+2026-11-09 09:14:00 INFO    eegtraj.baselines: template: 1268 bins from -0.50 to 12.17 s after onset_s, 1299484 training samples
+2026-11-09 09:14:00 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1325837 training samples
+2026-11-09 09:14:00 INFO    eegtraj.baselines: template: 1268 bins from -0.50 to 12.17 s after onset_s, 1325837 training samples
