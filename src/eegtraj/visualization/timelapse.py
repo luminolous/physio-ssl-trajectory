@@ -20,10 +20,13 @@ from eegtraj.data.windows import WRIST_INDEX, segment_samples
 OBJECT_INDEX = 0  # sensor 1 in kin_pos (4, 3, T): the object (docs/dataset.md)
 # Events drawn on the timeline, in time order: label -> trials column (LED-on is time 0 by definition).
 EVENTS = {"LED on": "ev_LEDOn", "onset": "onset_s", "first touch": "ev_tFirstDigitTouch", "lift-off": "ev_tLiftOff",
-          "replace": "ev_tReplace", "hand stop": "ev_tHandStop"}
-# Phase shown in the title: name of the interval that starts at each event.
-PHASE_AFTER = {"LED on": "reaction", "onset": "reach", "first touch": "grasp and load", "lift-off": "lift and hold",
-               "replace": "replace and release", "hand stop": "rest"}
+          "replace": "ev_tReplace", "release": "ev_tBothReleased", "hand stop": "ev_tHandStop"}
+# Movement phases of the ground truth, in order. Boundaries: onset, first touch, hold start, hold end, release, hand
+# stop. Hold start and end come from the object height (``hold_interval``); the dataset has no hold event.
+PHASES = ("reach", "lift", "hold", "replace", "return")
+PHASE_COLORS = {"reach": "#0d0887", "lift": "#7e03a8", "hold": "#cc4778", "replace": "#f0803a", "return": "#c9a800"}
+OUTSIDE_COLOR = "0.7"  # ground truth before onset and after hand stop
+HOLD_FRACTION = 0.9  # hold = object at or above this fraction of its peak rise above the lift-off height
 
 
 @dataclass
@@ -35,6 +38,7 @@ class LiftBundle:
     wrist, obj: (n, 3) cm, re-centered on the wrist position at kinematic onset (as the decoder target).
     preds: label -> (n, 3) cm, NaN outside the scored segment.
     events: label -> seconds since LED-on.
+    phases: phase -> (start, end) seconds since LED-on (``movement_phases``).
     """
 
     subject: str
@@ -50,6 +54,7 @@ class LiftBundle:
     events: dict[str, float]
     eeg_names: list[str] = field(default_factory=list)
     topo: np.ndarray | None = None
+    phases: dict[str, tuple[float, float]] = field(default_factory=dict)
 
     @property
     def rt_s(self) -> float:
@@ -74,13 +79,51 @@ def event_frames(events: dict[str, float], t_start_s: float, fps: float, speed: 
     return {k: int(round((v - t_start_s) * fps / speed)) for k, v in events.items()}
 
 
-def phase_at(events: dict[str, float], time_s: float) -> str:
-    """Phase name at ``time_s``: the interval after the last event at or before it, 'rest' before LED-on."""
-    current = "rest"
-    for label, t in events.items():
-        if time_s >= t:
-            current = PHASE_AFTER[label]
-    return current
+def hold_interval(t_s: np.ndarray, obj_z: np.ndarray, t_lift_off: float, t_replace: float,
+                  fraction: float = HOLD_FRACTION) -> tuple[float, float]:
+    """(start, end) s of the hold: first and last sample between lift-off and replace at which the object is at or
+    above ``fraction`` of its peak rise above the lift-off height."""
+    m = (t_s >= t_lift_off) & (t_s <= t_replace)
+    if not m.any():
+        raise ValueError("no sample between lift-off and replace")
+    rise = obj_z[m] - float(np.interp(t_lift_off, t_s, obj_z))
+    up = np.flatnonzero(rise >= fraction * rise.max())
+    return float(t_s[m][up[0]]), float(t_s[m][up[-1]])
+
+
+def movement_phases(events: dict[str, float], hold: tuple[float, float]) -> dict[str, tuple[float, float]]:
+    """Phase -> (start, end) s. reach: onset to first touch; lift: first touch to hold start (grasp, load, lift-off,
+    rise); hold; replace: hold end to release (lower, set down, release); return: release to hand stop."""
+    edges = [events["onset"], events["first touch"], hold[0], hold[1], events["release"], events["hand stop"]]
+    if np.any(np.diff(edges) < 0):
+        raise ValueError(f"phase boundaries out of order: {edges}")
+    return {p: (edges[k], edges[k + 1]) for k, p in enumerate(PHASES)}
+
+
+def phase_at(phases: dict[str, tuple[float, float]], events: dict[str, float], time_s: float) -> str:
+    """Phase name at ``time_s``: a movement phase, 'reaction' between LED-on and onset, else 'rest'."""
+    for name, (a, b) in phases.items():
+        if a <= time_s < b:
+            return name
+    if events["LED on"] <= time_s < events["onset"]:
+        return "reaction"
+    return "rest"
+
+
+def phase_samples(t_s: np.ndarray, phases: dict[str, tuple[float, float]], i0: int, i: int) -> dict[str, slice]:
+    """Sample slice of every ground-truth piece drawn from ``i0`` up to sample ``i``: 'before' (to onset), each phase,
+    'after' (from hand stop). Neighbouring pieces share their boundary sample, so the line stays continuous. Pieces
+    with fewer than two samples are left out."""
+    names = ["before", *phases, "after"]
+    edges = [sample_at(t_s, a) for a, _ in phases.values()] + [sample_at(t_s, list(phases.values())[-1][1])]
+    lo = [i0] + edges
+    hi = edges + [len(t_s) - 1]
+    out = {}
+    for name, a, b in zip(names, lo, hi):
+        a, b = max(a, i0), min(b, i)
+        if b > a:
+            out[name] = slice(a, b + 1)
+    return out
 
 
 # ---------------------------------------------------------------- data
@@ -133,8 +176,10 @@ def load_lift(cache_dir: str | Path, subject: str, row: int, channels: list[str]
     topo = np.asarray(data[f"eeg_{topomap_band}_car"][:, sl], dtype=np.float64) if topomap_band else None
     preds = {label: lift_predictions(Path(p), subject, trials, row, fs, wrist) for label, p in prediction_runs.items()}
     events = {label: float(tr[col]) - float(tr.ev_LEDOn) for label, col in EVENTS.items()}
-    return LiftBundle(subject, int(tr.series), int(tr.lift), int(tr.weight_g), str(tr.surface), lift_times(tr, fs), eeg,
-                      wrist, obj, preds, events, names, topo)
+    t_s = lift_times(tr, fs)
+    phases = movement_phases(events, hold_interval(t_s, obj[:, 2], events["lift-off"], events["replace"]))
+    return LiftBundle(subject, int(tr.series), int(tr.lift), int(tr.weight_g), str(tr.surface), t_s, eeg, wrist, obj,
+                      preds, events, names, topo, phases)
 
 
 def select_lifts(trials: dict[str, pd.DataFrame], rules: dict[str, dict], seed: int,
@@ -177,8 +222,9 @@ def select_lifts(trials: dict[str, pd.DataFrame], rules: dict[str, dict], seed: 
 
 # ---------------------------------------------------------------- animation
 
-STYLE = {"ground truth": dict(color="k", lw=2.4), "template_cue": dict(color="0.55", lw=1.5, ls="--")}
-PALETTE = ("tab:blue", "tab:orange", "tab:green", "tab:purple", "tab:brown")
+GROUND_TRUTH_LW = 3.0
+STYLE = {"template_cue": dict(color="0.55", lw=1.5, ls="--")}
+PALETTE = ("tab:green", "tab:cyan", "tab:brown", "tab:olive", "tab:blue")  # kept apart from PHASE_COLORS
 EMPTY = np.empty(0)  # mplot3d needs arrays, not lists, for empty lines
 
 
@@ -216,7 +262,7 @@ def animate_lift(bundle: LiftBundle, path: str | Path, fps: float = 25, speed: f
     i0, i1 = sample_at(t, t_start), samples[-1]
 
     fig = plt.figure(figsize=figsize, dpi=dpi)
-    gs = fig.add_gridspec(1, 2, width_ratios=[1.0, 1.05], wspace=0.15, left=0.08, right=0.98, bottom=0.09, top=0.88)
+    gs = fig.add_gridspec(1, 2, width_ratios=[1.0, 1.05], wspace=0.15, left=0.08, right=0.98, bottom=0.14, top=0.88)
     ax_eeg = fig.add_subplot(gs[0, 0])
     ax3d = fig.add_subplot(gs[0, 1], projection="3d")
     ax_topo = fig.add_axes((0.85, 0.66, 0.13, 0.2)) if topomap and bundle.topo is not None else None
@@ -234,10 +280,17 @@ def animate_lift(bundle: LiftBundle, path: str | Path, fps: float = 25, speed: f
     ax_eeg.set_yticks([-k * offset for k in range(len(labels))], labels)
     ax_eeg.set_xlim(t_start, t_end)
     ax_eeg.set_ylim(-(len(labels) - 0.4) * offset, 0.8 * offset)
+    for name, (a, b) in bundle.phases.items():  # phase bands, same colours as the ground truth
+        ax_eeg.axvspan(a, b, color=PHASE_COLORS[name], alpha=0.08, lw=0)
+    last_top = -np.inf
+    y_bottom = -(len(labels) - 0.4) * offset
     for k, (lab, te) in enumerate(bundle.events.items()):
         if t_start <= te <= t_end:
             ax_eeg.axvline(te, color="tab:blue", lw=0.8, ls=":")
-            ax_eeg.text(te, 0.8 * offset, lab, rotation=90, va="top", ha="right", fontsize=7, color="tab:blue")
+            top = te - last_top >= 0.35  # a label close to the previous one goes to the bottom edge
+            ax_eeg.text(te, 0.8 * offset if top else y_bottom, lab, rotation=90, va="top" if top else "bottom",
+                        ha="right", fontsize=7, color="tab:blue")
+            last_top = te if top else last_top
     ax_eeg.set_xlabel("time since LED-on (s)")
     ax_eeg.set_title(f"Input: EEG 0.1-40 Hz, causal, CAR; trace spacing {offset:.0f} (cached units, likely uV); "
                      "red = ICA-cleaned", fontsize=9)
@@ -250,14 +303,36 @@ def animate_lift(bundle: LiftBundle, path: str | Path, fps: float = 25, speed: f
         touch = bundle.wrist[sample_at(t, bundle.events["first touch"])]
         view = (20.0, float(np.degrees(np.arctan2(touch[1], touch[0]))) - 90.0)
     ax3d.view_init(*view)
-    series = {"ground truth": bundle.wrist} | bundle.preds
+    ax3d.computed_zorder = False  # fixed draw order: ground truth above the predictions
+    # Ground truth: one line per phase (shows the direction of movement), grey before onset and after hand stop.
+    from matplotlib.lines import Line2D
+    gt_colors = {"before": OUTSIDE_COLOR} | PHASE_COLORS | {"after": OUTSIDE_COLOR}
+    gt_lines = {name: ax3d.plot(EMPTY, EMPTY, EMPTY, color=c, lw=GROUND_TRUTH_LW, solid_capstyle="round", zorder=4)[0]
+                for name, c in gt_colors.items()}
+    (gt_head,) = ax3d.plot(EMPTY, EMPTY, EMPTY, "o", color="k", ms=5, zorder=5)
+    i_stop = sample_at(t, bundle.phases["return"][1])
+    w0 = bundle.wrist[sample_at(t, bundle.phases["reach"][0])]
+    w1 = bundle.wrist[i_stop]
+    marker = dict(ms=10, mfc="white", mec="k", mew=2.0, ls="", zorder=6)
+    ax3d.plot(w0[0:1], w0[1:2], w0[2:3], marker="o", **marker)  # start: wrist at onset, shown throughout
+    (end_pt,) = ax3d.plot(EMPTY, EMPTY, EMPTY, marker="s", **marker)  # end: wrist at hand stop, once reached
+    preds = bundle.preds
     lines, heads = {}, {}
-    for k, (lab, arr) in enumerate(series.items()):
-        st = STYLE.get(lab, dict(color=PALETTE[(k - 2) % len(PALETTE)], lw=1.4))
+    for k, (lab, arr) in enumerate(preds.items()):
+        st = STYLE.get(lab, dict(color=PALETTE[(k - 1) % len(PALETTE)], lw=1.4))
         (lines[lab],) = ax3d.plot(EMPTY, EMPTY, EMPTY, label=lab, **st)
         (heads[lab],) = ax3d.plot(EMPTY, EMPTY, EMPTY, "o", color=st["color"], ms=4)
-    (obj_pt,) = ax3d.plot(EMPTY, EMPTY, EMPTY, "s", color="tab:olive", ms=8, label="object (sensor 1)")
-    ax3d.legend(loc="upper left", fontsize=7, bbox_to_anchor=(0.0, 1.02))
+    (obj_pt,) = ax3d.plot(EMPTY, EMPTY, EMPTY, "s", color="k", alpha=0.45, ms=7, label="object (sensor 1)")
+    pred_legend = ax3d.legend(loc="upper left", fontsize=7, bbox_to_anchor=(0.0, 1.02), title="predictions",
+                              title_fontsize=7)
+    gt_handles = [Line2D([], [], color=PHASE_COLORS[p], lw=GROUND_TRUTH_LW, label=p) for p in PHASES]
+    gt_handles += [Line2D([], [], color=OUTSIDE_COLOR, lw=GROUND_TRUTH_LW, label="before onset, after hand stop"),
+                   Line2D([], [], marker="o", **(marker | dict(ms=7)), label="start (onset)"),
+                   Line2D([], [], marker="s", **(marker | dict(ms=7)), label="end (hand stop)")]
+    pos = ax3d.get_position()  # strip under the 3D panel, clear of its tick labels
+    fig.legend(handles=gt_handles, loc="lower center", bbox_to_anchor=((pos.x0 + pos.x1) / 2, 0.0), ncol=4,
+               fontsize=7, title="ground truth (wrist), by phase", title_fontsize=7, frameon=False)
+    ax3d.add_artist(pred_legend)
 
     topo_vlim = None
     info = None
@@ -273,7 +348,14 @@ def animate_lift(bundle: LiftBundle, path: str | Path, fps: float = 25, speed: f
     def draw(f: int):
         i = int(samples[f])
         cursor.set_xdata([times[f], times[f]])
-        for lab, arr in series.items():
+        pieces = phase_samples(t, bundle.phases, i0, i)
+        for name, ln in gt_lines.items():
+            a = bundle.wrist[pieces[name]] if name in pieces else np.empty((0, 3))
+            ln.set_data_3d(a[:, 0], a[:, 1], a[:, 2])
+        gt_head.set_data_3d(bundle.wrist[i, 0:1], bundle.wrist[i, 1:2], bundle.wrist[i, 2:3])
+        end = w1 if i >= i_stop else np.full(3, np.nan)
+        end_pt.set_data_3d(end[0:1], end[1:2], end[2:3])
+        for lab, arr in preds.items():
             a = arr[i0:i + 1]
             lines[lab].set_data_3d(a[:, 0], a[:, 1], a[:, 2])
             last = arr[i] if np.all(np.isfinite(arr[i])) else np.full(3, np.nan)
@@ -286,7 +368,7 @@ def animate_lift(bundle: LiftBundle, path: str | Path, fps: float = 25, speed: f
                                  vlim=topo_vlim, cmap="RdBu_r")
             ax_topo.set_title("scalp EEG at the cursor (uncleaned)", fontsize=8)
         title.set_text(f"{bundle.subject} S{bundle.series} lift {bundle.lift} | {bundle.weight_g} g, {bundle.surface} | "
-                       f"t = {times[f]:5.2f} s after LED-on | phase: {phase_at(bundle.events, times[f])}")
+                       f"t = {times[f]:5.2f} s after LED-on | phase: {phase_at(bundle.phases, bundle.events, times[f])}")
         return []
 
     anim = FuncAnimation(fig, draw, frames=len(times), blit=False)

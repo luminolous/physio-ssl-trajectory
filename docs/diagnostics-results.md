@@ -544,6 +544,89 @@ These results inform the framing. They do not decide it or the architecture; tha
 
 Caveats for both: seed 1 only for the cleaned runs and the calibration grid; one draw at k = all; ICA fitting is transductive; the within-subject test series are all weight series.
 
+## Last pre-design checks and visualization
+
+Added on 2026-11-09. Two analyses to bound the design space before the architecture discussion, and one notebook to look at single lifts. Same protocol as the final pre-design checks (LOSO over the 10 test subjects, inner validation as the selection readout). Outputs are under `output/diagnostics/final-checks/` and `output/diagnostics/visualization/`.
+
+These results inform the design. They do not decide it.
+
+| Check | Main result |
+|---|---|
+| Oracle-warp ceiling | Warping the cue template with 5 numbers per trial (shift, time scale, per-axis amplitude) fitted to the true trajectory reaches r 0.918 / R² 0.840, against 0.803 / 0.524 for `template_cue`; most of the r headroom is timing |
+| Electrode reduction curve | On ICA-cleaned data every small montage keeps r and R² at the template level but loses trial-specific readout: about a third with 6 contralateral channels (CAR32), about 60 % with Cz alone and a linked-mastoid reference (3 seeds) |
+| Movement timelapse notebook | 4 videos of single lifts: EEG traces, events, ground truth coloured by phase, and 5 decoders' predictions in 3D, in real time |
+
+### Oracle-warp ceiling
+
+- Analysis only: every parameter is fitted to the test trial's own trajectory, so these numbers are ceilings, never decoder results.
+- Base shape: the fold's cue template (identity warp = `template_cue`, checked per subject). Variants (decided by the user): time shift tau; tau + time scale s; + per-axis amplitude A; + per-axis offset; piecewise warp from the trial's own phase landmarks (onset, first touch, lift-off, replace, hand stop) to the template's median landmarks, without and with a bounded refinement; minimum jerk as four superposed submovements (reach, lift, lower, return). Bounds: tau [-1, 2] s, s [0.5, 2], A [0.3, 3], offset ±10 cm.
+- LOSO, 10 test subjects (mean); every oracle variant is above `template_cue` in 10/10 subjects on r and R²:
+
+| Method | Free parameters | r | R² | NRMSE | `residual_r_specific` |
+|---|---|---|---|---|---|
+| `template_cue` | 0 | 0.803 | 0.524 | 0.216 | - |
+| Oracle template (onset) | 0 | 0.864 | 0.622 | 0.193 | 0.195 |
+| tau | 1 | 0.879 | 0.650 | 0.187 | 0.171 |
+| tau + scale | 2 | 0.916 | 0.734 | 0.163 | 0.291 |
+| + amplitude | 5 | 0.918 | 0.840 | 0.129 | 0.320 |
+| + offset | 8 | 0.918 | 0.846 | 0.127 | 0.324 |
+| Piecewise, landmarks | 6 (+5 oracle events) | 0.914 | 0.837 | 0.132 | 0.264 |
+| Piecewise, refined | 11 | 0.923 | 0.854 | 0.123 | 0.324 |
+| Minimum jerk | 23 | 0.977 | 0.957 | 0.047 | 0.568 |
+| CNN-LSTM 2 s residual (EEG) | - | 0.813 | 0.510 | 0.218 | 0.192 |
+| CNN-LSTM 2 s residual, ICA (EEG) | - | 0.796 | 0.487 | 0.225 | 0.080 |
+
+- Where the headroom is: tau + scale give r +0.114 (of +0.121 for the refined piecewise warp). Amplitude adds R² +0.106 but no r (by construction). Offset adds almost nothing. Per-phase warping adds r +0.005 to +0.007. Minimum jerk, with 23 free parameters, is closer to a smooth fit of the trajectory than to a ceiling for a small head.
+- The parameters are behavioral. Per-subject Spearman rho (median over subjects): tau vs reaction time 0.86; scale vs movement duration 0.89-0.96. tau has a subject-level part (per-subject median from -0.34 s for P1 to +0.36 s for P2 and P7; within-subject IQR 0.07-0.39 s).
+- Bound hits are below 0.5 % of trials for tau, s, A, and offset. In the refined piecewise warp the hand-stop and replace breakpoints sit at their ±0.3 s bound in 91 % and 55 % of trials, because the cross-subject template is a blurred mean without a sharp return landmark; its gain over the landmark warp is small (r +0.009).
+- Reading: a parametric head with 5 numbers per trial has a ceiling of r 0.918 / R² 0.840, well above `template_cue` and every EEG decoder. It is reachable only if tau and s can be predicted; EEG-derived onset did not beat the cue earlier (`onset_template` r 0.754 vs 0.803, D12). A sharper base shape than the blurred template would raise the ceiling of any warp.
+- Run folder: `output/diagnostics/final-checks/oracle-warp/20261108-164630/` (figures `summary_by_method.png`, `parameters_vs_behavior.png`, overlays at the 5 %, 50 %, 95 % quantiles of `template_cue` per-trial r). `oracle_predictions.npz` is git-ignored.
+
+### Electrode reduction curve
+
+- Question: how much of the trial-specific readout survives on montages a small device could carry. CNN-LSTM 2 s, D11 budget, direct and residual form, ICA-cleaned data (and the headband ring also uncleaned).
+- Montages: all 32, central 9, contralateral 6, minimal 3, Cz, headband ring (10). References (decided by the user): (a) CAR over 32 channels, then select; (b) linked mastoid (TP9+TP10)/2, the realistic option for a small device, for contralateral 6, minimal 3, Cz, and the ring. 22 runs at seed 1; seeds 2-3 for cleaned all 32, contralateral 6 CAR, and Cz mastoid (residual form).
+- `residual_r_specific`, LOSO test (inner validation in brackets), seed 1:
+
+| Montage | (a) CAR32 direct | (a) CAR32 residual | (b) mastoid direct | (b) mastoid residual |
+|---|---|---|---|---|
+| All 32, cleaned | 0.068 (0.062) | 0.080 (0.080) | - | - |
+| Central 9 | 0.034 (0.035) | 0.057 (0.063) | - | - |
+| Contralateral 6 | 0.032 (0.032) | 0.056 (0.058) | 0.020 (0.024) | 0.037 (0.033) |
+| Minimal 3 | 0.043 (0.041) | 0.058 (0.062) | 0.009 (0.015) | 0.020 (0.027) |
+| Cz | 0.031 (0.032) | 0.061 (0.056) | 0.020 (0.022) | 0.039 (0.027) |
+| Ring, cleaned | 0.041 (0.055) | 0.055 (0.060) | 0.020 (0.032) | 0.027 (0.040) |
+| Ring, uncleaned | 0.105 (0.114) | 0.199 (0.225) | 0.076 (0.105) | 0.176 (0.207) |
+| All 32, uncleaned | 0.134 (0.161) | 0.192 (-) | - | - |
+
+- Seeds 2-3, `residual_r_specific` per seed (1 / 2 / 3), test (inner validation): all 32 cleaned 0.080 / 0.081 / 0.060 (0.080 / 0.081 / 0.079); contralateral 6 CAR 0.056 / 0.050 / 0.057 (0.058 / 0.056 / 0.054); Cz mastoid 0.039 / 0.041 / 0.039 (0.027 / 0.027 / 0.036). Inner-validation seed spread is at most 0.01.
+- Seed-averaged, paired against all 32 cleaned (3 seeds each):
+
+| Montage | Inner-val Δ specific | Folds above | p | Test Δ specific | Subjects above | p | Test r / R² |
+|---|---|---|---|---|---|---|---|
+| Contralateral 6, CAR32 | -0.024 | 1/10 | 0.010 | -0.019 | 2/10 | 0.105 | 0.802 / 0.509 |
+| Cz, linked mastoid | -0.050 | 0/10 | 0.002 | -0.034 | 1/10 | 0.049 | 0.803 / 0.517 |
+| All 32 cleaned (reference) | - | - | - | - | - | - | 0.797 / 0.490 |
+
+- Cleaned data: the step from 32 channels to a small montage is real on the selection readout and stable across seeds; about a third of the remaining trial-specific readout is lost with 6 contralateral channels under CAR32, about 60 % with one realistic electrode. The small montages are flat against each other (Cz under CAR 0.061 vs central 9 0.057): the step is 32 to 9, not 9 to 1.
+- Reference: linked mastoid is below CAR32 in 20 of 20 comparisons (montage × form × split). CAR over 32 lends a small montage information from all 32 electrodes, so "Cz under CAR" is not a one-electrode device.
+- Headband ring: uncleaned it matches all 32 uncleaned in residual form (0.199 vs 0.192, 6/10, p 0.63) while missing the vertex; cleaned it falls to the level of the central montages. This fits an ocular source for most of the uncleaned readout.
+- Main metrics: residual-form r 0.798-0.805 and R² 0.50-0.52 for every montage (template dominated). Direct-form r falls with fewer channels (0.468 central 9 to 0.304 Cz mastoid, vs 0.485).
+- Compute (batch 1): parameters 10 843 (32 channels) to 6 875 (Cz), spatial layer only; epoch 2.2-4.9 s; peak training GPU 0.41-0.54 GB vs 0.98 GB; CPU latency 0.29-0.34 ms vs 0.47 ms. Compute is not a constraint for any montage.
+- Caveats: channel count changes model capacity (spatial layer); ICA is fitted on 32 channels, so cleaned small montages are not realizable on a small device as they stand; linked mastoid needs 2 extra electrodes; epoch times of the all-32 comparators come from runs that shared the GPU; most groups are seed 1 only.
+- Run folders: runs `output/diagnostics/final-checks/electrode-reduction/<data>__<montage>__<reference>__<form>/` (table below); comparison seed 1 `output/diagnostics/final-checks/electrode-reduction/summary/20261108-203103/`, all seeds `output/diagnostics/final-checks/electrode-reduction/summary/20261109-091350/` (table.csv, per_run.csv, runs.json, summary.md, `specific_vs_channels.png`, `montages.png`); compute benchmark `output/diagnostics/final-checks/electrode-reduction/compute/20261108-172810/`.
+
+### Movement timelapse notebook
+
+- Notebook `notebook/visualize_movement_timelapse.ipynb`, helpers in `src/eegtraj/visualization/timelapse.py`. Exploration only; it trains nothing and reads saved LOSO predictions.
+- Each video shows one lift in real time (25 fps, 4 samples per frame at 100 Hz): EEG traces with a moving cursor and event markers (LED on, onset, first touch, lift-off, replace, release, hand stop), a 3D panel with the trajectories drawn up to the cursor, the object sensor, a topomap inset, and the current phase in the title.
+- Ground truth is coloured by phase, so the direction of movement is visible: reach (onset to first touch), lift (first touch to hold start: grasp, load, lift-off, rise), hold (object at or above 90 % of its peak rise above the lift-off height), replace (hold end to release of both digits: lower, set down, release), return (release to hand stop); grey before onset and after hand stop. The dataset has no hold event, so hold start and end come from the object height. A circle marks the start (wrist at onset), a square the end (wrist at hand stop, shown once reached). The ground truth is drawn above the predictions, and the EEG panel shades the same phases.
+- Prediction panels (seed 1 of each LOSO run): `template_cue`, CNN-LSTM direct, CNN-LSTM residual, EEGNet residual, CNN-LSTM residual on ICA-cleaned EEG.
+- Lifts (seed 20261109, test subjects, no onset-mismatch or filter-transient lifts): typical P8 S1 lift 24 (RT 0.39 s), slow reaction P2 S2 lift 15 (RT 1.12 s), P7 S7 lift 31, heavy weight P11 S4 lift 18 (660 g).
+- Timing check in the notebook: frames in file equal expected frames; the cursor sample equals the frame time on the 100 Hz grid; every event within half a frame of its nearest frame.
+- Timing of the current render: frames in file equal expected frames for all 4 videos; largest event-to-frame gap 0.018 s (half a frame is 0.02 s).
+- Run folder: `output/diagnostics/visualization/timelapse/20261109-105955/` (4 MP4, 7.2-10.3 s, 1.81 MB in total; selection.csv, timing.csv; MP4 files are tracked). The first render, with a single black ground-truth line, is `output/diagnostics/visualization/timelapse/20261109-094843/`.
+
 ## Run directories
 
 Each row is one configuration, with several run IDs being seeds. r is the mean over subjects, seeds averaged first. Source tables: `output/diagnostics/summary/models.md`, `output/diagnostics/history/summary/`, `output/diagnostics/within_subject/summary/`, `output/diagnostics/artifact-controls/summary/`. Residual metrics: `output/diagnostics/residual/20261106-081026/residual.csv`.
@@ -619,3 +702,33 @@ r is the mean over test subjects (LOSO). Calibration runs are listed in their se
 | `output/diagnostics/final-checks/calibration/loso_residual/` | `20261108-121237_seed1` | 0.812 |
 | `output/diagnostics/final-checks/calibration/loso_residual_ica/` | `20261108-125017_seed1` | 0.796 |
 | `output/diagnostics/final-checks/calibration/loso_residual_prefrontal/` | `20261108-131720_seed1` | 0.816 |
+
+### Last-check runs
+
+r is the mean over test subjects (LOSO), averaged over seeds. Analysis runs without a decoder (oracle warp, comparison, compute benchmark, timelapse) are listed in their sections. The cleaned all-32 comparator is `output/diagnostics/final-checks/ocular/cnn_lstm_residual/`, now with seeds 2-3.
+
+| Folder | Run IDs | r |
+|---|---|---|
+| `output/diagnostics/final-checks/ocular/cnn_lstm_residual/` | `20261108-110400_seed1`, `20261108-232336_seed2`, `20261108-234735_seed3` | 0.797 |
+| `output/diagnostics/final-checks/electrode-reduction/ica__central9__car__direct/` | `20261108-174117_seed1` | 0.468 |
+| `output/diagnostics/final-checks/electrode-reduction/ica__central9__car__residual/` | `20261108-174856_seed1` | 0.799 |
+| `output/diagnostics/final-checks/electrode-reduction/ica__contralateral__car__direct/` | `20261108-175619_seed1` | 0.442 |
+| `output/diagnostics/final-checks/electrode-reduction/ica__contralateral__car__residual/` | `20261108-180154_seed1`, `20261108-233819_seed2`, `20261109-000211_seed3` | 0.802 |
+| `output/diagnostics/final-checks/electrode-reduction/ica__contralateral__mastoid__direct/` | `20261108-180638_seed1` | 0.359 |
+| `output/diagnostics/final-checks/electrode-reduction/ica__contralateral__mastoid__residual/` | `20261108-181224_seed1` | 0.799 |
+| `output/diagnostics/final-checks/electrode-reduction/ica__cz__car__direct/` | `20261108-181715_seed1` | 0.387 |
+| `output/diagnostics/final-checks/electrode-reduction/ica__cz__car__residual/` | `20261108-182240_seed1` | 0.805 |
+| `output/diagnostics/final-checks/electrode-reduction/ica__cz__mastoid__direct/` | `20261108-182710_seed1` | 0.304 |
+| `output/diagnostics/final-checks/electrode-reduction/ica__cz__mastoid__residual/` | `20261108-183251_seed1`, `20261108-234259_seed2`, `20261109-000704_seed3` | 0.803 |
+| `output/diagnostics/final-checks/electrode-reduction/ica__headband_ring__car__direct/` | `20261108-183750_seed1` | 0.346 |
+| `output/diagnostics/final-checks/electrode-reduction/ica__headband_ring__car__residual/` | `20261108-184739_seed1` | 0.801 |
+| `output/diagnostics/final-checks/electrode-reduction/ica__headband_ring__mastoid__direct/` | `20261108-185458_seed1` | 0.214 |
+| `output/diagnostics/final-checks/electrode-reduction/ica__headband_ring__mastoid__residual/` | `20261108-190546_seed1` | 0.798 |
+| `output/diagnostics/final-checks/electrode-reduction/ica__minimal3__car__direct/` | `20261108-191354_seed1` | 0.437 |
+| `output/diagnostics/final-checks/electrode-reduction/ica__minimal3__car__residual/` | `20261108-191909_seed1` | 0.804 |
+| `output/diagnostics/final-checks/electrode-reduction/ica__minimal3__mastoid__direct/` | `20261108-192254_seed1` | 0.338 |
+| `output/diagnostics/final-checks/electrode-reduction/ica__minimal3__mastoid__residual/` | `20261108-192728_seed1` | 0.802 |
+| `output/diagnostics/final-checks/electrode-reduction/raw__headband_ring__car__direct/` | `20261108-193127_seed1` | 0.509 |
+| `output/diagnostics/final-checks/electrode-reduction/raw__headband_ring__car__residual/` | `20261108-194414_seed1` | 0.815 |
+| `output/diagnostics/final-checks/electrode-reduction/raw__headband_ring__mastoid__direct/` | `20261108-195339_seed1` | 0.417 |
+| `output/diagnostics/final-checks/electrode-reduction/raw__headband_ring__mastoid__residual/` | `20261108-200703_seed1` | 0.816 |

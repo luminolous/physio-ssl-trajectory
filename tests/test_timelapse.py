@@ -7,9 +7,12 @@ import pytest
 from eegtraj.visualization.timelapse import (
     event_frames,
     frame_times,
+    hold_interval,
     lift_predictions,
     lift_times,
+    movement_phases,
     phase_at,
+    phase_samples,
     sample_at,
     select_lifts,
 )
@@ -47,13 +50,52 @@ def test_event_frames_put_the_cursor_on_each_event():
     assert fr["LED on"] == 25
 
 
-def test_phase_names_follow_the_events():
-    events = {"LED on": 0.0, "onset": 0.4, "first touch": 1.4, "lift-off": 1.9, "replace": 5.0, "hand stop": 6.0}
-    assert phase_at(events, -0.5) == "rest"
-    assert phase_at(events, 0.2) == "reaction"
-    assert phase_at(events, 1.0) == "reach"
-    assert phase_at(events, 3.0) == "lift and hold"
-    assert phase_at(events, 6.5) == "rest"
+EVENTS = {"LED on": 0.0, "onset": 0.4, "first touch": 1.4, "lift-off": 1.9, "replace": 5.0, "release": 5.3,
+          "hand stop": 6.0}
+
+
+def test_hold_interval_from_object_height():
+    t = np.arange(1, 801) / FS - 1.0  # -0.99 .. 7.0 s
+    z = np.full(t.size, 5.0)
+    rise = (t >= 1.9) & (t < 2.4)
+    z[rise] = 5.0 + 6.0 * (t[rise] - 1.9) / 0.5  # rises 6 cm in 0.5 s, holds, lowers 4.0-5.0 s
+    z[(t >= 2.4) & (t < 4.0)] = 11.0
+    low = (t >= 4.0) & (t < 5.0)
+    z[low] = 11.0 - 6.0 * (t[low] - 4.0)
+    a, b = hold_interval(t, z, 1.9, 5.0)
+    assert a == pytest.approx(2.35) and b == pytest.approx(4.1)  # 90 % of the 6 cm rise = 10.4 cm
+
+
+def test_phases_and_phase_names():
+    phases = movement_phases(EVENTS, (2.4, 4.0))
+    assert list(phases) == ["reach", "lift", "hold", "replace", "return"]
+    assert phases["reach"] == (0.4, 1.4) and phases["hold"] == (2.4, 4.0) and phases["return"] == (5.3, 6.0)
+    assert phase_at(phases, EVENTS, -0.5) == "rest"
+    assert phase_at(phases, EVENTS, 0.2) == "reaction"
+    assert phase_at(phases, EVENTS, 1.0) == "reach"
+    assert phase_at(phases, EVENTS, 2.0) == "lift"
+    assert phase_at(phases, EVENTS, 3.0) == "hold"
+    assert phase_at(phases, EVENTS, 4.5) == "replace"
+    assert phase_at(phases, EVENTS, 5.5) == "return"
+    assert phase_at(phases, EVENTS, 6.5) == "rest"
+    with pytest.raises(ValueError, match="order"):
+        movement_phases(EVENTS, (4.0, 2.4))
+
+
+def test_phase_samples_are_continuous_and_stop_at_the_cursor():
+    t = np.arange(1, 801) / FS - 1.0
+    phases = movement_phases(EVENTS, (2.4, 4.0))
+    i0 = sample_at(t, -0.5)
+    full = phase_samples(t, phases, i0, len(t) - 1)
+    assert list(full) == ["before", "reach", "lift", "hold", "replace", "return", "after"]
+    pieces = list(full.values())
+    assert pieces[0].start == i0 and pieces[-1].stop == len(t)
+    for p, q in zip(pieces, pieces[1:]):
+        assert p.stop - 1 == q.start  # shared boundary sample
+    assert t[full["reach"].start] == pytest.approx(0.4) and t[full["return"].stop - 1] == pytest.approx(6.0)
+    mid = phase_samples(t, phases, i0, sample_at(t, 1.0))  # cursor inside the reach
+    assert list(mid) == ["before", "reach"] and mid["reach"].stop - 1 == sample_at(t, 1.0)
+    assert list(phase_samples(t, phases, i0, sample_at(t, 0.4))) == ["before"]
 
 
 def test_lift_predictions_place_saved_samples_on_the_window(tmp_path):

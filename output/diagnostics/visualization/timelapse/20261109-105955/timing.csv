@@ -1,0 +1,5 @@
+video,frames,frames_in_file,seconds_in_file,expected_s,max_cursor_vs_sample_s,max_event_vs_frame_s,samples_per_frame
+typical_P8_S1_lift24.mp4,180,180,7.2,7.2,0.0,0.018,[4]
+slow_reaction_P2_S2_lift15.mp4,257,257,10.28,10.28,0.0,0.016,[4]
+P7_P7_S7_lift31.mp4,197,197,7.88,7.88,0.0,0.018,[4]
+heavy_weight_P11_S4_lift18.mp4,213,213,8.52,8.52,0.0,0.018,[4]
