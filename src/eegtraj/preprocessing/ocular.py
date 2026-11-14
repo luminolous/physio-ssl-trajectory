@@ -82,3 +82,38 @@ def remove_components(x: np.ndarray, ica: OcularICA | None) -> np.ndarray:
         return x
     sel = ica.selected
     return x - ica.mixing[:, sel] @ (ica.unmixing[sel] @ x)
+
+
+PROXY_ORDER = ("VEOG", "HEOG")
+
+
+def proxy_rows(eeg: np.ndarray, names: list[str]) -> np.ndarray:
+    """EOG proxies as rows, float32 (2, T) in the order of :data:`PROXY_ORDER`: VEOG = mean(Fp1, Fp2), HEOG = F7 - F8.
+
+    Input of the ocular branch (proposed-model, SSL-3), computed from the CAR cache (32, T). HEOG does not depend on
+    the reference; VEOG is the CAR-referenced mean of Fp1 and Fp2.
+    """
+    p = eog_proxies(np.asarray(eeg), names)
+    return np.stack([p[k] for k in PROXY_ORDER]).astype(np.float32)
+
+
+def sources_from_removed(uncleaned: np.ndarray, cleaned: np.ndarray, mixing_sel: np.ndarray) -> tuple[np.ndarray, float]:
+    """Time courses of the removed ICA components, recovered from two CAR caches that share one linear chain.
+
+    Cleaning removes A_sel s before a linear chain L (causal band-pass, CAR, anti-alias, decimation), so
+    uncleaned - cleaned = C A_sel L(s), with C the CAR matrix. The filtered sources are therefore
+    L(s) = pinv(C A_sel) (uncleaned - cleaned).
+
+    Args:
+        uncleaned, cleaned: (n_channels, T), same samples. mixing_sel: (n_channels, k) selected mixing columns.
+
+    Returns:
+        float64 (k, T) filtered source time courses, and the relative residual of the rank-k fit (near 0 when the
+        caches differ only by the removed components).
+    """
+    diff = np.asarray(uncleaned, dtype=np.float64) - np.asarray(cleaned, dtype=np.float64)
+    a = np.asarray(mixing_sel, dtype=np.float64)
+    a_car = a - a.mean(axis=0, keepdims=True)
+    src = np.linalg.pinv(a_car) @ diff
+    resid = float(np.linalg.norm(diff - a_car @ src) / max(float(np.linalg.norm(diff)), 1e-12))
+    return src, resid

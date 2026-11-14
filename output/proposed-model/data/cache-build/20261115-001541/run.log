@@ -1,0 +1,132 @@
+2026-11-15 00:15:45 INFO    eegtraj.utils.run: Run directory: output\proposed-model\data\cache-build\20261115-001541
+2026-11-15 00:15:46 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-15 00:15:47 INFO    eegtraj.data.unlabeled: P2 S1: 58374 grid samples, settle 11.9 s
+2026-11-15 00:15:47 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-15 00:15:48 INFO    eegtraj.data.unlabeled: P2 S2: 66016 grid samples, settle 13.8 s
+2026-11-15 00:15:48 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-15 00:15:49 INFO    eegtraj.data.unlabeled: P2 S3: 30549 grid samples, settle 14.1 s
+2026-11-15 00:15:49 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-15 00:15:50 INFO    eegtraj.data.unlabeled: P2 S4: 55622 grid samples, settle 13.2 s
+2026-11-15 00:15:50 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-15 00:15:50 INFO    eegtraj.data.unlabeled: P2 S5: 30329 grid samples, settle 11.8 s
+2026-11-15 00:15:51 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-15 00:15:51 INFO    eegtraj.data.unlabeled: P2 S6: 41244 grid samples, settle 12.9 s
+2026-11-15 00:15:52 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-15 00:15:52 INFO    eegtraj.data.unlabeled: P2 S7: 30173 grid samples, settle 12.3 s
+2026-11-15 00:15:52 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-15 00:15:52 INFO    eegtraj.data.unlabeled: P2 S8: 29989 grid samples, settle 11.6 s
+2026-11-15 00:15:53 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-15 00:15:53 INFO    eegtraj.data.unlabeled: P2 S9: 29474 grid samples, settle 12.4 s
+2026-11-15 00:15:53 INFO    eegtraj.preprocessing.bad_channels: Interpolated bad channels: ['Fz']
+2026-11-15 00:15:53 INFO    eegtraj.data.unlabeled: P2 ST: 30142 grid samples, settle 12.7 s
+2026-11-15 00:15:53 INFO    eegtraj.data.unlabeled: P2: stream broadband_ica car (32, 401912), hours {'lift': 0.7829, 'between': 0.2498, 'st': 0.0837}, 8 s
+2026-11-15 00:15:54 INFO    eegtraj.data.unlabeled: P3 S1: 24452 grid samples, settle 12.8 s
+2026-11-15 00:15:55 INFO    eegtraj.data.unlabeled: P3 S2: 38572 grid samples, settle 12.9 s
+2026-11-15 00:15:56 INFO    eegtraj.data.unlabeled: P3 S3: 45871 grid samples, settle 13.8 s
+2026-11-15 00:15:56 INFO    eegtraj.data.unlabeled: P3 S4: 39283 grid samples, settle 12.2 s
+2026-11-15 00:15:57 INFO    eegtraj.data.unlabeled: P3 S5: 49714 grid samples, settle 11.6 s
+2026-11-15 00:15:58 INFO    eegtraj.data.unlabeled: P3 S6: 23266 grid samples, settle 13.6 s
+2026-11-15 00:15:58 INFO    eegtraj.data.unlabeled: P3 S7: 23015 grid samples, settle 12.8 s
+2026-11-15 00:15:59 INFO    eegtraj.data.unlabeled: P3 S8: 22989 grid samples, settle 12.8 s
+2026-11-15 00:15:59 INFO    eegtraj.data.unlabeled: P3 S9: 22389 grid samples, settle 12.8 s
+2026-11-15 00:15:59 INFO    eegtraj.data.unlabeled: P3 ST: 22678 grid samples, settle 13.3 s
+2026-11-15 00:15:59 INFO    eegtraj.data.unlabeled: P3: stream broadband_ica car (32, 312229), hours {'lift': 0.6167, 'between': 0.1876, 'st': 0.063}, 6 s
+2026-11-15 00:16:00 INFO    eegtraj.data.unlabeled: P4 S1: 49322 grid samples, settle 14.0 s
+2026-11-15 00:16:01 INFO    eegtraj.data.unlabeled: P4 S2: 41744 grid samples, settle 12.9 s
+2026-11-15 00:16:02 INFO    eegtraj.data.unlabeled: P4 S3: 26299 grid samples, settle 13.5 s
+2026-11-15 00:16:03 INFO    eegtraj.data.unlabeled: P4 S4: 41118 grid samples, settle 12.1 s
+2026-11-15 00:16:03 INFO    eegtraj.data.unlabeled: P4 S5: 24605 grid samples, settle 12.4 s
+2026-11-15 00:16:04 INFO    eegtraj.data.unlabeled: P4 S6: 48731 grid samples, settle 13.5 s
+2026-11-15 00:16:05 INFO    eegtraj.data.unlabeled: P4 S7: 24299 grid samples, settle 13.0 s
+2026-11-15 00:16:05 INFO    eegtraj.data.unlabeled: P4 S8: 24384 grid samples, settle 12.6 s
+2026-11-15 00:16:05 INFO    eegtraj.data.unlabeled: P4 S9: 24253 grid samples, settle 13.0 s
+2026-11-15 00:16:06 INFO    eegtraj.data.unlabeled: P4 ST: 24705 grid samples, settle 13.3 s
+2026-11-15 00:16:06 INFO    eegtraj.data.unlabeled: P4: stream broadband_ica car (32, 329460), hours {'lift': 0.6437, 'between': 0.2028, 'st': 0.0686}, 6 s
+2026-11-15 00:16:07 INFO    eegtraj.data.unlabeled: P5 S1: 45593 grid samples, settle 12.8 s
+2026-11-15 00:16:07 INFO    eegtraj.data.unlabeled: P5 S2: 27611 grid samples, settle 12.8 s
+2026-11-15 00:16:08 INFO    eegtraj.data.unlabeled: P5 S3: 51835 grid samples, settle 13.1 s
+2026-11-15 00:16:09 INFO    eegtraj.data.unlabeled: P5 S4: 27288 grid samples, settle 13.2 s
+2026-11-15 00:16:10 INFO    eegtraj.data.unlabeled: P5 S5: 53117 grid samples, settle 12.9 s
+2026-11-15 00:16:11 INFO    eegtraj.data.unlabeled: P5 S6: 45347 grid samples, settle 12.7 s
+2026-11-15 00:16:11 INFO    eegtraj.data.unlabeled: P5 S7: 27052 grid samples, settle 13.0 s
+2026-11-15 00:16:12 INFO    eegtraj.data.unlabeled: P5 S8: 25900 grid samples, settle 12.7 s
+2026-11-15 00:16:12 INFO    eegtraj.data.unlabeled: P5 S9: 26364 grid samples, settle 13.2 s
+2026-11-15 00:16:12 INFO    eegtraj.data.unlabeled: P5 ST: 25847 grid samples, settle 13.3 s
+2026-11-15 00:16:12 INFO    eegtraj.data.unlabeled: P5: stream broadband_ica car (32, 355954), hours {'lift': 0.7011, 'between': 0.2159, 'st': 0.0718}, 7 s
+2026-11-15 00:16:13 INFO    eegtraj.data.unlabeled: P6 S1: 29916 grid samples, settle 13.2 s
+2026-11-15 00:16:14 INFO    eegtraj.data.unlabeled: P6 S2: 53547 grid samples, settle 12.8 s
+2026-11-15 00:16:15 INFO    eegtraj.data.unlabeled: P6 S3: 44378 grid samples, settle 12.9 s
+2026-11-15 00:16:16 INFO    eegtraj.data.unlabeled: P6 S4: 27546 grid samples, settle 12.8 s
+2026-11-15 00:16:16 INFO    eegtraj.data.unlabeled: P6 S5: 43153 grid samples, settle 12.6 s
+2026-11-15 00:16:17 INFO    eegtraj.data.unlabeled: P6 S6: 51496 grid samples, settle 12.6 s
+2026-11-15 00:16:18 INFO    eegtraj.data.unlabeled: P6 S7: 26678 grid samples, settle 13.0 s
+2026-11-15 00:16:18 INFO    eegtraj.data.unlabeled: P6 S8: 27167 grid samples, settle 13.5 s
+2026-11-15 00:16:19 INFO    eegtraj.data.unlabeled: P6 S9: 27370 grid samples, settle 13.1 s
+2026-11-15 00:16:19 INFO    eegtraj.data.unlabeled: P6 ST: 28533 grid samples, settle 13.7 s
+2026-11-15 00:16:19 INFO    eegtraj.data.unlabeled: P6: stream broadband_ica car (32, 359784), hours {'lift': 0.7075, 'between': 0.2126, 'st': 0.0793}, 7 s
+2026-11-15 00:16:21 INFO    eegtraj.data.unlabeled: P7 S1: 61526 grid samples, settle 12.8 s
+2026-11-15 00:16:21 INFO    eegtraj.data.unlabeled: P7 S2: 42579 grid samples, settle 12.8 s
+2026-11-15 00:16:22 INFO    eegtraj.data.unlabeled: P7 S3: 44736 grid samples, settle 12.8 s
+2026-11-15 00:16:23 INFO    eegtraj.data.unlabeled: P7 S4: 52742 grid samples, settle 12.2 s
+2026-11-15 00:16:24 INFO    eegtraj.data.unlabeled: P7 S5: 42509 grid samples, settle 13.1 s
+2026-11-15 00:16:25 INFO    eegtraj.data.unlabeled: P7 S6: 29429 grid samples, settle 13.5 s
+2026-11-15 00:16:25 INFO    eegtraj.data.unlabeled: P7 S7: 28979 grid samples, settle 12.7 s
+2026-11-15 00:16:26 INFO    eegtraj.data.unlabeled: P7 S8: 28084 grid samples, settle 13.1 s
+2026-11-15 00:16:27 INFO    eegtraj.data.unlabeled: P7 S9: 27613 grid samples, settle 12.8 s
+2026-11-15 00:16:27 INFO    eegtraj.data.unlabeled: P7 ST: 27791 grid samples, settle 12.1 s
+2026-11-15 00:16:27 INFO    eegtraj.data.unlabeled: P7: stream broadband_ica car (32, 385988), hours {'lift': 0.8594, 'between': 0.1356, 'st': 0.0772}, 8 s
+2026-11-15 00:16:28 INFO    eegtraj.data.unlabeled: P8 S1: 40086 grid samples, settle 12.6 s
+2026-11-15 00:16:29 INFO    eegtraj.data.unlabeled: P8 S2: 47836 grid samples, settle 12.5 s
+2026-11-15 00:16:29 INFO    eegtraj.data.unlabeled: P8 S3: 24740 grid samples, settle 12.9 s
+2026-11-15 00:16:30 INFO    eegtraj.data.unlabeled: P8 S4: 48512 grid samples, settle 13.0 s
+2026-11-15 00:16:31 INFO    eegtraj.data.unlabeled: P8 S5: 23743 grid samples, settle 12.4 s
+2026-11-15 00:16:31 INFO    eegtraj.data.unlabeled: P8 S6: 38353 grid samples, settle 13.7 s
+2026-11-15 00:16:32 INFO    eegtraj.data.unlabeled: P8 S7: 23722 grid samples, settle 13.0 s
+2026-11-15 00:16:32 INFO    eegtraj.data.unlabeled: P8 S8: 24819 grid samples, settle 13.0 s
+2026-11-15 00:16:33 INFO    eegtraj.data.unlabeled: P8 S9: 24701 grid samples, settle 12.7 s
+2026-11-15 00:16:33 INFO    eegtraj.data.unlabeled: P8 ST: 25351 grid samples, settle 12.7 s
+2026-11-15 00:16:33 INFO    eegtraj.data.unlabeled: P8: stream broadband_ica car (32, 321863), hours {'lift': 0.6486, 'between': 0.1751, 'st': 0.0704}, 6 s
+2026-11-15 00:16:34 INFO    eegtraj.data.unlabeled: P9 S1: 28285 grid samples, settle 12.2 s
+2026-11-15 00:16:34 INFO    eegtraj.data.unlabeled: P9 S2: 41842 grid samples, settle 13.1 s
+2026-11-15 00:16:35 INFO    eegtraj.data.unlabeled: P9 S3: 50554 grid samples, settle 13.6 s
+2026-11-15 00:16:36 INFO    eegtraj.data.unlabeled: P9 S4: 41694 grid samples, settle 13.5 s
+2026-11-15 00:16:37 INFO    eegtraj.data.unlabeled: P9 S5: 49660 grid samples, settle 14.1 s
+2026-11-15 00:16:38 INFO    eegtraj.data.unlabeled: P9 S6: 26321 grid samples, settle 13.3 s
+2026-11-15 00:16:38 INFO    eegtraj.data.unlabeled: P9 S7: 25642 grid samples, settle 12.8 s
+2026-11-15 00:16:39 INFO    eegtraj.data.unlabeled: P9 S8: 25498 grid samples, settle 13.0 s
+2026-11-15 00:16:39 INFO    eegtraj.data.unlabeled: P9 S9: 25143 grid samples, settle 13.6 s
+2026-11-15 00:16:39 INFO    eegtraj.data.unlabeled: P9 ST: 25337 grid samples, settle 13.3 s
+2026-11-15 00:16:40 INFO    eegtraj.data.unlabeled: P9: stream broadband_ica car (32, 339976), hours {'lift': 0.6835, 'between': 0.1905, 'st': 0.0704}, 6 s
+2026-11-15 00:16:41 INFO    eegtraj.data.unlabeled: P10 S1: 52477 grid samples, settle 12.9 s
+2026-11-15 00:16:41 INFO    eegtraj.data.unlabeled: P10 S2: 43374 grid samples, settle 12.6 s
+2026-11-15 00:16:42 INFO    eegtraj.data.unlabeled: P10 S3: 28595 grid samples, settle 12.0 s
+2026-11-15 00:16:43 INFO    eegtraj.data.unlabeled: P10 S4: 42245 grid samples, settle 12.4 s
+2026-11-15 00:16:43 INFO    eegtraj.data.unlabeled: P10 S5: 27313 grid samples, settle 13.5 s
+2026-11-15 00:16:44 INFO    eegtraj.data.unlabeled: P10 S6: 51466 grid samples, settle 13.0 s
+2026-11-15 00:16:45 INFO    eegtraj.data.unlabeled: P10 S7: 26563 grid samples, settle 13.5 s
+2026-11-15 00:16:45 INFO    eegtraj.data.unlabeled: P10 S8: 25346 grid samples, settle 13.6 s
+2026-11-15 00:16:46 INFO    eegtraj.data.unlabeled: P10 S9: 25666 grid samples, settle 13.6 s
+2026-11-15 00:16:46 INFO    eegtraj.data.unlabeled: P10 ST: 25781 grid samples, settle 12.5 s
+2026-11-15 00:16:46 INFO    eegtraj.data.unlabeled: P10: stream broadband_ica car (32, 348826), hours {'lift': 0.7072, 'between': 0.1902, 'st': 0.0716}, 7 s
+2026-11-15 00:16:47 INFO    eegtraj.data.unlabeled: P11 S1: 44680 grid samples, settle 12.9 s
+2026-11-15 00:16:48 INFO    eegtraj.data.unlabeled: P11 S2: 29539 grid samples, settle 13.2 s
+2026-11-15 00:16:49 INFO    eegtraj.data.unlabeled: P11 S3: 53249 grid samples, settle 12.6 s
+2026-11-15 00:16:49 INFO    eegtraj.data.unlabeled: P11 S4: 28290 grid samples, settle 13.8 s
+2026-11-15 00:16:50 INFO    eegtraj.data.unlabeled: P11 S5: 50157 grid samples, settle 12.7 s
+2026-11-15 00:16:51 INFO    eegtraj.data.unlabeled: P11 S6: 43196 grid samples, settle 13.6 s
+2026-11-15 00:16:52 INFO    eegtraj.data.unlabeled: P11 S7: 28236 grid samples, settle 12.3 s
+2026-11-15 00:16:52 INFO    eegtraj.data.unlabeled: P11 S8: 26857 grid samples, settle 13.2 s
+2026-11-15 00:16:53 INFO    eegtraj.data.unlabeled: P11 S9: 27303 grid samples, settle 11.8 s
+2026-11-15 00:16:53 INFO    eegtraj.data.unlabeled: P11 ST: 28195 grid samples, settle 13.4 s
+2026-11-15 00:16:53 INFO    eegtraj.data.unlabeled: P11: stream broadband_ica car (32, 359702), hours {'lift': 0.7264, 'between': 0.1945, 'st': 0.0783}, 7 s
+2026-11-15 00:16:54 INFO    eegtraj.data.unlabeled: P12 S1: 30224 grid samples, settle 12.3 s
+2026-11-15 00:16:55 INFO    eegtraj.data.unlabeled: P12 S2: 54009 grid samples, settle 12.8 s
+2026-11-15 00:16:56 INFO    eegtraj.data.unlabeled: P12 S3: 46174 grid samples, settle 13.0 s
+2026-11-15 00:16:56 INFO    eegtraj.data.unlabeled: P12 S4: 31245 grid samples, settle 13.2 s
+2026-11-15 00:16:57 INFO    eegtraj.data.unlabeled: P12 S5: 46113 grid samples, settle 14.1 s
+2026-11-15 00:16:58 INFO    eegtraj.data.unlabeled: P12 S6: 53314 grid samples, settle 12.2 s
+2026-11-15 00:16:59 INFO    eegtraj.data.unlabeled: P12 S7: 29567 grid samples, settle 12.3 s
+2026-11-15 00:17:00 INFO    eegtraj.data.unlabeled: P12 S8: 30935 grid samples, settle 13.1 s
+2026-11-15 00:17:00 INFO    eegtraj.data.unlabeled: P12 S9: 29133 grid samples, settle 12.6 s
+2026-11-15 00:17:00 INFO    eegtraj.data.unlabeled: P12 ST: 28440 grid samples, settle 13.1 s
+2026-11-15 00:17:00 INFO    eegtraj.data.unlabeled: P12: stream broadband_ica car (32, 379154), hours {'lift': 0.7539, 'between': 0.2203, 'st': 0.079}, 7 s

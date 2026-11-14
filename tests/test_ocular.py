@@ -55,6 +55,29 @@ def test_rank_deficient_data_uses_the_rank():
     assert ica.rank == 7 and ica.mixing.shape == (8, 7)
 
 
+def test_proxy_rows_order_and_values():
+    from eegtraj.preprocessing.ocular import proxy_rows
+
+    x, _, _ = recording()
+    p = proxy_rows(x, NAMES)
+    assert p.shape == (2, x.shape[1]) and p.dtype == np.float32
+    assert np.allclose(p[0], (x[0] + x[1]) / 2, rtol=1e-5, atol=1e-3)
+    assert np.allclose(p[1], x[2] - x[3], rtol=1e-5, atol=1e-3)
+
+
+def test_sources_from_removed_recovers_components_after_car():
+    from eegtraj.preprocessing.ocular import sources_from_removed
+    from eegtraj.preprocessing.reference import common_average
+
+    rng = np.random.default_rng(1)
+    a = rng.standard_normal((8, 2))
+    s = rng.standard_normal((2, 500))
+    x = rng.standard_normal((8, 500)) + a @ s
+    rec, resid = sources_from_removed(common_average(x), common_average(x - a @ s), a)
+    assert resid < 1e-10
+    assert np.allclose(rec, s, atol=1e-8)
+
+
 RAW_P1 = __import__("pathlib").Path("dataset/raw/P1/HS_P1_S1.mat")
 CACHE_P1 = __import__("pathlib").Path("dataset/cache/98f5fa6e66/P1/eeg_broadband_car.npy")
 
