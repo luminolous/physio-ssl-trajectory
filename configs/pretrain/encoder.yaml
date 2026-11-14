@@ -1,0 +1,13 @@
+# Neural-branch encoder (design.md, "Stage 1"). Shared by every encoder variant of Experiment 1.
+prior_config: configs/pretrain/physio_prior.yaml  # gate initialization and L2 pull centre
+n_chans: 32
+window: 200  # samples, 2 s at 100 Hz
+patch: 20  # samples, 0.2 s -> 10 tokens
+d_model: 128
+n_layers: 4
+n_heads: 4
+mlp_width: 256
+dropout: 0.1
+n_filters: 16  # temporal conv
+kernel: 25  # samples, 250 ms
+depth_multiplier: 2  # depthwise spatial conv
