@@ -1,0 +1,10 @@
+cache_dir: dataset/cache/98f5fa6e66
+split_config: configs/splits/default.yaml
+conditions:
+- 165
+- 330
+- 660
+n_grid: 201
+plot_window_s:
+- -0.5
+- 7.0

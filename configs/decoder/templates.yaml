@@ -1,0 +1,8 @@
+# Landmark-registered templates T(phi) for the proposed head (design.md, "Template"). Fitted per LOSO fold from the
+# fold's training subjects only. phi = 0 at the kinematic onset, 1 at the hand stop; landmarks at their median
+# fractions over the training lifts.
+cache_dir: dataset/cache/98f5fa6e66
+split_config: configs/splits/default.yaml
+conditions: [165, 330, 660]  # weight_g
+n_grid: 201  # phi grid, step 0.005
+plot_window_s: [-0.5, 7.0]  # time since LED-on, overlay plots only
