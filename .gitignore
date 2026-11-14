@@ -239,3 +239,10 @@ output/smoke/
 
 # Claude Code local settings
 .claude/settings.local.json
+
+# Local-only files (not for the repo)
+Claude outputs/
+docs/arsitektur_lengkap_v2.png
+docs/design-id.md
+docs/progress-demo-findings.md
+docs/progress-demo-findings-id.md
