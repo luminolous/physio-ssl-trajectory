@@ -1,0 +1,9 @@
+# Unlabeled 2 s windows for pretraining (SSL-1 option b: all 12 subjects, no labels; SSL-2: all three sources).
+cache_dir: dataset/cache/98f5fa6e66
+subjects: [P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12]
+variants: [broadband_car]
+sources: [lift, between, st]
+window: 200  # samples, 2 s at 100 Hz
+stride: 50  # samples, 0.5 s
+strict_per_fold: false  # true: drop exclude_subject (optional sensitivity check, SSL-1 option a)
+exclude_subject: null

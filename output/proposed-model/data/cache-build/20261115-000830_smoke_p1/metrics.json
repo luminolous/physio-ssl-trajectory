@@ -1,0 +1,58 @@
+{
+  "built": [
+    {
+      "subject": "P1",
+      "band": "broadband",
+      "reference": "car",
+      "band_hz": [
+        0.1,
+        40.0
+      ],
+      "fs_hz": 100.0,
+      "ica_from": null,
+      "ica_selected": null,
+      "shape": [
+        32,
+        331090
+      ],
+      "hours": {
+        "lift": 0.6238,
+        "between": 0.2309,
+        "st": 0.0651
+      },
+      "n_segments": {
+        "lift": 129,
+        "between": 129,
+        "st": 1
+      },
+      "lift_alignment_max_abs_error": 6.017472423991421e-05,
+      "filter_settle_time_s": {
+        "S1": 12.84,
+        "S2": 12.306,
+        "S3": 13.226,
+        "S4": 13.568,
+        "S5": 12.77,
+        "S6": 13.092,
+        "S7": 12.948,
+        "S8": 13.36,
+        "S9": 12.94,
+        "ST": 11.8
+      },
+      "build_seconds": 6.6
+    }
+  ],
+  "hours_per_subject": {
+    "P1": {
+      "lift": 0.6238,
+      "between": 0.2309,
+      "st": 0.0651,
+      "all": 0.9197
+    }
+  },
+  "hours_total": {
+    "lift": 0.624,
+    "between": 0.231,
+    "st": 0.065,
+    "all": 0.92
+  }
+}

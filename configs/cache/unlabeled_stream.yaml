@@ -1,0 +1,9 @@
+# Continuous EEG streams for self-supervised pretraining (proposed-model, decisions SSL-1 option b and SSL-2).
+# Lift windows, between-lift HS segments, and the ST recording, on the 100 Hz grid and through the causal chain of
+# the main cache. See src/eegtraj/data/unlabeled.py.
+cache_config: configs/cache/default.yaml
+cache_dir: dataset/cache/98f5fa6e66
+band: broadband
+band_hz: [0.1, 40.0]  # must equal the main cache band
+reference: car
+ica_from: null  # e.g. broadband_ica_car to reuse the saved ocular ICA (target view)

@@ -1,0 +1,12 @@
+2026-11-15 00:08:33 INFO    eegtraj.utils.run: Run directory: output\proposed-model\data\cache-build\20261115-000830_smoke_p1
+2026-11-15 00:08:34 INFO    eegtraj.data.unlabeled: P1 S1: 23899 grid samples, settle 12.8 s
+2026-11-15 00:08:35 INFO    eegtraj.data.unlabeled: P1 S2: 54390 grid samples, settle 12.3 s
+2026-11-15 00:08:36 INFO    eegtraj.data.unlabeled: P1 S3: 43522 grid samples, settle 13.2 s
+2026-11-15 00:08:36 INFO    eegtraj.data.unlabeled: P1 S4: 23248 grid samples, settle 13.6 s
+2026-11-15 00:08:37 INFO    eegtraj.data.unlabeled: P1 S5: 42128 grid samples, settle 12.8 s
+2026-11-15 00:08:38 INFO    eegtraj.data.unlabeled: P1 S6: 49910 grid samples, settle 13.1 s
+2026-11-15 00:08:38 INFO    eegtraj.data.unlabeled: P1 S7: 23912 grid samples, settle 12.9 s
+2026-11-15 00:08:39 INFO    eegtraj.data.unlabeled: P1 S8: 23466 grid samples, settle 13.4 s
+2026-11-15 00:08:39 INFO    eegtraj.data.unlabeled: P1 S9: 23190 grid samples, settle 12.9 s
+2026-11-15 00:08:40 INFO    eegtraj.data.unlabeled: P1 ST: 23425 grid samples, settle 11.8 s
+2026-11-15 00:08:40 INFO    eegtraj.data.unlabeled: P1: stream broadband car (32, 331090), hours {'lift': 0.6238, 'between': 0.2309, 'st': 0.0651}, 7 s
