@@ -1,0 +1,9 @@
+# ICA-cleaned continuous streams for the pretraining target view (proposed-model). Same segments and grid as
+# configs/cache/unlabeled_stream.yaml. Reuses the ocular ICA saved with the broadband_ica_car cache variant
+# (configs/cache/broadband_ica.yaml); it is not refitted. That ICA was fitted on HS S1-S9; ST is cleaned with it too.
+cache_config: configs/cache/default.yaml
+cache_dir: dataset/cache/98f5fa6e66
+band: broadband_ica
+band_hz: [0.1, 40.0]
+reference: car
+ica_from: broadband_ica_car

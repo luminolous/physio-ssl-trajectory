@@ -1,0 +1,524 @@
+{
+  "built": [
+    {
+      "subject": "P2",
+      "band": "broadband",
+      "reference": "car",
+      "band_hz": [
+        0.1,
+        40.0
+      ],
+      "fs_hz": 100.0,
+      "ica_from": null,
+      "ica_selected": null,
+      "shape": [
+        32,
+        401912
+      ],
+      "hours": {
+        "lift": 0.7829,
+        "between": 0.2498,
+        "st": 0.0837
+      },
+      "n_segments": {
+        "lift": 129,
+        "between": 129,
+        "st": 1
+      },
+      "lift_alignment_max_abs_error": 7.798698516126024e-05,
+      "filter_settle_time_s": {
+        "S1": 12.882,
+        "S2": 13.814,
+        "S3": 14.438,
+        "S4": 13.114,
+        "S5": 11.108,
+        "S6": 12.332,
+        "S7": 11.914,
+        "S8": 12.328,
+        "S9": 12.64,
+        "ST": 12.686
+      },
+      "build_seconds": 9.8
+    },
+    {
+      "subject": "P3",
+      "band": "broadband",
+      "reference": "car",
+      "band_hz": [
+        0.1,
+        40.0
+      ],
+      "fs_hz": 100.0,
+      "ica_from": null,
+      "ica_selected": null,
+      "shape": [
+        32,
+        312229
+      ],
+      "hours": {
+        "lift": 0.6167,
+        "between": 0.1876,
+        "st": 0.063
+      },
+      "n_segments": {
+        "lift": 129,
+        "between": 129,
+        "st": 1
+      },
+      "lift_alignment_max_abs_error": 3.740866964108136e-05,
+      "filter_settle_time_s": {
+        "S1": 11.654,
+        "S2": 12.67,
+        "S3": 13.504,
+        "S4": 12.616,
+        "S5": 12.682,
+        "S6": 13.614,
+        "S7": 12.834,
+        "S8": 12.126,
+        "S9": 12.832,
+        "ST": 12.946
+      },
+      "build_seconds": 7.8
+    },
+    {
+      "subject": "P4",
+      "band": "broadband",
+      "reference": "car",
+      "band_hz": [
+        0.1,
+        40.0
+      ],
+      "fs_hz": 100.0,
+      "ica_from": null,
+      "ica_selected": null,
+      "shape": [
+        32,
+        329460
+      ],
+      "hours": {
+        "lift": 0.6437,
+        "between": 0.2028,
+        "st": 0.0686
+      },
+      "n_segments": {
+        "lift": 129,
+        "between": 129,
+        "st": 1
+      },
+      "lift_alignment_max_abs_error": 3.0391095833692816e-05,
+      "filter_settle_time_s": {
+        "S1": 13.814,
+        "S2": 12.376,
+        "S3": 13.552,
+        "S4": 12.086,
+        "S5": 11.59,
+        "S6": 13.324,
+        "S7": 13.016,
+        "S8": 12.564,
+        "S9": 13.06,
+        "ST": 13.004
+      },
+      "build_seconds": 10.1
+    },
+    {
+      "subject": "P5",
+      "band": "broadband",
+      "reference": "car",
+      "band_hz": [
+        0.1,
+        40.0
+      ],
+      "fs_hz": 100.0,
+      "ica_from": null,
+      "ica_selected": null,
+      "shape": [
+        32,
+        355954
+      ],
+      "hours": {
+        "lift": 0.7011,
+        "between": 0.2159,
+        "st": 0.0718
+      },
+      "n_segments": {
+        "lift": 129,
+        "between": 129,
+        "st": 1
+      },
+      "lift_alignment_max_abs_error": 0.0003829621236945968,
+      "filter_settle_time_s": {
+        "S1": 12.576,
+        "S2": 12.702,
+        "S3": 13.028,
+        "S4": 13.06,
+        "S5": 12.502,
+        "S6": 12.662,
+        "S7": 12.994,
+        "S8": 13.184,
+        "S9": 12.892,
+        "ST": 13.524
+      },
+      "build_seconds": 6.8
+    },
+    {
+      "subject": "P6",
+      "band": "broadband",
+      "reference": "car",
+      "band_hz": [
+        0.1,
+        40.0
+      ],
+      "fs_hz": 100.0,
+      "ica_from": null,
+      "ica_selected": null,
+      "shape": [
+        32,
+        359784
+      ],
+      "hours": {
+        "lift": 0.7075,
+        "between": 0.2126,
+        "st": 0.0793
+      },
+      "n_segments": {
+        "lift": 129,
+        "between": 129,
+        "st": 1
+      },
+      "lift_alignment_max_abs_error": 6.040539301466197e-05,
+      "filter_settle_time_s": {
+        "S1": 12.594,
+        "S2": 12.328,
+        "S3": 12.866,
+        "S4": 12.63,
+        "S5": 12.836,
+        "S6": 12.158,
+        "S7": 12.678,
+        "S8": 13.89,
+        "S9": 13.114,
+        "ST": 13.622
+      },
+      "build_seconds": 6.6
+    },
+    {
+      "subject": "P7",
+      "band": "broadband",
+      "reference": "car",
+      "band_hz": [
+        0.1,
+        40.0
+      ],
+      "fs_hz": 100.0,
+      "ica_from": null,
+      "ica_selected": null,
+      "shape": [
+        32,
+        385988
+      ],
+      "hours": {
+        "lift": 0.8594,
+        "between": 0.1356,
+        "st": 0.0772
+      },
+      "n_segments": {
+        "lift": 129,
+        "between": 123,
+        "st": 1
+      },
+      "lift_alignment_max_abs_error": 0.00010611681454975042,
+      "filter_settle_time_s": {
+        "S1": 12.914,
+        "S2": 11.95,
+        "S3": 12.792,
+        "S4": 11.86,
+        "S5": 13.308,
+        "S6": 13.296,
+        "S7": 12.728,
+        "S8": 13.15,
+        "S9": 12.358,
+        "ST": 12.038
+      },
+      "build_seconds": 7.7
+    },
+    {
+      "subject": "P8",
+      "band": "broadband",
+      "reference": "car",
+      "band_hz": [
+        0.1,
+        40.0
+      ],
+      "fs_hz": 100.0,
+      "ica_from": null,
+      "ica_selected": null,
+      "shape": [
+        32,
+        321863
+      ],
+      "hours": {
+        "lift": 0.6486,
+        "between": 0.1751,
+        "st": 0.0704
+      },
+      "n_segments": {
+        "lift": 129,
+        "between": 129,
+        "st": 1
+      },
+      "lift_alignment_max_abs_error": 5.44841177543276e-05,
+      "filter_settle_time_s": {
+        "S1": 12.606,
+        "S2": 12.194,
+        "S3": 12.946,
+        "S4": 12.854,
+        "S5": 12.284,
+        "S6": 13.6,
+        "S7": 12.92,
+        "S8": 12.924,
+        "S9": 12.458,
+        "ST": 12.462
+      },
+      "build_seconds": 6.2
+    },
+    {
+      "subject": "P9",
+      "band": "broadband",
+      "reference": "car",
+      "band_hz": [
+        0.1,
+        40.0
+      ],
+      "fs_hz": 100.0,
+      "ica_from": null,
+      "ica_selected": null,
+      "shape": [
+        32,
+        339976
+      ],
+      "hours": {
+        "lift": 0.6835,
+        "between": 0.1905,
+        "st": 0.0704
+      },
+      "n_segments": {
+        "lift": 129,
+        "between": 129,
+        "st": 1
+      },
+      "lift_alignment_max_abs_error": 5.8724455811898224e-05,
+      "filter_settle_time_s": {
+        "S1": 12.13,
+        "S2": 12.994,
+        "S3": 13.522,
+        "S4": 13.654,
+        "S5": 14.09,
+        "S6": 12.78,
+        "S7": 12.274,
+        "S8": 12.78,
+        "S9": 13.606,
+        "ST": 13.322
+      },
+      "build_seconds": 6.5
+    },
+    {
+      "subject": "P10",
+      "band": "broadband",
+      "reference": "car",
+      "band_hz": [
+        0.1,
+        40.0
+      ],
+      "fs_hz": 100.0,
+      "ica_from": null,
+      "ica_selected": null,
+      "shape": [
+        32,
+        348826
+      ],
+      "hours": {
+        "lift": 0.7072,
+        "between": 0.1902,
+        "st": 0.0716
+      },
+      "n_segments": {
+        "lift": 130,
+        "between": 130,
+        "st": 1
+      },
+      "lift_alignment_max_abs_error": 5.714767507924989e-05,
+      "filter_settle_time_s": {
+        "S1": 13.246,
+        "S2": 12.388,
+        "S3": 13.054,
+        "S4": 11.952,
+        "S5": 13.396,
+        "S6": 12.996,
+        "S7": 13.492,
+        "S8": 13.374,
+        "S9": 13.412,
+        "ST": 12.444
+      },
+      "build_seconds": 6.7
+    },
+    {
+      "subject": "P11",
+      "band": "broadband",
+      "reference": "car",
+      "band_hz": [
+        0.1,
+        40.0
+      ],
+      "fs_hz": 100.0,
+      "ica_from": null,
+      "ica_selected": null,
+      "shape": [
+        32,
+        359702
+      ],
+      "hours": {
+        "lift": 0.7264,
+        "between": 0.1945,
+        "st": 0.0783
+      },
+      "n_segments": {
+        "lift": 129,
+        "between": 129,
+        "st": 1
+      },
+      "lift_alignment_max_abs_error": 5.3891611969447695e-05,
+      "filter_settle_time_s": {
+        "S1": 12.996,
+        "S2": 13.226,
+        "S3": 12.822,
+        "S4": 13.806,
+        "S5": 12.55,
+        "S6": 13.498,
+        "S7": 12.382,
+        "S8": 13.154,
+        "S9": 12.09,
+        "ST": 13.466
+      },
+      "build_seconds": 6.6
+    },
+    {
+      "subject": "P12",
+      "band": "broadband",
+      "reference": "car",
+      "band_hz": [
+        0.1,
+        40.0
+      ],
+      "fs_hz": 100.0,
+      "ica_from": null,
+      "ica_selected": null,
+      "shape": [
+        32,
+        379154
+      ],
+      "hours": {
+        "lift": 0.7539,
+        "between": 0.2203,
+        "st": 0.079
+      },
+      "n_segments": {
+        "lift": 139,
+        "between": 139,
+        "st": 1
+      },
+      "lift_alignment_max_abs_error": 5.4644247711621574e-05,
+      "filter_settle_time_s": {
+        "S1": 12.082,
+        "S2": 12.048,
+        "S3": 12.766,
+        "S4": 12.968,
+        "S5": 14.006,
+        "S6": 12.2,
+        "S7": 11.99,
+        "S8": 13.01,
+        "S9": 12.306,
+        "ST": 13.038
+      },
+      "build_seconds": 7.1
+    }
+  ],
+  "hours_per_subject": {
+    "P1": {
+      "lift": 0.6238,
+      "between": 0.2309,
+      "st": 0.0651,
+      "all": 0.9197
+    },
+    "P2": {
+      "lift": 0.7829,
+      "between": 0.2498,
+      "st": 0.0837,
+      "all": 1.1164
+    },
+    "P3": {
+      "lift": 0.6167,
+      "between": 0.1876,
+      "st": 0.063,
+      "all": 0.8673
+    },
+    "P4": {
+      "lift": 0.6437,
+      "between": 0.2028,
+      "st": 0.0686,
+      "all": 0.9152
+    },
+    "P5": {
+      "lift": 0.7011,
+      "between": 0.2159,
+      "st": 0.0718,
+      "all": 0.9888
+    },
+    "P6": {
+      "lift": 0.7075,
+      "between": 0.2126,
+      "st": 0.0793,
+      "all": 0.9994
+    },
+    "P7": {
+      "lift": 0.8594,
+      "between": 0.1356,
+      "st": 0.0772,
+      "all": 1.0722
+    },
+    "P8": {
+      "lift": 0.6486,
+      "between": 0.1751,
+      "st": 0.0704,
+      "all": 0.8941
+    },
+    "P9": {
+      "lift": 0.6835,
+      "between": 0.1905,
+      "st": 0.0704,
+      "all": 0.9444
+    },
+    "P10": {
+      "lift": 0.7072,
+      "between": 0.1902,
+      "st": 0.0716,
+      "all": 0.969
+    },
+    "P11": {
+      "lift": 0.7264,
+      "between": 0.1945,
+      "st": 0.0783,
+      "all": 0.9992
+    },
+    "P12": {
+      "lift": 0.7539,
+      "between": 0.2203,
+      "st": 0.079,
+      "all": 1.0532
+    }
+  },
+  "hours_total": {
+    "lift": 8.455,
+    "between": 2.406,
+    "st": 0.878,
+    "all": 11.739
+  }
+}
