@@ -90,7 +90,7 @@ class CausalEncoder(nn.Module):
         """Encode windows.
 
         Args:
-            x: (B, C, window). keep: optional (n_kept,) sorted token indices to feed to the transformer (context view
+            x: (B, C, window). keep: optional (n_kept,) or (B, n_kept) sorted token indices to feed to the transformer (context view
                 with masked tokens dropped); positions stay those of the full window. use_gate: False for the target
                 branch.
 
@@ -101,9 +101,12 @@ class CausalEncoder(nn.Module):
             raise ValueError(f"expected windows of {self.window} samples, got {x.shape[-1]}")
         h = self.tokenizer(self.gate(x) if use_gate else x) + self.pos
         if keep is not None:
-            if (keep[1:] <= keep[:-1]).any():
+            if (keep[..., 1:] <= keep[..., :-1]).any():
                 raise ValueError("keep must be strictly increasing")
-            h = h[:, keep]
+            if keep.dim() == 1:
+                h = h[:, keep]
+            else:  # (B, n_kept): one set of kept tokens per window
+                h = torch.gather(h, 1, keep.unsqueeze(-1).expand(-1, -1, h.shape[-1]))
         n = h.shape[1]
         mask = torch.triu(torch.full((n, n), float("-inf"), device=h.device), diagonal=1)
         return self.out_norm(self.blocks(h, mask=mask, is_causal=True))
