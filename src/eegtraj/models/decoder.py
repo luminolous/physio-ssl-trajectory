@@ -180,27 +180,37 @@ class StreamDecoder(nn.Module):
             self.encoder.eval()
         return self
 
-    def features(self, eeg: torch.Tensor | None, eog: torch.Tensor | None) -> torch.Tensor:
-        """Fused per-patch features (B, N, d_fused). eeg (B, 32, history + 20 N), eog (B, 2, history + 20 N)."""
+    def neural_tokens(self, eeg: torch.Tensor) -> torch.Tensor:
+        """Encoder token per patch (B, N, d): last token of the 2 s window ending at each patch's last sample."""
+        b, c, t = eeg.shape
+        if (t - self.history) % self.patch or t < self.window:
+            raise ValueError("eeg stream must be history + a whole number of patches")
+        win = eeg.unfold(-1, self.window, self.patch)  # (B, C, N, window)
+        n = win.shape[2]
+        win = win.permute(0, 2, 1, 3).reshape(b * n, c, self.window)
+        with torch.set_grad_enabled(torch.is_grad_enabled() and not self.freeze_encoder):
+            tok = self.encoder(win)[:, -1]
+        return tok.reshape(b, n, -1)
+
+    def features(self, eeg: torch.Tensor | None, eog: torch.Tensor | None,
+                 tokens: torch.Tensor | None = None) -> torch.Tensor:
+        """Fused per-patch features (B, N, d_fused). eeg (B, 32, history + 20 N), eog (B, 2, history + 20 N).
+        ``tokens``: precomputed neural tokens (B, N, d) instead of ``eeg`` (frozen setting only)."""
         parts = []
-        if self.encoder is not None:
-            b, c, t = eeg.shape
-            if (t - self.history) % self.patch or t < self.window:
-                raise ValueError("eeg stream must be history + a whole number of patches")
-            win = eeg.unfold(-1, self.window, self.patch)  # (B, C, N, window)
-            n = win.shape[2]
-            win = win.permute(0, 2, 1, 3).reshape(b * n, c, self.window)
-            with torch.set_grad_enabled(torch.is_grad_enabled() and not self.freeze_encoder):
-                tok = self.encoder(win)[:, -1]
-            parts.append(tok.reshape(b, n, -1))
+        if self.encoder is not None and tokens is not None:
+            if not self.freeze_encoder:
+                raise ValueError("precomputed tokens are only valid for a frozen encoder")
+            parts.append(tokens)
+        elif self.encoder is not None:
+            parts.append(self.neural_tokens(eeg))
         if self.ocular is not None:
             parts.append(self.ocular(eog, self.history))
         return self.fusion(torch.cat(parts, dim=-1))
 
     def forward(self, eeg: torch.Tensor | None, eog: torch.Tensor | None, out_idx: torch.Tensor,
                 t_since_led: torch.Tensor | None = None, cue: torch.Tensor | None = None,
-                phi_override: torch.Tensor | None = None,
-                weights_override: torch.Tensor | None = None) -> dict[str, torch.Tensor]:
+                phi_override: torch.Tensor | None = None, weights_override: torch.Tensor | None = None,
+                tokens: torch.Tensor | None = None) -> dict[str, torch.Tensor]:
         """Decode a batch of lift streams.
 
         Args:
@@ -214,7 +224,7 @@ class StreamDecoder(nn.Module):
             (B, N, 3); warp heads also ``phi`` (B, S), ``weights`` (B, S, C), ``log_amp_patch`` (B, N, 3),
             ``amp`` (B, S, 3); the tracker ``phi_patch`` (B, N) and ``rate`` (B, N).
         """
-        h = self.features(eeg, eog)
+        h = self.features(eeg, eog, tokens)
         p = self.patch
         out: dict[str, torch.Tensor] = {"aux_logits": self.out["aux"](h)}
         out["logvar"] = causal_interp(self.out["logvar"](h).clamp(-8.0, 8.0), out_idx, p)

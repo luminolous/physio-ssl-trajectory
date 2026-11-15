@@ -1,0 +1,19 @@
+2026-11-15 14:24:12 INFO    eegtraj.utils.run: Run directory: output\proposed-model\decoder\decoder__proposed_hybrid_frozen_lejepa_guided\20261115-142412_seed1_smoke
+2026-11-15 14:24:12 INFO    eegtraj.models.decoder_runner: model decoder: head proposed, neural True, ocular True, setting frozen, encoder {'source': 'checkpoint', 'checkpoint': 'output/proposed-model/pretrain/lejepa_guided/20261115-123041/checkpoints/encoder_final.pt', 'architecture_config': 'configs/pretrain/encoder.yaml', 'random_seed': 0}, decoder seed 1, device cuda
+2026-11-15 14:24:16 INFO    eegtraj.models.decoder_runner: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1335787 training samples
+2026-11-15 14:24:16 INFO    eegtraj.models.decoder_runner: fold loso_P1: train ('P2', 'P5', 'P8', 'P9', 'P10', 'P11', 'P12') (140 lifts), val ('P4', 'P7') (40 lifts), test ('P1',); tau0 0.41 s, s0 5.97 s; params {'total': 584866, 'trainable': 47474}
+2026-11-15 14:24:19 INFO    eegtraj.models.decoder_runner: lr 0.001 epoch 1: train loss 7.5127 nll 7.3497 aux 1.6066 | val MSE 25.784 cm^2 (0.7 s)
+2026-11-15 14:24:19 INFO    eegtraj.models.decoder_runner: lr 0.001 epoch 2: train loss 3.2014 nll 3.0501 aux 1.4350 | val MSE 18.707 cm^2 (0.2 s)
+2026-11-15 14:24:19 INFO    eegtraj.models.decoder_runner: lr 0.0003 epoch 1: train loss 11.4099 nll 11.2392 aux 1.7052 | val MSE 67.725 cm^2 (0.2 s)
+2026-11-15 14:24:20 INFO    eegtraj.models.decoder_runner: lr 0.0003 epoch 2: train loss 6.4399 nll 6.2783 aux 1.5987 | val MSE 39.546 cm^2 (0.2 s)
+2026-11-15 14:24:20 INFO    eegtraj.models.decoder_runner: selected lr 0.001 (val MSE 18.707) from {0.001: 18.707, 0.0003: 39.546}
+2026-11-15 14:24:20 INFO    eegtraj.models.decoder_runner: fold loso_P1 test P1: r 0.509 (x 0.592 y 0.645 z 0.289) R2 0.159 NRMSE 0.309 rrs -0.0126 | template_cue r 0.776 (0.1 s)
+2026-11-15 14:24:20 INFO    eegtraj.models.decoder_runner: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1268758 training samples
+2026-11-15 14:24:21 INFO    eegtraj.models.decoder_runner: fold loso_P2: train ('P1', 'P4', 'P5', 'P8', 'P10', 'P11', 'P12') (140 lifts), val ('P7', 'P9') (40 lifts), test ('P2',); tau0 0.37 s, s0 5.60 s; params {'total': 584866, 'trainable': 47474}
+2026-11-15 14:24:21 INFO    eegtraj.models.decoder_runner: lr 0.001 epoch 1: train loss 7.4361 nll 7.2745 aux 1.5943 | val MSE 25.577 cm^2 (0.3 s)
+2026-11-15 14:24:21 INFO    eegtraj.models.decoder_runner: lr 0.001 epoch 2: train loss 3.2835 nll 3.1361 aux 1.4009 | val MSE 16.514 cm^2 (0.2 s)
+2026-11-15 14:24:21 INFO    eegtraj.models.decoder_runner: lr 0.0003 epoch 1: train loss 11.2539 nll 11.0842 aux 1.6949 | val MSE 82.930 cm^2 (0.2 s)
+2026-11-15 14:24:22 INFO    eegtraj.models.decoder_runner: lr 0.0003 epoch 2: train loss 6.3114 nll 6.1525 aux 1.5728 | val MSE 47.483 cm^2 (0.2 s)
+2026-11-15 14:24:22 INFO    eegtraj.models.decoder_runner: selected lr 0.001 (val MSE 16.514) from {0.001: 16.514, 0.0003: 47.483}
+2026-11-15 14:24:22 INFO    eegtraj.models.decoder_runner: fold loso_P2 test P2: r 0.471 (x 0.802 y 0.834 z -0.224) R2 0.103 NRMSE 0.297 rrs -0.0321 | template_cue r -0.063 (0.1 s)
+2026-11-15 14:24:22 INFO    eegtraj.models.decoder_runner: aggregate over 2 test subjects: r 0.490, R2 0.131, NRMSE 0.303, rrs -0.0223 | template_cue r 0.357

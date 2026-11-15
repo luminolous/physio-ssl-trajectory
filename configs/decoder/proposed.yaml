@@ -1,0 +1,53 @@
+# Stage 2 decoder (design.md "Stage 2"): one config = one compared model. Proposed: LeJEPA (masked-predictor variant)
+# guided encoder, hybrid (neural + ocular), phase tracker + template mixing + warp + Delta.
+# Settings and variants of Experiments 1-3 are CLI overrides of this file (scripts/run_decoder.py --help).
+name: decoder  # output folder: <name>__<head>_<branches>_<setting>_<encoder>
+cache_dir: dataset/cache/98f5fa6e66
+split_config: configs/splits/default.yaml
+seed: 1  # decoder seed; the pretraining seed is in the encoder checkpoint (0)
+
+model:
+  head: proposed  # direct | residual | global_warp | proposed
+  neural: true
+  ocular: true
+  setting: frozen  # frozen | finetune
+  encoder:
+    source: checkpoint  # checkpoint | random | none
+    checkpoint: output/proposed-model/pretrain/lejepa_guided/20261115-123041/checkpoints/encoder_final.pt
+    architecture_config: configs/pretrain/encoder.yaml  # for source: random
+    random_seed: 0  # source: random (0 = the step-0 init of the pretraining runs)
+  d_fused: 128
+  d_ocular: 32
+  ocular_channels: 16
+  a_max: 0.5  # |log A| bound
+  dropout: 0.1
+
+templates:  # landmark-registered templates from each fold's training subjects
+  conditions: [165, 330, 660]
+  n_grid: 201
+
+loss:  # placeholders until "[DECISION] Loss weights and prior values"
+  aux: 0.1
+  delta: 0.01
+  amp: 0.1
+  gate: 0.1  # fine-tune only (frozen: gate fixed, no term)
+
+train:  # design.md "Training budget": identical for every compared model
+  lr_grid: [1.0e-3, 3.0e-4]
+  weight_decay: 0.01
+  max_epochs: 30
+  patience: 5
+  batch_lifts: 16
+  amp: bf16
+  grad_clip: 1.0
+
+scoring:
+  seed: 0  # residual_r_other_trial pairing
+  n_permutations: 5
+
+save_predictions: true
+
+smoke:  # --smoke
+  n_folds: 2
+  trials_per_subject: 20
+  max_epochs: 2
