@@ -1,0 +1,6 @@
+include_smoke: false
+include_pre_ssl19: false
+runs:
+- 20261115-163006_seed1_aux0.1_delta0.01_amp0.1_gate0.1_screening
+- 20261115-162634_seed1_aux0.1_delta0.01_amp0.1_gate0.1_screening
+- 20261115-162238_seed1_aux0.1_delta0.01_amp0.1_gate0.1_screening

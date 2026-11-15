@@ -1,0 +1,593 @@
+{
+  "name": "decoder",
+  "folds": "screening",
+  "model": {
+    "head": "proposed",
+    "neural": true,
+    "ocular": true,
+    "setting": "frozen",
+    "encoder": {
+      "source": "checkpoint",
+      "checkpoint": "output/proposed-model/pretrain/lejepa_guided/20261115-123041/checkpoints/encoder_final.pt",
+      "architecture_config": "configs/pretrain/encoder.yaml",
+      "random_seed": 0
+    },
+    "d_fused": 128,
+    "d_ocular": 32,
+    "ocular_channels": 16,
+    "a_max": 0.5,
+    "clock_log_range": 0.6931471805599453,
+    "dropout": 0.1
+  },
+  "encoder": {
+    "source": "checkpoint",
+    "checkpoint": "output/proposed-model/pretrain/lejepa_guided/20261115-123041/checkpoints/encoder_final.pt",
+    "architecture_config": "configs/pretrain/encoder.yaml",
+    "random_seed": 0
+  },
+  "decoder_seed": 1,
+  "smoke": true,
+  "loss_weights": {
+    "aux": 0.1,
+    "delta": 0.01,
+    "amp": 0.1,
+    "gate": 0.1
+  },
+  "train": {
+    "lr_grid": [
+      0.001,
+      0.0003
+    ],
+    "weight_decay": 0.01,
+    "max_epochs": 2,
+    "patience": 5,
+    "batch_lifts": 16,
+    "amp": "bf16",
+    "grad_clip": 1.0
+  },
+  "eeg_normalization_note": "transductive: each subject's own label-free EEG statistics (D9)",
+  "stream_start": "LED-on - 1.5 s (SSL-17)",
+  "aggregate": {
+    "r": {
+      "mean": 0.6796914676138291,
+      "sd": 0.10402979121370771,
+      "n_subjects": 2
+    },
+    "r2": {
+      "mean": 0.12986694697634568,
+      "sd": 0.48071560772777994,
+      "n_subjects": 2
+    },
+    "nrmse": {
+      "mean": 0.309375938287063,
+      "sd": 0.10088896806805873,
+      "n_subjects": 2
+    },
+    "residual_r": {
+      "mean": -0.07409431206359263,
+      "sd": 0.46152454154590716,
+      "n_subjects": 2
+    },
+    "residual_r_other_trial": {
+      "mean": -0.01272735138304304,
+      "sd": 0.5052787972755745,
+      "n_subjects": 2
+    },
+    "residual_r_specific": {
+      "mean": -0.06136696068054959,
+      "sd": 0.04375425572966732,
+      "n_subjects": 2
+    }
+  },
+  "aggregate_floor_template_cue": {
+    "r": {
+      "mean": 0.8740252574116193,
+      "sd": 0.005102010785267421,
+      "n_subjects": 2
+    },
+    "r2": {
+      "mean": 0.5221722937267812,
+      "sd": 0.24184875149613375,
+      "n_subjects": 2
+    },
+    "nrmse": {
+      "mean": 0.22141512579594902,
+      "sd": 0.06289505140804587,
+      "n_subjects": 2
+    },
+    "residual_r": {
+      "mean": NaN,
+      "sd": NaN,
+      "n_subjects": 2
+    },
+    "residual_r_other_trial": {
+      "mean": NaN,
+      "sd": NaN,
+      "n_subjects": 2
+    },
+    "residual_r_specific": {
+      "mean": NaN,
+      "sd": NaN,
+      "n_subjects": 2
+    }
+  },
+  "per_subject": {
+    "P3": {
+      "r": 0.6061312968011957,
+      "r2": -0.2100503190701798,
+      "nrmse": 0.38071521175490036,
+      "residual_r": -0.4004414450747161,
+      "residual_r_other_trial": -0.3700134153263846,
+      "residual_r_specific": -0.030428029748331475,
+      "r_per_axis": {
+        "x": 0.6463172661165586,
+        "y": 0.6561076036008896,
+        "z": 0.5159690206861389
+      },
+      "n_trials": 20
+    },
+    "P6": {
+      "r": 0.7532516384264626,
+      "r2": 0.46978421302287116,
+      "nrmse": 0.23803666481922559,
+      "residual_r": 0.2522528209475308,
+      "residual_r_other_trial": 0.3445587125602985,
+      "residual_r_specific": -0.0923058916127677,
+      "r_per_axis": {
+        "x": 0.7660543788443268,
+        "y": 0.7704560569887275,
+        "z": 0.7232444794463335
+      },
+      "n_trials": 20
+    }
+  },
+  "floor_template_cue": {
+    "P3": {
+      "r": 0.8776329238355688,
+      "r2": 0.3511594015223649,
+      "nrmse": 0.26588864314965477,
+      "residual_r": NaN,
+      "residual_r_other_trial": NaN,
+      "residual_r_specific": NaN
+    },
+    "P6": {
+      "r": 0.8704175909876698,
+      "r2": 0.6931851859311976,
+      "nrmse": 0.17694160844224327,
+      "residual_r": NaN,
+      "residual_r_other_trial": NaN,
+      "residual_r_specific": NaN
+    }
+  },
+  "aggregate_floor_cue_phi": {
+    "r": {
+      "mean": 0.8086757394987623,
+      "sd": 0.06286993401250478,
+      "n_subjects": 2
+    },
+    "r2": {
+      "mean": 0.3231552612407881,
+      "sd": 0.10817312909272096,
+      "n_subjects": 2
+    },
+    "nrmse": {
+      "mean": 0.264161969868125,
+      "sd": 0.03156924369885077,
+      "n_subjects": 2
+    },
+    "residual_r": {
+      "mean": 0.03623615780101983,
+      "sd": 0.15817889481783434,
+      "n_subjects": 2
+    },
+    "residual_r_other_trial": {
+      "mean": -0.03199325186322641,
+      "sd": 0.1024908039720969,
+      "n_subjects": 2
+    },
+    "residual_r_specific": {
+      "mean": 0.06822940966424625,
+      "sd": 0.05568809084573743,
+      "n_subjects": 2
+    }
+  },
+  "floor_cue_phi": {
+    "P3": {
+      "r": 0.8531314961717551,
+      "r2": 0.24666530811715726,
+      "nrmse": 0.2864847961645131,
+      "residual_r": -0.07561321136526446,
+      "residual_r_other_trial": -0.10446519436115727,
+      "residual_r_specific": 0.02885198299589281,
+      "r_per_axis": {
+        "x": 0.8455733147780787,
+        "y": 0.8712387370783906,
+        "z": 0.8425824366587961
+      },
+      "n_trials": 20
+    },
+    "P6": {
+      "r": 0.7642199828257693,
+      "r2": 0.39964521436441885,
+      "nrmse": 0.24183914357173697,
+      "residual_r": 0.14808552696730412,
+      "residual_r_other_trial": 0.040478690634704446,
+      "residual_r_specific": 0.10760683633259968,
+      "r_per_axis": {
+        "x": 0.7714522014540808,
+        "y": 0.7889160705910297,
+        "z": 0.7322916764321975
+      },
+      "n_trials": 20
+    }
+  },
+  "per_fold": [
+    {
+      "fold": "screening_P3",
+      "train_subjects": [
+        "P1",
+        "P2",
+        "P4",
+        "P5",
+        "P8",
+        "P9",
+        "P10",
+        "P11"
+      ],
+      "val_subjects": [
+        "P7",
+        "P12"
+      ],
+      "test_subjects": [
+        "P3"
+      ],
+      "tau0_s": 0.3719999999999999,
+      "s0_s": 5.59,
+      "template_counts": {
+        "165": 672,
+        "330": 1224,
+        "660": 456
+      },
+      "encoder": {
+        "source": "checkpoint",
+        "checkpoint": "output/proposed-model/pretrain/lejepa_guided/20261115-123041/checkpoints/encoder_final.pt",
+        "variant": {
+          "name": "lejepa_guided",
+          "objective": "lejepa",
+          "guided": true
+        },
+        "pretrain_step": 3000,
+        "kind": "online"
+      },
+      "parameters": {
+        "total": 584866,
+        "trainable": 47474
+      },
+      "selected_lr": 0.001,
+      "selected_val_mse": 17.473747409937634,
+      "grid": [
+        {
+          "lr": 0.001,
+          "best_val_mse": 17.473747409937634,
+          "best_epoch": 1,
+          "epochs_run": 2,
+          "history": [
+            {
+              "lr": 0.001,
+              "epoch": 1,
+              "val_mse": 17.473747409937634,
+              "sec": 0.9,
+              "train_nll": 4.0867432117462155,
+              "train_aux": 1.491699182987213,
+              "train_delta": 0.08696928360732273,
+              "train_amp": 0.005646867046016269,
+              "train_gate": 0.0,
+              "train_loss": 4.2373474597930905
+            },
+            {
+              "lr": 0.001,
+              "epoch": 2,
+              "val_mse": 19.455233432576318,
+              "sec": 0.3,
+              "train_nll": 2.8009557723999023,
+              "train_aux": 1.329279351234436,
+              "train_delta": 0.7754487037658692,
+              "train_amp": 0.023820834793150426,
+              "train_gate": 0.0,
+              "train_loss": 2.9440202713012695
+            }
+          ]
+        },
+        {
+          "lr": 0.0003,
+          "best_val_mse": 18.742870276341705,
+          "best_epoch": 2,
+          "epochs_run": 2,
+          "history": [
+            {
+              "lr": 0.0003,
+              "epoch": 1,
+              "val_mse": 30.532274965893237,
+              "sec": 0.3,
+              "train_nll": 4.749064588546753,
+              "train_aux": 1.6155760288238525,
+              "train_delta": 0.005866529291961342,
+              "train_amp": 0.0006127130887762178,
+              "train_gate": 0.0,
+              "train_loss": 4.910742020606994
+            },
+            {
+              "lr": 0.0003,
+              "epoch": 2,
+              "val_mse": 18.742870276341705,
+              "sec": 0.3,
+              "train_nll": 3.5692577362060547,
+              "train_aux": 1.4730650424957275,
+              "train_delta": 0.05740294996649027,
+              "train_amp": 0.004135014652274549,
+              "train_gate": 0.0,
+              "train_loss": 3.717551755905151
+            }
+          ]
+        }
+      ],
+      "inner_val": {
+        "P7": {
+          "r": 0.7070145679050519,
+          "r2": 0.22672718126239544,
+          "nrmse": 0.2721812072866044,
+          "residual_r": 0.6355259447879126,
+          "residual_r_other_trial": 0.6422019478645483,
+          "residual_r_specific": -0.006676003076635739,
+          "r_per_axis": {
+            "x": 0.7198959513409803,
+            "y": 0.7260987647985853,
+            "z": 0.6750489875755898
+          },
+          "n_trials": 20
+        },
+        "P12": {
+          "r": 0.7906641403418977,
+          "r2": 0.4970987682021733,
+          "nrmse": 0.22363328063390356,
+          "residual_r": 0.4642310839397717,
+          "residual_r_other_trial": 0.5160719465394072,
+          "residual_r_specific": -0.05184086259963555,
+          "r_per_axis": {
+            "x": 0.7891763453087925,
+            "y": 0.825224700254093,
+            "z": 0.7575913754628079
+          },
+          "n_trials": 20
+        }
+      },
+      "test": {
+        "P3": {
+          "r": 0.6061312968011957,
+          "r2": -0.2100503190701798,
+          "nrmse": 0.38071521175490036,
+          "residual_r": -0.4004414450747161,
+          "residual_r_other_trial": -0.3700134153263846,
+          "residual_r_specific": -0.030428029748331475,
+          "r_per_axis": {
+            "x": 0.6463172661165586,
+            "y": 0.6561076036008896,
+            "z": 0.5159690206861389
+          },
+          "n_trials": 20
+        }
+      },
+      "floor_template_cue": {
+        "P3": {
+          "r": 0.8776329238355688,
+          "r2": 0.3511594015223649,
+          "nrmse": 0.26588864314965477,
+          "residual_r": NaN,
+          "residual_r_other_trial": NaN,
+          "residual_r_specific": NaN
+        }
+      },
+      "floor_cue_phi": {
+        "P3": {
+          "r": 0.8531314961717551,
+          "r2": 0.24666530811715726,
+          "nrmse": 0.2864847961645131,
+          "residual_r": -0.07561321136526446,
+          "residual_r_other_trial": -0.10446519436115727,
+          "residual_r_specific": 0.02885198299589281,
+          "r_per_axis": {
+            "x": 0.8455733147780787,
+            "y": 0.8712387370783906,
+            "z": 0.8425824366587961
+          },
+          "n_trials": 20
+        }
+      },
+      "seconds": 11.9
+    },
+    {
+      "fold": "screening_P6",
+      "train_subjects": [
+        "P2",
+        "P4",
+        "P5",
+        "P8",
+        "P9",
+        "P10",
+        "P11",
+        "P12"
+      ],
+      "val_subjects": [
+        "P1",
+        "P7"
+      ],
+      "test_subjects": [
+        "P6"
+      ],
+      "tau0_s": 0.39400000000000013,
+      "s0_s": 5.8309999999999995,
+      "template_counts": {
+        "165": 672,
+        "330": 1224,
+        "660": 456
+      },
+      "encoder": {
+        "source": "checkpoint",
+        "checkpoint": "output/proposed-model/pretrain/lejepa_guided/20261115-123041/checkpoints/encoder_final.pt",
+        "variant": {
+          "name": "lejepa_guided",
+          "objective": "lejepa",
+          "guided": true
+        },
+        "pretrain_step": 3000,
+        "kind": "online"
+      },
+      "parameters": {
+        "total": 584866,
+        "trainable": 47474
+      },
+      "selected_lr": 0.001,
+      "selected_val_mse": 21.751531596824403,
+      "grid": [
+        {
+          "lr": 0.001,
+          "best_val_mse": 21.751531596824403,
+          "best_epoch": 1,
+          "epochs_run": 2,
+          "history": [
+            {
+              "lr": 0.001,
+              "epoch": 1,
+              "val_mse": 21.751531596824403,
+              "sec": 0.3,
+              "train_nll": 3.706005501747131,
+              "train_aux": 1.5234956860542297,
+              "train_delta": 0.07518043031450361,
+              "train_amp": 0.003520953733823262,
+              "train_gate": 0.0,
+              "train_loss": 3.8594589948654177
+            },
+            {
+              "lr": 0.001,
+              "epoch": 2,
+              "val_mse": 28.286152194794525,
+              "sec": 0.3,
+              "train_nll": 2.7118505239486694,
+              "train_aux": 1.3395604372024537,
+              "train_delta": 0.5812872380018235,
+              "train_amp": 0.016357454378157853,
+              "train_gate": 0.0,
+              "train_loss": 2.853255200386047
+            }
+          ]
+        },
+        {
+          "lr": 0.0003,
+          "best_val_mse": 24.905980930805818,
+          "best_epoch": 2,
+          "epochs_run": 2,
+          "history": [
+            {
+              "lr": 0.0003,
+              "epoch": 1,
+              "val_mse": 33.16141692416299,
+              "sec": 0.2,
+              "train_nll": 4.367863440513611,
+              "train_aux": 1.639666247367859,
+              "train_delta": 0.00538564357557334,
+              "train_amp": 0.0005036601021856768,
+              "train_gate": 0.0,
+              "train_loss": 4.5319342613220215
+            },
+            {
+              "lr": 0.0003,
+              "epoch": 2,
+              "val_mse": 24.905980930805818,
+              "sec": 0.2,
+              "train_nll": 3.374299645423889,
+              "train_aux": 1.4983987212181091,
+              "train_delta": 0.057226819545030595,
+              "train_amp": 0.0025607913732528685,
+              "train_gate": 0.0,
+              "train_loss": 3.5249678611755373
+            }
+          ]
+        }
+      ],
+      "inner_val": {
+        "P1": {
+          "r": 0.5574513267174179,
+          "r2": -0.09810616170261628,
+          "nrmse": 0.35345453525536,
+          "residual_r": -0.37324623369865656,
+          "residual_r_other_trial": -0.43775207480863293,
+          "residual_r_specific": 0.06450584110997637,
+          "r_per_axis": {
+            "x": 0.6150695682545998,
+            "y": 0.6322759358166021,
+            "z": 0.42500847608105197
+          },
+          "n_trials": 20
+        },
+        "P7": {
+          "r": 0.7647274757212895,
+          "r2": 0.3652958720655513,
+          "nrmse": 0.24444996272715266,
+          "residual_r": 0.6902826905595503,
+          "residual_r_other_trial": 0.7029337023167566,
+          "residual_r_specific": -0.012651011757206287,
+          "r_per_axis": {
+            "x": 0.7762253678712692,
+            "y": 0.7864727884158172,
+            "z": 0.731484270876782
+          },
+          "n_trials": 20
+        }
+      },
+      "test": {
+        "P6": {
+          "r": 0.7532516384264626,
+          "r2": 0.46978421302287116,
+          "nrmse": 0.23803666481922559,
+          "residual_r": 0.2522528209475308,
+          "residual_r_other_trial": 0.3445587125602985,
+          "residual_r_specific": -0.0923058916127677,
+          "r_per_axis": {
+            "x": 0.7660543788443268,
+            "y": 0.7704560569887275,
+            "z": 0.7232444794463335
+          },
+          "n_trials": 20
+        }
+      },
+      "floor_template_cue": {
+        "P6": {
+          "r": 0.8704175909876698,
+          "r2": 0.6931851859311976,
+          "nrmse": 0.17694160844224327,
+          "residual_r": NaN,
+          "residual_r_other_trial": NaN,
+          "residual_r_specific": NaN
+        }
+      },
+      "floor_cue_phi": {
+        "P6": {
+          "r": 0.7642199828257693,
+          "r2": 0.39964521436441885,
+          "nrmse": 0.24183914357173697,
+          "residual_r": 0.14808552696730412,
+          "residual_r_other_trial": 0.040478690634704446,
+          "residual_r_specific": 0.10760683633259968,
+          "r_per_axis": {
+            "x": 0.7714522014540808,
+            "y": 0.7889160705910297,
+            "z": 0.7322916764321975
+          },
+          "n_trials": 20
+        }
+      },
+      "seconds": 2.7
+    }
+  ],
+  "wall_seconds": 14.8
+}

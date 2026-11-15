@@ -1,0 +1,6 @@
+runs:
+- output\proposed-model\decoder-sweep\decoder__proposed_hybrid_frozen_lejepa_guided\20261115-162238_seed1_aux0.1_delta0.01_amp0.1_gate0.1_screening
+- output\proposed-model\decoder-sweep\decoder__global_warp_hybrid_frozen_lejepa_guided\20261115-162634_seed1_aux0.1_delta0.01_amp0.1_gate0.1_screening
+- output\proposed-model\decoder-sweep\decoder__residual_hybrid_frozen_lejepa_guided\20261115-163006_seed1_aux0.1_delta0.01_amp0.1_gate0.1_screening
+cache_dir: dataset/cache/98f5fa6e66
+split_config: configs/splits/default.yaml

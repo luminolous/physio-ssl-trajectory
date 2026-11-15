@@ -210,7 +210,7 @@ def main() -> None:
             score("template_cue (floor)", cue_tmpl.predict(s, mask, ctx), "floor")
             score("1. oracle phi, true condition, A=1, Delta=0", t_mix(tmpl, phi_true, w_true), "oracle")
             score("1b. oracle phi, uniform mixing", t_mix(tmpl, phi_true, w_uni), "oracle")
-            score("2. cue phi (median RT, median duration), uniform", t_mix(tmpl, phi_cue, w_uni), "no EEG")
+            score("2. cue phi = head floor (median RT, median duration), uniform", t_mix(tmpl, phi_cue, w_uni), "no EEG")
             score("2b. cue phi with runner s0, uniform", t_mix(tmpl, phi_cue_s0, w_uni), "no EEG")
 
             for r, cfg in runs:

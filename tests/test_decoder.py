@@ -11,7 +11,7 @@ import torch
 from eegtraj.data.decoder_labels import LabelLeakageError, patch_aux_targets, training_aux_classes
 from eegtraj.data.splits import Fold
 from eegtraj.models.decoder import (HEADS, AUX_CLASSES, StreamDecoder, aux_classes, causal_interp, decoder_loss,
-                                    tracker_phase)
+                                    clock_phase)
 from eegtraj.models.encoder import CausalEncoder
 from eegtraj.models.landmark_template import LandmarkTemplates, TemplateBank, time_to_phase
 
@@ -61,17 +61,52 @@ def test_causal_interp_uses_only_finished_patches():
         assert torch.allclose(causal_interp(v2, torch.tensor([[s]]), P), causal_interp(vals, torch.tensor([[s]]), P))
 
 
-def test_tracker_phase_is_monotone_bounded_and_integrates_the_rate():
+def test_clock_phase_is_monotone_bounded_and_integrates_the_clock():
     g = torch.Generator().manual_seed(0)
+    t0, tau0, s0 = -1.5 + 0.01, 0.4, 5.8
     for _ in range(20):
-        rate = torch.rand(3, 40, generator=g) * 2.0
+        rate = 0.5 + 1.5 * torch.rand(3, 40, generator=g)
         idx = torch.arange(0, 40 * P + 30).expand(3, -1)
-        phi, phi_end = tracker_phase(rate, idx, P, 100.0)
+        phi, phi_end, tau = clock_phase(rate, idx, P, 100.0, t0, tau0, s0)
+        assert (tau[:, 1:] > tau[:, :-1]).all()  # strictly increasing clock
         assert (phi[:, 1:] >= phi[:, :-1] - 1e-7).all() and phi.min() >= 0 and phi.max() <= 1
-        assert torch.allclose(phi_end[:, 0], torch.zeros(3))
-        assert torch.allclose(phi[:, P - 1], torch.zeros(3))  # phi(e_0) = 0
-        expect = torch.clamp(rate[:, 0] * 0.2, max=1.0)
-        assert torch.allclose(phi[:, 2 * P - 1], expect, atol=1e-6)  # phi(e_1) = rate_0 * 0.2 s
+        assert torch.allclose(tau[:, P - 1], torch.full((3,), -1.3))  # tau(e_0) = real time at e_0
+        assert torch.allclose(tau[:, 2 * P - 1], -1.3 + rate[:, 0] * 0.2, atol=1e-6)  # tau(e_1) = tau(e_0) + k_0 0.2 s
+        assert torch.allclose(phi, ((tau - tau0) / s0).clamp(0, 1))
+
+
+def test_clock_at_real_time_gives_the_cue_phase():
+    idx = torch.arange(0, 45 * P).expand(2, -1)
+    t_led = -1.5 + (idx + 1) / 100.0
+    phi, _, tau = clock_phase(torch.ones(2, 45), idx, P, 100.0, -1.5 + 0.01, 0.4, 5.8)
+    assert torch.allclose(tau, t_led, atol=1e-5)
+    assert torch.allclose(phi, ((t_led - 0.4) / 5.8).clamp(0, 1), atol=1e-6)
+
+
+@pytest.mark.parametrize("head", ["proposed", "global_warp"])
+def test_warp_heads_start_at_the_cue_phase(head):
+    """Zero-initialized outputs: u = 0 (real-time clock) and tau = tau0, s = s0, so both warp heads start at the head
+    floor phi = clip((t - t_LED - tau0) / s0, 0, 1) with A = 1, Delta = 0 and uniform mixing."""
+    torch.manual_seed(1)
+    dec = StreamDecoder(head, small_encoder(), True, TemplateBank.from_templates(templates()), d_fused=32,
+                        dropout=0.0, tau0=0.4, s0=5.8).eval()
+    eeg, eog = stream(2, 45)
+    idx = torch.arange(0, 45 * P).expand(2, -1)
+    t_led = -1.5 + (idx + 1) / 100.0
+    out = dec(eeg, eog, idx, t_led)
+    phi = ((t_led - 0.4) / 5.8).clamp(0, 1)
+    assert torch.allclose(out["phi"], phi, atol=1e-5)
+    floor = torch.from_numpy(np.mean([templates()(phi.numpy(), c) for c in (165, 330, 660)], axis=0)).float()
+    assert torch.allclose(out["y"], floor, atol=1e-3)
+
+
+def test_clock_rate_bounded():
+    dec = decoder("proposed").train()
+    with torch.no_grad():
+        dec.out["rate"].weight.normal_(std=5.0)
+    eeg, eog = stream(2, 20)
+    out = dec(eeg, eog, torch.arange(0, 20 * P).expand(2, -1))
+    assert out["rate"].min() >= 0.5 - 1e-6 and out["rate"].max() <= 2.0 + 1e-6
 
 
 def test_warp_head_with_true_phase_reproduces_the_template():

@@ -21,6 +21,7 @@ model:
   d_ocular: 32
   ocular_channels: 16
   a_max: 0.5  # |log A| bound
+  clock_log_range: 0.6931471805599453  # ln 2: tracker clock rate in [0.5, 2] x real time (SSL-19)
   dropout: 0.1
 
 templates:  # landmark-registered templates from each fold's training subjects

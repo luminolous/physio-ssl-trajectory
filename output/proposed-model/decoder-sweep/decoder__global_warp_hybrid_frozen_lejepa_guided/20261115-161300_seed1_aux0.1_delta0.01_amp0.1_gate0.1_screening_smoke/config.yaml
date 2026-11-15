@@ -1,0 +1,51 @@
+name: decoder
+cache_dir: dataset/cache/98f5fa6e66
+split_config: configs/splits/default.yaml
+folds: screening
+seed: 1
+model:
+  head: global_warp
+  neural: true
+  ocular: true
+  setting: frozen
+  encoder:
+    source: checkpoint
+    checkpoint: output/proposed-model/pretrain/lejepa_guided/20261115-123041/checkpoints/encoder_final.pt
+    architecture_config: configs/pretrain/encoder.yaml
+    random_seed: 0
+  d_fused: 128
+  d_ocular: 32
+  ocular_channels: 16
+  a_max: 0.5
+  clock_log_range: 0.6931471805599453
+  dropout: 0.1
+templates:
+  conditions:
+  - 165
+  - 330
+  - 660
+  n_grid: 201
+loss:
+  aux: 0.1
+  delta: 0.01
+  amp: 0.1
+  gate: 0.1
+train:
+  lr_grid:
+  - 0.001
+  - 0.0003
+  weight_decay: 0.01
+  max_epochs: 30
+  patience: 5
+  batch_lifts: 16
+  amp: bf16
+  grad_clip: 1.0
+scoring:
+  seed: 0
+  n_permutations: 5
+save_predictions: true
+smoke:
+  n_folds: 2
+  trials_per_subject: 20
+  max_epochs: 2
+smoke_run: true
