@@ -69,3 +69,17 @@ def test_masks_select_rows(cfg):
     assert not (m["train"] & m["test"]).any() and not (m["train"] & m["val"]).any()
     assert set(trials[m["test"]].subject) == set(fold.test_subjects)
     assert not trials[m["train"] | m["val"] | m["test"]].subject.isin(cfg["screening_subjects"]).any()
+
+
+def test_screening_folds_test_only_screening_subjects():
+    from eegtraj.data.splits import load_split_config, make_folds, main_subjects
+
+    cfg = load_split_config("configs/splits/default.yaml")
+    folds = make_folds(cfg, "screening")
+    assert [f.test_subjects for f in folds] == [("P3",), ("P6",)]
+    for f in folds:
+        assert set(f.train_subjects) | set(f.val_subjects) == set(main_subjects(cfg))
+        assert not set(f.train_subjects) & set(f.val_subjects) and len(f.val_subjects) == 2
+        assert not {"P3", "P6"} & (set(f.train_subjects) | set(f.val_subjects))
+    loso = make_folds(cfg, "loso")
+    assert not {"P3", "P6"} & {s for f in loso for s in f.test_subjects}

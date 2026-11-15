@@ -4,6 +4,7 @@
 name: decoder  # output folder: <name>__<head>_<branches>_<setting>_<encoder>
 cache_dir: dataset/cache/98f5fa6e66
 split_config: configs/splits/default.yaml
+folds: loso  # loso (main) | screening (test P3 / P6; tuning only, decided 2026-11-15)
 seed: 1  # decoder seed; the pretraining seed is in the encoder checkpoint (0)
 
 model:

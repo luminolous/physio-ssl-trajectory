@@ -98,8 +98,25 @@ def within_subject_folds(cfg: dict[str, Any]) -> list[Fold]:
     ]
 
 
+def screening_folds(cfg: dict[str, Any]) -> list[Fold]:
+    """One fold per screening subject (P3, P6): test = that subject; train / inner validation from the main subjects
+    (seeded, 2 inner-validation subjects). For tuning choices that are then frozen for the main experiment
+    (proposed-model stage, loss weights): scores come from the screening subjects only."""
+    subjects = main_subjects(cfg)
+    folds = []
+    for i, test in enumerate(cfg["screening_subjects"]):
+        rng = np.random.default_rng([cfg["seed"], 100 + i])
+        val_idx = rng.choice(len(subjects), size=cfg["n_inner_val"], replace=False)
+        val = tuple(sorted((subjects[j] for j in val_idx), key=lambda s: int(s[1:])))
+        train = tuple(s for s in subjects if s not in val)
+        folds.append(Fold(name=f"screening_{test}", train_subjects=train, val_subjects=val, test_subjects=(test,)))
+    return folds
+
+
 def make_folds(cfg: dict[str, Any], mode: str) -> list[Fold]:
-    """Folds for ``mode`` = ``"loso"`` or ``"within_subject"``."""
+    """Folds for ``mode`` = ``"loso"``, ``"within_subject"`` or ``"screening"``."""
+    if mode == "screening":
+        return screening_folds(cfg)
     if mode == "loso":
         return loso_folds(cfg)
     if mode == "within_subject":

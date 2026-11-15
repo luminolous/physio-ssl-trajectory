@@ -21,6 +21,7 @@ from eegtraj.models.decoder_runner import run
 from eegtraj.utils.run import setup_run
 
 OUTPUT = Path("output/proposed-model/decoder")
+SWEEP_OUTPUT = Path("output/proposed-model/decoder-sweep")
 BRANCHES = {"hybrid": (True, True), "neural": (True, False), "ocular": (False, True)}
 
 
@@ -45,6 +46,9 @@ def main() -> None:
     parser.add_argument("--checkpoint", help="stage 1 encoder checkpoint")
     parser.add_argument("--seed", type=int, help="decoder seed")
     parser.add_argument("--name", help="run name (output folder)")
+    parser.add_argument("--folds", choices=["loso", "screening"], help="screening: test P3 / P6 (tuning only)")
+    parser.add_argument("--loss", default="", help="loss weight overrides, e.g. aux=0.1,delta=0.01")
+    parser.add_argument("--sweep", action="store_true", help="tuning run: writes under decoder-sweep/")
     args = parser.parse_args()
     cfg = yaml.safe_load(args.config.read_text(encoding="utf-8"))
     m = cfg["model"]
@@ -64,10 +68,22 @@ def main() -> None:
         cfg["name"] = args.name
     if not m["neural"]:
         m["encoder"]["source"] = "none"
+    if args.folds:
+        cfg["folds"] = args.folds
+    for item in filter(None, args.loss.split(",")):
+        key, value = item.split("=")
+        if key not in cfg["loss"]:
+            raise SystemExit(f"unknown loss weight {key!r}; choose from {sorted(cfg['loss'])}")
+        cfg["loss"][key] = float(value)
     cfg["smoke_run"] = args.smoke
     branches = next(k for k, v in BRANCHES.items() if v == (m["neural"], m["ocular"]))
     folder = f"{cfg['name']}__{m['head']}_{branches}_{m['setting']}_{encoder_label(m)}"
-    run_dir = setup_run(OUTPUT / folder, cfg, tag=f"seed{cfg['seed']}" + ("_smoke" if args.smoke else ""))
+    tag = f"seed{cfg['seed']}"
+    if args.sweep:
+        tag += "_" + "_".join(f"{k}{v:g}" for k, v in cfg["loss"].items())
+    if cfg.get("folds", "loso") != "loso":
+        tag += f"_{cfg['folds']}"
+    run_dir = setup_run((SWEEP_OUTPUT if args.sweep else OUTPUT) / folder, cfg, tag=tag + ("_smoke" if args.smoke else ""))
     print(f"Run directory: {run_dir}")
     run(cfg, run_dir)
     print(f"Run directory: {run_dir}")

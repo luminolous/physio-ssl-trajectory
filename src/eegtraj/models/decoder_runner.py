@@ -264,7 +264,7 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     seed = int(cfg["seed"])
     split = load_split_config(cfg["split_config"])
-    folds: list[Fold] = make_folds(split, "loso")
+    folds: list[Fold] = make_folds(split, cfg.get("folds", "loso"))
     smoke = cfg.get("smoke_run", False)
     if smoke:
         folds = folds[:int(cfg["smoke"]["n_folds"])]
@@ -368,7 +368,7 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
                     "sd": float(np.nanstd([v[k] for v in table.values()], ddof=1)) if len(table) > 1 else None,
                     "n_subjects": len(table)} for k in SCORES}
 
-    metrics = {"name": cfg["name"], "model": m, "encoder": enc_cfg, "decoder_seed": seed, "smoke": smoke,
+    metrics = {"name": cfg["name"], "folds": cfg.get("folds", "loso"), "model": m, "encoder": enc_cfg, "decoder_seed": seed, "smoke": smoke,
                "loss_weights": cfg["loss"], "train": cfg["train"],
                "eeg_normalization_note": "transductive: each subject's own label-free EEG statistics (D9)",
                "stream_start": "LED-on - 1.5 s (SSL-17)", "aggregate": agg(per_subject),

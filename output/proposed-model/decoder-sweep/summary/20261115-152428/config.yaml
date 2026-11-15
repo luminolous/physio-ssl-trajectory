@@ -1,0 +1,12 @@
+include_smoke: false
+runs:
+- 20261115-144504_seed1_aux0.1_delta0.01_amp0.1_gate0.1_screening
+- 20261115-151221_seed1_aux0.1_delta0.01_amp0.01_gate0.1_screening
+- 20261115-150859_seed1_aux0.1_delta0.01_amp0_gate0.1_screening
+- 20261115-150549_seed1_aux0.1_delta0.1_amp0.1_gate0.1_screening
+- 20261115-150229_seed1_aux0.1_delta0.001_amp0.1_gate0.1_screening
+- 20261115-145211_seed1_aux0.01_delta0.01_amp0.1_gate0.1_screening
+- 20261115-151544_seed1_aux0.1_delta0.01_amp1_gate0.1_screening
+- 20261115-144828_seed1_aux0_delta0.01_amp0.1_gate0.1_screening
+- 20261115-145855_seed1_aux0.1_delta0_amp0.1_gate0.1_screening
+- 20261115-145550_seed1_aux1_delta0.01_amp0.1_gate0.1_screening
