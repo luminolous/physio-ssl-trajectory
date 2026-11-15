@@ -1,0 +1,6 @@
+include_smoke: false
+include_old: false
+runs:
+- 20261115-170139_seed1_aux0.1_delta0.01_amp0.1_gate0.1_screening
+- 20261115-165121_seed1_aux0.1_delta0.01_amp0.1_gate0.1_screening
+- 20261115-165537_seed1_aux0.1_delta0.01_amp0.1_gate0.1_screening

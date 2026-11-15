@@ -170,3 +170,80 @@ class TemplateBank(nn.Module):
         if weights is None:
             return t
         return (weights.unsqueeze(-1) * t).sum(dim=-2)
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Phase prior (SSL-20): distribution of the training lifts' phase at each time since LED-on, among the lifts whose
+# scoring segment contains that time.
+
+QUAD_NODES = 32  # Gauss-Hermite nodes over phi; clip kinks limit accuracy: |error| <= 0.05 cm for sigma <= 0.3
+
+
+def extended_phase(t_s: np.ndarray, landmarks_s: np.ndarray, fractions: np.ndarray) -> np.ndarray:
+    """Unclipped phi: piecewise linear through the landmarks, extended linearly outside them with the slope of the
+    first / last landmark interval (phi < 0 before the onset, > 1 after the hand stop)."""
+    out = np.interp(t_s, landmarks_s, fractions)
+    lo, hi = t_s < landmarks_s[0], t_s > landmarks_s[-1]
+    out[lo] = (t_s[lo] - landmarks_s[0]) * (fractions[1] - fractions[0]) / (landmarks_s[1] - landmarks_s[0])
+    out[hi] = 1.0 + (t_s[hi] - landmarks_s[-1]) * (fractions[-1] - fractions[-2]) / (landmarks_s[-1] - landmarks_s[-2])
+    return out
+
+
+@dataclass
+class PhasePrior:
+    """Mean ``mu`` and SD ``sd`` of the training lifts' (unclipped) phase at time ``t0 + k dt`` since LED-on, over the
+    lifts whose scoring segment [segment_start_s, segment_end_s] contains that time (the same samples template_cue
+    averages). ``mu`` is made non-decreasing (running maximum). Outside the grid the edge values are held."""
+
+    t0: float
+    dt: float
+    mu: np.ndarray
+    sd: np.ndarray
+    counts: np.ndarray
+
+    def __call__(self, t_s: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+        grid = self.t0 + self.dt * np.arange(self.mu.size)
+        return np.interp(t_s, grid, self.mu), np.interp(t_s, grid, self.sd)
+
+
+def fit_phase_prior(subjects: Sequence[SubjectSamples], train_subjects: Sequence[str], fractions: np.ndarray,
+                    t0: float = -1.5, t1: float = 12.0, dt: float = 0.01, min_count: int = 20,
+                    min_sd: float = 1e-3) -> PhasePrior:
+    """Phase prior from the lifts of ``train_subjects`` only (lifts with non-increasing landmarks are skipped).
+    Grid times with fewer than ``min_count`` lifts take the nearest grid time that has enough."""
+    grid = np.arange(t0, t1 + dt / 2, dt)
+    s1, s2, cnt = np.zeros(grid.size), np.zeros(grid.size), np.zeros(grid.size)
+    for s in subjects:
+        if s.subject not in set(train_subjects):
+            continue
+        tr = s.trials
+        marks = lift_landmarks(tr)
+        led = tr[CUE_COLUMN].to_numpy(np.float64)
+        seg = tr[["segment_start_s", "segment_end_s"]].to_numpy(np.float64)
+        for r in np.flatnonzero(ordered(marks)):
+            tw = grid + led[r]
+            inside = (tw >= seg[r, 0]) & (tw <= seg[r, 1])
+            p = extended_phase(tw[inside], marks[r], fractions)
+            s1[inside] += p
+            s2[inside] += p * p
+            cnt[inside] += 1
+    ok = cnt >= min_count
+    if not ok.any():
+        raise ValueError("no grid time with enough training lifts")
+    mean = s1[ok] / cnt[ok]
+    sd = np.sqrt(np.maximum(s2[ok] / cnt[ok] - mean ** 2, min_sd ** 2))
+    mu = np.maximum.accumulate(np.interp(grid, grid[ok], mean))
+    return PhasePrior(float(t0), float(dt), mu.astype(np.float32), np.interp(grid, grid[ok], sd).astype(np.float32),
+                      cnt.astype(np.int64))
+
+
+def expected_template(bank: "TemplateBank", phi: torch.Tensor, sigma: torch.Tensor, weights: torch.Tensor,
+                      n_nodes: int = QUAD_NODES) -> torch.Tensor:
+    """E_{x ~ N(phi, sigma^2)} [sum_c w_c T_c(clip(x, 0, 1))] by Gauss-Hermite quadrature. phi, sigma (...,),
+    weights (..., C) -> (..., 3). sigma = 0 gives the template at phi."""
+    z, w = np.polynomial.hermite_e.hermegauss(n_nodes)
+    z = torch.as_tensor(z, dtype=phi.dtype, device=phi.device)
+    w = torch.as_tensor(w / w.sum(), dtype=phi.dtype, device=phi.device)
+    x = phi.unsqueeze(-1) + sigma.unsqueeze(-1) * z  # (..., K)
+    t = bank(x, weights.unsqueeze(-2).expand(*x.shape, weights.shape[-1]))  # (..., K, 3)
+    return (w.unsqueeze(-1) * t).sum(dim=-2)

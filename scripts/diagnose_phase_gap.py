@@ -13,6 +13,8 @@ Per screening fold, with the fold's training-only landmark templates and templat
    and hand stop, phi at onset and at hand stop, across-trial correlation of crossing times) plus phi substitution:
    the run's own A, mixing and Delta (recovered as y - A T_mix(phi)) with phi replaced by the oracle phi or the cue
    phi. Plots of predicted vs landmark phi for a few lifts per subject.
+   Runs with the phase prior (SSL-20; ``phi_centre`` and ``phi_sigma`` saved) use the expected template E[T_mix] under
+   N(phi_centre, phi_sigma^2); the head floor row ``2c`` is that expectation under the fold phase prior.
 
 The oracle rows use the test lift's kinematic events and condition label: analysis only, never a model input.
 
@@ -42,7 +44,10 @@ from eegtraj.baselines.base import FitContext  # noqa: E402
 from eegtraj.baselines.scoring import fit_cue_template, subject_scores  # noqa: E402
 from eegtraj.data.splits import load_split_config, make_folds  # noqa: E402
 from eegtraj.data.windows import load_subject_samples  # noqa: E402
-from eegtraj.models.landmark_template import fold_templates, lift_landmarks, ordered, time_to_phase  # noqa: E402
+import torch  # noqa: E402
+
+from eegtraj.models.landmark_template import (TemplateBank, expected_template, fit_phase_prior,  # noqa: E402
+                                              fold_templates, lift_landmarks, ordered, time_to_phase)
 from eegtraj.utils.run import setup_run  # noqa: E402
 
 logger = logging.getLogger("diagnose_phase_gap")
@@ -85,6 +90,14 @@ def landmark_phi(s, fractions: np.ndarray) -> tuple[np.ndarray, int]:
 def t_mix(tmpl, phi: np.ndarray, w: np.ndarray) -> np.ndarray:
     """sum_c w_c T_c(phi), (n, 3). w (n, C)."""
     return sum(w[:, i:i + 1] * tmpl(phi, c) for i, c in enumerate(tmpl.conditions))
+
+
+def e_mix(tmpl, centre: np.ndarray, sigma: np.ndarray, w: np.ndarray) -> np.ndarray:
+    """Expected sum_c w_c T_c(clip(phi)) under phi ~ N(centre, sigma^2) (same quadrature as the decoder)."""
+    bank = TemplateBank.from_templates(tmpl)
+    f = lambda a: torch.from_numpy(np.asarray(a, np.float32))  # noqa: E731
+    with torch.no_grad():
+        return expected_template(bank, f(centre), f(sigma), f(w)).numpy().astype(np.float64)
 
 
 def crossing(t: np.ndarray, phi: np.ndarray, level: float) -> float:
@@ -188,6 +201,7 @@ def main() -> None:
         rt_med = float(np.median(marks[:, 0] - led))
         dur_med = float(np.median(marks[:, -1] - marks[:, 0]))
         s0_runner = float(tmpl.landmarks_since_cue_s[-1] - tmpl.landmarks_since_cue_s[0])
+        prior = fit_phase_prior([subj[n] for n in names], fold.train_subjects, tmpl.fractions)
         for test in fold.test_subjects:
             s = subj[test]
             mask = np.ones(s.sample_idx.size, bool)
@@ -199,6 +213,7 @@ def main() -> None:
             w_uni = np.full((t.size, len(tmpl.conditions)), 1 / len(tmpl.conditions))
             phi_cue = np.clip((t_led - rt_med) / dur_med, 0, 1)
             phi_cue_s0 = np.clip((t_led - rt_med) / s0_runner, 0, 1)
+            mu_t, sd_t = prior(t_led)
             info[test] = {"fold": fold.name, "median_rt_s": rt_med, "median_duration_s": dur_med, "runner_s0_s": s0_runner,
                           "fractions": tmpl.fractions.tolist(), "n_fallback_lifts": n_fallback,
                           "lifts_without_condition": int((w_true.sum(1) == 0).sum())}
@@ -210,8 +225,9 @@ def main() -> None:
             score("template_cue (floor)", cue_tmpl.predict(s, mask, ctx), "floor")
             score("1. oracle phi, true condition, A=1, Delta=0", t_mix(tmpl, phi_true, w_true), "oracle")
             score("1b. oracle phi, uniform mixing", t_mix(tmpl, phi_true, w_uni), "oracle")
-            score("2. cue phi = head floor (median RT, median duration), uniform", t_mix(tmpl, phi_cue, w_uni), "no EEG")
+            score("2. cue phi (median RT, median duration), uniform", t_mix(tmpl, phi_cue, w_uni), "no EEG")
             score("2b. cue phi with runner s0, uniform", t_mix(tmpl, phi_cue_s0, w_uni), "no EEG")
+            score("2c. head floor: phase prior N(mu(t), sd(t)), uniform (SSL-20)", e_mix(tmpl, mu_t, sd_t, w_uni), "no EEG")
 
             for r, cfg in runs:
                 z = preds[r]
@@ -224,10 +240,20 @@ def main() -> None:
                 if f"{test}__phi" not in z.files:
                     continue
                 phi, w, amp = z[f"{test}__phi"].astype(np.float64), z[f"{test}__weights"], z[f"{test}__amp"]
-                delta = y - amp * t_mix(tmpl, phi, w)
-                score(f"4. {head}: phi -> oracle phi (own A, mix, Delta)", amp * t_mix(tmpl, phi_true, w) + delta, "oracle")
-                score(f"4. {head}: phi -> cue phi (own A, mix, Delta)", amp * t_mix(tmpl, phi_cue, w) + delta, "no EEG")
-                score(f"4. {head}: own phi, A=1, uniform, Delta=0", t_mix(tmpl, phi, w_uni), "decoder")
+                if f"{test}__phi_centre" in z.files:
+                    centre, sig = z[f"{test}__phi_centre"].astype(np.float64), z[f"{test}__phi_sigma"].astype(np.float64)
+                else:
+                    centre, sig = phi, np.zeros_like(phi)
+                delta = y - amp * e_mix(tmpl, centre, sig, w)
+                score(f"4. {head}: phi -> oracle phi, sigma 0 (own A, mix, Delta)", amp * t_mix(tmpl, phi_true, w) + delta,
+                      "oracle")
+                score(f"4. {head}: phi -> cue phi, sigma 0 (own A, mix, Delta)", amp * t_mix(tmpl, phi_cue, w) + delta,
+                      "no EEG")
+                score(f"4. {head}: phi -> phase prior (own A, mix, Delta)", amp * e_mix(tmpl, mu_t, sd_t, w) + delta, "no EEG")
+                score(f"4. {head}: own phi and sigma, A=1, uniform, Delta=0", e_mix(tmpl, centre, sig, w_uni), "decoder")
+                info.setdefault("sigma", {})[f"{head}_{test}"] = {
+                    "median_sigma": float(np.median(sig)), "median_prior_sd": float(np.median(sd_t)),
+                    "median_sigma_over_prior": float(np.median(sig / np.maximum(sd_t, 1e-6)))}
                 df = phi_timing(s, phi, phi_true, t, rows)
                 df.insert(0, "subject", test)
                 df.insert(1, "head", head)

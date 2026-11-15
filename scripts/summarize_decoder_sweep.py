@@ -4,7 +4,7 @@ Reads every finished run under output/proposed-model/decoder-sweep/<folder>/ (me
 weights, test scores on the screening subjects P3 and P6 (screening folds), their mean, the template_cue floor, and
 the selected lr / epochs. Rows are sorted by the selection score: mean r over P3 and P6 (decided 2026-11-15;
 residual_r_specific and NRMSE reported). Smoke runs are skipped unless ``--include-smoke``; runs from before the
-clock-warp tracker (SSL-19; no ``floor_cue_phi`` in metrics.json) unless ``--include-pre-ssl19``.
+phase prior (SSL-20; no ``phase_prior`` in the fold records) unless ``--include-old``.
 
 Writes to a new output/proposed-model/decoder-sweep/summary/<run-id>/: summary.csv, summary.md, metrics.json.
 
@@ -33,7 +33,7 @@ def collect(include_smoke: bool, include_old: bool = False) -> pd.DataFrame:
         if run.parent.name == "summary" or ("smoke" in run.name and not include_smoke):
             continue
         m = json.loads(mfile.read_text(encoding="utf-8"))
-        if "floor_cue_phi" not in m and not include_old:
+        if "phase_prior" not in m["per_fold"][0] and not include_old:  # before SSL-20
             continue
         row = {"folder": run.parent.name, "run": run.name, "folds": m.get("folds"),
                **{w: m["loss_weights"].get(w) for w in WEIGHTS}}
@@ -60,11 +60,11 @@ def collect(include_smoke: bool, include_old: bool = False) -> pd.DataFrame:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--include-smoke", action="store_true")
-    parser.add_argument("--include-pre-ssl19", action="store_true", help="also runs with the old softplus tracker")
+    parser.add_argument("--include-old", action="store_true", help="also runs from before the phase prior (SSL-20)")
     args = parser.parse_args()
-    table = collect(args.include_smoke, args.include_pre_ssl19)
+    table = collect(args.include_smoke, args.include_old)
     run_dir = setup_run(SWEEP / "summary", {"include_smoke": args.include_smoke,
-                                            "include_pre_ssl19": args.include_pre_ssl19, "runs": table.run.tolist()})
+                                            "include_old": args.include_old, "runs": table.run.tolist()})
     table.to_csv(run_dir / "summary.csv", index=False)
     cols = [c for c in ["head", "aux", "delta", "amp", "gate", "r", "r_P3", "r_P6", "rrs", "rrs_P3", "rrs_P6", "nrmse", "r2",
                         "floor_r", "head_floor_r", "lr", "best_epochs", "minutes", "run"] if c in table]

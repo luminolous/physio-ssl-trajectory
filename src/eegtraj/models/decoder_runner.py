@@ -3,15 +3,16 @@
 Per fold (``eegtraj.data.splits``; screening subjects never tested):
 1. Fold-level references from the training subjects only: landmark-registered templates (``fold_templates``),
    template_cue (``fit_cue_template``), cue-phase centre tau0 (median reaction time) and scale s0 (median onset ->
-   hand stop duration) of the training lifts (global-warp centre and clock-warp tracker), auxiliary phase labels
-   (``training_aux_classes``).
+   hand stop duration) of the training lifts (global-warp centre and clock-warp tracker), the phase prior
+   (``fit_phase_prior``, SSL-20: phase mean and SD at each time since LED-on over the training lifts whose scoring
+   segment contains it), auxiliary phase labels (``training_aux_classes``).
 2. For every lr in the grid: train with AdamW (weight decay 0.01), early stopping on inner-validation MSE (cm^2, the
    criterion of the deep baselines), patience 5, max 30 epochs; keep the best epoch. The lr with the lowest
    inner-validation MSE is selected. Identical for every compared model.
 3. Predict the test subject (and score the inner-validation subjects); score with r, R2, NRMSE (per trial, per axis,
    D7) and residual_r / residual_r_specific against template_cue; template_cue itself is scored as the floor, and
-   the head floor ``cue_phi`` (the warp heads at initialization: landmark templates at the cue phase
-   clip((t - t_LED - tau0) / s0, 0, 1), uniform mixing, A = 1, Delta = 0; no EEG) on the same samples.
+   the head floor ``cue_phi`` (the warp heads at initialization: expected landmark template under the phase prior at
+   real time, uniform mixing, A = 1, Delta = 0; no EEG) on the same samples.
 
 Encoder settings: ``frozen`` (encoder and gate fixed; tokens precomputed once per subject), ``finetune`` (all
 trained). Encoder sources: ``checkpoint`` (stage 1), ``random`` (seeded random init: frozen control, or scratch with
@@ -43,7 +44,8 @@ from eegtraj.data.windows import input_channel_names
 from eegtraj.metrics import aggregate_subject, per_trial_metrics
 from eegtraj.models.decoder import StreamDecoder, decoder_loss
 from eegtraj.models.encoder import CausalEncoder, n_parameters
-from eegtraj.models.landmark_template import LandmarkTemplates, TemplateBank, fold_templates, lift_landmarks
+from eegtraj.models.landmark_template import (LandmarkTemplates, PhasePrior, TemplateBank, expected_template,
+                                              fit_phase_prior, fold_templates, lift_landmarks)
 
 logger = logging.getLogger(__name__)
 SCORES = ("r", "r2", "nrmse", "residual_r", "residual_r_other_trial", "residual_r_specific")
@@ -175,7 +177,7 @@ def predict(model, lifts, cue, tokens, device, cfg) -> dict[tuple[str, int], dic
             s = len(l.out_idx)
             r = {"y": out["y"][k, :s].float().cpu().numpy(),
                  "sigma": torch.exp(0.5 * out["logvar"][k, :s].float()).cpu().numpy()}
-            for key in ("phi", "weights", "amp"):
+            for key in ("phi", "phi_centre", "phi_sigma", "weights", "amp"):
                 if key in out:
                     r[key] = out[key][k, :s].float().cpu().numpy()
             res[(l.subject, l.trial_row)] = r
@@ -247,12 +249,18 @@ def cue_phase_params(train: list) -> tuple[float, float]:
     return float(np.median(marks[:, 0] - led)), float(np.median(marks[:, -1] - marks[:, 0]))
 
 
-def cue_phi_prediction(st: SubjectStreams, tmpl: LandmarkTemplates, tau0: float, s0: float) -> dict:
-    """Head floor per lift: uniform mixture of the landmark templates at phi = clip((t - t_LED - tau0) / s0, 0, 1)."""
+@torch.no_grad()
+def cue_phi_prediction(st: SubjectStreams, tmpl: LandmarkTemplates, prior: PhasePrior) -> dict:
+    """Head floor per lift (the warp heads at initialization): expected uniform mixture of the landmark templates
+    under phi ~ N(mu(t), sd(t)^2), t = time since LED-on."""
+    bank = TemplateBank.from_templates(tmpl)
+    uniform = torch.full((len(tmpl.conditions),), 1.0 / len(tmpl.conditions))
     out = {}
     for l in st.lifts:
-        phi = np.clip((l.t_since_led.astype(np.float64) - tau0) / s0, 0.0, 1.0)
-        out[(l.subject, l.trial_row)] = {"y": np.mean([tmpl(phi, c) for c in tmpl.conditions], axis=0).astype(np.float32)}
+        mu, sd = prior(l.t_since_led.astype(np.float64))
+        mu, sd = torch.from_numpy(mu).float(), torch.from_numpy(sd).float()
+        y = expected_template(bank, mu, sd, uniform.expand(mu.shape[0], -1))
+        out[(l.subject, l.trial_row)] = {"y": y.numpy().astype(np.float32)}
     return out
 
 
@@ -323,6 +331,8 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
         tmpl = fold_templates([subj[s].samples for s in names], fold, conditions=tuple(cfg["templates"]["conditions"]),
                               n_grid=int(cfg["templates"]["n_grid"]))
         tau0, s0 = cue_phase_params(train_samples)
+        prior = fit_phase_prior([subj[s].samples for s in names], fold.train_subjects, tmpl.fractions)
+        prior_dict = {"t0": prior.t0, "dt": prior.dt, "mu": prior.mu, "sd": prior.sd} if m.get("phase_prior", True) else None
         cue = {}
         for s in names:
             pred = template.predict(subj[s].samples, masks_all[s], ctx)
@@ -341,6 +351,7 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
                                  d_ocular=int(m["d_ocular"]), ocular_channels=int(m["ocular_channels"]),
                                  a_max=float(m["a_max"]), tau0=tau0, s0=s0,
                                  clock_log_range=float(m["clock_log_range"]), stream_start_s=-STREAM_START_BEFORE_LED_S,
+                                 phase_prior=prior_dict, sigma_log_range=float(m["sigma_log_range"]),
                                  dropout=float(m["dropout"]))
 
         probe_model = make_model().to(device)
@@ -368,7 +379,7 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
             t_pred = time.time()
             preds = predict(model, subj[s].lifts, cue, tokens, device, cfg["train"])
             scores, floor, arrays = score_subject(subj[s], preds, template, ctx, cfg)
-            head_floors[s], _, _ = score_subject(subj[s], cue_phi_prediction(subj[s], tmpl, tau0, s0), template, ctx, cfg)
+            head_floors[s], _, _ = score_subject(subj[s], cue_phi_prediction(subj[s], tmpl, prior), template, ctx, cfg)
             per_subject[s], floors[s] = scores, floor
             saved[s] = arrays
             logger.info("fold %s test %s: r %.3f (x %.3f y %.3f z %.3f) R2 %.3f NRMSE %.3f rrs %.4f | template_cue r %.3f"
@@ -377,7 +388,8 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
                         time.time() - t_pred)
         fold_rows.append({"fold": fold.name, "train_subjects": list(fold.train_subjects),
                           "val_subjects": list(fold.val_subjects), "test_subjects": list(fold.test_subjects),
-                          "tau0_s": tau0, "s0_s": s0, "template_counts": {str(k): v for k, v in tmpl.counts.items()},
+                          "tau0_s": tau0, "s0_s": s0,
+                          "phase_prior": {"t0": prior.t0, "dt": prior.dt, "mu": prior.mu.tolist(), "sd": prior.sd.tolist()}, "template_counts": {str(k): v for k, v in tmpl.counts.items()},
                           "encoder": enc_info, "parameters": n_params, **report, "inner_val": inner,
                           "test": {s: per_subject[s] for s in fold.test_subjects},
                           "floor_template_cue": {s: floors[s] for s in fold.test_subjects},

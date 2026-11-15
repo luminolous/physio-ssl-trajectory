@@ -13,7 +13,7 @@ from eegtraj.data.splits import Fold
 from eegtraj.models.decoder import (HEADS, AUX_CLASSES, StreamDecoder, aux_classes, causal_interp, decoder_loss,
                                     clock_phase)
 from eegtraj.models.encoder import CausalEncoder
-from eegtraj.models.landmark_template import LandmarkTemplates, TemplateBank, time_to_phase
+from eegtraj.models.landmark_template import LandmarkTemplates, TemplateBank, expected_template, time_to_phase
 
 CACHE = Path("dataset/cache/98f5fa6e66")
 H, P = 180, 20  # history and patch samples
@@ -35,11 +35,19 @@ def templates() -> LandmarkTemplates:
                              counts={165: 1, 330: 1, 660: 1}, subjects=("P1",))
 
 
-def decoder(head: str, neural: bool = True, ocular: bool = True, freeze: bool = False) -> StreamDecoder:
+def toy_prior() -> dict:
+    """Phase prior on t in [-1.5, 12] s: mean = cue phase, SD growing with time."""
+    grid = np.arange(-1.5, 12.0 + 0.005, 0.01)
+    return {"t0": -1.5, "dt": 0.01, "mu": ((grid - 0.4) / 5.8).astype(np.float32),
+            "sd": (0.02 + 0.02 * np.clip(grid, 0, None)).astype(np.float32)}
+
+
+def decoder(head: str, neural: bool = True, ocular: bool = True, freeze: bool = False,
+            prior: bool = False) -> StreamDecoder:
     torch.manual_seed(1)
     bank = TemplateBank.from_templates(templates())
     dec = StreamDecoder(head, small_encoder() if neural else None, ocular, bank, freeze_encoder=freeze, d_fused=32,
-                        dropout=0.0)
+                        dropout=0.0, tau0=0.4, s0=5.8, phase_prior=toy_prior() if prior else None)
     return dec.eval()
 
 
@@ -100,6 +108,49 @@ def test_warp_heads_start_at_the_cue_phase(head):
     assert torch.allclose(out["y"], floor, atol=1e-3)
 
 
+def test_expected_template_limits():
+    bank = TemplateBank.from_templates(templates())
+    phi = torch.linspace(-0.2, 1.2, 50)
+    w = torch.softmax(torch.randn(50, 3), -1)
+    assert torch.allclose(expected_template(bank, phi, torch.zeros(50), w), bank(phi, w), atol=1e-6)
+    wide = expected_template(bank, torch.full((1,), 0.5), torch.full((1,), 0.3), w[:1])
+    grid = torch.linspace(-3, 4, 20001)  # brute-force Gaussian average
+    dens = torch.exp(-0.5 * ((grid - 0.5) / 0.3) ** 2)
+    brute = (dens[:, None] * bank(grid, w[:1].expand(grid.numel(), -1))).sum(0) / dens.sum()
+    assert torch.allclose(wide[0], brute, atol=0.03)  # cm; clip kinks slow Gauss-Hermite convergence
+
+
+@pytest.mark.parametrize("head", ["proposed", "global_warp"])
+def test_warp_heads_with_prior_start_at_the_head_floor(head):
+    """Zero-initialized outputs: real-time clock and prior SD, A = 1, Delta = 0, uniform mixing."""
+    dec = decoder(head, prior=True)
+    eeg, eog = stream(2, 45)
+    idx = torch.arange(0, 45 * P).expand(2, -1)
+    t_led = -1.5 + (idx + 1) / 100.0
+    out = dec(eeg, eog, idx, t_led)
+    pr = toy_prior()
+    mu = torch.from_numpy(np.interp(t_led.numpy(), -1.5 + 0.01 * np.arange(pr["mu"].size), pr["mu"])).float()
+    sd = torch.from_numpy(np.interp(t_led.numpy(), -1.5 + 0.01 * np.arange(pr["sd"].size), pr["sd"])).float()
+    assert torch.allclose(out["phi_centre"], mu, atol=1e-4) and torch.allclose(out["phi_sigma"], sd, atol=1e-4)
+    floor = expected_template(TemplateBank.from_templates(templates()), mu, sd, torch.full((2, idx.shape[1], 3), 1 / 3))
+    assert torch.allclose(out["y"], floor, atol=1e-3)
+    assert (out["phi_centre"][:, 1:] >= out["phi_centre"][:, :-1] - 1e-6).all()
+
+
+def test_sigma_gets_gradients_and_stays_bounded():
+    dec = decoder("proposed", prior=True).train()
+    eeg, eog = stream(2, 20)
+    idx = torch.arange(0, 20 * P).expand(2, -1)
+    out = dec(eeg, eog, idx, -1.5 + (idx + 1) / 100.0)
+    out["y"].sum().backward()
+    assert dec.out["sigma"].weight.grad is not None and dec.out["sigma"].weight.grad.abs().sum() > 0
+    with torch.no_grad():
+        dec.out["sigma"].weight.normal_(std=10.0)
+        out = dec(eeg, eog, idx, -1.5 + (idx + 1) / 100.0)
+    ratio = out["phi_sigma"] / dec.prior_at(out["clock"])[1]
+    assert ratio.min() >= 0.1 - 1e-4 and ratio.max() <= 10.0 + 1e-3
+
+
 def test_clock_rate_bounded():
     dec = decoder("proposed").train()
     with torch.no_grad():
@@ -129,10 +180,13 @@ def test_warp_head_with_true_phase_reproduces_the_template():
         assert np.abs(out["y"][0].detach().numpy() - y_true).max() < 1e-3
 
 
+@pytest.mark.parametrize("prior", [False, True])
 @pytest.mark.parametrize("head", HEADS)
 @pytest.mark.parametrize("branches", [(True, True), (True, False), (False, True)])
-def test_full_decoder_is_causal(head, branches):
-    dec = decoder(head, *branches)
+def test_full_decoder_is_causal(head, branches, prior):
+    if prior and head not in ("proposed", "global_warp"):
+        pytest.skip("phase prior only affects the warp heads")
+    dec = decoder(head, *branches, prior=prior)
     with torch.no_grad():  # zero-initialized output layers would make y independent of the input
         for q in dec.out.parameters():
             q.normal_(std=0.3)
@@ -222,3 +276,19 @@ def test_auxiliary_labels_are_read_for_training_subjects_only():
     for s in ("P1", "P5", "P3"):  # test, inner validation, and a subject outside the fold
         with pytest.raises(LabelLeakageError):
             training_aux_classes(CACHE, s, fold)
+
+
+@pytest.mark.skipif(not (CACHE / "P1" / "trials.csv").exists(), reason="needs the main cache")
+def test_phase_prior_uses_training_subjects_only_and_is_monotone():
+    from eegtraj.data.windows import load_subject_samples
+    from eegtraj.models.landmark_template import fit_landmark_templates, fit_phase_prior
+
+    subs = [load_subject_samples(CACHE, s, "broadband", "car", "all", "position", history=300, pre_lift=True)
+            for s in ("P1", "P2")]
+    tmpl = fit_landmark_templates(subs, ["P1"])
+    a = fit_phase_prior(subs, ["P1"], tmpl.fractions)
+    b = fit_phase_prior(subs[:1], ["P1"], tmpl.fractions)
+    assert np.array_equal(a.mu, b.mu) and np.array_equal(a.sd, b.sd)  # P2 ignored
+    assert (np.diff(a.mu) >= 0).all() and (a.sd > 0).all()
+    mu, _ = a(np.array([-1.0, 0.4, 3.0, 6.0]))
+    assert mu[0] < 0 < mu[2] < mu[3] <= 1.1

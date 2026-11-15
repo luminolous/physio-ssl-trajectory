@@ -22,6 +22,8 @@ model:
   ocular_channels: 16
   a_max: 0.5  # |log A| bound
   clock_log_range: 0.6931471805599453  # ln 2: tracker clock rate in [0.5, 2] x real time (SSL-19)
+  phase_prior: true  # SSL-20: phase uncertainty with the fold phase prior (false: deterministic phase)
+  sigma_log_range: 2.302585092994046  # ln 10: prior SD scaled by [0.1, 10] (SSL-20)
   dropout: 0.1
 
 templates:  # landmark-registered templates from each fold's training subjects

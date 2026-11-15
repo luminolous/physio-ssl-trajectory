@@ -20,11 +20,19 @@ clip((t - t_LED - tau0) / s0, 0, 1). tau is continuous and strictly increasing, 
 and monotone non-decreasing. Before e_0 the clock runs at real time (never scored: scored samples start after e_0
 by construction of the stream start).
 
+Phase uncertainty (SSL-20). With a fold phase prior (``phase_prior``: mean mu(t) and SD sd(t) of the training lifts'
+phase at time t since LED-on, among lifts whose scoring segment contains t; ``landmark_template.fit_phase_prior``),
+both warp heads map their warped clock tau to a phase distribution N(mu(tau), (sd(tau) exp(c_s tanh(v)))^2), v per
+patch from the fused features (zero-initialized, causal interpolation), and output the expected template
+E[T_mix(clip(phi, 0, 1))] (Gauss-Hermite quadrature). At initialization (real-time clock, v = 0) this is the head
+floor, close to template_cue. Without a prior, phi = clip((tau - tau0) / s0, 0, 1) and sigma = 0 (deterministic).
+
 Heads (``head``):
 - ``direct``: y = Linear(h).
 - ``residual``: y = template_cue(t) + Delta (template_cue supplied per output sample by the caller).
-- ``global_warp``: phi(t) = clip((t - t_LED - tau) / s, 0, 1) with tau, s re-estimated at every patch; then the same
-  template mixing, amplitude and residual as the proposed head (only the phase source differs).
+- ``global_warp``: warped clock tau(t) = tau0 + s0 (t - t_LED - tau) / s with tau, s re-estimated at every patch
+  (tau0, s0 at initialization: tau(t) = t - t_LED); then the same phase prior, template mixing, amplitude and residual
+  as the proposed head (only the clock source differs).
 - ``proposed``: phase tracker (clock warp) + template mixing + amplitude A + residual Delta: y = A * T_mix(phi) + Delta.
 Every head also outputs per-axis log sigma^2 and the auxiliary phase logits (5 classes, training only).
 """
@@ -39,7 +47,7 @@ from torch import nn
 from torch.nn import functional as F
 
 from eegtraj.models.encoder import CausalEncoder
-from eegtraj.models.landmark_template import TemplateBank
+from eegtraj.models.landmark_template import QUAD_NODES, TemplateBank, expected_template
 
 HEADS = ("direct", "residual", "global_warp", "proposed")
 WARP_HEADS = ("global_warp", "proposed")
@@ -140,13 +148,16 @@ class StreamDecoder(nn.Module):
             kept in eval mode). tau0, s0: global-warp centre (s): median onset after LED-on and median onset -> hand
             stop duration of the fold's training lifts; also the proposed tracker's cue-phase centre and scale.
         a_max: |log A| bound. clock_log_range: c, the tracker's clock rate lies in [e^-c, e^c]. stream_start_s: seconds
-        since LED-on at the stream start (SSL-17: -1.5). fs: sampling rate.
+        since LED-on at the stream start (SSL-17: -1.5). phase_prior: dict with ``t0``, ``dt``, ``mu``, ``sd`` (fold
+        phase prior on a uniform grid of time since LED-on; None: deterministic phase). sigma_log_range: c_s, the
+        prior SD is scaled by a factor in [e^-c_s, e^c_s]. fs: sampling rate.
     """
 
     def __init__(self, head: str, encoder: CausalEncoder | None, ocular: bool, templates: TemplateBank | None = None,
                  freeze_encoder: bool = False, d_fused: int = 128, d_ocular: int = 32, ocular_channels: int = 16,
                  a_max: float = 0.5, tau0: float = 0.35, s0: float = 5.8, tau_range: float = 1.0,
                  s_log_range: float = 0.7, clock_log_range: float = math.log(2.0), stream_start_s: float = -1.5,
+                 phase_prior: dict | None = None, sigma_log_range: float = math.log(10.0), n_quad: int = QUAD_NODES,
                  logvar_init: float = math.log(4.0), fs: float = 100.0, dropout: float = 0.1):
         super().__init__()
         if head not in HEADS:
@@ -159,6 +170,12 @@ class StreamDecoder(nn.Module):
         self.fs, self.a_max, self.tau0, self.s0 = fs, a_max, tau0, s0
         self.tau_range, self.s_log_range = tau_range, s_log_range
         self.clock_log_range, self.stream_start_s = clock_log_range, stream_start_s
+        self.sigma_log_range, self.n_quad = sigma_log_range, n_quad
+        self.prior_t0 = self.prior_dt = None
+        if phase_prior is not None:
+            self.prior_t0, self.prior_dt = float(phase_prior["t0"]), float(phase_prior["dt"])
+            self.register_buffer("prior_mu", torch.as_tensor(np.asarray(phase_prior["mu"]), dtype=torch.float32))
+            self.register_buffer("prior_sd", torch.as_tensor(np.asarray(phase_prior["sd"]), dtype=torch.float32))
         self.patch = encoder.patch if encoder is not None else 20
         self.window = encoder.window if encoder is not None else 200
         self.history = self.window - self.patch
@@ -178,6 +195,8 @@ class StreamDecoder(nn.Module):
         if head in WARP_HEADS:
             self.out["amp"] = nn.Linear(d_fused, 3)
             self.out["mix"] = nn.Linear(d_fused, n_cond)
+            if phase_prior is not None:
+                self.out["sigma"] = nn.Linear(d_fused, 1)
         if head == "proposed":
             self.out["rate"] = nn.Linear(d_fused, 1)
         if head == "global_warp":
@@ -186,7 +205,7 @@ class StreamDecoder(nn.Module):
 
     def _init_outputs(self, logvar_init: float) -> None:
         for name, lin in self.out.items():
-            if name in ("delta", "amp", "mix", "warp", "rate"):  # start: Delta 0, A 1, uniform, tau0 / s0, real-time clock
+            if name in ("delta", "amp", "mix", "warp", "rate", "sigma"):  # start: Delta 0, A 1, uniform, real-time clock, prior SD
                 nn.init.zeros_(lin.weight)
                 nn.init.zeros_(lin.bias)
         nn.init.zeros_(self.out["logvar"].weight)
@@ -240,7 +259,8 @@ class StreamDecoder(nn.Module):
         Returns:
             ``y`` (B, S, 3), ``logvar`` (B, S, 3), ``aux_logits`` (B, N, 5), and for the other heads ``delta_patch``
             (B, N, 3); warp heads also ``phi`` (B, S), ``weights`` (B, S, C), ``log_amp_patch`` (B, N, 3),
-            ``amp`` (B, S, 3); the tracker ``phi_patch`` (B, N) and clock ``rate`` (B, N).
+            ``amp`` (B, S, 3), ``phi_centre`` (unclipped), ``phi_sigma``, ``clock`` (B, S); the tracker ``phi_patch``
+            (B, N, deterministic cue map of the clock) and clock ``rate`` (B, N).
         """
         h = self.features(eeg, eog, tokens)
         p = self.patch
@@ -263,8 +283,8 @@ class StreamDecoder(nn.Module):
         weights = causal_interp(torch.softmax(self.out["mix"](h), dim=-1), out_idx, p)
         if self.head == "proposed":
             rate = torch.exp(self.clock_log_range * torch.tanh(self.out["rate"](h).squeeze(-1)))
-            phi, phi_patch, _ = clock_phase(rate, out_idx, p, self.fs, self.stream_start_s + 1.0 / self.fs, self.tau0,
-                                            self.s0)
+            _, phi_patch, clock = clock_phase(rate, out_idx, p, self.fs, self.stream_start_s + 1.0 / self.fs, self.tau0,
+                                              self.s0)
             out["rate"], out["phi_patch"] = rate, phi_patch
         else:
             if t_since_led is None:
@@ -272,14 +292,30 @@ class StreamDecoder(nn.Module):
             w = self.out["warp"](h)
             tau = causal_interp((self.tau0 + self.tau_range * torch.tanh(w[..., :1])), out_idx, p).squeeze(-1)
             scale = causal_interp(self.s0 * torch.exp(self.s_log_range * torch.tanh(w[..., 1:])), out_idx, p).squeeze(-1)
-            phi = ((t_since_led - tau) / scale).clamp(0.0, 1.0)
-        if phi_override is not None:
-            phi = phi_override
+            clock = self.tau0 + self.s0 * (t_since_led - tau) / scale
+        if self.prior_t0 is not None:
+            centre, sd = self.prior_at(clock)
+            factor = causal_interp(torch.exp(self.sigma_log_range * torch.tanh(self.out["sigma"](h))), out_idx, p)
+            sigma = sd * factor.squeeze(-1)
+        else:
+            centre, sigma = (clock - self.tau0) / self.s0, torch.zeros_like(clock)
+        if phi_override is not None:  # deterministic phase (tests, analysis)
+            centre, sigma = phi_override, torch.zeros_like(phi_override)
         if weights_override is not None:
             weights = weights_override
-        out.update({"phi": phi, "weights": weights, "amp": amp})
-        out["y"] = amp * self.templates(phi, weights) + delta
+        out.update({"phi": centre.clamp(0.0, 1.0), "phi_centre": centre, "phi_sigma": sigma, "clock": clock,
+                    "weights": weights, "amp": amp})
+        out["y"] = amp * expected_template(self.templates, centre, sigma, weights, self.n_quad) + delta
         return out
+
+    def prior_at(self, tau: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+        """Phase prior mean and SD at clock times ``tau`` (s since LED-on), linear interpolation, edges held."""
+        g = self.prior_mu.shape[0]
+        x = ((tau - self.prior_t0) / self.prior_dt).clamp(0.0, g - 1.0)
+        i0 = x.detach().floor().clamp(0, g - 2).long()
+        f = x - i0.to(x.dtype)
+        lerp = lambda v: v[i0] * (1 - f) + v[i0 + 1] * f  # noqa: E731
+        return lerp(self.prior_mu), lerp(self.prior_sd)
 
     def gate_penalty(self) -> torch.Tensor:
         if self.encoder is None or self.freeze_encoder:
