@@ -14,6 +14,7 @@ import numpy as np
 from eegtraj.baselines.base import Baseline, FitContext
 from eegtraj.baselines.template import TemplateCueBaseline, time_since_event
 from eegtraj.data.windows import SubjectSamples
+from eegtraj.metrics.trajectory import MIN_SHARED_BINS
 from eegtraj.metrics import aggregate_subject, per_trial_metrics, residual_r, residual_r_other_trial
 
 
@@ -24,15 +25,18 @@ def fit_cue_template(train: list[SubjectSamples], ctx: FitContext) -> TemplateCu
 
 
 def subject_scores(s: SubjectSamples, mask: np.ndarray, y_pred: np.ndarray, template: TemplateCueBaseline, ctx: FitContext,
-                   seed: int, n_permutations: int) -> dict[str, float]:
-    """r, R2, NRMSE, and the residual metrics of one subject's predictions at ``s.sample_idx[mask]``."""
+                   seed: int, n_permutations: int, min_shared_bins: int = MIN_SHARED_BINS) -> dict[str, float]:
+    """r, R2, NRMSE, and the residual metrics of one subject's predictions at ``s.sample_idx[mask]``.
+
+    ``min_shared_bins``: for predictions on a subsampled time grid, scale it so it still covers 0.5 s.
+    """
     y_true, rows = s.target[:, s.sample_idx[mask]].T, s.trial_row[mask]
     scores = aggregate_subject(per_trial_metrics(y_true, y_pred, rows))
     cue = template.predict(s, mask, ctx)
     bins = np.round(time_since_event(s, "ev_LEDOn", mask) * s.fs_hz).astype(np.int64)
     res = residual_r(y_true, y_pred, cue, rows)["mean"]
     rng = np.random.default_rng([seed, int(s.subject[1:])])
-    other = residual_r_other_trial(y_true, y_pred, cue, rows, bins, rng, n_permutations)["mean"]
+    other = residual_r_other_trial(y_true, y_pred, cue, rows, bins, rng, n_permutations, min_shared_bins)["mean"]
     return {"r": scores["r"]["mean"], "r2": scores["r2"]["mean"], "nrmse": scores["nrmse"]["mean"],
             "residual_r": res, "residual_r_other_trial": other, "residual_r_specific": res - other}
 

@@ -1,0 +1,53 @@
+# Stage 1 pretraining (design.md "Stage 1", "Pretraining objective details", SSL-1..SSL-12).
+# One run per variant: scripts/pretrain.py --config configs/pretrain/pretrain.yaml --variant <name>.
+# steps, lam and lambda_gate are placeholders until "[DECISION] Pretraining budget and lambda"; they are then frozen
+# for all variants (design.md "Training budget").
+encoder_config: configs/pretrain/encoder.yaml
+windows_config: configs/pretrain/unlabeled_windows.yaml  # SSL-1 option b, SSL-2 sources
+raw_variant: broadband_car  # context view (and target view of unguided variants)
+cleaned_variant: broadband_ica_car  # target view of guided variants (own D9 z-score), times w_phys
+seed: 0
+
+variants:
+  lejepa_guided: {objective: lejepa, guided: true}  # proposed
+  lejepa_unguided: {objective: lejepa, guided: false}
+  jepa_guided: {objective: jepa, guided: true}
+  jepa_unguided: {objective: jepa, guided: false}
+  mae: {objective: mae, guided: false}  # reconstructs the raw window; no target view
+
+objective:
+  lam: 0.05  # LeJEPA trade-off (paper default); placeholder until the budget decision
+  lambda_gate: 0.1  # L2 pull of the gate to the prior; placeholder until the budget decision
+  mask_ratio: [0.3, 0.5]  # contiguous block of 3-5 of the 10 tokens
+  ema: [0.996, 1.0]  # classic JEPA, linear over the steps (SSL-12)
+  predictor: {d_model: 64, n_layers: 2, n_heads: 4, mlp_width: 128, dropout: 0.0}
+  sigreg: {n_slices: 1024, t_max: 3.0, n_points: 17}
+
+train:
+  steps: 20000  # placeholder until the budget decision
+  batch_size: 256
+  lr: 5.0e-4
+  weight_decay: 0.05
+  warmup_steps: 1000  # linear warm-up, then cosine to 0
+  grad_clip: 1.0
+  amp: bf16  # bf16 | fp16 | off
+  log_every: 50
+  health_every: 2000
+  checkpoint_every: 5000
+
+probe:  # health metric only; screening subjects, never a test subject
+  cache_dir: dataset/cache/98f5fa6e66
+  subjects: [P3, P6]
+  pairs: [[[P3], [P6]], [[P6], [P3]]]  # (ridge train subjects, scored subjects)
+  stride: 20  # one probed target sample per 0.2 s patch
+  alpha: 1.0
+  n_permutations: 5
+
+smoke:  # --smoke: 2 subjects, a few hundred steps
+  subjects: [P3, P6]
+  steps: 300
+  warmup_steps: 30
+  batch_size: 128
+  log_every: 20
+  health_every: 100
+  checkpoint_every: 150

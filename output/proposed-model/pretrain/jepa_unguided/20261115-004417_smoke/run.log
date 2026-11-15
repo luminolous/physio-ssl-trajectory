@@ -1,0 +1,45 @@
+2026-11-15 00:44:17 INFO    eegtraj.utils.run: Run directory: output\proposed-model\pretrain\jepa_unguided\20261115-004417_smoke
+2026-11-15 00:44:17 INFO    pretrain: variant jepa_unguided (objective jepa, guided False), device cuda, seed 0
+2026-11-15 00:44:18 INFO    pretrain: unlabeled windows: 11676 from ['P3', 'P6'] (sources ['lift', 'between', 'st'], variants ['broadband_car'])
+2026-11-15 00:44:18 INFO    pretrain: encoder parameters 537392, predictor parameters 84352
+2026-11-15 00:44:20 INFO    pretrain: probe windows: {'P3': 7658, 'P6': 9432}
+2026-11-15 00:44:21 INFO    eegtraj.models.probe: template_cue: 661 bins from -0.40 to 6.20 s after ev_LEDOn, 7658 training samples
+2026-11-15 00:44:21 INFO    eegtraj.models.probe: template_cue: 1441 bins from -0.40 to 14.00 s after ev_LEDOn, 9432 training samples
+2026-11-15 00:44:22 INFO    pretrain: health step 0 online: sd_min 0.320 sd_mean 0.534 eff_rank 49.3 probe_r 0.240 probe_rrs -0.015
+2026-11-15 00:44:22 INFO    eegtraj.models.probe: template_cue: 661 bins from -0.40 to 6.20 s after ev_LEDOn, 7658 training samples
+2026-11-15 00:44:22 INFO    eegtraj.models.probe: template_cue: 1441 bins from -0.40 to 14.00 s after ev_LEDOn, 9432 training samples
+2026-11-15 00:44:23 INFO    pretrain: health step 0 ema: sd_min 0.320 sd_mean 0.534 eff_rank 49.3 probe_r 0.240 probe_rrs -0.015
+2026-11-15 00:44:25 INFO    pretrain: step 20 lr 0.0003333 sec 1.8 gate 1.169e-06 pred 1.043 loss 1.043 grad_norm 1.937 ema_momentum 0.9963
+2026-11-15 00:44:26 INFO    pretrain: step 40 lr 0.0004986 sec 3.2 gate 1.772e-05 pred 0.6112 loss 0.6112 grad_norm 0.6134 ema_momentum 0.9965
+2026-11-15 00:44:27 INFO    pretrain: step 60 lr 0.0004859 sec 4.6 gate 5.364e-05 pred 0.4477 loss 0.4477 grad_norm 0.2767 ema_momentum 0.9968
+2026-11-15 00:44:29 INFO    pretrain: step 80 lr 0.0004605 sec 6 gate 9.818e-05 pred 0.3965 loss 0.3965 grad_norm 0.2682 ema_momentum 0.9971
+2026-11-15 00:44:30 INFO    pretrain: step 100 lr 0.0004237 sec 7.4 gate 0.000142 pred 0.3713 loss 0.3713 grad_norm 0.3263 ema_momentum 0.9973
+2026-11-15 00:44:31 INFO    eegtraj.models.probe: template_cue: 661 bins from -0.40 to 6.20 s after ev_LEDOn, 7658 training samples
+2026-11-15 00:44:31 INFO    eegtraj.models.probe: template_cue: 1441 bins from -0.40 to 14.00 s after ev_LEDOn, 9432 training samples
+2026-11-15 00:44:32 INFO    pretrain: health step 100 online: sd_min 0.438 sd_mean 0.776 eff_rank 49.4 probe_r 0.264 probe_rrs -0.016
+2026-11-15 00:44:32 INFO    eegtraj.models.probe: template_cue: 661 bins from -0.40 to 6.20 s after ev_LEDOn, 7658 training samples
+2026-11-15 00:44:33 INFO    eegtraj.models.probe: template_cue: 1441 bins from -0.40 to 14.00 s after ev_LEDOn, 9432 training samples
+2026-11-15 00:44:33 INFO    pretrain: health step 100 ema: sd_min 0.331 sd_mean 0.564 eff_rank 49.3 probe_r 0.239 probe_rrs -0.016
+2026-11-15 00:44:34 INFO    pretrain: step 120 lr 0.0003775 sec 11.4 gate 0.0001926 pred 0.3495 loss 0.3496 grad_norm 0.3076 ema_momentum 0.9976
+2026-11-15 00:44:35 INFO    pretrain: step 140 lr 0.0003245 sec 12.6 gate 0.0002308 pred 0.3433 loss 0.3433 grad_norm 0.3417 ema_momentum 0.9979
+2026-11-15 00:44:37 INFO    pretrain: step 160 lr 0.0002674 sec 13.8 gate 0.0002546 pred 0.3378 loss 0.3378 grad_norm 0.3541 ema_momentum 0.9981
+2026-11-15 00:44:38 INFO    pretrain: step 180 lr 0.0002095 sec 15 gate 0.0002819 pred 0.3348 loss 0.3348 grad_norm 0.3294 ema_momentum 0.9984
+2026-11-15 00:44:39 INFO    pretrain: step 200 lr 0.0001537 sec 16.3 gate 0.0003037 pred 0.3215 loss 0.3216 grad_norm 0.3194 ema_momentum 0.9987
+2026-11-15 00:44:40 INFO    eegtraj.models.probe: template_cue: 661 bins from -0.40 to 6.20 s after ev_LEDOn, 7658 training samples
+2026-11-15 00:44:40 INFO    eegtraj.models.probe: template_cue: 1441 bins from -0.40 to 14.00 s after ev_LEDOn, 9432 training samples
+2026-11-15 00:44:40 INFO    pretrain: health step 200 online: sd_min 0.497 sd_mean 0.818 eff_rank 53.2 probe_r 0.266 probe_rrs -0.016
+2026-11-15 00:44:41 INFO    eegtraj.models.probe: template_cue: 661 bins from -0.40 to 6.20 s after ev_LEDOn, 7658 training samples
+2026-11-15 00:44:41 INFO    eegtraj.models.probe: template_cue: 1441 bins from -0.40 to 14.00 s after ev_LEDOn, 9432 training samples
+2026-11-15 00:44:42 INFO    pretrain: health step 200 ema: sd_min 0.364 sd_mean 0.606 eff_rank 50.0 probe_r 0.241 probe_rrs -0.016
+2026-11-15 00:44:43 INFO    pretrain: step 220 lr 0.0001031 sec 20.2 gate 0.0003189 pred 0.3241 loss 0.3242 grad_norm 0.3067 ema_momentum 0.9989
+2026-11-15 00:44:44 INFO    pretrain: step 240 lr 6.037e-05 sec 21.4 gate 0.0003275 pred 0.3298 loss 0.3298 grad_norm 0.3044 ema_momentum 0.9992
+2026-11-15 00:44:45 INFO    pretrain: step 260 lr 2.791e-05 sec 22.6 gate 0.0003339 pred 0.3218 loss 0.3218 grad_norm 0.2965 ema_momentum 0.9995
+2026-11-15 00:44:47 INFO    pretrain: step 280 lr 7.426e-06 sec 23.9 gate 0.0003376 pred 0.3197 loss 0.3198 grad_norm 0.2974 ema_momentum 0.9997
+2026-11-15 00:44:48 INFO    pretrain: step 300 lr 1.692e-08 sec 25.2 gate 0.0003388 pred 0.3307 loss 0.3307 grad_norm 0.3111 ema_momentum 1
+2026-11-15 00:44:48 INFO    eegtraj.models.probe: template_cue: 661 bins from -0.40 to 6.20 s after ev_LEDOn, 7658 training samples
+2026-11-15 00:44:49 INFO    eegtraj.models.probe: template_cue: 1441 bins from -0.40 to 14.00 s after ev_LEDOn, 9432 training samples
+2026-11-15 00:44:49 INFO    pretrain: health step 300 online: sd_min 0.500 sd_mean 0.826 eff_rank 54.0 probe_r 0.270 probe_rrs -0.015
+2026-11-15 00:44:50 INFO    eegtraj.models.probe: template_cue: 661 bins from -0.40 to 6.20 s after ev_LEDOn, 7658 training samples
+2026-11-15 00:44:50 INFO    eegtraj.models.probe: template_cue: 1441 bins from -0.40 to 14.00 s after ev_LEDOn, 9432 training samples
+2026-11-15 00:44:51 INFO    pretrain: health step 300 ema: sd_min 0.372 sd_mean 0.621 eff_rank 50.3 probe_r 0.242 probe_rrs -0.016
+2026-11-15 00:44:51 INFO    pretrain: done in 27.8 s (0.093 s/step); final health {'online': {'emb_sd_min': 0.5002386489799726, 'emb_sd_mean': 0.825577654033754, 'eff_rank': 54.03079941222531, 'probe_r_P6': 0.272814572962576, 'probe_rrs_P6': -0.010750219922983417, 'probe_r_P3': 0.2680737057173566, 'probe_rrs_P3': -0.0198435729957519, 'probe_r': 0.2704441393399663, 'probe_residual_r_specific': -0.01529689645936766}, 'ema': {'emb_sd_min': 0.3721035744959139, 'emb_sd_mean': 0.6209286667489669, 'eff_rank': 50.32355124514394, 'probe_r_P6': 0.3078927850800046, 'probe_rrs_P6': -0.008881650586204826, 'probe_r_P3': 0.17669776220394687, 'probe_rrs_P3': -0.02250037185075837, 'probe_r': 0.24229527364197573, 'probe_residual_r_specific': -0.0156910112184816}}

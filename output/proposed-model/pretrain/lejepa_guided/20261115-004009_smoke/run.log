@@ -1,0 +1,33 @@
+2026-11-15 00:40:09 INFO    eegtraj.utils.run: Run directory: output\proposed-model\pretrain\lejepa_guided\20261115-004009_smoke
+2026-11-15 00:40:09 INFO    pretrain: variant lejepa_guided (objective lejepa, guided True), device cuda, seed 0
+2026-11-15 00:40:10 INFO    pretrain: unlabeled windows: 11676 from ['P3', 'P6'] (sources ['lift', 'between', 'st'], variants ['broadband_car', 'broadband_ica_car'])
+2026-11-15 00:40:10 INFO    pretrain: encoder parameters 537392, predictor parameters 84352
+2026-11-15 00:40:12 INFO    pretrain: probe windows: {'P3': 7789, 'P6': 9576}
+2026-11-15 00:40:13 INFO    eegtraj.models.probe: template_cue: 676 bins from -0.54 to 6.21 s after ev_LEDOn, 7789 training samples
+2026-11-15 00:40:13 INFO    eegtraj.models.probe: template_cue: 1472 bins from -0.57 to 14.14 s after ev_LEDOn, 9576 training samples
+2026-11-15 00:40:14 INFO    pretrain: health step 0 online: sd_min 0.320 sd_mean 0.534 eff_rank 49.4 probe_r 0.227 probe_rrs nan
+2026-11-15 00:40:16 INFO    pretrain: step 20 lr 0.0003333 sec 2.4 gate 2.657e-06 pred 1.181 sigreg 268 loss 14.52 grad_norm 51.77
+2026-11-15 00:40:18 INFO    pretrain: step 40 lr 0.0004986 sec 4.3 gate 3.866e-05 pred 0.9326 sigreg 41.1 loss 2.941 grad_norm 18.44
+2026-11-15 00:40:20 INFO    pretrain: step 60 lr 0.0004859 sec 6.1 gate 0.000109 pred 0.7555 sigreg 27.62 loss 2.099 grad_norm 16.92
+2026-11-15 00:40:21 INFO    pretrain: step 80 lr 0.0004605 sec 7.9 gate 0.000184 pred 0.689 sigreg 22.43 loss 1.776 grad_norm 15.27
+2026-11-15 00:40:23 INFO    pretrain: step 100 lr 0.0004237 sec 9.7 gate 0.0002582 pred 0.6486 sigreg 19.48 loss 1.59 grad_norm 13.5
+2026-11-15 00:40:24 INFO    eegtraj.models.probe: template_cue: 676 bins from -0.54 to 6.21 s after ev_LEDOn, 7789 training samples
+2026-11-15 00:40:24 INFO    eegtraj.models.probe: template_cue: 1472 bins from -0.57 to 14.14 s after ev_LEDOn, 9576 training samples
+2026-11-15 00:40:24 INFO    pretrain: health step 100 online: sd_min 0.558 sd_mean 0.965 eff_rank 67.5 probe_r 0.210 probe_rrs nan
+2026-11-15 00:40:26 INFO    pretrain: step 120 lr 0.0003775 sec 12.5 gate 0.0003442 pred 0.6326 sigreg 17.21 loss 1.461 grad_norm 12.13
+2026-11-15 00:40:28 INFO    pretrain: step 140 lr 0.0003245 sec 14.3 gate 0.0004252 pred 0.6089 sigreg 16.77 loss 1.417 grad_norm 12.68
+2026-11-15 00:40:30 INFO    pretrain: step 160 lr 0.0002674 sec 16.1 gate 0.0004951 pred 0.6012 sigreg 15.53 loss 1.348 grad_norm 11
+2026-11-15 00:40:31 INFO    pretrain: step 180 lr 0.0002095 sec 17.9 gate 0.0005421 pred 0.5975 sigreg 13.84 loss 1.26 grad_norm 9.299
+2026-11-15 00:40:33 INFO    pretrain: step 200 lr 0.0001537 sec 19.8 gate 0.0005717 pred 0.5854 sigreg 13.86 loss 1.249 grad_norm 10.22
+2026-11-15 00:40:34 INFO    eegtraj.models.probe: template_cue: 676 bins from -0.54 to 6.21 s after ev_LEDOn, 7789 training samples
+2026-11-15 00:40:34 INFO    eegtraj.models.probe: template_cue: 1472 bins from -0.57 to 14.14 s after ev_LEDOn, 9576 training samples
+2026-11-15 00:40:34 INFO    pretrain: health step 200 online: sd_min 0.575 sd_mean 0.959 eff_rank 73.9 probe_r 0.225 probe_rrs nan
+2026-11-15 00:40:36 INFO    pretrain: step 220 lr 0.0001031 sec 22.5 gate 0.0005902 pred 0.5829 sigreg 13.15 loss 1.211 grad_norm 9.249
+2026-11-15 00:40:38 INFO    pretrain: step 240 lr 6.037e-05 sec 24.3 gate 0.0006055 pred 0.5902 sigreg 12.17 loss 1.169 grad_norm 7.832
+2026-11-15 00:40:40 INFO    pretrain: step 260 lr 2.791e-05 sec 26.1 gate 0.0006142 pred 0.5783 sigreg 12.64 loss 1.182 grad_norm 8.76
+2026-11-15 00:40:41 INFO    pretrain: step 280 lr 7.426e-06 sec 27.9 gate 0.0006195 pred 0.5762 sigreg 11.95 loss 1.145 grad_norm 8.046
+2026-11-15 00:40:43 INFO    pretrain: step 300 lr 1.692e-08 sec 29.7 gate 0.0006209 pred 0.5884 sigreg 11.55 loss 1.136 grad_norm 7.81
+2026-11-15 00:40:44 INFO    eegtraj.models.probe: template_cue: 676 bins from -0.54 to 6.21 s after ev_LEDOn, 7789 training samples
+2026-11-15 00:40:44 INFO    eegtraj.models.probe: template_cue: 1472 bins from -0.57 to 14.14 s after ev_LEDOn, 9576 training samples
+2026-11-15 00:40:44 INFO    pretrain: health step 300 online: sd_min 0.603 sd_mean 0.959 eff_rank 75.2 probe_r 0.225 probe_rrs nan
+2026-11-15 00:40:44 INFO    pretrain: done in 30.6 s (0.102 s/step); final health {'online': {'emb_sd_min': 0.6027152288699857, 'emb_sd_mean': 0.9589438320367579, 'eff_rank': 75.17492505720543, 'probe_r_P6': 0.270944962678853, 'probe_rrs_P6': nan, 'probe_r_P3': 0.17912114640826904, 'probe_rrs_P3': nan, 'probe_r': 0.225033054543561, 'probe_residual_r_specific': nan}}

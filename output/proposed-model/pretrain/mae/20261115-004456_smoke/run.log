@@ -1,0 +1,33 @@
+2026-11-15 00:44:56 INFO    eegtraj.utils.run: Run directory: output\proposed-model\pretrain\mae\20261115-004456_smoke
+2026-11-15 00:44:56 INFO    pretrain: variant mae (objective mae, guided False), device cuda, seed 0
+2026-11-15 00:44:56 INFO    pretrain: unlabeled windows: 11676 from ['P3', 'P6'] (sources ['lift', 'between', 'st'], variants ['broadband_car'])
+2026-11-15 00:44:56 INFO    pretrain: encoder parameters 537392, predictor parameters 117632
+2026-11-15 00:44:59 INFO    pretrain: probe windows: {'P3': 7658, 'P6': 9432}
+2026-11-15 00:44:59 INFO    eegtraj.models.probe: template_cue: 661 bins from -0.40 to 6.20 s after ev_LEDOn, 7658 training samples
+2026-11-15 00:45:00 INFO    eegtraj.models.probe: template_cue: 1441 bins from -0.40 to 14.00 s after ev_LEDOn, 9432 training samples
+2026-11-15 00:45:00 INFO    pretrain: health step 0 online: sd_min 0.320 sd_mean 0.534 eff_rank 49.3 probe_r 0.240 probe_rrs -0.015
+2026-11-15 00:45:02 INFO    pretrain: step 20 lr 0.0003333 sec 1.3 gate 1.488e-06 pred 1.265 loss 1.265 grad_norm 0.5317
+2026-11-15 00:45:02 INFO    pretrain: step 40 lr 0.0004986 sec 2.2 gate 1.349e-05 pred 1.096 loss 1.096 grad_norm 0.2105
+2026-11-15 00:45:03 INFO    pretrain: step 60 lr 0.0004859 sec 3.1 gate 1.873e-05 pred 1.027 loss 1.027 grad_norm 0.1089
+2026-11-15 00:45:04 INFO    pretrain: step 80 lr 0.0004605 sec 3.9 gate 1.655e-05 pred 1.032 loss 1.032 grad_norm 0.1243
+2026-11-15 00:45:05 INFO    pretrain: step 100 lr 0.0004237 sec 4.8 gate 1.656e-05 pred 1.001 loss 1.001 grad_norm 0.1375
+2026-11-15 00:45:06 INFO    eegtraj.models.probe: template_cue: 661 bins from -0.40 to 6.20 s after ev_LEDOn, 7658 training samples
+2026-11-15 00:45:06 INFO    eegtraj.models.probe: template_cue: 1441 bins from -0.40 to 14.00 s after ev_LEDOn, 9432 training samples
+2026-11-15 00:45:06 INFO    pretrain: health step 100 online: sd_min 0.306 sd_mean 0.642 eff_rank 42.8 probe_r 0.224 probe_rrs -0.014
+2026-11-15 00:45:07 INFO    pretrain: step 120 lr 0.0003775 sec 7.1 gate 1.81e-05 pred 0.9635 loss 0.9635 grad_norm 0.1412
+2026-11-15 00:45:08 INFO    pretrain: step 140 lr 0.0003245 sec 8 gate 1.982e-05 pred 0.95 loss 0.95 grad_norm 0.1636
+2026-11-15 00:45:09 INFO    pretrain: step 160 lr 0.0002674 sec 8.9 gate 1.856e-05 pred 0.9597 loss 0.9597 grad_norm 0.1966
+2026-11-15 00:45:10 INFO    pretrain: step 180 lr 0.0002095 sec 9.8 gate 2.008e-05 pred 0.9394 loss 0.9394 grad_norm 0.1938
+2026-11-15 00:45:11 INFO    pretrain: step 200 lr 0.0001537 sec 10.7 gate 1.985e-05 pred 0.9109 loss 0.9109 grad_norm 0.191
+2026-11-15 00:45:11 INFO    eegtraj.models.probe: template_cue: 661 bins from -0.40 to 6.20 s after ev_LEDOn, 7658 training samples
+2026-11-15 00:45:12 INFO    eegtraj.models.probe: template_cue: 1441 bins from -0.40 to 14.00 s after ev_LEDOn, 9432 training samples
+2026-11-15 00:45:12 INFO    pretrain: health step 200 online: sd_min 0.371 sd_mean 0.755 eff_rank 47.9 probe_r 0.222 probe_rrs -0.014
+2026-11-15 00:45:13 INFO    pretrain: step 220 lr 0.0001031 sec 13 gate 1.947e-05 pred 0.9351 loss 0.9351 grad_norm 0.1913
+2026-11-15 00:45:14 INFO    pretrain: step 240 lr 6.037e-05 sec 13.9 gate 2.072e-05 pred 0.9083 loss 0.9083 grad_norm 0.2207
+2026-11-15 00:45:15 INFO    pretrain: step 260 lr 2.791e-05 sec 14.8 gate 2.16e-05 pred 0.9238 loss 0.9238 grad_norm 0.212
+2026-11-15 00:45:16 INFO    pretrain: step 280 lr 7.426e-06 sec 15.7 gate 2.177e-05 pred 0.9368 loss 0.9368 grad_norm 0.2068
+2026-11-15 00:45:17 INFO    pretrain: step 300 lr 1.692e-08 sec 16.5 gate 2.171e-05 pred 0.9202 loss 0.9202 grad_norm 0.1983
+2026-11-15 00:45:17 INFO    eegtraj.models.probe: template_cue: 661 bins from -0.40 to 6.20 s after ev_LEDOn, 7658 training samples
+2026-11-15 00:45:18 INFO    eegtraj.models.probe: template_cue: 1441 bins from -0.40 to 14.00 s after ev_LEDOn, 9432 training samples
+2026-11-15 00:45:18 INFO    pretrain: health step 300 online: sd_min 0.415 sd_mean 0.784 eff_rank 50.0 probe_r 0.219 probe_rrs -0.016
+2026-11-15 00:45:18 INFO    pretrain: done in 17.8 s (0.059 s/step); final health {'online': {'emb_sd_min': 0.41482929942579594, 'emb_sd_mean': 0.7844915635348684, 'eff_rank': 50.02878866327786, 'probe_r_P6': 0.2827307766633725, 'probe_rrs_P6': -0.007449909258218701, 'probe_r_P3': 0.15510285558998982, 'probe_rrs_P3': -0.023787136449105656, 'probe_r': 0.21891681612668115, 'probe_residual_r_specific': -0.015618522853662178}}
