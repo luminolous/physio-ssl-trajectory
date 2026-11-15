@@ -30,7 +30,7 @@ templates:  # landmark-registered templates from each fold's training subjects
   conditions: [165, 330, 660]
   n_grid: 201
 
-loss:  # placeholders until "[DECISION] Loss weights and prior values"
+loss:  # frozen 2026-11-15 (design.md SSL-18; screening sweep after SSL-19 / SSL-20)
   aux: 0.1
   delta: 0.01
   amp: 0.1

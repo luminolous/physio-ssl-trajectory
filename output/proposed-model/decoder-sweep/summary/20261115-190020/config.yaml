@@ -1,0 +1,15 @@
+include_smoke: false
+include_old: false
+runs:
+- 20261115-170139_seed1_aux0.1_delta0.01_amp0.1_gate0.1_screening
+- 20261115-171948_seed1_aux0.01_delta0.01_amp0.1_gate0.1_screening
+- 20261115-173700_seed1_aux0.1_delta0.1_amp0.1_gate0.1_screening
+- 20261115-174129_seed1_aux0.1_delta0.01_amp0_gate0.1_screening
+- 20261115-172843_seed1_aux0.1_delta0_amp0.1_gate0.1_screening
+- 20261115-174640_seed1_aux0.1_delta0.01_amp0.01_gate0.1_screening
+- 20261115-171521_seed1_aux0_delta0.01_amp0.1_gate0.1_screening
+- 20261115-165121_seed1_aux0.1_delta0.01_amp0.1_gate0.1_screening
+- 20261115-173252_seed1_aux0.1_delta0.001_amp0.1_gate0.1_screening
+- 20261115-172429_seed1_aux1_delta0.01_amp0.1_gate0.1_screening
+- 20261115-165537_seed1_aux0.1_delta0.01_amp0.1_gate0.1_screening
+- 20261115-175046_seed1_aux0.1_delta0.01_amp1_gate0.1_screening
