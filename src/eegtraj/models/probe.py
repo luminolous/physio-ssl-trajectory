@@ -52,8 +52,12 @@ class ProbeSubject:
         return self.samples.target[:, self.samples.sample_idx[self.mask]].T
 
 
-def load_probe_subject(cache_dir: str, subject: str, window: int = 200, stride: int = 10) -> ProbeSubject:
-    s = load_subject_samples(cache_dir, subject, "broadband", "car", "all", "position", history=window, pre_lift=True)
+def load_probe_subject(cache_dir: str, subject: str, window: int = 200, stride: int = 10,
+                       band: str = "broadband") -> ProbeSubject:
+    """``band``: ``broadband`` (the encoder's input) or ``broadband_ica`` (ICA-cleaned cache, its own z-score: probes
+    neural information without the removed ocular components). Targets, scored samples and template_cue do not depend
+    on the band."""
+    s = load_subject_samples(cache_dir, subject, band, "car", "all", "position", history=window, pre_lift=True)
     stats = s.eeg_for_stats().astype(np.float64)
     mean, sd = stats.mean(axis=1, keepdims=True), np.sqrt(stats.var(axis=1, keepdims=True) + 1e-8)
     # One grid for every lift (bins of time since LED-on), so residual_r_other_trial finds shared bins across trials.

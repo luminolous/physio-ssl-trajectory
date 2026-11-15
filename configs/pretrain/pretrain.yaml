@@ -1,7 +1,7 @@
 # Stage 1 pretraining (design.md "Stage 1", "Pretraining objective details", SSL-1..SSL-12).
 # One run per variant: scripts/pretrain.py --config configs/pretrain/pretrain.yaml --variant <name>.
-# steps and lam: placeholders until the sweep of "[DECISION] Pretraining budget and lambda" (grid lam {0.02, 0.05, 0.1}
-# x steps {3000, 6000, 12000} on lejepa_guided, decided 2026-11-15); then frozen for all variants. lambda_gate fixed 0.1.
+# Budget frozen for all variants (decided 2026-11-15 after the sweep and the probe investigation, design.md SSL-13):
+# lam 0.05, 3000 steps. lambda_gate fixed 0.1 (SSL-15).
 encoder_config: configs/pretrain/encoder.yaml
 windows_config: configs/pretrain/unlabeled_windows.yaml  # SSL-1 option b, SSL-2 sources
 raw_variant: broadband_car  # context view (and target view of unguided variants)
@@ -16,7 +16,7 @@ variants:
   mae: {objective: mae, guided: false}  # reconstructs the raw window; no target view
 
 objective:
-  lam: 0.05  # LeJEPA trade-off (paper default); placeholder until the budget decision
+  lam: 0.05  # LeJEPA trade-off (paper default); frozen after the sweep (SSL-13)
   lambda_gate: 0.1  # L2 pull of the gate to the prior; fixed, not swept (decided 2026-11-15)
   mask_ratio: [0.3, 0.5]  # contiguous block of 3-5 of the 10 tokens
   ema: [0.996, 1.0]  # classic JEPA, linear over the steps (SSL-12)
@@ -24,7 +24,7 @@ objective:
   sigreg: {n_slices: 1024, t_max: 3.0, n_points: 17}
 
 train:
-  steps: 6000  # placeholder until the sweep result (about 21 epochs of 73,889 windows at batch 256)
+  steps: 3000  # frozen after the sweep (SSL-13); about 10 epochs of 73,889 windows at batch 256
   batch_size: 256
   lr: 5.0e-4
   weight_decay: 0.05

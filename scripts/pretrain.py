@@ -119,10 +119,12 @@ def main() -> None:
     parser.add_argument("--sweep", action="store_true", help="budget sweep run: writes under pretrain-sweep/")
     parser.add_argument("--lam", type=float, default=None, help="override objective.lam (sweep)")
     parser.add_argument("--steps", type=int, default=None, help="override train.steps (sweep)")
+    parser.add_argument("--checkpoint-at", default="", help="extra checkpoint steps, comma separated, e.g. 500,1000,2000")
     args = parser.parse_args()
     cfg = resolve_config(yaml.safe_load(args.config.read_text(encoding="utf-8")), args.variant, args.smoke, args.lam,
                          args.steps)
     cfg["sweep"] = args.sweep
+    cfg["train"]["checkpoint_at"] = sorted(int(k) for k in args.checkpoint_at.split(",") if k.strip())
     tag = "_".join(t for t in ["smoke" if args.smoke else "",
                                f"lam{cfg['objective']['lam']:g}_s{cfg['train']['steps']}" if args.sweep else ""] if t)
     run_dir = setup_run((SWEEP_OUTPUT if args.sweep else OUTPUT) / args.variant, cfg, tag=tag or None)
@@ -204,7 +206,7 @@ def main() -> None:
         if done % int(tr["health_every"]) == 0 or done == steps:
             health_rows += health(pre, probes, cfg, device, done)
             pd.DataFrame(health_rows).to_csv(run_dir / "health.csv", index=False)
-        if done % int(tr["checkpoint_every"]) == 0 and done != steps:
+        if (done % int(tr["checkpoint_every"]) == 0 or done in tr["checkpoint_at"]) and done != steps:
             save_encoder(run_dir / "checkpoints" / f"encoder_step{done}.pt", pre.encoder, cfg, done, "online")
             if pre.target_encoder is not None:
                 save_encoder(run_dir / "checkpoints" / f"encoder_ema_step{done}.pt", pre.target_encoder, cfg, done, "ema")

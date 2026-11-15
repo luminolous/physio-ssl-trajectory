@@ -1,0 +1,15 @@
+2026-11-15 11:44:31 INFO    eegtraj.utils.run: Run directory: output\proposed-model\pretrain-sweep\lejepa_unguided\20261115-114430_smoke_lam0.05_s120
+2026-11-15 11:44:31 INFO    pretrain: variant lejepa_unguided (objective lejepa, guided False), device cuda, seed 0
+2026-11-15 11:44:31 INFO    pretrain: unlabeled windows: 11676 from ['P3', 'P6'] (sources ['lift', 'between', 'st'], variants ['broadband_car'])
+2026-11-15 11:44:31 INFO    pretrain: encoder parameters 537392, predictor parameters 84352
+2026-11-15 11:44:33 INFO    pretrain: probe windows: {'P3': 7658, 'P6': 9432}
+2026-11-15 11:44:37 INFO    pretrain: health step 0 online: sd_min 0.320 sd_mean 0.534 eff_rank 49.3 within r 0.638 rrs 0.0477 | cross r 0.240 rrs -0.0152
+2026-11-15 11:44:39 INFO    pretrain: step 20 lr 0.0004948 sec 2.3 gate 1.214e-05 pred 1.132 sigreg 154.5 loss 8.799 grad_norm 33.67
+2026-11-15 11:44:41 INFO    pretrain: step 40 lr 0.0004268 sec 4.1 gate 0.0001033 pred 0.8216 sigreg 31 loss 2.33 grad_norm 12.1
+2026-11-15 11:44:43 INFO    pretrain: step 60 lr 0.0003006 sec 5.9 gate 0.0002264 pred 0.7122 sigreg 23.35 loss 1.844 grad_norm 12.73
+2026-11-15 11:44:44 INFO    pretrain: step 80 lr 0.0001577 sec 7.6 gate 0.0003173 pred 0.6703 sigreg 19.79 loss 1.626 grad_norm 10.51
+2026-11-15 11:44:46 INFO    pretrain: step 100 lr 4.521e-05 sec 9.4 gate 0.0003675 pred 0.6413 sigreg 18.02 loss 1.51 grad_norm 9.44
+2026-11-15 11:44:49 INFO    pretrain: health step 100 online: sd_min 0.546 sd_mean 0.969 eff_rank 65.1 within r 0.628 rrs 0.0486 | cross r 0.228 rrs -0.0150
+2026-11-15 11:44:51 INFO    pretrain: step 120 lr 1.058e-07 sec 14.7 gate 0.0003836 pred 0.6466 sigreg 16.47 loss 1.438 grad_norm 7.739
+2026-11-15 11:44:55 INFO    pretrain: health step 120 online: sd_min 0.547 sd_mean 0.969 eff_rank 65.3 within r 0.628 rrs 0.0487 | cross r 0.229 rrs -0.0150
+2026-11-15 11:44:55 INFO    pretrain: done in 18.2 s (0.152 s/step); final health {'online': {'emb_sd_min': 0.5472744617251126, 'emb_sd_mean': 0.9685070879111422, 'eff_rank': 65.28874552067623, 'within_r_P3': 0.6314451554155497, 'within_rrs_P3': 0.02873393209522463, 'within_r_P6': 0.6236527011628641, 'within_rrs_P6': 0.06876501809156471, 'cross_r_P6': 0.26132161773039, 'cross_rrs_P6': -0.008785011777705076, 'cross_r_P3': 0.19680279789952934, 'cross_rrs_P3': -0.021162971637180283, 'within_r': 0.6275489282892068, 'within_rrs': 0.04874947509339467, 'cross_r': 0.22906220781495967, 'cross_rrs': -0.01497399170744268}}

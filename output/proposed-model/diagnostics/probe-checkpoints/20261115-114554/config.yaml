@@ -1,0 +1,26 @@
+runs:
+- output\proposed-model\pretrain-sweep\lejepa_guided\20261115-100916_lam0.05_s3000
+- output\proposed-model\pretrain-sweep\lejepa_guided\20261115-101515_lam0.05_s6000
+- output\proposed-model\pretrain-sweep\lejepa_guided\20261115-102702_lam0.05_s12000
+random_seeds:
+- 0
+- 1
+- 2
+kinds:
+- online
+probe:
+  cache_dir: dataset/cache/98f5fa6e66
+  subjects:
+  - P3
+  - P6
+  pairs:
+  - - - P3
+    - - P6
+  - - - P6
+    - - P3
+  stride: 20
+  alpha: 1.0
+  n_permutations: 5
+inputs:
+  raw: broadband
+  ica: broadband_ica

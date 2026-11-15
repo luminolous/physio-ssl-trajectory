@@ -1,0 +1,133 @@
+2026-11-15 10:58:26 INFO    eegtraj.utils.run: Run directory: output\proposed-model\pretrain-sweep\lejepa_guided\20261115-105826_lam0.1_s6000
+2026-11-15 10:58:26 INFO    pretrain: variant lejepa_guided (objective lejepa, guided True), device cuda, seed 0
+2026-11-15 10:58:28 INFO    pretrain: unlabeled windows: 73889 from ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9', 'P10', 'P11', 'P12'] (sources ['lift', 'between', 'st'], variants ['broadband_car', 'broadband_ica_car'])
+2026-11-15 10:58:29 INFO    pretrain: encoder parameters 537392, predictor parameters 84352
+2026-11-15 10:58:33 INFO    pretrain: probe windows: {'P3': 7658, 'P6': 9432}
+2026-11-15 10:58:50 INFO    pretrain: health step 0 online: sd_min 0.320 sd_mean 0.534 eff_rank 49.3 within r 0.638 rrs 0.0477 | cross r 0.240 rrs -0.0152
+2026-11-15 10:58:59 INFO    pretrain: step 50 lr 8.333e-05 sec 9.3 gate 1.093e-06 pred 1.2 sigreg 672.7 loss 68.35 grad_norm 246.4
+2026-11-15 10:59:08 INFO    pretrain: step 100 lr 0.0001667 sec 17.9 gate 1.498e-05 pred 0.9881 sigreg 55.56 loss 6.445 grad_norm 61.13
+2026-11-15 10:59:17 INFO    pretrain: step 150 lr 0.00025 sec 26.9 gate 3.45e-05 pred 0.855 sigreg 28.78 loss 3.647 grad_norm 65.89
+2026-11-15 10:59:26 INFO    pretrain: step 200 lr 0.0003333 sec 36.5 gate 6.35e-05 pred 0.8093 sigreg 23.61 loss 3.089 grad_norm 73.95
+2026-11-15 10:59:36 INFO    pretrain: step 250 lr 0.0004167 sec 45.9 gate 0.0001179 pred 0.7681 sigreg 20.49 loss 2.741 grad_norm 68.77
+2026-11-15 10:59:45 INFO    pretrain: step 300 lr 0.0005 sec 54.7 gate 0.0002212 pred 0.7527 sigreg 18.16 loss 2.493 grad_norm 59.49
+2026-11-15 10:59:53 INFO    pretrain: step 350 lr 0.0004999 sec 63.4 gate 0.0003918 pred 0.7359 sigreg 16.57 loss 2.319 grad_norm 51.14
+2026-11-15 11:00:02 INFO    pretrain: step 400 lr 0.0004996 sec 72.5 gate 0.0006065 pred 0.7327 sigreg 14.77 loss 2.137 grad_norm 41.08
+2026-11-15 11:00:11 INFO    pretrain: step 450 lr 0.0004992 sec 80.8 gate 0.0008575 pred 0.7376 sigreg 13.39 loss 2.003 grad_norm 34.58
+2026-11-15 11:00:19 INFO    pretrain: step 500 lr 0.0004985 sec 89.1 gate 0.001106 pred 0.7393 sigreg 12.1 loss 1.875 grad_norm 28.74
+2026-11-15 11:00:27 INFO    pretrain: step 550 lr 0.0004976 sec 96.8 gate 0.001324 pred 0.7495 sigreg 10.67 loss 1.742 grad_norm 23.46
+2026-11-15 11:00:35 INFO    pretrain: step 600 lr 0.0004966 sec 105.3 gate 0.00158 pred 0.7568 sigreg 10.42 loss 1.724 grad_norm 22.61
+2026-11-15 11:00:44 INFO    pretrain: step 650 lr 0.0004954 sec 113.8 gate 0.001841 pred 0.7592 sigreg 9.282 loss 1.612 grad_norm 18.71
+2026-11-15 11:00:52 INFO    pretrain: step 700 lr 0.000494 sec 121.7 gate 0.002091 pred 0.7661 sigreg 8.382 loss 1.528 grad_norm 15.85
+2026-11-15 11:00:59 INFO    pretrain: step 750 lr 0.0004924 sec 129.5 gate 0.002155 pred 0.766 sigreg 7.806 loss 1.47 grad_norm 14.84
+2026-11-15 11:01:06 INFO    pretrain: step 800 lr 0.0004906 sec 136.5 gate 0.002279 pred 0.769 sigreg 7.412 loss 1.434 grad_norm 13.81
+2026-11-15 11:01:14 INFO    pretrain: step 850 lr 0.0004886 sec 143.6 gate 0.002411 pred 0.773 sigreg 6.972 loss 1.393 grad_norm 12.55
+2026-11-15 11:01:21 INFO    pretrain: step 900 lr 0.0004865 sec 150.6 gate 0.002591 pred 0.7779 sigreg 6.466 loss 1.347 grad_norm 11.28
+2026-11-15 11:01:28 INFO    pretrain: step 950 lr 0.0004842 sec 158.4 gate 0.002676 pred 0.7792 sigreg 6.11 loss 1.313 grad_norm 10.53
+2026-11-15 11:01:36 INFO    pretrain: step 1000 lr 0.0004817 sec 166.2 gate 0.002679 pred 0.7906 sigreg 5.659 loss 1.278 grad_norm 9.445
+2026-11-15 11:01:54 INFO    pretrain: health step 1000 online: sd_min 0.810 sd_mean 0.981 eff_rank 105.1 within r 0.579 rrs 0.0395 | cross r 0.217 rrs -0.0187
+2026-11-15 11:02:02 INFO    pretrain: step 1050 lr 0.000479 sec 192.1 gate 0.002653 pred 0.7929 sigreg 5.334 loss 1.247 grad_norm 8.544
+2026-11-15 11:02:10 INFO    pretrain: step 1100 lr 0.0004761 sec 200.4 gate 0.002534 pred 0.7998 sigreg 5.144 loss 1.234 grad_norm 8.191
+2026-11-15 11:02:18 INFO    pretrain: step 1150 lr 0.0004731 sec 208 gate 0.002524 pred 0.8003 sigreg 4.757 loss 1.196 grad_norm 7.381
+2026-11-15 11:02:26 INFO    pretrain: step 1200 lr 0.0004699 sec 216.1 gate 0.002456 pred 0.8062 sigreg 4.509 loss 1.177 grad_norm 6.948
+2026-11-15 11:02:35 INFO    pretrain: step 1250 lr 0.0004666 sec 225 gate 0.002349 pred 0.8104 sigreg 4.284 loss 1.158 grad_norm 6.47
+2026-11-15 11:02:43 INFO    pretrain: step 1300 lr 0.0004631 sec 232.7 gate 0.002276 pred 0.8154 sigreg 4.199 loss 1.154 grad_norm 6.278
+2026-11-15 11:02:50 INFO    pretrain: step 1350 lr 0.0004594 sec 239.6 gate 0.002124 pred 0.8257 sigreg 3.941 loss 1.137 grad_norm 5.774
+2026-11-15 11:02:57 INFO    pretrain: step 1400 lr 0.0004555 sec 246.5 gate 0.002019 pred 0.831 sigreg 3.639 loss 1.112 grad_norm 5.157
+2026-11-15 11:03:04 INFO    pretrain: step 1450 lr 0.0004515 sec 253.8 gate 0.001856 pred 0.8398 sigreg 3.483 loss 1.104 grad_norm 4.984
+2026-11-15 11:03:14 INFO    pretrain: step 1500 lr 0.0004474 sec 263.7 gate 0.001725 pred 0.8493 sigreg 3.098 loss 1.074 grad_norm 4.224
+2026-11-15 11:03:23 INFO    pretrain: step 1550 lr 0.0004431 sec 273.1 gate 0.001573 pred 0.8489 sigreg 2.99 loss 1.063 grad_norm 4.176
+2026-11-15 11:03:33 INFO    pretrain: step 1600 lr 0.0004386 sec 282.5 gate 0.001461 pred 0.8585 sigreg 2.85 loss 1.058 grad_norm 3.796
+2026-11-15 11:03:41 INFO    pretrain: step 1650 lr 0.000434 sec 291 gate 0.001392 pred 0.8639 sigreg 2.774 loss 1.055 grad_norm 3.655
+2026-11-15 11:03:50 INFO    pretrain: step 1700 lr 0.0004293 sec 299.6 gate 0.001244 pred 0.8692 sigreg 2.621 loss 1.045 grad_norm 3.369
+2026-11-15 11:03:59 INFO    pretrain: step 1750 lr 0.0004244 sec 308.7 gate 0.00109 pred 0.8754 sigreg 2.476 loss 1.036 grad_norm 3.133
+2026-11-15 11:04:08 INFO    pretrain: step 1800 lr 0.0004194 sec 317.8 gate 0.001013 pred 0.8799 sigreg 2.449 loss 1.037 grad_norm 3.016
+2026-11-15 11:04:16 INFO    pretrain: step 1850 lr 0.0004143 sec 326.3 gate 0.0009076 pred 0.8826 sigreg 2.298 loss 1.024 grad_norm 2.748
+2026-11-15 11:04:25 INFO    pretrain: step 1900 lr 0.000409 sec 334.9 gate 0.0008466 pred 0.8848 sigreg 2.293 loss 1.026 grad_norm 2.685
+2026-11-15 11:04:33 INFO    pretrain: step 1950 lr 0.0004037 sec 343.3 gate 0.0007735 pred 0.8845 sigreg 2.217 loss 1.018 grad_norm 2.599
+2026-11-15 11:04:42 INFO    pretrain: step 2000 lr 0.0003982 sec 351.7 gate 0.0007104 pred 0.884 sigreg 2.175 loss 1.013 grad_norm 2.471
+2026-11-15 11:04:58 INFO    pretrain: health step 2000 online: sd_min 0.621 sd_mean 0.961 eff_rank 103.6 within r 0.575 rrs 0.0390 | cross r 0.211 rrs -0.0159
+2026-11-15 11:05:07 INFO    pretrain: step 2050 lr 0.0003926 sec 377 gate 0.0006642 pred 0.8837 sigreg 2.18 loss 1.013 grad_norm 2.493
+2026-11-15 11:05:14 INFO    pretrain: step 2100 lr 0.0003869 sec 384.2 gate 0.0006303 pred 0.8862 sigreg 2.105 loss 1.008 grad_norm 2.404
+2026-11-15 11:05:24 INFO    pretrain: step 2150 lr 0.000381 sec 393.5 gate 0.0005718 pred 0.8867 sigreg 2.096 loss 1.008 grad_norm 2.31
+2026-11-15 11:05:34 INFO    pretrain: step 2200 lr 0.0003751 sec 403.5 gate 0.0005435 pred 0.8827 sigreg 2.086 loss 1.003 grad_norm 2.305
+2026-11-15 11:05:43 INFO    pretrain: step 2250 lr 0.0003691 sec 412.9 gate 0.0005165 pred 0.878 sigreg 2.106 loss 1.001 grad_norm 2.277
+2026-11-15 11:05:52 INFO    pretrain: step 2300 lr 0.000363 sec 422.1 gate 0.0005069 pred 0.8792 sigreg 2.137 loss 1.005 grad_norm 2.329
+2026-11-15 11:06:00 INFO    pretrain: step 2350 lr 0.0003568 sec 430.4 gate 0.0005144 pred 0.8741 sigreg 2.072 loss 0.994 grad_norm 2.25
+2026-11-15 11:06:09 INFO    pretrain: step 2400 lr 0.0003506 sec 438.9 gate 0.0005094 pred 0.8728 sigreg 2.113 loss 0.9969 grad_norm 2.261
+2026-11-15 11:06:17 INFO    pretrain: step 2450 lr 0.0003442 sec 447.3 gate 0.0004985 pred 0.8713 sigreg 2.079 loss 0.9921 grad_norm 2.244
+2026-11-15 11:06:26 INFO    pretrain: step 2500 lr 0.0003378 sec 455.8 gate 0.0004842 pred 0.8687 sigreg 2.088 loss 0.9906 grad_norm 2.204
+2026-11-15 11:06:34 INFO    pretrain: step 2550 lr 0.0003313 sec 464.1 gate 0.000468 pred 0.864 sigreg 2.111 loss 0.9887 grad_norm 2.274
+2026-11-15 11:06:43 INFO    pretrain: step 2600 lr 0.0003248 sec 472.6 gate 0.0004619 pred 0.8614 sigreg 2.074 loss 0.9827 grad_norm 2.199
+2026-11-15 11:06:50 INFO    pretrain: step 2650 lr 0.0003182 sec 479.8 gate 0.0004847 pred 0.8625 sigreg 2.102 loss 0.9865 grad_norm 2.235
+2026-11-15 11:06:58 INFO    pretrain: step 2700 lr 0.0003115 sec 488.3 gate 0.0004998 pred 0.8581 sigreg 2.126 loss 0.9849 grad_norm 2.263
+2026-11-15 11:07:08 INFO    pretrain: step 2750 lr 0.0003048 sec 497.5 gate 0.000508 pred 0.8538 sigreg 2.075 loss 0.976 grad_norm 2.192
+2026-11-15 11:07:17 INFO    pretrain: step 2800 lr 0.0002981 sec 506.9 gate 0.0005324 pred 0.8519 sigreg 2.127 loss 0.9795 grad_norm 2.276
+2026-11-15 11:07:27 INFO    pretrain: step 2850 lr 0.0002913 sec 517 gate 0.0005327 pred 0.8503 sigreg 2.143 loss 0.9796 grad_norm 2.285
+2026-11-15 11:07:36 INFO    pretrain: step 2900 lr 0.0002845 sec 526 gate 0.0005203 pred 0.8465 sigreg 2.117 loss 0.9736 grad_norm 2.256
+2026-11-15 11:07:45 INFO    pretrain: step 2950 lr 0.0002776 sec 535 gate 0.0005251 pred 0.8428 sigreg 2.135 loss 0.9721 grad_norm 2.267
+2026-11-15 11:07:54 INFO    pretrain: step 3000 lr 0.0002708 sec 544 gate 0.0005436 pred 0.8376 sigreg 2.146 loss 0.9685 grad_norm 2.298
+2026-11-15 11:08:12 INFO    pretrain: health step 3000 online: sd_min 0.523 sd_mean 0.941 eff_rank 102.0 within r 0.572 rrs 0.0401 | cross r 0.198 rrs -0.0158
+2026-11-15 11:08:19 INFO    pretrain: step 3050 lr 0.0002639 sec 569.3 gate 0.000553 pred 0.8355 sigreg 2.228 loss 0.9748 grad_norm 2.427
+2026-11-15 11:08:28 INFO    pretrain: step 3100 lr 0.000257 sec 577.7 gate 0.0005742 pred 0.8366 sigreg 2.159 loss 0.9689 grad_norm 2.316
+2026-11-15 11:08:35 INFO    pretrain: step 3150 lr 0.0002501 sec 585.5 gate 0.0005881 pred 0.8304 sigreg 2.188 loss 0.9663 grad_norm 2.364
+2026-11-15 11:08:44 INFO    pretrain: step 3200 lr 0.0002432 sec 593.5 gate 0.0005995 pred 0.8323 sigreg 2.23 loss 0.9721 grad_norm 2.477
+2026-11-15 11:08:52 INFO    pretrain: step 3250 lr 0.0002364 sec 602.2 gate 0.0005956 pred 0.8293 sigreg 2.171 loss 0.9635 grad_norm 2.389
+2026-11-15 11:09:00 INFO    pretrain: step 3300 lr 0.0002295 sec 610.5 gate 0.0006142 pred 0.8302 sigreg 2.181 loss 0.9653 grad_norm 2.396
+2026-11-15 11:09:09 INFO    pretrain: step 3350 lr 0.0002226 sec 619 gate 0.0006385 pred 0.8259 sigreg 2.16 loss 0.9593 grad_norm 2.356
+2026-11-15 11:09:19 INFO    pretrain: step 3400 lr 0.0002158 sec 628.5 gate 0.0006489 pred 0.8231 sigreg 2.163 loss 0.9571 grad_norm 2.356
+2026-11-15 11:09:27 INFO    pretrain: step 3450 lr 0.000209 sec 636.9 gate 0.0006705 pred 0.8172 sigreg 2.195 loss 0.9551 grad_norm 2.392
+2026-11-15 11:09:36 INFO    pretrain: step 3500 lr 0.0002022 sec 645.6 gate 0.0006864 pred 0.8177 sigreg 2.207 loss 0.9567 grad_norm 2.463
+2026-11-15 11:09:44 INFO    pretrain: step 3550 lr 0.0001955 sec 653.9 gate 0.0007024 pred 0.8148 sigreg 2.171 loss 0.9506 grad_norm 2.395
+2026-11-15 11:09:52 INFO    pretrain: step 3600 lr 0.0001888 sec 662 gate 0.0007198 pred 0.8076 sigreg 2.174 loss 0.9443 grad_norm 2.375
+2026-11-15 11:10:01 INFO    pretrain: step 3650 lr 0.0001821 sec 670.5 gate 0.000735 pred 0.804 sigreg 2.185 loss 0.9421 grad_norm 2.393
+2026-11-15 11:10:09 INFO    pretrain: step 3700 lr 0.0001755 sec 679.2 gate 0.0007403 pred 0.8044 sigreg 2.208 loss 0.9448 grad_norm 2.447
+2026-11-15 11:10:17 INFO    pretrain: step 3750 lr 0.000169 sec 687.2 gate 0.0007496 pred 0.8021 sigreg 2.246 loss 0.9466 grad_norm 2.524
+2026-11-15 11:10:25 INFO    pretrain: step 3800 lr 0.0001625 sec 695.4 gate 0.0007567 pred 0.8029 sigreg 2.2 loss 0.9428 grad_norm 2.427
+2026-11-15 11:10:34 INFO    pretrain: step 3850 lr 0.0001561 sec 703.5 gate 0.0007677 pred 0.7993 sigreg 2.246 loss 0.9441 grad_norm 2.523
+2026-11-15 11:10:42 INFO    pretrain: step 3900 lr 0.0001497 sec 711.7 gate 0.0007759 pred 0.7971 sigreg 2.219 loss 0.9393 grad_norm 2.466
+2026-11-15 11:10:50 INFO    pretrain: step 3950 lr 0.0001434 sec 719.7 gate 0.0007824 pred 0.7973 sigreg 2.18 loss 0.9356 grad_norm 2.439
+2026-11-15 11:10:58 INFO    pretrain: step 4000 lr 0.0001372 sec 727.5 gate 0.0007756 pred 0.7896 sigreg 2.222 loss 0.9329 grad_norm 2.521
+2026-11-15 11:11:14 INFO    pretrain: health step 4000 online: sd_min 0.499 sd_mean 0.928 eff_rank 103.2 within r 0.574 rrs 0.0372 | cross r 0.222 rrs -0.0163
+2026-11-15 11:11:21 INFO    pretrain: step 4050 lr 0.0001311 sec 751.3 gate 0.0007817 pred 0.788 sigreg 2.245 loss 0.9337 grad_norm 2.552
+2026-11-15 11:11:28 INFO    pretrain: step 4100 lr 0.0001251 sec 758.2 gate 0.0007865 pred 0.7899 sigreg 2.26 loss 0.937 grad_norm 2.565
+2026-11-15 11:11:35 INFO    pretrain: step 4150 lr 0.0001192 sec 765.2 gate 0.0007924 pred 0.7872 sigreg 2.268 loss 0.9353 grad_norm 2.584
+2026-11-15 11:11:42 INFO    pretrain: step 4200 lr 0.0001134 sec 772.2 gate 0.0008055 pred 0.7856 sigreg 2.306 loss 0.9377 grad_norm 2.698
+2026-11-15 11:11:49 INFO    pretrain: step 4250 lr 0.0001077 sec 779.2 gate 0.000813 pred 0.787 sigreg 2.222 loss 0.9306 grad_norm 2.518
+2026-11-15 11:11:56 INFO    pretrain: step 4300 lr 0.0001021 sec 786.2 gate 0.000809 pred 0.7848 sigreg 2.244 loss 0.9308 grad_norm 2.592
+2026-11-15 11:12:03 INFO    pretrain: step 4350 lr 9.656e-05 sec 793.2 gate 0.0008101 pred 0.7812 sigreg 2.202 loss 0.9234 grad_norm 2.524
+2026-11-15 11:12:10 INFO    pretrain: step 4400 lr 9.118e-05 sec 800.1 gate 0.0008133 pred 0.7802 sigreg 2.226 loss 0.9248 grad_norm 2.569
+2026-11-15 11:12:17 INFO    pretrain: step 4450 lr 8.592e-05 sec 807.1 gate 0.0008179 pred 0.7809 sigreg 2.233 loss 0.9262 grad_norm 2.61
+2026-11-15 11:12:24 INFO    pretrain: step 4500 lr 8.078e-05 sec 814.1 gate 0.000819 pred 0.7762 sigreg 2.327 loss 0.9314 grad_norm 2.779
+2026-11-15 11:12:32 INFO    pretrain: step 4550 lr 7.577e-05 sec 821.8 gate 0.0008188 pred 0.7736 sigreg 2.236 loss 0.9199 grad_norm 2.596
+2026-11-15 11:12:40 INFO    pretrain: step 4600 lr 7.09e-05 sec 830 gate 0.0008205 pred 0.7781 sigreg 2.266 loss 0.927 grad_norm 2.646
+2026-11-15 11:12:48 INFO    pretrain: step 4650 lr 6.616e-05 sec 838.3 gate 0.0008167 pred 0.776 sigreg 2.258 loss 0.9243 grad_norm 2.648
+2026-11-15 11:12:56 INFO    pretrain: step 4700 lr 6.156e-05 sec 846.3 gate 0.0008222 pred 0.7773 sigreg 2.19 loss 0.9186 grad_norm 2.544
+2026-11-15 11:13:04 INFO    pretrain: step 4750 lr 5.711e-05 sec 854.2 gate 0.0008175 pred 0.7763 sigreg 2.207 loss 0.9195 grad_norm 2.576
+2026-11-15 11:13:13 INFO    pretrain: step 4800 lr 5.28e-05 sec 863.2 gate 0.0008144 pred 0.7732 sigreg 2.22 loss 0.9179 grad_norm 2.614
+2026-11-15 11:13:19 INFO    pretrain: step 4850 lr 4.864e-05 sec 869.3 gate 0.0008132 pred 0.7698 sigreg 2.222 loss 0.9151 grad_norm 2.624
+2026-11-15 11:13:25 INFO    pretrain: step 4900 lr 4.463e-05 sec 874.9 gate 0.0008195 pred 0.7668 sigreg 2.254 loss 0.9156 grad_norm 2.662
+2026-11-15 11:13:30 INFO    pretrain: step 4950 lr 4.078e-05 sec 880.5 gate 0.0008233 pred 0.7685 sigreg 2.237 loss 0.9154 grad_norm 2.684
+2026-11-15 11:13:36 INFO    pretrain: step 5000 lr 3.709e-05 sec 886.1 gate 0.0008211 pred 0.7682 sigreg 2.201 loss 0.9115 grad_norm 2.602
+2026-11-15 11:13:40 INFO    pretrain: health step 5000 online: sd_min 0.493 sd_mean 0.927 eff_rank 104.6 within r 0.575 rrs 0.0366 | cross r 0.229 rrs -0.0166
+2026-11-15 11:13:46 INFO    pretrain: step 5050 lr 3.356e-05 sec 895.5 gate 0.0008188 pred 0.7679 sigreg 2.238 loss 0.915 grad_norm 2.626
+2026-11-15 11:13:51 INFO    pretrain: step 5100 lr 3.02e-05 sec 901.1 gate 0.0008205 pred 0.7657 sigreg 2.218 loss 0.911 grad_norm 2.61
+2026-11-15 11:13:57 INFO    pretrain: step 5150 lr 2.7e-05 sec 906.7 gate 0.0008217 pred 0.7671 sigreg 2.292 loss 0.9197 grad_norm 2.746
+2026-11-15 11:14:02 INFO    pretrain: step 5200 lr 2.397e-05 sec 912.2 gate 0.0008198 pred 0.7661 sigreg 2.221 loss 0.9117 grad_norm 2.653
+2026-11-15 11:14:08 INFO    pretrain: step 5250 lr 2.111e-05 sec 917.8 gate 0.00082 pred 0.7633 sigreg 2.19 loss 0.906 grad_norm 2.642
+2026-11-15 11:14:13 INFO    pretrain: step 5300 lr 1.843e-05 sec 923.4 gate 0.0008197 pred 0.7677 sigreg 2.205 loss 0.9115 grad_norm 2.62
+2026-11-15 11:14:19 INFO    pretrain: step 5350 lr 1.592e-05 sec 929 gate 0.0008183 pred 0.7632 sigreg 2.239 loss 0.9109 grad_norm 2.685
+2026-11-15 11:14:24 INFO    pretrain: step 5400 lr 1.359e-05 sec 934.5 gate 0.0008181 pred 0.7655 sigreg 2.217 loss 0.9108 grad_norm 2.637
+2026-11-15 11:14:30 INFO    pretrain: step 5450 lr 1.144e-05 sec 940.1 gate 0.0008169 pred 0.7599 sigreg 2.228 loss 0.9068 grad_norm 2.669
+2026-11-15 11:14:36 INFO    pretrain: step 5500 lr 9.471e-06 sec 945.7 gate 0.0008159 pred 0.7627 sigreg 2.191 loss 0.9055 grad_norm 2.623
+2026-11-15 11:14:41 INFO    pretrain: step 5550 lr 7.684e-06 sec 951.2 gate 0.0008157 pred 0.7635 sigreg 2.199 loss 0.9071 grad_norm 2.624
+2026-11-15 11:14:47 INFO    pretrain: step 5600 lr 6.081e-06 sec 956.8 gate 0.0008154 pred 0.7602 sigreg 2.268 loss 0.911 grad_norm 2.734
+2026-11-15 11:14:52 INFO    pretrain: step 5650 lr 4.664e-06 sec 962.4 gate 0.0008151 pred 0.7618 sigreg 2.221 loss 0.9078 grad_norm 2.682
+2026-11-15 11:14:58 INFO    pretrain: step 5700 lr 3.432e-06 sec 968 gate 0.0008149 pred 0.7647 sigreg 2.228 loss 0.9111 grad_norm 2.669
+2026-11-15 11:15:04 INFO    pretrain: step 5750 lr 2.388e-06 sec 973.6 gate 0.000815 pred 0.762 sigreg 2.26 loss 0.9119 grad_norm 2.689
+2026-11-15 11:15:09 INFO    pretrain: step 5800 lr 1.533e-06 sec 979.2 gate 0.0008151 pred 0.7613 sigreg 2.135 loss 0.8987 grad_norm 2.51
+2026-11-15 11:15:15 INFO    pretrain: step 5850 lr 8.653e-07 sec 984.8 gate 0.0008152 pred 0.7601 sigreg 2.223 loss 0.9065 grad_norm 2.637
+2026-11-15 11:15:20 INFO    pretrain: step 5900 lr 3.872e-07 sec 990.3 gate 0.0008153 pred 0.7636 sigreg 2.207 loss 0.908 grad_norm 2.639
+2026-11-15 11:15:26 INFO    pretrain: step 5950 lr 9.876e-08 sec 995.9 gate 0.0008153 pred 0.7602 sigreg 2.259 loss 0.9102 grad_norm 2.729
+2026-11-15 11:15:31 INFO    pretrain: step 6000 lr 3.797e-11 sec 1001 gate 0.0008153 pred 0.7621 sigreg 2.181 loss 0.9041 grad_norm 2.62
+2026-11-15 11:15:35 INFO    pretrain: health step 6000 online: sd_min 0.493 sd_mean 0.927 eff_rank 105.0 within r 0.574 rrs 0.0363 | cross r 0.231 rrs -0.0167
+2026-11-15 11:15:35 INFO    pretrain: done in 1004.9 s (0.167 s/step); final health {'online': {'emb_sd_min': 0.49342446415932484, 'emb_sd_mean': 0.9272282795229033, 'eff_rank': 104.99309730547475, 'within_r_P3': 0.6057007950708574, 'within_rrs_P3': 0.02709597856966078, 'within_r_P6': 0.5422574995759754, 'within_rrs_P6': 0.04556362183998093, 'cross_r_P6': 0.2748940415591929, 'cross_rrs_P6': -0.012960804957771466, 'cross_r_P3': 0.18742168987516297, 'cross_rrs_P3': -0.020537615258794828, 'within_r': 0.5739791473234164, 'within_rrs': 0.03632980020482086, 'cross_r': 0.23115786571717795, 'cross_rrs': -0.016749210108283147}}
