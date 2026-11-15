@@ -1,0 +1,29 @@
+2026-11-15 09:16:38 INFO    eegtraj.utils.run: Run directory: output\proposed-model\pretrain\jepa_unguided\20261115-091638_smoke
+2026-11-15 09:16:38 INFO    pretrain: variant jepa_unguided (objective jepa, guided False), device cuda, seed 0
+2026-11-15 09:16:38 INFO    pretrain: unlabeled windows: 11676 from ['P3', 'P6'] (sources ['lift', 'between', 'st'], variants ['broadband_car'])
+2026-11-15 09:16:38 INFO    pretrain: encoder parameters 537392, predictor parameters 84352
+2026-11-15 09:16:41 INFO    pretrain: probe windows: {'P3': 7658, 'P6': 9432}
+2026-11-15 09:16:44 INFO    pretrain: health step 0 online: sd_min 0.320 sd_mean 0.534 eff_rank 49.3 within r 0.638 rrs 0.0477 | cross r 0.240 rrs -0.0152
+2026-11-15 09:16:48 INFO    pretrain: health step 0 ema: sd_min 0.320 sd_mean 0.534 eff_rank 49.3 within r 0.638 rrs 0.0477 | cross r 0.240 rrs -0.0152
+2026-11-15 09:16:50 INFO    pretrain: step 20 lr 0.0003333 sec 1.9 gate 1.169e-06 pred 1.043 loss 1.043 grad_norm 1.937 ema_momentum 0.9963
+2026-11-15 09:16:51 INFO    pretrain: step 40 lr 0.0004986 sec 3.2 gate 1.772e-05 pred 0.6112 loss 0.6112 grad_norm 0.6134 ema_momentum 0.9965
+2026-11-15 09:16:52 INFO    pretrain: step 60 lr 0.0004859 sec 4.4 gate 5.364e-05 pred 0.4477 loss 0.4477 grad_norm 0.2767 ema_momentum 0.9968
+2026-11-15 09:16:53 INFO    pretrain: step 80 lr 0.0004605 sec 5.6 gate 9.818e-05 pred 0.3965 loss 0.3965 grad_norm 0.2682 ema_momentum 0.9971
+2026-11-15 09:16:55 INFO    pretrain: step 100 lr 0.0004237 sec 6.9 gate 0.000142 pred 0.3713 loss 0.3713 grad_norm 0.3263 ema_momentum 0.9973
+2026-11-15 09:16:58 INFO    pretrain: health step 100 online: sd_min 0.438 sd_mean 0.776 eff_rank 49.4 within r 0.609 rrs 0.0377 | cross r 0.264 rrs -0.0163
+2026-11-15 09:17:01 INFO    pretrain: health step 100 ema: sd_min 0.331 sd_mean 0.564 eff_rank 49.3 within r 0.635 rrs 0.0485 | cross r 0.239 rrs -0.0156
+2026-11-15 09:17:02 INFO    pretrain: step 120 lr 0.0003775 sec 14.6 gate 0.0001926 pred 0.3495 loss 0.3496 grad_norm 0.3076 ema_momentum 0.9976
+2026-11-15 09:17:04 INFO    pretrain: step 140 lr 0.0003245 sec 15.9 gate 0.0002308 pred 0.3433 loss 0.3433 grad_norm 0.3417 ema_momentum 0.9979
+2026-11-15 09:17:05 INFO    pretrain: step 160 lr 0.0002674 sec 17.1 gate 0.0002546 pred 0.3378 loss 0.3378 grad_norm 0.3541 ema_momentum 0.9981
+2026-11-15 09:17:06 INFO    pretrain: step 180 lr 0.0002095 sec 18.4 gate 0.0002819 pred 0.3348 loss 0.3348 grad_norm 0.3294 ema_momentum 0.9984
+2026-11-15 09:17:07 INFO    pretrain: step 200 lr 0.0001537 sec 19.6 gate 0.0003037 pred 0.3215 loss 0.3216 grad_norm 0.3194 ema_momentum 0.9987
+2026-11-15 09:17:10 INFO    pretrain: health step 200 online: sd_min 0.497 sd_mean 0.818 eff_rank 53.2 within r 0.599 rrs 0.0393 | cross r 0.266 rrs -0.0156
+2026-11-15 09:17:13 INFO    pretrain: health step 200 ema: sd_min 0.364 sd_mean 0.606 eff_rank 50.0 within r 0.629 rrs 0.0466 | cross r 0.241 rrs -0.0156
+2026-11-15 09:17:15 INFO    pretrain: step 220 lr 0.0001031 sec 27.2 gate 0.0003189 pred 0.3241 loss 0.3242 grad_norm 0.3067 ema_momentum 0.9989
+2026-11-15 09:17:16 INFO    pretrain: step 240 lr 6.037e-05 sec 28.5 gate 0.0003275 pred 0.3298 loss 0.3298 grad_norm 0.3044 ema_momentum 0.9992
+2026-11-15 09:17:17 INFO    pretrain: step 260 lr 2.791e-05 sec 29.7 gate 0.0003339 pred 0.3218 loss 0.3218 grad_norm 0.2965 ema_momentum 0.9995
+2026-11-15 09:17:19 INFO    pretrain: step 280 lr 7.426e-06 sec 31 gate 0.0003376 pred 0.3197 loss 0.3198 grad_norm 0.2974 ema_momentum 0.9997
+2026-11-15 09:17:20 INFO    pretrain: step 300 lr 1.692e-08 sec 32.2 gate 0.0003388 pred 0.3307 loss 0.3307 grad_norm 0.3111 ema_momentum 1
+2026-11-15 09:17:23 INFO    pretrain: health step 300 online: sd_min 0.500 sd_mean 0.826 eff_rank 54.0 within r 0.598 rrs 0.0385 | cross r 0.270 rrs -0.0153
+2026-11-15 09:17:26 INFO    pretrain: health step 300 ema: sd_min 0.372 sd_mean 0.621 eff_rank 50.3 within r 0.627 rrs 0.0459 | cross r 0.242 rrs -0.0157
+2026-11-15 09:17:26 INFO    pretrain: done in 38.7 s (0.129 s/step); final health {'online': {'emb_sd_min': 0.5002386489799726, 'emb_sd_mean': 0.825577654033754, 'eff_rank': 54.03079941222531, 'within_r_P3': 0.6121176272474422, 'within_rrs_P3': 0.026001988618212703, 'within_r_P6': 0.5842135139057669, 'within_rrs_P6': 0.050921063793542894, 'cross_r_P6': 0.272814572962576, 'cross_rrs_P6': -0.010750219922983417, 'cross_r_P3': 0.2680737057173566, 'cross_rrs_P3': -0.0198435729957519, 'within_r': 0.5981655705766046, 'within_rrs': 0.0384615262058778, 'cross_r': 0.2704441393399663, 'cross_rrs': -0.01529689645936766}, 'ema': {'emb_sd_min': 0.3721035744959139, 'emb_sd_mean': 0.6209286667489669, 'eff_rank': 50.32355124514394, 'within_r_P3': 0.6280091520000433, 'within_rrs_P3': 0.026645471822920878, 'within_r_P6': 0.6262626474679311, 'within_rrs_P6': 0.06520774169732808, 'cross_r_P6': 0.3078927850800046, 'cross_rrs_P6': -0.008881650586204826, 'cross_r_P3': 0.17669776220394687, 'cross_rrs_P3': -0.02250037185075837, 'within_r': 0.6271358997339872, 'within_rrs': 0.04592660676012448, 'cross_r': 0.24229527364197573, 'cross_rrs': -0.0156910112184816}}

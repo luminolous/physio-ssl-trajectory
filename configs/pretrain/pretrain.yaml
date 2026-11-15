@@ -1,7 +1,7 @@
 # Stage 1 pretraining (design.md "Stage 1", "Pretraining objective details", SSL-1..SSL-12).
 # One run per variant: scripts/pretrain.py --config configs/pretrain/pretrain.yaml --variant <name>.
-# steps, lam and lambda_gate are placeholders until "[DECISION] Pretraining budget and lambda"; they are then frozen
-# for all variants (design.md "Training budget").
+# steps and lam: placeholders until the sweep of "[DECISION] Pretraining budget and lambda" (grid lam {0.02, 0.05, 0.1}
+# x steps {3000, 6000, 12000} on lejepa_guided, decided 2026-11-15); then frozen for all variants. lambda_gate fixed 0.1.
 encoder_config: configs/pretrain/encoder.yaml
 windows_config: configs/pretrain/unlabeled_windows.yaml  # SSL-1 option b, SSL-2 sources
 raw_variant: broadband_car  # context view (and target view of unguided variants)
@@ -17,28 +17,28 @@ variants:
 
 objective:
   lam: 0.05  # LeJEPA trade-off (paper default); placeholder until the budget decision
-  lambda_gate: 0.1  # L2 pull of the gate to the prior; placeholder until the budget decision
+  lambda_gate: 0.1  # L2 pull of the gate to the prior; fixed, not swept (decided 2026-11-15)
   mask_ratio: [0.3, 0.5]  # contiguous block of 3-5 of the 10 tokens
   ema: [0.996, 1.0]  # classic JEPA, linear over the steps (SSL-12)
   predictor: {d_model: 64, n_layers: 2, n_heads: 4, mlp_width: 128, dropout: 0.0}
   sigreg: {n_slices: 1024, t_max: 3.0, n_points: 17}
 
 train:
-  steps: 20000  # placeholder until the budget decision
+  steps: 6000  # placeholder until the sweep result (about 21 epochs of 73,889 windows at batch 256)
   batch_size: 256
   lr: 5.0e-4
   weight_decay: 0.05
-  warmup_steps: 1000  # linear warm-up, then cosine to 0
+  warmup_frac: 0.05  # linear warm-up over this fraction of the steps, then cosine to 0
   grad_clip: 1.0
   amp: bf16  # bf16 | fp16 | off
   log_every: 50
-  health_every: 2000
-  checkpoint_every: 5000
+  health_every: 1000
+  checkpoint_every: 3000
 
-probe:  # health metric only; screening subjects, never a test subject
+probe:  # screening subjects only (decided 2026-11-15): within-subject probe = selection score, cross-subject logged
   cache_dir: dataset/cache/98f5fa6e66
   subjects: [P3, P6]
-  pairs: [[[P3], [P6]], [[P6], [P3]]]  # (ridge train subjects, scored subjects)
+  pairs: [[[P3], [P6]], [[P6], [P3]]]  # cross-subject probe: (ridge train subjects, scored subjects)
   stride: 20  # one probed target sample per 0.2 s patch
   alpha: 1.0
   n_permutations: 5
@@ -46,7 +46,7 @@ probe:  # health metric only; screening subjects, never a test subject
 smoke:  # --smoke: 2 subjects, a few hundred steps
   subjects: [P3, P6]
   steps: 300
-  warmup_steps: 30
+  warmup_frac: 0.1
   batch_size: 128
   log_every: 20
   health_every: 100

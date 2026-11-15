@@ -5,9 +5,9 @@ before the segment start comes from the pre-lift cache. EEG is z-scored per subj
 the same statistics as ``eegtraj.data.unlabeled.UnlabeledWindows``). The probe input is the encoder's last token
 (the streaming output for the patch that ends at the target sample), so it uses no EEG after the target.
 
-A ridge probe is fitted on one group of subjects and scored on another with r and ``residual_r_specific``
-(``eegtraj.baselines.scoring.subject_scores``; the ``template_cue`` floor is fitted on the probe's training subjects).
-Only screening / inner-validation subjects should be used here, never a fold's test subject.
+Ridge probes are scored with r and ``residual_r_specific`` (``eegtraj.baselines.scoring.subject_scores``; the
+``template_cue`` floor is fitted on the probe's training data only). Only the screening subjects (P3, P6) are used:
+pretraining is not per fold (SSL-1 option b), and inner-validation subjects are test subjects of other folds.
 """
 
 from __future__ import annotations
@@ -27,6 +27,8 @@ from eegtraj.metrics.trajectory import MIN_SHARED_BINS
 from eegtraj.models.pretraining import effective_rank, embedding_std, ridge_fit, ridge_predict
 
 logger = logging.getLogger(__name__)
+_quiet = logging.getLogger(__name__ + ".template")  # template_cue fit logs, once per probe fold
+_quiet.setLevel(logging.WARNING)
 
 
 @dataclass
@@ -77,17 +79,48 @@ def embed(encoder: torch.nn.Module, windows: np.ndarray, device, batch: int = 51
     return torch.cat(out).numpy()
 
 
+def _scores(p: ProbeSubject, mask: np.ndarray, pred: np.ndarray, train: list[tuple[SubjectSamples, np.ndarray]],
+            seed: int, n_permutations: int) -> dict[str, float]:
+    """r and residual_r_specific of ``pred`` at ``mask``; template_cue fitted on ``train`` (samples, mask) only."""
+    ctx = FitContext(eeg_norm={}, target_norm=None, history=1, lag_step=1, seed=seed,
+                     train_masks={s.subject: m for s, m in train}, val_masks={}, logger=_quiet)
+    template = fit_cue_template([s for s, _ in train], ctx)
+    return subject_scores(p.samples, mask, pred, template, ctx, seed, n_permutations,
+                          min_shared_bins=math.ceil(MIN_SHARED_BINS / p.stride))
+
+
+def within_subject_scores(p: ProbeSubject, z: np.ndarray, alpha: float, seed: int,
+                          n_permutations: int) -> dict[str, float]:
+    """Leave-one-series-out ridge probe inside one subject. Ridge and template_cue use the other series only.
+
+    Per-series scores are averaged with weights = number of lifts in the series (= mean over lifts).
+    """
+    series = p.samples.trials.series.to_numpy()[p.samples.trial_row]  # per scored sample
+    ser_probe = series[p.mask]
+    r, rrs, n = [], [], []
+    for k in np.unique(ser_probe):
+        held = ser_probe == k
+        w, st = ridge_fit(z[~held], p.target[~held], alpha)
+        sc = _scores(p, p.mask & (series == k), ridge_predict(z[held], w, st),
+                     [(p.samples, p.mask & (series != k))], seed, n_permutations)
+        r.append(sc["r"])
+        rrs.append(sc["residual_r_specific"])
+        n.append(np.unique(p.samples.trial_row[p.mask & (series == k)]).size)
+    return {"r": float(np.average(r, weights=n)), "rrs": float(np.average(rrs, weights=n))}
+
+
 def probe_report(encoder: torch.nn.Module, subjects: list[ProbeSubject], pairs: list[tuple[list[str], list[str]]],
                  device, alpha: float = 1.0, seed: int = 0, n_permutations: int = 5) -> dict[str, float]:
     """Embedding health and probe scores of one encoder.
 
-    Args:
-        pairs: (train subjects, evaluation subjects) for the ridge probe; scores are averaged over all evaluated
-            subjects of all pairs.
+    Two probes (decided 2026-11-15; the within-subject one is the selection score):
+    - within-subject: leave-one-series-out ridge inside each probe subject (``within_r``, ``within_rrs``);
+    - cross-subject: ridge fitted on the first subjects of each pair, scored on the others (``cross_r``,
+      ``cross_rrs``).
 
     Returns:
-        ``emb_sd_min``, ``emb_sd_mean``, ``eff_rank`` (over all probe windows), ``probe_r``,
-        ``probe_residual_r_specific`` and per-subject values ``probe_r_<S>``, ``probe_rrs_<S>``.
+        ``emb_sd_min``, ``emb_sd_mean``, ``eff_rank`` (over all probe windows), the four means above (over subjects),
+        and per-subject values ``within_r_<S>``, ``within_rrs_<S>``, ``cross_r_<S>``, ``cross_rrs_<S>``.
     """
     by_name = {p.subject: p for p in subjects}
     emb = {p.subject: embed(encoder, p.windows, device) for p in subjects}
@@ -95,22 +128,22 @@ def probe_report(encoder: torch.nn.Module, subjects: list[ProbeSubject], pairs: 
     sd = embedding_std(every)
     out: dict[str, float] = {"emb_sd_min": float(sd.min()), "emb_sd_mean": float(sd.mean()),
                              "eff_rank": effective_rank(every)}
-    rs, rrs = [], []
+    acc: dict[str, list[float]] = {"within_r": [], "within_rrs": [], "cross_r": [], "cross_rrs": []}
+    for p in subjects:
+        sc = within_subject_scores(p, emb[p.subject], alpha, seed, n_permutations)
+        for key in ("r", "rrs"):
+            out[f"within_{key}_{p.subject}"] = sc[key]
+            acc[f"within_{key}"].append(sc[key])
     for train_names, eval_names in pairs:
         train = [by_name[n] for n in train_names]
         w, st = ridge_fit(np.concatenate([emb[p.subject] for p in train]), np.concatenate([p.target for p in train]),
                           alpha)
-        ctx = FitContext(eeg_norm={}, target_norm=None, history=1, lag_step=1, seed=seed,
-                         train_masks={p.subject: p.mask for p in train}, val_masks={}, logger=logger)
-        template = fit_cue_template([p.samples for p in train], ctx)
         for name in eval_names:
             p = by_name[name]
-            scores = subject_scores(p.samples, p.mask, ridge_predict(emb[name], w, st), template, ctx, seed,
-                                    n_permutations, min_shared_bins=math.ceil(MIN_SHARED_BINS / p.stride))
-            out[f"probe_r_{name}"] = scores["r"]
-            out[f"probe_rrs_{name}"] = scores["residual_r_specific"]
-            rs.append(scores["r"])
-            rrs.append(scores["residual_r_specific"])
-    out["probe_r"] = float(np.mean(rs))
-    out["probe_residual_r_specific"] = float(np.mean(rrs))
+            sc = _scores(p, p.mask, ridge_predict(emb[name], w, st), [(q.samples, q.mask) for q in train], seed,
+                         n_permutations)
+            out[f"cross_r_{name}"], out[f"cross_rrs_{name}"] = sc["r"], sc["residual_r_specific"]
+            acc["cross_r"].append(sc["r"])
+            acc["cross_rrs"].append(sc["residual_r_specific"])
+    out.update({k: float(np.mean(v)) for k, v in acc.items()})
     return out

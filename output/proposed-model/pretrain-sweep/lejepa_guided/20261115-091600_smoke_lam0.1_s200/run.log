@@ -1,0 +1,19 @@
+2026-11-15 09:16:00 INFO    eegtraj.utils.run: Run directory: output\proposed-model\pretrain-sweep\lejepa_guided\20261115-091600_smoke_lam0.1_s200
+2026-11-15 09:16:00 INFO    pretrain: variant lejepa_guided (objective lejepa, guided True), device cuda, seed 0
+2026-11-15 09:16:01 INFO    pretrain: unlabeled windows: 11676 from ['P3', 'P6'] (sources ['lift', 'between', 'st'], variants ['broadband_car', 'broadband_ica_car'])
+2026-11-15 09:16:01 INFO    pretrain: encoder parameters 537392, predictor parameters 84352
+2026-11-15 09:16:04 INFO    pretrain: probe windows: {'P3': 7658, 'P6': 9432}
+2026-11-15 09:16:07 INFO    pretrain: health step 0 online: sd_min 0.320 sd_mean 0.534 eff_rank 49.3 within r 0.638 rrs 0.0477 | cross r 0.240 rrs -0.0152
+2026-11-15 09:16:09 INFO    pretrain: step 20 lr 0.0005 sec 2.3 gate 5.383e-06 pred 1.166 sigreg 229.7 loss 24.02 grad_norm 92.16
+2026-11-15 09:16:11 INFO    pretrain: step 40 lr 0.0004864 sec 4.1 gate 5.933e-05 pred 0.8946 sigreg 36.49 loss 4.454 grad_norm 31.07
+2026-11-15 09:16:13 INFO    pretrain: step 60 lr 0.0004443 sec 6 gate 0.0001316 pred 0.7584 sigreg 25.64 loss 3.247 grad_norm 32.02
+2026-11-15 09:16:15 INFO    pretrain: step 80 lr 0.0003788 sec 7.8 gate 0.0001924 pred 0.7155 sigreg 20.9 loss 2.734 grad_norm 28.5
+2026-11-15 09:16:17 INFO    pretrain: step 100 lr 0.0002977 sec 9.7 gate 0.0002452 pred 0.6924 sigreg 18.09 loss 2.432 grad_norm 25.63
+2026-11-15 09:16:20 INFO    pretrain: health step 100 online: sd_min 0.568 sd_mean 0.970 eff_rank 68.4 within r 0.620 rrs 0.0475 | cross r 0.219 rrs -0.0159
+2026-11-15 09:16:22 INFO    pretrain: step 120 lr 0.0002109 sec 14.9 gate 0.0002926 pred 0.6873 sigreg 15.65 loss 2.184 grad_norm 22.98
+2026-11-15 09:16:24 INFO    pretrain: step 140 lr 0.0001288 sec 16.8 gate 0.0003241 pred 0.6752 sigreg 15.23 loss 2.131 grad_norm 23.82
+2026-11-15 09:16:26 INFO    pretrain: step 160 lr 6.132e-05 sec 18.6 gate 0.0003413 pred 0.6751 sigreg 13.6 loss 1.967 grad_norm 21.12
+2026-11-15 09:16:28 INFO    pretrain: step 180 lr 1.66e-05 sec 20.4 gate 0.0003483 pred 0.6724 sigreg 12.83 loss 1.888 grad_norm 18.98
+2026-11-15 09:16:29 INFO    pretrain: step 200 lr 3.808e-08 sec 22.2 gate 0.0003501 pred 0.6672 sigreg 12.95 loss 1.896 grad_norm 18.64
+2026-11-15 09:16:33 INFO    pretrain: health step 200 online: sd_min 0.574 sd_mean 0.970 eff_rank 72.6 within r 0.618 rrs 0.0486 | cross r 0.224 rrs -0.0158
+2026-11-15 09:16:33 INFO    pretrain: done in 25.5 s (0.127 s/step); final health {'online': {'emb_sd_min': 0.5739207597951176, 'emb_sd_mean': 0.9697310760502726, 'eff_rank': 72.61698660156036, 'within_r_P3': 0.6225927000852944, 'within_rrs_P3': 0.030708735596706893, 'within_r_P6': 0.6135472752750019, 'within_rrs_P6': 0.06658501247012621, 'cross_r_P6': 0.26619729546699905, 'cross_rrs_P6': -0.0106725708007116, 'cross_r_P3': 0.18247126792195298, 'cross_rrs_P3': -0.021016926108669343, 'within_r': 0.6180699876801481, 'within_rrs': 0.048646874033416554, 'cross_r': 0.224334281694476, 'cross_rrs': -0.01584474845469047}}

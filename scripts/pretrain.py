@@ -7,11 +7,13 @@ classic JEPA logs them for the online and the EMA encoder (SSL-10).
 
 Writes to a new output/proposed-model/pretrain/<variant>/<run-id>/: config.yaml, log, train_log.csv, health.csv,
 metrics.json, checkpoints/encoder_step<k>.pt and encoder_final.pt (online encoder with gate; classic JEPA also
-encoder_ema_*.pt).
+encoder_ema_*.pt). ``--sweep`` (budget sweep, with ``--lam`` / ``--steps``) writes to
+output/proposed-model/pretrain-sweep/<variant>/<run-id>_lam<lam>_s<steps>/ instead.
 
 Usage (from repo root):
     .venv\\Scripts\\python scripts\\pretrain.py --config configs\\pretrain\\pretrain.yaml --variant lejepa_guided
     .venv\\Scripts\\python scripts\\pretrain.py --config configs\\pretrain\\pretrain.yaml --variant mae --smoke
+    .venv\\Scripts\\python scripts\\pretrain.py --config configs\\pretrain\\pretrain.yaml --variant lejepa_guided --sweep --lam 0.05 --steps 6000
 """
 
 from __future__ import annotations
@@ -38,11 +40,13 @@ from eegtraj.models.probe import load_probe_subject, probe_report
 from eegtraj.utils.run import setup_run
 
 OUTPUT = Path("output/proposed-model/pretrain")
+SWEEP_OUTPUT = Path("output/proposed-model/pretrain-sweep")
 logger = logging.getLogger("pretrain")
 
 
-def resolve_config(cfg: dict, variant: str, smoke: bool) -> dict:
-    """Config with the variant and (for --smoke) the smoke overrides applied; nested configs inlined."""
+def resolve_config(cfg: dict, variant: str, smoke: bool, lam: float | None = None, steps: int | None = None) -> dict:
+    """Config with the variant, the --smoke overrides and the sweep overrides (lam, steps) applied; nested configs
+    inlined."""
     if variant not in cfg["variants"]:
         raise SystemExit(f"unknown variant {variant!r}; choose from {sorted(cfg['variants'])}")
     out = copy.deepcopy(cfg)
@@ -55,10 +59,16 @@ def resolve_config(cfg: dict, variant: str, smoke: bool) -> dict:
         s = cfg["smoke"]
         out["windows"]["subjects"] = list(s["subjects"])
         out["train"].update({k: v for k, v in s.items() if k != "subjects"})
+    if lam is not None:
+        out["objective"]["lam"] = float(lam)
+    if steps is not None:
+        out["train"]["steps"] = int(steps)
     return out
 
 
-def lr_at(step: int, base: float, warmup: int, total: int) -> float:
+def lr_at(step: int, base: float, warmup_frac: float, total: int) -> float:
+    """Linear warm-up over ``warmup_frac`` of the steps, then cosine to 0."""
+    warmup = max(1, round(warmup_frac * total))
     if step < warmup:
         return base * (step + 1) / warmup
     return base * 0.5 * (1 + math.cos(math.pi * (step - warmup) / max(total - warmup, 1)))
@@ -95,9 +105,9 @@ def health(pre: Pretrainer, probes, cfg: dict, device, step: int) -> list[dict]:
     for name, enc in encoders:
         rep = probe_report(enc, probes, pairs, device, float(p["alpha"]), int(cfg["seed"]), int(p["n_permutations"]))
         rows.append({"step": step, "encoder": name, **rep})
-        logger.info("health step %d %s: sd_min %.3f sd_mean %.3f eff_rank %.1f probe_r %.3f probe_rrs %.3f", step, name,
-                    rep["emb_sd_min"], rep["emb_sd_mean"], rep["eff_rank"], rep["probe_r"],
-                    rep["probe_residual_r_specific"])
+        logger.info("health step %d %s: sd_min %.3f sd_mean %.3f eff_rank %.1f within r %.3f rrs %.4f | cross r %.3f "
+                    "rrs %.4f", step, name, rep["emb_sd_min"], rep["emb_sd_mean"], rep["eff_rank"], rep["within_r"],
+                    rep["within_rrs"], rep["cross_r"], rep["cross_rrs"])
     return rows
 
 
@@ -106,9 +116,16 @@ def main() -> None:
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--variant", required=True)
     parser.add_argument("--smoke", action="store_true", help="2 subjects, a few hundred steps")
+    parser.add_argument("--sweep", action="store_true", help="budget sweep run: writes under pretrain-sweep/")
+    parser.add_argument("--lam", type=float, default=None, help="override objective.lam (sweep)")
+    parser.add_argument("--steps", type=int, default=None, help="override train.steps (sweep)")
     args = parser.parse_args()
-    cfg = resolve_config(yaml.safe_load(args.config.read_text(encoding="utf-8")), args.variant, args.smoke)
-    run_dir = setup_run(OUTPUT / args.variant, cfg, tag="smoke" if args.smoke else None)
+    cfg = resolve_config(yaml.safe_load(args.config.read_text(encoding="utf-8")), args.variant, args.smoke, args.lam,
+                         args.steps)
+    cfg["sweep"] = args.sweep
+    tag = "_".join(t for t in ["smoke" if args.smoke else "",
+                               f"lam{cfg['objective']['lam']:g}_s{cfg['train']['steps']}" if args.sweep else ""] if t)
+    run_dir = setup_run((SWEEP_OUTPUT if args.sweep else OUTPUT) / args.variant, cfg, tag=tag or None)
     (run_dir / "checkpoints").mkdir()
     tr, ob, var = cfg["train"], cfg["objective"], cfg["variant"]
     seed = int(cfg["seed"])
@@ -155,7 +172,7 @@ def main() -> None:
     pre.train()
     for step in range(steps):
         for g in opt.param_groups:
-            g["lr"] = lr_at(step, float(tr["lr"]), int(tr["warmup_steps"]), steps)
+            g["lr"] = lr_at(step, float(tr["lr"]), float(tr["warmup_frac"]), steps)
         views = [v.to(device, non_blocking=True) for v in sampler(batch)]
         raw, cleaned = views[0], (views[1] if len(views) > 1 else None)
         with torch.autocast(device_type=device.type, dtype=amp or torch.float32, enabled=use_amp):

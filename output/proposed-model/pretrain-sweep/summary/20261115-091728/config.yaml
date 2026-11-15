@@ -1,0 +1,4 @@
+variant: lejepa_guided
+include_smoke: true
+runs:
+- 20261115-091600_smoke_lam0.1_s200
