@@ -1,0 +1,4 @@
+runs:
+- output\proposed-model\decoder-sweep\decoder__proposed_hybrid_frozen_lejepa_guided\20261115-144504_seed1_aux0.1_delta0.01_amp0.1_gate0.1_screening
+cache_dir: dataset/cache/98f5fa6e66
+split_config: configs/splits/default.yaml
