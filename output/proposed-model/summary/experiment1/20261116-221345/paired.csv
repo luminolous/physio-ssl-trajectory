@@ -1,0 +1,199 @@
+comparison,a,b,metric,mean_diff,sd_diff,n_subjects,n_pos,p_wilcoxon
+config - template_cue,hybrid/finetune/lejepa_guided,template_cue,r,0.012327770274162476,0.051591507363387405,10,3,0.845703125
+config - head floor,hybrid/finetune/lejepa_guided,head floor,r,0.011094770259545783,0.04835200907165679,10,3,0.921875
+config - template_cue,hybrid/finetune/lejepa_guided,template_cue,r2,-0.004896108290989509,0.07847458690597348,10,3,0.4921875
+config - head floor,hybrid/finetune/lejepa_guided,head floor,r2,-0.008877845791571179,0.07611637955266357,10,3,0.431640625
+config - template_cue,hybrid/finetune/lejepa_guided,template_cue,nrmse,-0.00011244102695192881,0.016713326028987504,10,7,0.6953125
+config - head floor,hybrid/finetune/lejepa_guided,head floor,nrmse,0.00015329539843756402,0.01658948851078691,10,7,0.625
+hybrid - ocular-only,hybrid/finetune/lejepa_guided,ocular/frozen/noenc,r,0.010536008296935729,0.02842050503568824,10,5,0.556640625
+hybrid - ocular-only,hybrid/finetune/lejepa_guided,ocular/frozen/noenc,r2,0.0011800315188784521,0.04765711964006062,10,5,0.76953125
+hybrid - ocular-only,hybrid/finetune/lejepa_guided,ocular/frozen/noenc,nrmse,-0.001827979506527072,0.009626640503973726,10,5,1.0
+hybrid - ocular-only,hybrid/finetune/lejepa_guided,ocular/frozen/noenc,residual_r_specific,0.03541742980856587,0.05212469396596712,10,9,0.037109375
+pretrained - scratch (fine-tune),hybrid/finetune/lejepa_guided,hybrid/finetune/random0,r,-0.0020539429582812187,0.013606512813817941,10,4,0.625
+pretrained - scratch (fine-tune),hybrid/finetune/lejepa_guided,hybrid/finetune/random0,r2,-0.005240269869406716,0.02864555572139108,10,5,0.6953125
+pretrained - scratch (fine-tune),hybrid/finetune/lejepa_guided,hybrid/finetune/random0,nrmse,0.0015528231965102335,0.006417828944686165,10,6,0.375
+pretrained - scratch (fine-tune),hybrid/finetune/lejepa_guided,hybrid/finetune/random0,residual_r_specific,-0.009266145712792394,0.024720109815031244,10,4,0.322265625
+fine-tune - frozen,hybrid/finetune/lejepa_guided,hybrid/frozen/lejepa_guided,r,0.007576240327790129,0.015663545903138638,10,7,0.232421875
+fine-tune - frozen,hybrid/finetune/lejepa_guided,hybrid/frozen/lejepa_guided,r2,0.005338344001167556,0.022709330331451224,10,6,0.556640625
+fine-tune - frozen,hybrid/finetune/lejepa_guided,hybrid/frozen/lejepa_guided,nrmse,-0.001882550422073978,0.004965915838686764,10,4,0.275390625
+fine-tune - frozen,hybrid/finetune/lejepa_guided,hybrid/frozen/lejepa_guided,residual_r_specific,0.03147380663291126,0.027251611795802003,10,8,0.009765625
+config - template_cue,hybrid/finetune/random0,template_cue,r,0.014381713232443694,0.05270257771395377,10,4,0.6953125
+config - head floor,hybrid/finetune/random0,head floor,r,0.013148713217827002,0.0491974369135119,10,4,0.6953125
+config - template_cue,hybrid/finetune/random0,template_cue,r2,0.000344161578417207,0.08810725359847178,10,4,0.845703125
+config - head floor,hybrid/finetune/random0,head floor,r2,-0.0036375759221644625,0.08470935596886531,10,4,0.76953125
+config - template_cue,hybrid/finetune/random0,template_cue,nrmse,-0.0016652642234621623,0.019190621284047717,10,6,0.921875
+config - head floor,hybrid/finetune/random0,head floor,nrmse,-0.0013995277980726694,0.01881529791229468,10,5,0.921875
+hybrid - ocular-only,hybrid/finetune/random0,ocular/frozen/noenc,r,0.012589951255216947,0.02636928140327554,10,5,0.232421875
+hybrid - ocular-only,hybrid/finetune/random0,ocular/frozen/noenc,r2,0.0064203013882851686,0.05192724215082926,10,5,1.0
+hybrid - ocular-only,hybrid/finetune/random0,ocular/frozen/noenc,nrmse,-0.0033808027030373055,0.010925595970671675,10,5,0.322265625
+hybrid - ocular-only,hybrid/finetune/random0,ocular/frozen/noenc,residual_r_specific,0.044683575521358265,0.05716127996912184,10,8,0.037109375
+fine-tune - frozen,hybrid/finetune/random0,hybrid/frozen/random0,r,0.006916864938534206,0.015141113609802824,10,6,0.16015625
+fine-tune - frozen,hybrid/finetune/random0,hybrid/frozen/random0,r2,0.003358588559284664,0.034161948953536594,10,3,0.921875
+fine-tune - frozen,hybrid/finetune/random0,hybrid/frozen/random0,nrmse,-0.00199154832678686,0.007333132964376686,10,4,0.625
+fine-tune - frozen,hybrid/finetune/random0,hybrid/frozen/random0,residual_r_specific,0.019996867013079612,0.03737149069611028,10,7,0.193359375
+config - template_cue,hybrid/frozen/jepa_guided,template_cue,r,0.004032860734239629,0.04320899163235571,10,4,0.6953125
+config - head floor,hybrid/frozen/jepa_guided,head floor,r,0.0027998607196229376,0.03976350649774671,10,4,0.625
+config - template_cue,hybrid/frozen/jepa_guided,template_cue,r2,-0.014573543260457487,0.07271482231328763,10,3,0.193359375
+config - head floor,hybrid/frozen/jepa_guided,head floor,r2,-0.018555280761039156,0.07004009705176435,10,3,0.16015625
+config - template_cue,hybrid/frozen/jepa_guided,template_cue,nrmse,0.002679080518200763,0.01595968741066251,10,7,0.375
+config - head floor,hybrid/frozen/jepa_guided,head floor,nrmse,0.002944816943590256,0.015738056668294177,10,7,0.322265625
+hybrid - ocular-only,hybrid/frozen/jepa_guided,ocular/frozen/noenc,r,0.0022410987570128825,0.017359918312750824,10,5,0.845703125
+hybrid - ocular-only,hybrid/frozen/jepa_guided,ocular/frozen/noenc,r2,-0.008497403450589525,0.02879202571660362,10,3,0.322265625
+hybrid - ocular-only,hybrid/frozen/jepa_guided,ocular/frozen/noenc,nrmse,0.0009635420386256199,0.006480949274037141,10,6,0.625
+hybrid - ocular-only,hybrid/frozen/jepa_guided,ocular/frozen/noenc,residual_r_specific,0.005141708449037969,0.032051949686417155,10,5,0.625
+pretrained - random-init (frozen),hybrid/frozen/jepa_guided,hybrid/frozen/random0,r,-0.003431987559669858,0.0063720660234219476,10,3,0.193359375
+pretrained - random-init (frozen),hybrid/frozen/jepa_guided,hybrid/frozen/random0,r2,-0.01155911627959003,0.015455523350647137,10,2,0.048828125
+pretrained - random-init (frozen),hybrid/frozen/jepa_guided,hybrid/frozen/random0,nrmse,0.0023527964148760657,0.0036508162419534957,10,8,0.083984375
+pretrained - random-init (frozen),hybrid/frozen/jepa_guided,hybrid/frozen/random0,residual_r_specific,-0.01954500005924069,0.028249140463447273,10,3,0.083984375
+config - template_cue,hybrid/frozen/jepa_unguided,template_cue,r,0.012843983950426342,0.04179798468361966,10,6,0.556640625
+config - head floor,hybrid/frozen/jepa_unguided,head floor,r,0.011610983935809649,0.03802677643886408,10,5,0.625
+config - template_cue,hybrid/frozen/jepa_unguided,template_cue,r2,0.00040372986023830547,0.0693381134348275,10,5,0.921875
+config - head floor,hybrid/frozen/jepa_unguided,head floor,r2,-0.003578007640343364,0.06553841920435026,10,5,0.6953125
+config - template_cue,hybrid/frozen/jepa_unguided,template_cue,nrmse,-0.0012493543802011508,0.014995096266584315,10,5,0.845703125
+config - head floor,hybrid/frozen/jepa_unguided,head floor,nrmse,-0.0009836179548116581,0.014594897929585205,10,5,0.76953125
+hybrid - ocular-only,hybrid/frozen/jepa_unguided,ocular/frozen/noenc,r,0.011052221973199595,0.015531555973511258,10,6,0.083984375
+hybrid - ocular-only,hybrid/frozen/jepa_unguided,ocular/frozen/noenc,r2,0.0064798696701062666,0.03356058242580524,10,5,0.625
+hybrid - ocular-only,hybrid/frozen/jepa_unguided,ocular/frozen/noenc,nrmse,-0.0029648928597762942,0.007104219407321768,10,4,0.322265625
+hybrid - ocular-only,hybrid/frozen/jepa_unguided,ocular/frozen/noenc,residual_r_specific,0.053841868392800675,0.053135949526984576,10,9,0.013671875
+pretrained - random-init (frozen),hybrid/frozen/jepa_unguided,hybrid/frozen/random0,r,0.005379135656516853,0.012124781758381005,10,7,0.232421875
+pretrained - random-init (frozen),hybrid/frozen/jepa_unguided,hybrid/frozen/random0,r2,0.0034181568411057626,0.02664395136454254,10,5,0.76953125
+pretrained - random-init (frozen),hybrid/frozen/jepa_unguided,hybrid/frozen/random0,nrmse,-0.0015756384835258486,0.006138433093939172,10,5,0.625
+pretrained - random-init (frozen),hybrid/frozen/jepa_unguided,hybrid/frozen/random0,residual_r_specific,0.029155159884522018,0.025653839771617122,10,9,0.013671875
+config - template_cue,hybrid/frozen/lejepa_guided,template_cue,r,0.004751529946372346,0.039992145798473364,10,4,0.6953125
+config - head floor,hybrid/frozen/lejepa_guided,head floor,r,0.003518529931755654,0.036523089948280234,10,3,0.556640625
+config - template_cue,hybrid/frozen/lejepa_guided,template_cue,r2,-0.010234452292157064,0.06530404203723894,10,3,0.375
+config - head floor,hybrid/frozen/lejepa_guided,head floor,r2,-0.014216189792738735,0.06296979280748044,10,4,0.322265625
+config - template_cue,hybrid/frozen/lejepa_guided,template_cue,nrmse,0.0017701093951220492,0.014135331311553081,10,6,0.4921875
+config - head floor,hybrid/frozen/lejepa_guided,head floor,nrmse,0.002035845820511542,0.01408216568448119,10,6,0.4921875
+hybrid - ocular-only,hybrid/frozen/lejepa_guided,ocular/frozen/noenc,r,0.002959767969145599,0.017916529583935005,10,5,0.845703125
+hybrid - ocular-only,hybrid/frozen/lejepa_guided,ocular/frozen/noenc,r2,-0.0041583124822891036,0.035379798317694416,10,4,0.556640625
+hybrid - ocular-only,hybrid/frozen/lejepa_guided,ocular/frozen/noenc,nrmse,5.457091554690596e-05,0.007605928278679293,10,5,0.845703125
+hybrid - ocular-only,hybrid/frozen/lejepa_guided,ocular/frozen/noenc,residual_r_specific,0.0039436231756546135,0.04350930379523971,10,4,1.0
+pretrained - random-init (frozen),hybrid/frozen/lejepa_guided,hybrid/frozen/random0,r,-0.0027133183475371416,0.006615760094082152,10,2,0.193359375
+pretrained - random-init (frozen),hybrid/frozen/lejepa_guided,hybrid/frozen/random0,r2,-0.0072200253112896075,0.017046111452138264,10,3,0.275390625
+pretrained - random-init (frozen),hybrid/frozen/lejepa_guided,hybrid/frozen/random0,nrmse,0.0014438252917973516,0.003671969247660621,10,7,0.275390625
+pretrained - random-init (frozen),hybrid/frozen/lejepa_guided,hybrid/frozen/random0,residual_r_specific,-0.02074308533262404,0.023607252296350256,10,3,0.02734375
+config - template_cue,hybrid/frozen/lejepa_unguided,template_cue,r,0.007202298409839358,0.043215833789068084,10,3,0.76953125
+config - head floor,hybrid/frozen/lejepa_unguided,head floor,r,0.005969298395222667,0.03985745903715845,10,4,0.845703125
+config - template_cue,hybrid/frozen/lejepa_unguided,template_cue,r2,-0.0075754818867956875,0.07709553530996435,10,3,0.556640625
+config - head floor,hybrid/frozen/lejepa_unguided,head floor,r2,-0.011557219387377356,0.07498643004609341,10,4,0.4921875
+config - template_cue,hybrid/frozen/lejepa_unguided,template_cue,nrmse,0.0013274534528533056,0.016507646664766784,10,6,0.625
+config - head floor,hybrid/frozen/lejepa_unguided,head floor,nrmse,0.0015931898782427984,0.016541177049271834,10,6,0.6953125
+hybrid - ocular-only,hybrid/frozen/lejepa_unguided,ocular/frozen/noenc,r,0.005410536432612611,0.020688246537625594,10,5,0.76953125
+hybrid - ocular-only,hybrid/frozen/lejepa_unguided,ocular/frozen/noenc,r2,-0.001499342076927726,0.046674745378949715,10,4,0.76953125
+hybrid - ocular-only,hybrid/frozen/lejepa_unguided,ocular/frozen/noenc,nrmse,-0.0003880850267218378,0.009938375034942024,10,5,1.0
+hybrid - ocular-only,hybrid/frozen/lejepa_unguided,ocular/frozen/noenc,residual_r_specific,0.010576672428216412,0.05105545692672097,10,5,0.6953125
+pretrained - random-init (frozen),hybrid/frozen/lejepa_unguided,hybrid/frozen/random0,r,-0.000262549884070129,0.007941288782418184,10,5,0.921875
+pretrained - random-init (frozen),hybrid/frozen/lejepa_unguided,hybrid/frozen/random0,r2,-0.00456105490592823,0.022451306454422455,10,4,0.375
+pretrained - random-init (frozen),hybrid/frozen/lejepa_unguided,hybrid/frozen/random0,nrmse,0.0010011693495286078,0.004474670308449679,10,7,0.322265625
+pretrained - random-init (frozen),hybrid/frozen/lejepa_unguided,hybrid/frozen/random0,residual_r_specific,-0.01411003608006225,0.025917213882658215,10,2,0.130859375
+config - template_cue,hybrid/frozen/mae,template_cue,r,0.006066637333306146,0.05028838724597249,10,3,0.6953125
+config - head floor,hybrid/frozen/mae,head floor,r,0.004833637318689454,0.0469973782210714,10,3,0.556640625
+config - template_cue,hybrid/frozen/mae,template_cue,r2,-0.011971139760823701,0.08927494109778111,10,3,0.375
+config - head floor,hybrid/frozen/mae,head floor,r2,-0.01595287726140537,0.08713911654808462,10,3,0.322265625
+config - template_cue,hybrid/frozen/mae,template_cue,nrmse,0.001679383561199821,0.019159336161723294,10,7,0.431640625
+config - head floor,hybrid/frozen/mae,head floor,nrmse,0.0019451199865893136,0.01901961746636626,10,7,0.431640625
+hybrid - ocular-only,hybrid/frozen/mae,ocular/frozen/noenc,r,0.0042748753560793995,0.02393349786209094,10,5,0.625
+hybrid - ocular-only,hybrid/frozen/mae,ocular/frozen/noenc,r2,-0.00589499995095574,0.05460579450822313,10,5,0.6953125
+hybrid - ocular-only,hybrid/frozen/mae,ocular/frozen/noenc,nrmse,-3.615491837532236e-05,0.011524065131496983,10,5,1.0
+hybrid - ocular-only,hybrid/frozen/mae,ocular/frozen/noenc,residual_r_specific,0.025429354375443268,0.04725409470269348,10,6,0.193359375
+pretrained - random-init (frozen),hybrid/frozen/mae,hybrid/frozen/random0,r,-0.001398210960603341,0.015451701830852363,10,4,0.6953125
+pretrained - random-init (frozen),hybrid/frozen/mae,hybrid/frozen/random0,r2,-0.008956712779956244,0.035388498268859724,10,5,0.845703125
+pretrained - random-init (frozen),hybrid/frozen/mae,hybrid/frozen/random0,nrmse,0.0013530994578751232,0.007344055667959753,10,5,0.921875
+pretrained - random-init (frozen),hybrid/frozen/mae,hybrid/frozen/random0,residual_r_specific,0.000742645867164609,0.017969543086614755,10,3,0.625
+config - template_cue,hybrid/frozen/random0,template_cue,r,0.0074648482939094875,0.04042538833674842,10,4,1.0
+config - head floor,hybrid/frozen/random0,head floor,r,0.006231848279292795,0.03717315818152435,10,4,0.921875
+config - template_cue,hybrid/frozen/random0,template_cue,r2,-0.0030144269808674573,0.06887990731520592,10,3,0.4921875
+config - head floor,hybrid/frozen/random0,head floor,r2,-0.006996164481449127,0.06701304356878734,10,4,0.431640625
+config - template_cue,hybrid/frozen/random0,template_cue,nrmse,0.0003262841033246977,0.015317306114855564,10,7,0.556640625
+config - head floor,hybrid/frozen/random0,head floor,nrmse,0.0005920205287141906,0.015275148444165476,10,6,0.6953125
+hybrid - ocular-only,hybrid/frozen/random0,ocular/frozen/noenc,r,0.005673086316682741,0.01716648080032155,10,5,0.375
+hybrid - ocular-only,hybrid/frozen/random0,ocular/frozen/noenc,r2,0.003061712829000504,0.029747469217214516,10,5,0.6953125
+hybrid - ocular-only,hybrid/frozen/random0,ocular/frozen/noenc,nrmse,-0.0013892543762504457,0.007044925926814482,10,5,0.4921875
+hybrid - ocular-only,hybrid/frozen/random0,ocular/frozen/noenc,residual_r_specific,0.02468670850827866,0.047654167519668375,10,7,0.193359375
+config - template_cue,neural/finetune/lejepa_guided,template_cue,r,0.01572634574514118,0.04704477386512339,10,5,0.4921875
+config - head floor,neural/finetune/lejepa_guided,head floor,r,0.014493345730524488,0.04301993734987744,10,5,0.556640625
+config - template_cue,neural/finetune/lejepa_guided,template_cue,r2,0.0023433996229988096,0.07373256371021308,10,4,0.625
+config - head floor,neural/finetune/lejepa_guided,head floor,r2,-0.00163833787758286,0.07021871793416858,10,4,0.625
+config - template_cue,neural/finetune/lejepa_guided,template_cue,nrmse,-0.0021590231361519273,0.01613825293651908,10,5,1.0
+config - head floor,neural/finetune/lejepa_guided,head floor,nrmse,-0.0018932867107624347,0.01571435504752547,10,5,1.0
+pretrained - scratch (fine-tune),neural/finetune/lejepa_guided,neural/finetune/random0,r,-0.0018569006725187576,0.009678159010393018,10,2,0.193359375
+pretrained - scratch (fine-tune),neural/finetune/lejepa_guided,neural/finetune/random0,r2,-0.004534483082448237,0.018322890179352038,10,3,0.275390625
+pretrained - scratch (fine-tune),neural/finetune/lejepa_guided,neural/finetune/random0,nrmse,0.0012021714108677694,0.004744459432912599,10,7,0.232421875
+pretrained - scratch (fine-tune),neural/finetune/lejepa_guided,neural/finetune/random0,residual_r_specific,-0.018525343369674485,0.027673793343333003,10,4,0.10546875
+fine-tune - frozen,neural/finetune/lejepa_guided,neural/frozen/lejepa_guided,r,0.013371552567774081,0.017045625913503847,10,7,0.02734375
+fine-tune - frozen,neural/finetune/lejepa_guided,neural/frozen/lejepa_guided,r2,0.017289865778993906,0.040076386798431354,10,7,0.275390625
+fine-tune - frozen,neural/finetune/lejepa_guided,neural/frozen/lejepa_guided,nrmse,-0.005016908320742952,0.008967687811249228,10,3,0.083984375
+fine-tune - frozen,neural/finetune/lejepa_guided,neural/frozen/lejepa_guided,residual_r_specific,0.06161740203635938,0.03356298907640369,10,10,0.001953125
+config - template_cue,neural/finetune/random0,template_cue,r,0.017583246417659938,0.049696414142929746,10,4,0.6953125
+config - head floor,neural/finetune/random0,head floor,r,0.016350246403043243,0.04617653981349712,10,4,0.6953125
+config - template_cue,neural/finetune/random0,template_cue,r2,0.006877882705447047,0.0820891921421823,10,4,0.76953125
+config - head floor,neural/finetune/random0,head floor,r2,0.0028961452048653774,0.07889104215981044,10,5,0.76953125
+config - template_cue,neural/finetune/random0,template_cue,nrmse,-0.003361194547019697,0.017551355518770767,10,5,0.6953125
+config - head floor,neural/finetune/random0,head floor,nrmse,-0.003095458121630204,0.017225244280075748,10,5,0.921875
+fine-tune - frozen,neural/finetune/random0,neural/frozen/random0,r,0.012236214993360538,0.019386120359086063,10,7,0.10546875
+fine-tune - frozen,neural/finetune/random0,neural/frozen/random0,r2,0.012083121075149994,0.038417340934052406,10,5,0.6953125
+fine-tune - frozen,neural/finetune/random0,neural/frozen/random0,nrmse,-0.004397404431156116,0.008147328971616765,10,4,0.193359375
+fine-tune - frozen,neural/finetune/random0,neural/frozen/random0,residual_r_specific,0.07463631272407144,0.04878177009036237,10,10,0.001953125
+config - template_cue,neural/frozen/jepa_guided,template_cue,r,0.00019463961256581673,0.03787689446092266,10,4,0.4921875
+config - head floor,neural/frozen/jepa_guided,head floor,r,-0.0010383604020508751,0.03452216529840573,10,3,0.4921875
+config - template_cue,neural/frozen/jepa_guided,template_cue,r2,-0.01862658640064048,0.060730110228409837,10,2,0.193359375
+config - head floor,neural/frozen/jepa_guided,head floor,r2,-0.02260832390122215,0.05840979866251192,10,3,0.193359375
+config - template_cue,neural/frozen/jepa_guided,template_cue,nrmse,0.004107488035326015,0.013652095684262249,10,7,0.232421875
+config - head floor,neural/frozen/jepa_guided,head floor,nrmse,0.004373224460715508,0.013575871080920171,10,6,0.322265625
+pretrained - random-init (frozen),neural/frozen/jepa_guided,neural/frozen/random0,r,-0.005152391811733581,0.008175247922343962,10,3,0.083984375
+pretrained - random-init (frozen),neural/frozen/jepa_guided,neural/frozen/random0,r2,-0.013421348030937533,0.021024996663855426,10,3,0.064453125
+pretrained - random-init (frozen),neural/frozen/jepa_guided,neural/frozen/random0,nrmse,0.0030712781511895966,0.004547670985264646,10,7,0.083984375
+pretrained - random-init (frozen),neural/frozen/jepa_guided,neural/frozen/random0,residual_r_specific,-0.03903721680142451,0.0400497043937779,10,2,0.02734375
+config - template_cue,neural/frozen/jepa_unguided,template_cue,r,0.009349667476076962,0.04768441382308568,10,5,0.921875
+config - head floor,neural/frozen/jepa_unguided,head floor,r,0.00811666746146027,0.04395562320121628,10,5,0.921875
+config - template_cue,neural/frozen/jepa_unguided,template_cue,r2,-0.006354134456422869,0.08069130751015399,10,3,0.275390625
+config - head floor,neural/frozen/jepa_unguided,head floor,r2,-0.010335871957004538,0.0768737524387594,10,3,0.193359375
+config - template_cue,neural/frozen/jepa_unguided,template_cue,nrmse,0.0005120918339826086,0.016960898050995463,10,7,0.4921875
+config - head floor,neural/frozen/jepa_unguided,head floor,nrmse,0.0007778282593721014,0.016457158145989786,10,7,0.4921875
+pretrained - random-init (frozen),neural/frozen/jepa_unguided,neural/frozen/random0,r,0.0040026360517775635,0.017145389666367084,10,7,0.556640625
+pretrained - random-init (frozen),neural/frozen/jepa_unguided,neural/frozen/random0,r2,-0.0011488960867199222,0.03220168478434696,10,5,1.0
+pretrained - random-init (frozen),neural/frozen/jepa_unguided,neural/frozen/random0,nrmse,-0.0005241180501538101,0.006938013306842667,10,5,0.921875
+pretrained - random-init (frozen),neural/frozen/jepa_unguided,neural/frozen/random0,residual_r_specific,0.04978104353131653,0.037671970201555584,10,10,0.001953125
+config - template_cue,neural/frozen/lejepa_guided,template_cue,r,0.0023547931773670984,0.03849488759717037,10,3,0.556640625
+config - head floor,neural/frozen/lejepa_guided,head floor,r,0.0011217931627504063,0.03553345334605642,10,4,0.625
+config - template_cue,neural/frozen/lejepa_guided,template_cue,r2,-0.014946466155995097,0.06751335123175496,10,2,0.232421875
+config - head floor,neural/frozen/lejepa_guided,head floor,r2,-0.018928203656576766,0.06690022249833069,10,3,0.275390625
+config - template_cue,neural/frozen/lejepa_guided,template_cue,nrmse,0.002857885184591025,0.014360059477080253,10,7,0.275390625
+config - head floor,neural/frozen/lejepa_guided,head floor,nrmse,0.0031236216099805175,0.014680225385441701,10,6,0.375
+pretrained - random-init (frozen),neural/frozen/lejepa_guided,neural/frozen/random0,r,-0.0029922382469322996,0.011861580273251399,10,3,0.275390625
+pretrained - random-init (frozen),neural/frozen/lejepa_guided,neural/frozen/random0,r2,-0.009741227786292151,0.026488517616183448,10,2,0.130859375
+pretrained - random-init (frozen),neural/frozen/lejepa_guided,neural/frozen/random0,nrmse,0.001821675300454606,0.0052940892741192925,10,8,0.193359375
+pretrained - random-init (frozen),neural/frozen/lejepa_guided,neural/frozen/random0,residual_r_specific,-0.005506432681962421,0.023436538568342286,10,5,0.6953125
+config - template_cue,neural/frozen/lejepa_unguided,template_cue,r,0.004671303586559317,0.037114173422450714,10,4,0.625
+config - head floor,neural/frozen/lejepa_unguided,head floor,r,0.0034383035719426245,0.03389137689166812,10,4,0.625
+config - template_cue,neural/frozen/lejepa_unguided,template_cue,r2,-0.00969513335762089,0.067350079321319,10,3,0.431640625
+config - head floor,neural/frozen/lejepa_unguided,head floor,r2,-0.013676870858202558,0.06629082419935536,10,3,0.4921875
+config - template_cue,neural/frozen/lejepa_unguided,template_cue,nrmse,0.001541628821169222,0.01393553518281394,10,7,0.431640625
+config - head floor,neural/frozen/lejepa_unguided,head floor,nrmse,0.0018073652465587149,0.014206815759971812,10,7,0.4921875
+pretrained - random-init (frozen),neural/frozen/lejepa_unguided,neural/frozen/random0,r,-0.0006757278377400811,0.01128946108787653,10,4,0.845703125
+pretrained - random-init (frozen),neural/frozen/lejepa_unguided,neural/frozen/random0,r2,-0.004489894987917941,0.029758733235387837,10,4,0.4921875
+pretrained - random-init (frozen),neural/frozen/lejepa_unguided,neural/frozen/random0,nrmse,0.0005054189370328032,0.005779965912023908,10,6,0.556640625
+pretrained - random-init (frozen),neural/frozen/lejepa_unguided,neural/frozen/random0,residual_r_specific,-0.007122887398085842,0.0304251979144026,10,4,0.4921875
+config - template_cue,neural/frozen/mae,template_cue,r,0.00507915284847722,0.04405555006138316,10,4,0.625
+config - head floor,neural/frozen/mae,head floor,r,0.0038461528338605278,0.040343828878652274,10,3,0.4921875
+config - template_cue,neural/frozen/mae,template_cue,r2,-0.007322482782614092,0.07709538644536176,10,3,0.322265625
+config - head floor,neural/frozen/mae,head floor,r2,-0.011304220283195762,0.07434358199514819,10,3,0.322265625
+config - template_cue,neural/frozen/mae,template_cue,nrmse,0.0007981398231058535,0.016632999930036384,10,7,0.431640625
+config - head floor,neural/frozen/mae,head floor,nrmse,0.0010638762484953463,0.01637533157073026,10,7,0.431640625
+pretrained - random-init (frozen),neural/frozen/mae,neural/frozen/random0,r,-0.000267878575822178,0.0126336309521835,10,6,0.845703125
+pretrained - random-init (frozen),neural/frozen/mae,neural/frozen/random0,r2,-0.0021172444129111457,0.024706621684972778,10,4,0.625
+pretrained - random-init (frozen),neural/frozen/mae,neural/frozen/random0,nrmse,-0.00023807006103056526,0.005740512743307877,10,4,0.921875
+pretrained - random-init (frozen),neural/frozen/mae,neural/frozen/random0,residual_r_specific,0.04015071065461079,0.030306468754101288,10,10,0.001953125
+config - template_cue,neural/frozen/random0,template_cue,r,0.005347031424299398,0.03561255254632983,10,5,0.76953125
+config - head floor,neural/frozen/random0,head floor,r,0.004114031409682706,0.03249050015349771,10,4,0.625
+config - template_cue,neural/frozen/random0,template_cue,r2,-0.005205238369702947,0.06255649645379399,10,4,0.375
+config - head floor,neural/frozen/random0,head floor,r2,-0.009186975870284617,0.06161530815674078,10,3,0.322265625
+config - template_cue,neural/frozen/random0,template_cue,nrmse,0.0010362098841364188,0.013571128187726173,10,6,0.375
+config - head floor,neural/frozen/random0,head floor,nrmse,0.0013019463095259114,0.013800145210383783,10,6,0.4921875
+config - template_cue,ocular/frozen/noenc,template_cue,r,0.0017917619772267468,0.03316565242405678,10,3,0.6953125
+config - head floor,ocular/frozen/noenc,head floor,r,0.0005587619626100549,0.0300644602277414,10,5,0.625
+config - template_cue,ocular/frozen/noenc,template_cue,r2,-0.006076139809867961,0.05743215606934785,10,4,0.431640625
+config - head floor,ocular/frozen/noenc,head floor,r2,-0.010057877310449631,0.05444272284256172,10,4,0.322265625
+config - template_cue,ocular/frozen/noenc,template_cue,nrmse,0.0017155384795751432,0.012729405447292837,10,6,0.431640625
+config - head floor,ocular/frozen/noenc,head floor,nrmse,0.001981274904964636,0.012310955418392874,10,6,0.375
