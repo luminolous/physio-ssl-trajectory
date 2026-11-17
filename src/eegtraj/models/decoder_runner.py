@@ -13,6 +13,10 @@ Per fold (``eegtraj.data.splits``; screening subjects never tested):
    D7) and residual_r / residual_r_specific against template_cue; template_cue itself is scored as the floor, and
    the head floor ``cue_phi`` (the warp heads at initialization: expected landmark template under the phase prior at
    real time, uniform mixing, A = 1, Delta = 0; no EEG) on the same samples.
+4. Neural-branch occlusion (``occlusion.groups``): the test subject is scored again with the EEG rows of a channel
+   group set to 0 (the z-scored mean) in the neural-branch input only; the ocular proxies stay intact (computed
+   from the unoccluded EEG). Frozen tokens are recomputed from the occluded EEG. The selected model of every fold is
+   saved to ``models/<fold>.pt`` (state dict) when ``save_models`` is true.
 
 Encoder settings: ``frozen`` (encoder and gate fixed; tokens precomputed once per subject), ``finetune`` (all
 trained). Encoder sources: ``checkpoint`` (stage 1), ``random`` (seeded random init: frozen control, or scratch with
@@ -22,6 +26,7 @@ trained). Encoder sources: ``checkpoint`` (stage 1), ``random`` (seeded random i
 from __future__ import annotations
 
 import copy
+import dataclasses
 import json
 import logging
 import random
@@ -44,6 +49,7 @@ from eegtraj.data.windows import input_channel_names
 from eegtraj.metrics import aggregate_subject, per_trial_metrics
 from eegtraj.models.decoder import StreamDecoder, decoder_loss
 from eegtraj.models.encoder import CausalEncoder, n_parameters
+from eegtraj.preprocessing.reference import CHANNEL_SETS
 from eegtraj.models.landmark_template import (LandmarkTemplates, PhasePrior, TemplateBank, expected_template,
                                               fit_phase_prior, fold_templates, lift_landmarks)
 
@@ -264,6 +270,20 @@ def cue_phi_prediction(st: SubjectStreams, tmpl: LandmarkTemplates, prior: Phase
     return out
 
 
+OCCLUSION_GROUPS = {**{k: CHANNEL_SETS[k] for k in ("prefrontal", "frontal", "contralateral", "ipsilateral")},
+                    "occipital": ("O1", "Oz", "O2", "PO9", "PO10")}
+
+
+def occluded_lifts(lifts: list[LiftStream], rows: list[int]) -> list[LiftStream]:
+    """Copies of ``lifts`` with the EEG rows ``rows`` set to 0 (neural-branch input only; ``eog`` unchanged)."""
+    out = []
+    for l in lifts:
+        eeg = l.eeg.copy()
+        eeg[rows] = 0.0
+        out.append(dataclasses.replace(l, eeg=eeg))
+    return out
+
+
 def score_subject(st: SubjectStreams, preds: dict, template, ctx: FitContext, cfg: dict) -> tuple[dict, dict, dict]:
     """Scores of one subject's predictions and of the template_cue floor. Also returns the arrays to save."""
     s = st.samples
@@ -317,7 +337,11 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
         return streams[subject]
 
     token_cache: dict = {}
-    fold_rows, per_subject, floors, head_floors, saved = [], {}, {}, {}, {}
+    fold_rows, per_subject, floors, head_floors, saved, occlusion = [], {}, {}, {}, {}, {}
+    occ_groups = list(cfg.get("occlusion", {}).get("groups", [])) if m["neural"] else []
+    channel_names = input_channel_names(cfg["cache_dir"], "P1", "broadband", "all")
+    if cfg.get("save_models"):
+        (run_dir / "models").mkdir(exist_ok=True)
     for fold in folds:
         t_fold = time.time()
         names = sorted(set(fold.train_subjects) | set(fold.val_subjects) | set(fold.test_subjects),
@@ -382,6 +406,18 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
             head_floors[s], _, _ = score_subject(subj[s], cue_phi_prediction(subj[s], tmpl, prior), template, ctx, cfg)
             per_subject[s], floors[s] = scores, floor
             saved[s] = arrays
+            occlusion[s] = {}
+            for g in occ_groups:
+                rows = [channel_names.index(c) for c in OCCLUSION_GROUPS[g]]
+                occ = occluded_lifts(subj[s].lifts, rows)
+                occ_tokens = (precompute_tokens(model, occ, device) if tokens is not None else None)
+                occ_scores, _, _ = score_subject(subj[s], predict(model, occ, cue, occ_tokens, device, cfg["train"]),
+                                                 template, ctx, cfg)
+                occlusion[s][g] = {"scores": occ_scores, "drop": {k: scores[k] - occ_scores[k] for k in SCORES}}
+                logger.info("fold %s test %s occlude %s (%s): r %.3f (drop %.4f), rrs %.4f (drop %.4f)", fold.name, s, g,
+                            ",".join(OCCLUSION_GROUPS[g]), occ_scores["r"], scores["r"] - occ_scores["r"],
+                            occ_scores["residual_r_specific"],
+                            scores["residual_r_specific"] - occ_scores["residual_r_specific"])
             logger.info("fold %s test %s: r %.3f (x %.3f y %.3f z %.3f) R2 %.3f NRMSE %.3f rrs %.4f | template_cue r %.3f"
                         " | head floor cue_phi r %.3f (%.1f s)", fold.name, s, scores["r"], *scores["r_per_axis"].values(),
                         scores["r2"], scores["nrmse"], scores["residual_r_specific"], floor["r"], head_floors[s]["r"],
@@ -395,6 +431,10 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
                           "floor_template_cue": {s: floors[s] for s in fold.test_subjects},
                           "floor_cue_phi": {s: head_floors[s] for s in fold.test_subjects},
                           "seconds": round(time.time() - t_fold, 1)})
+        if cfg.get("save_models"):
+            torch.save({"fold": fold.name, "state_dict": {k: v.detach().cpu() for k, v in model.state_dict().items()},
+                        "tau0": tau0, "s0": s0, "phase_prior": prior_dict, "template_values": tmpl.values,
+                        "encoder": enc_info, "model_cfg": m}, run_dir / "models" / f"{fold.name}.pt")
         if cfg.get("save_predictions"):
             np.savez_compressed(run_dir / "predictions.npz",
                                 **{f"{s}__{k}": v for s, d in saved.items() for k, v in d.items()})
@@ -411,6 +451,8 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
                "stream_start": "LED-on - 1.5 s (SSL-17)", "aggregate": agg(per_subject),
                "aggregate_floor_template_cue": agg(floors), "per_subject": per_subject,
                "floor_template_cue": floors, "aggregate_floor_cue_phi": agg(head_floors), "floor_cue_phi": head_floors,
+               "occlusion_groups": {g: list(OCCLUSION_GROUPS[g]) for g in occ_groups}, "occlusion": occlusion,
+               "aggregate_occlusion_drop": {g: agg({s: occlusion[s][g]["drop"] for s in occlusion}) for g in occ_groups},
                "per_fold": fold_rows, "wall_seconds": round(time.time() - t_start, 1)}
     (run_dir / "metrics.json").write_text(json.dumps(metrics, indent=2, default=float) + "\n", encoding="utf-8")
     a, f = metrics["aggregate"], metrics["aggregate_floor_template_cue"]

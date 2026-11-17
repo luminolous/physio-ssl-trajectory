@@ -11,7 +11,7 @@ import torch
 from eegtraj.data.lift_streams import aux_patch_targets, build_subject_streams
 from eegtraj.data.windows import load_subject_samples
 from eegtraj.models.decoder import aux_classes
-from eegtraj.models.decoder_runner import collate
+from eegtraj.models.decoder_runner import collate, occluded_lifts
 
 CACHE = Path("dataset/cache/98f5fa6e66")
 pytestmark = pytest.mark.skipif(not (CACHE / "P1" / "pre_lift_eeg_broadband_car.npy").exists(),
@@ -72,3 +72,12 @@ def test_collate_pads_and_masks(p1):
         assert torch.equal(b["out_idx"][i, :len(l.out_idx)], torch.from_numpy(l.out_idx))
         assert not b["valid"][i, len(l.out_idx):].any()
     assert (b["aux"] == -1).all()
+
+
+def test_occlusion_zeroes_neural_input_only(p1):
+    lifts = p1.lifts[:3]
+    occ = occluded_lifts(lifts, [0, 1])
+    for a, b in zip(lifts, occ):
+        assert not b.eeg[[0, 1]].any() and np.array_equal(b.eeg[2:], a.eeg[2:])
+        assert np.array_equal(b.eog, a.eog) and np.array_equal(b.y, a.y)
+        assert a.eeg[[0, 1]].any()  # original untouched

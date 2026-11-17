@@ -50,6 +50,9 @@ scoring:
   n_permutations: 5
 
 save_predictions: true
+save_models: true  # selected model of every fold -> models/<fold>.pt (for later analysis)
+occlusion:  # neural-branch input only; ocular proxies intact (Experiment 1 / 2)
+  groups: [prefrontal, frontal, occipital, contralateral, ipsilateral]
 
 smoke:  # --smoke
   n_folds: 2
