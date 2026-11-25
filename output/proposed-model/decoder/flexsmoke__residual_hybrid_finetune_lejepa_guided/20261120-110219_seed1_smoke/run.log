@@ -1,0 +1,31 @@
+2026-11-20 11:02:19 INFO    eegtraj.utils.run: Run directory: output\proposed-model\decoder\flexsmoke__residual_hybrid_finetune_lejepa_guided\20261120-110219_seed1_smoke
+2026-11-20 11:02:19 INFO    eegtraj.models.decoder_runner: model flexsmoke: head residual, neural True, ocular True, setting finetune, encoder {'source': 'checkpoint', 'checkpoint': 'output/proposed-model/pretrain/lejepa_guided/20261115-123041/checkpoints/encoder_final.pt', 'architecture_config': 'configs/pretrain/encoder.yaml', 'random_seed': 0}, decoder seed 1, device cuda
+2026-11-20 11:02:23 INFO    eegtraj.models.decoder_runner: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1335787 training samples
+2026-11-20 11:02:24 INFO    eegtraj.models.decoder_runner: fold loso_P1: train ('P2', 'P5', 'P8', 'P9', 'P10', 'P11', 'P12') (140 lifts), val ('P4', 'P7') (40 lifts), test ('P1',); tau0 0.41 s, s0 5.94 s; params {'total': 583963, 'trainable': 583963}
+2026-11-20 11:02:27 INFO    eegtraj.models.decoder_runner: lr 0.001 epoch 1: train loss 2.9872 nll 2.8478 aux 1.3921 | val MSE 16.205 cm^2 (2.1 s)
+2026-11-20 11:02:28 INFO    eegtraj.models.decoder_runner: lr 0.001 epoch 2: train loss 2.6085 nll 2.4917 aux 1.1569 | val MSE 16.098 cm^2 (0.9 s)
+2026-11-20 11:02:29 INFO    eegtraj.models.decoder_runner: lr 0.0003 epoch 1: train loss 3.1622 nll 3.0100 aux 1.5208 | val MSE 16.193 cm^2 (0.9 s)
+2026-11-20 11:02:30 INFO    eegtraj.models.decoder_runner: lr 0.0003 epoch 2: train loss 2.9716 nll 2.8463 aux 1.2508 | val MSE 16.188 cm^2 (0.8 s)
+2026-11-20 11:02:30 INFO    eegtraj.models.decoder_runner: selected lr 0.001 (val MSE 16.098) from {0.001: 16.098, 0.0003: 16.188}
+2026-11-20 11:02:31 INFO    eegtraj.models.decoder_runner: fold loso_P1 test P1: full-stream predictions 16005 samples, max |diff| at scored samples 1.91e-06
+2026-11-20 11:02:31 INFO    eegtraj.models.decoder_runner: fold loso_P1 test P1 occlude prefrontal (Fp1,Fp2): r 0.768 (drop -0.0003), rrs 0.0555 (drop 0.0006)
+2026-11-20 11:02:32 INFO    eegtraj.models.decoder_runner: fold loso_P1 test P1 occlude frontal (Fp1,Fp2,F7,F3,Fz,F4,F8): r 0.767 (drop 0.0005), rrs 0.0560 (drop 0.0001)
+2026-11-20 11:02:32 INFO    eegtraj.models.decoder_runner: fold loso_P1 test P1 occlude occipital (O1,Oz,O2,PO9,PO10): r 0.766 (drop 0.0016), rrs 0.0465 (drop 0.0096)
+2026-11-20 11:02:32 INFO    eegtraj.models.decoder_runner: fold loso_P1 test P1 occlude contralateral (C3,FC5,FC1,CP5,CP1,Cz): r 0.770 (drop -0.0024), rrs 0.0703 (drop -0.0142)
+2026-11-20 11:02:32 INFO    eegtraj.models.decoder_runner: fold loso_P1 test P1 occlude ipsilateral (C4,FC6,FC2,CP6,CP2,Cz): r 0.767 (drop 0.0007), rrs 0.0970 (drop -0.0410)
+2026-11-20 11:02:32 INFO    eegtraj.models.decoder_runner: fold loso_P1 test P1: r 0.768 (x 0.820 y 0.833 z 0.650) R2 0.380 NRMSE 0.253 rrs 0.0560 | template_cue r 0.776 | head floor cue_phi r 0.782 (1.5 s)
+2026-11-20 11:02:32 INFO    eegtraj.models.decoder_runner: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1268758 training samples
+2026-11-20 11:02:33 INFO    eegtraj.models.decoder_runner: fold loso_P2: train ('P1', 'P4', 'P5', 'P8', 'P10', 'P11', 'P12') (140 lifts), val ('P7', 'P9') (40 lifts), test ('P2',); tau0 0.37 s, s0 5.58 s; params {'total': 583963, 'trainable': 583963}
+2026-11-20 11:02:34 INFO    eegtraj.models.decoder_runner: lr 0.001 epoch 1: train loss 2.8228 nll 2.6861 aux 1.3636 | val MSE 20.253 cm^2 (1.0 s)
+2026-11-20 11:02:34 INFO    eegtraj.models.decoder_runner: lr 0.001 epoch 2: train loss 2.5475 nll 2.4364 aux 1.1043 | val MSE 20.299 cm^2 (0.8 s)
+2026-11-20 11:02:35 INFO    eegtraj.models.decoder_runner: lr 0.0003 epoch 1: train loss 2.9529 nll 2.8040 aux 1.4875 | val MSE 20.439 cm^2 (0.8 s)
+2026-11-20 11:02:36 INFO    eegtraj.models.decoder_runner: lr 0.0003 epoch 2: train loss 2.8112 nll 2.6905 aux 1.2039 | val MSE 20.357 cm^2 (0.8 s)
+2026-11-20 11:02:36 INFO    eegtraj.models.decoder_runner: selected lr 0.001 (val MSE 20.253) from {0.001: 20.253, 0.0003: 20.357}
+2026-11-20 11:02:37 INFO    eegtraj.models.decoder_runner: fold loso_P2 test P2: full-stream predictions 21294 samples, max |diff| at scored samples 0.00e+00
+2026-11-20 11:02:37 INFO    eegtraj.models.decoder_runner: fold loso_P2 test P2 occlude prefrontal (Fp1,Fp2): r -0.049 (drop 0.0001), rrs 0.0064 (drop -0.0003)
+2026-11-20 11:02:38 INFO    eegtraj.models.decoder_runner: fold loso_P2 test P2 occlude frontal (Fp1,Fp2,F7,F3,Fz,F4,F8): r -0.046 (drop -0.0026), rrs 0.0197 (drop -0.0136)
+2026-11-20 11:02:38 INFO    eegtraj.models.decoder_runner: fold loso_P2 test P2 occlude occipital (O1,Oz,O2,PO9,PO10): r -0.050 (drop 0.0016), rrs 0.0050 (drop 0.0012)
+2026-11-20 11:02:38 INFO    eegtraj.models.decoder_runner: fold loso_P2 test P2 occlude contralateral (C3,FC5,FC1,CP5,CP1,Cz): r -0.061 (drop 0.0126), rrs -0.0010 (drop 0.0072)
+2026-11-20 11:02:38 INFO    eegtraj.models.decoder_runner: fold loso_P2 test P2 occlude ipsilateral (C4,FC6,FC2,CP6,CP2,Cz): r -0.058 (drop 0.0092), rrs -0.0024 (drop 0.0085)
+2026-11-20 11:02:38 INFO    eegtraj.models.decoder_runner: fold loso_P2 test P2: r -0.049 (x -0.006 y 0.044 z -0.184) R2 -0.487 NRMSE 0.391 rrs 0.0061 | template_cue r -0.063 | head floor cue_phi r -0.003 (1.9 s)
+2026-11-20 11:02:39 INFO    eegtraj.models.decoder_runner: aggregate over 2 test subjects: r 0.360, R2 -0.053, NRMSE 0.322, rrs 0.0311 | template_cue r 0.357 | head floor cue_phi r 0.389

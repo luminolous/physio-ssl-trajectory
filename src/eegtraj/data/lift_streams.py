@@ -6,6 +6,11 @@ j0 = round((t_LED - 1.5 s) * fs), i.e. never at a time derived from the lift's m
 the last scored sample. Samples after the lift window (at most one patch, after every scored sample) are zero; the
 decoder is causal, so they cannot affect any scored output.
 
+With ``to_lift_end`` the stream instead covers whole patches up to the end of the lift window, so its length no longer
+depends on tHandStop. ``full_stream_lift`` turns such a lift into one whose outputs are every stream sample from the
+first patch end (LED-on - 1.3 s) to the end of the lift window (flexibility features, design.md "Experiment 3"); its
+output times depend on LED-on and the lift window only, never on the kinematic onset.
+
 Inputs (all label-free):
 - EEG: broadband CAR, z-scored per subject and channel over the subject's lift samples (D9, transductive, as in
   pretraining).
@@ -17,7 +22,7 @@ Kinematic events and condition labels are not stored here (training-only labels:
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 
 import numpy as np
@@ -35,7 +40,8 @@ class LiftStream:
     """One lift. ``eeg`` (32, H + 20 N), ``eog`` (2, H + 20 N) float32; ``out_idx`` (S,) stream sample of each scored
     sample; ``sample_pos`` (S,) positions in ``SubjectSamples.sample_idx`` (for scoring); ``y`` (S, 3);
     ``t_since_led`` (S,) s; ``j0`` lift-window sample of stream sample 0; ``n_patches``; ``lift_len`` samples in the
-    lift window; ``orig_offset`` the lift's offset in the main cache arrays (for training-only per-sample labels)."""
+    lift window; ``orig_offset`` the lift's offset in the main cache arrays (for training-only per-sample labels);
+    ``led_s`` LED-on in lift-window time (s)."""
 
     subject: str
     trial_row: int
@@ -49,6 +55,7 @@ class LiftStream:
     n_patches: int
     lift_len: int
     orig_offset: int
+    led_s: float = float("nan")
 
     def patch_end_lift_samples(self, patch: int = 20) -> np.ndarray:
         """Lift-window sample index of each patch's last sample."""
@@ -69,8 +76,9 @@ def zscore_rows(x: np.ndarray, mask: np.ndarray) -> np.ndarray:
 
 def build_subject_streams(cache_dir: str | Path, subject: str, history: int = 180, patch: int = 20,
                           before_led_s: float = STREAM_START_BEFORE_LED_S,
-                          keep_trial: np.ndarray | None = None) -> SubjectStreams:
-    """Streams of every lift of ``subject`` (or of the rows where ``keep_trial`` is True)."""
+                          keep_trial: np.ndarray | None = None, to_lift_end: bool = False) -> SubjectStreams:
+    """Streams of every lift of ``subject`` (or of the rows where ``keep_trial`` is True). ``to_lift_end``: streams
+    run to the end of the lift window instead of the last scored sample."""
     s = load_subject_samples(cache_dir, subject, "broadband", "car", "all", "position", history=PRE_LIFT_SAMPLES + 1,
                              pre_lift=True)
     names = input_channel_names(cache_dir, subject, "broadband", "all")
@@ -92,6 +100,8 @@ def build_subject_streams(cache_dir: str | Path, subject: str, history: int = 18
         if out_idx.min() < patch - 1:
             raise ValueError(f"{subject} lift row {row}: a scored sample precedes the first patch end")
         n_patches = int(np.ceil((out_idx.max() + 1) / patch))
+        if to_lift_end:
+            n_patches = max(n_patches, int(np.ceil((tr.offset_end - tr.offset_start - j0) / patch)))
         a = tr.offset_start + j0 - history
         b = tr.offset_start + j0 + n_patches * patch
         lift_end = int(tr.offset_end)
@@ -105,8 +115,19 @@ def build_subject_streams(cache_dir: str | Path, subject: str, history: int = 18
         t_led = (j + 1) / fs - tr.ev_LEDOn
         lifts.append(LiftStream(subject, row, cut(eeg), cut(eog), out_idx.astype(np.int64), pos.astype(np.int64),
                                 s.target[:, s.sample_idx[pos]].T.astype(np.float32), t_led.astype(np.float32), j0,
-                                n_patches, int(tr.offset_end - tr.offset_start), int(orig.offset_start[row])))
+                                n_patches, int(tr.offset_end - tr.offset_start), int(orig.offset_start[row]),
+                                float(tr.ev_LEDOn)))
     return SubjectStreams(s, lifts)
+
+
+def full_stream_lift(lift: LiftStream, patch: int = 20, fs: float = 100.0) -> LiftStream:
+    """Copy of ``lift`` whose outputs are all stream samples from the first patch end to the end of the lift window
+    (or of the stream, if shorter). Targets are unknown there (zeros); ``sample_pos`` is -1."""
+    end = min(lift.lift_len - lift.j0, lift.n_patches * patch)
+    out_idx = np.arange(patch - 1, end, dtype=np.int64)
+    t_led = ((lift.j0 + out_idx + 1) / fs - lift.led_s).astype(np.float32)
+    return replace(lift, out_idx=out_idx, sample_pos=np.full(out_idx.size, -1, np.int64),
+                   y=np.zeros((out_idx.size, 3), np.float32), t_since_led=t_led)
 
 
 def aux_patch_targets(lift: LiftStream, aux: np.ndarray, patch: int = 20) -> np.ndarray:

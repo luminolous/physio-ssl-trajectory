@@ -42,7 +42,7 @@ from eegtraj.baselines.base import FitContext
 from eegtraj.baselines.scoring import fit_cue_template, subject_scores
 from eegtraj.data.decoder_labels import training_aux_classes
 from eegtraj.data.lift_streams import (STREAM_START_BEFORE_LED_S, LiftStream, SubjectStreams, aux_patch_targets,
-                                      build_subject_streams)
+                                      build_subject_streams, full_stream_lift)
 from eegtraj.data.splits import Fold, load_split_config, make_folds
 from eegtraj.data.target_view import prior_vector
 from eegtraj.data.windows import input_channel_names
@@ -183,7 +183,7 @@ def predict(model, lifts, cue, tokens, device, cfg) -> dict[tuple[str, int], dic
             s = len(l.out_idx)
             r = {"y": out["y"][k, :s].float().cpu().numpy(),
                  "sigma": torch.exp(0.5 * out["logvar"][k, :s].float()).cpu().numpy()}
-            for key in ("phi", "phi_centre", "phi_sigma", "weights", "amp"):
+            for key in ("phi", "phi_centre", "phi_sigma", "weights", "amp", "delta"):
                 if key in out:
                     r[key] = out[key][k, :s].float().cpu().numpy()
             res[(l.subject, l.trial_row)] = r
@@ -274,6 +274,37 @@ OCCLUSION_GROUPS = {**{k: CHANNEL_SETS[k] for k in ("prefrontal", "frontal", "co
                     "occipital": ("O1", "Oz", "O2", "PO9", "PO10")}
 
 
+def cue_at(template, t_since_led: np.ndarray) -> np.ndarray:
+    """template_cue (S, 3) at arbitrary times since LED-on (same binning and edge hold as ``TemplateCueBaseline``)."""
+    b = np.round(np.asarray(t_since_led) * template.fs_hz).astype(np.int64) - template.bin0
+    return template.template[:, np.clip(b, 0, template.template.shape[1] - 1)].T.astype(np.float32)
+
+
+def full_stream_arrays(model, st_full: SubjectStreams, scored: dict, template, frozen_tokens: bool, device,
+                       cfg: dict) -> tuple[dict, float]:
+    """Predictions on the whole stream of every lift (first patch end to the end of the lift window), from streams
+    built with ``to_lift_end``. Output times depend on LED-on and the lift window only, not on the kinematic onset.
+
+    Returns arrays ``full_y``, ``full_delta`` (if any), ``full_trial_row``, ``full_t_led`` (concatenated in lift order)
+    and the max |difference| to the scored predictions ``scored`` at the scored samples (causality check)."""
+    lifts = [full_stream_lift(l, model.patch) for l in st_full.lifts]
+    cue = {(l.subject, l.trial_row): cue_at(template, l.t_since_led) for l in lifts}
+    tokens = precompute_tokens(model, lifts, device) if frozen_tokens else None
+    preds = predict(model, lifts, cue, tokens, device, cfg)
+    out = {"full_y": [], "full_delta": [], "full_trial_row": [], "full_t_led": []}
+    max_diff = 0.0
+    for l_full, l in zip(lifts, st_full.lifts):
+        p = preds[(l.subject, l.trial_row)]
+        out["full_y"].append(p["y"])
+        if "delta" in p:
+            out["full_delta"].append(p["delta"])
+        out["full_trial_row"].append(np.full(len(l_full.out_idx), l.trial_row, np.int64))
+        out["full_t_led"].append(l_full.t_since_led)
+        ref = scored[(l.subject, l.trial_row)]["y"]
+        max_diff = max(max_diff, float(np.abs(p["y"][l.out_idx - l_full.out_idx[0]] - ref).max()))
+    return {k: np.concatenate(v) for k, v in out.items() if v}, max_diff
+
+
 def occluded_lifts(lifts: list[LiftStream], rows: list[int]) -> list[LiftStream]:
     """Copies of ``lifts`` with the EEG rows ``rows`` set to 0 (neural-branch input only; ``eog`` unchanged)."""
     out = []
@@ -338,6 +369,7 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
 
     token_cache: dict = {}
     fold_rows, per_subject, floors, head_floors, saved, occlusion = [], {}, {}, {}, {}, {}
+    full_stream_check: dict[str, float] = {}
     occ_groups = list(cfg.get("occlusion", {}).get("groups", [])) if m["neural"] else []
     channel_names = input_channel_names(cfg["cache_dir"], "P1", "broadband", "all")
     if cfg.get("save_models"):
@@ -406,6 +438,14 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
             head_floors[s], _, _ = score_subject(subj[s], cue_phi_prediction(subj[s], tmpl, prior), template, ctx, cfg)
             per_subject[s], floors[s] = scores, floor
             saved[s] = arrays
+            if cfg.get("save_full_stream"):  # flexibility features on the whole stream (design.md "Experiment 3")
+                keep = np.isin(np.arange(len(subj[s].samples.trials)), [l.trial_row for l in subj[s].lifts])
+                st_full = build_subject_streams(cfg["cache_dir"], s, keep_trial=keep, to_lift_end=True)
+                full, diff = full_stream_arrays(model, st_full, preds, template, tokens is not None, device, cfg["train"])
+                saved[s].update(full)
+                full_stream_check[s] = diff
+                logger.info("fold %s test %s: full-stream predictions %d samples, max |diff| at scored samples %.2e",
+                            fold.name, s, full["full_y"].shape[0], diff)
             occlusion[s] = {}
             for g in occ_groups:
                 rows = [channel_names.index(c) for c in OCCLUSION_GROUPS[g]]
@@ -453,6 +493,7 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
                "floor_template_cue": floors, "aggregate_floor_cue_phi": agg(head_floors), "floor_cue_phi": head_floors,
                "occlusion_groups": {g: list(OCCLUSION_GROUPS[g]) for g in occ_groups}, "occlusion": occlusion,
                "aggregate_occlusion_drop": {g: agg({s: occlusion[s][g]["drop"] for s in occlusion}) for g in occ_groups},
+               "full_stream_max_abs_diff": full_stream_check,
                "per_fold": fold_rows, "wall_seconds": round(time.time() - t_start, 1)}
     (run_dir / "metrics.json").write_text(json.dumps(metrics, indent=2, default=float) + "\n", encoding="utf-8")
     a, f = metrics["aggregate"], metrics["aggregate_floor_template_cue"]

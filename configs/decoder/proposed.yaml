@@ -50,6 +50,7 @@ scoring:
   n_permutations: 5
 
 save_predictions: true
+save_full_stream: true  # also predict every stream sample, LED-on - 1.3 s to the lift-window end (flexibility, from Experiment 3)
 save_models: true  # selected model of every fold -> models/<fold>.pt (for later analysis)
 occlusion:  # neural-branch input only; ocular proxies intact (Experiment 1 / 2)
   groups: [prefrontal, frontal, occipital, contralateral, ipsilateral]

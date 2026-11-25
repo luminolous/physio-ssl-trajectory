@@ -258,7 +258,7 @@ class StreamDecoder(nn.Module):
 
         Returns:
             ``y`` (B, S, 3), ``logvar`` (B, S, 3), ``aux_logits`` (B, N, 5), and for the other heads ``delta_patch``
-            (B, N, 3); warp heads also ``phi`` (B, S), ``weights`` (B, S, C), ``log_amp_patch`` (B, N, 3),
+            (B, N, 3) and ``delta`` (B, S, 3); warp heads also ``phi`` (B, S), ``weights`` (B, S, C), ``log_amp_patch`` (B, N, 3),
             ``amp`` (B, S, 3), ``phi_centre`` (unclipped), ``phi_sigma``, ``clock`` (B, S); the tracker ``phi_patch``
             (B, N, deterministic cue map of the clock) and clock ``rate`` (B, N).
         """
@@ -272,6 +272,7 @@ class StreamDecoder(nn.Module):
         delta_patch = self.out["delta"](h)
         out["delta_patch"] = delta_patch
         delta = causal_interp(delta_patch, out_idx, p)
+        out["delta"] = delta
         if self.head == "residual":
             if cue is None:
                 raise ValueError("residual head needs template_cue values")
