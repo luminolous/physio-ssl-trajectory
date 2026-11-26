@@ -54,7 +54,7 @@ from eegtraj.models.landmark_template import (LandmarkTemplates, PhasePrior, Tem
                                               fit_phase_prior, fold_templates, lift_landmarks)
 
 logger = logging.getLogger(__name__)
-SCORES = ("r", "r2", "nrmse", "residual_r", "residual_r_other_trial", "residual_r_specific")
+SCORES = ("r", "r2", "nrmse", "residual_r", "residual_r_other_trial", "residual_r_specific", "residual_r_matched")
 
 
 def set_seeds(seed: int) -> None:
@@ -454,14 +454,16 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
                 occ_scores, _, _ = score_subject(subj[s], predict(model, occ, cue, occ_tokens, device, cfg["train"]),
                                                  template, ctx, cfg)
                 occlusion[s][g] = {"scores": occ_scores, "drop": {k: scores[k] - occ_scores[k] for k in SCORES}}
-                logger.info("fold %s test %s occlude %s (%s): r %.3f (drop %.4f), rrs %.4f (drop %.4f)", fold.name, s, g,
-                            ",".join(OCCLUSION_GROUPS[g]), occ_scores["r"], scores["r"] - occ_scores["r"],
+                logger.info("fold %s test %s occlude %s (%s): r %.3f (drop %.4f), matched %.4f (drop %.4f), rrs %.4f "
+                            "(drop %.4f)", fold.name, s, g, ",".join(OCCLUSION_GROUPS[g]), occ_scores["r"],
+                            scores["r"] - occ_scores["r"], occ_scores["residual_r_matched"],
+                            scores["residual_r_matched"] - occ_scores["residual_r_matched"],
                             occ_scores["residual_r_specific"],
                             scores["residual_r_specific"] - occ_scores["residual_r_specific"])
-            logger.info("fold %s test %s: r %.3f (x %.3f y %.3f z %.3f) R2 %.3f NRMSE %.3f rrs %.4f | template_cue r %.3f"
-                        " | head floor cue_phi r %.3f (%.1f s)", fold.name, s, scores["r"], *scores["r_per_axis"].values(),
-                        scores["r2"], scores["nrmse"], scores["residual_r_specific"], floor["r"], head_floors[s]["r"],
-                        time.time() - t_pred)
+            logger.info("fold %s test %s: r %.3f (x %.3f y %.3f z %.3f) R2 %.3f NRMSE %.3f matched %.4f rrs %.4f"
+                        " | template_cue r %.3f | head floor cue_phi r %.3f (%.1f s)", fold.name, s, scores["r"],
+                        *scores["r_per_axis"].values(), scores["r2"], scores["nrmse"], scores["residual_r_matched"],
+                        scores["residual_r_specific"], floor["r"], head_floors[s]["r"], time.time() - t_pred)
         fold_rows.append({"fold": fold.name, "train_subjects": list(fold.train_subjects),
                           "val_subjects": list(fold.val_subjects), "test_subjects": list(fold.test_subjects),
                           "tau0_s": tau0, "s0_s": s0,
@@ -497,9 +499,10 @@ def run(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
                "per_fold": fold_rows, "wall_seconds": round(time.time() - t_start, 1)}
     (run_dir / "metrics.json").write_text(json.dumps(metrics, indent=2, default=float) + "\n", encoding="utf-8")
     a, f = metrics["aggregate"], metrics["aggregate_floor_template_cue"]
-    logger.info("aggregate over %d test subjects: r %.3f, R2 %.3f, NRMSE %.3f, rrs %.4f | template_cue r %.3f | head "
-                "floor cue_phi r %.3f", a["r"]["n_subjects"], a["r"]["mean"], a["r2"]["mean"], a["nrmse"]["mean"],
-                a["residual_r_specific"]["mean"], f["r"]["mean"], metrics["aggregate_floor_cue_phi"]["r"]["mean"])
+    logger.info("aggregate over %d test subjects: r %.3f, R2 %.3f, NRMSE %.3f, matched %.4f, rrs %.4f | template_cue "
+                "r %.3f | head floor cue_phi r %.3f", a["r"]["n_subjects"], a["r"]["mean"], a["r2"]["mean"],
+                a["nrmse"]["mean"], a["residual_r_matched"]["mean"], a["residual_r_specific"]["mean"], f["r"]["mean"],
+                metrics["aggregate_floor_cue_phi"]["r"]["mean"])
     return metrics
 
 

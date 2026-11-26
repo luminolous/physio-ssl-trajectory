@@ -3,6 +3,8 @@
 Both use the cue-locked template fitted on the fold's training subjects, as in ``eegtraj.diagnostics.residual``.
 Permutations of ``residual_r_other_trial`` depend only on ``seed`` and the subject, so every prediction of a
 subject (for example every occluded channel) is scored against the same trial pairs.
+``residual_r_matched`` (design.md SSL-27, the main trial-specific metric) uses the same pairs, with both terms on
+the bins two trials share, so a prediction that is one function of time since LED-on scores 0.
 """
 
 from __future__ import annotations
@@ -15,7 +17,8 @@ from eegtraj.baselines.base import Baseline, FitContext
 from eegtraj.baselines.template import TemplateCueBaseline, time_since_event
 from eegtraj.data.windows import SubjectSamples
 from eegtraj.metrics.trajectory import MIN_SHARED_BINS
-from eegtraj.metrics import aggregate_subject, per_trial_metrics, residual_r, residual_r_other_trial
+from eegtraj.metrics import (aggregate_subject, per_trial_metrics, residual_r, residual_r_matched,
+                             residual_r_other_trial)
 
 
 def fit_cue_template(train: list[SubjectSamples], ctx: FitContext) -> TemplateCueBaseline:
@@ -37,8 +40,12 @@ def subject_scores(s: SubjectSamples, mask: np.ndarray, y_pred: np.ndarray, temp
     res = residual_r(y_true, y_pred, cue, rows)["mean"]
     rng = np.random.default_rng([seed, int(s.subject[1:])])
     other = residual_r_other_trial(y_true, y_pred, cue, rows, bins, rng, n_permutations, min_shared_bins)["mean"]
+    rng = np.random.default_rng([seed, int(s.subject[1:])])  # same trial pairs as residual_r_other_trial
+    matched = residual_r_matched(y_true, y_pred, cue, rows, bins, rng, n_permutations, min_shared_bins)
     return {"r": scores["r"]["mean"], "r2": scores["r2"]["mean"], "nrmse": scores["nrmse"]["mean"],
-            "residual_r": res, "residual_r_other_trial": other, "residual_r_specific": res - other}
+            "residual_r": res, "residual_r_other_trial": other, "residual_r_specific": res - other,
+            "residual_r_matched": matched["matched"], "residual_r_matched_own": matched["own"],
+            "residual_r_matched_cross": matched["cross"]}
 
 
 def score_inner_validation(model: Baseline, train: list[SubjectSamples], val: list[SubjectSamples], ctx: FitContext,

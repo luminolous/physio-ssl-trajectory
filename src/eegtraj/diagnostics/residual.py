@@ -6,7 +6,8 @@ that tested the subject, with the same masks and code as the ``template_cue`` an
 
 ``residual_r`` also picks up what is shared across a subject's trials, such as a shape difference between
 that subject and the training subjects. ``residual_r_other_trial`` measures that part by pairing trials at
-random, and ``residual_r_specific`` is the difference. Permutations depend only on ``seed`` and the
+random, and ``residual_r_specific`` is the difference. ``residual_r_matched`` (design.md SSL-27) uses the same
+pairs with both terms on the shared bins. Permutations depend only on ``seed`` and the
 subject, so every run of a subject uses the same trial pairs.
 """
 
@@ -22,7 +23,7 @@ from eegtraj.baselines.runner import trial_filter
 from eegtraj.baselines.template import TemplateBaseline, TemplateCueBaseline, time_since_event
 from eegtraj.data.splits import load_split_config, make_folds
 from eegtraj.data.windows import SubjectSamples, load_subject_samples, sample_masks
-from eegtraj.metrics import residual_r, residual_r_other_trial
+from eegtraj.metrics import residual_r, residual_r_matched, residual_r_other_trial
 
 
 @dataclass
@@ -88,5 +89,9 @@ def score_predictions(predictions, templates: dict[str, SubjectTemplates], seed:
         other = residual_r_other_trial(y_true, y_pred, t.cue, rows_saved, t.time_bin, rng, n_permutations)
         row |= {"residual_r_other_trial": other["mean"], "residual_r_other_trial_n_nan": other["n_nan"],
                 "residual_r_specific": row["residual_r"] - other["mean"]}
+        rng = np.random.default_rng([seed, int(s[1:])])  # same trial pairs (design.md SSL-27)
+        matched = residual_r_matched(y_true, y_pred, t.cue, rows_saved, t.time_bin, rng, n_permutations)
+        row |= {"residual_r_matched": matched["matched"], "residual_r_matched_own": matched["own"],
+                "residual_r_matched_cross": matched["cross"]}
         rows.append(row)
     return rows

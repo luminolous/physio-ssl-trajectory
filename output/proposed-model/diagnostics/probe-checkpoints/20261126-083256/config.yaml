@@ -1,0 +1,21 @@
+runs: []
+random_seeds:
+- 0
+kinds:
+- online
+probe:
+  cache_dir: dataset/cache/98f5fa6e66
+  subjects:
+  - P3
+  - P6
+  pairs:
+  - - - P3
+    - - P6
+  - - - P6
+    - - P3
+  stride: 20
+  alpha: 1.0
+  n_permutations: 5
+inputs:
+  raw: broadband
+  ica: broadband_ica

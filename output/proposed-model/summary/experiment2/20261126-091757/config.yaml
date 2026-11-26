@@ -1,0 +1,17 @@
+runs:
+- output\proposed-model\decoder\exp1__proposed_neural_finetune_lejepa_guided\20261116-113534_seed1
+- output\proposed-model\decoder\exp1__proposed_neural_finetune_lejepa_guided\20261116-122506_seed2
+- output\proposed-model\decoder\exp1__proposed_neural_finetune_lejepa_guided\20261116-132148_seed3
+- output\proposed-model\decoder\exp1__proposed_hybrid_finetune_lejepa_guided\20261116-141400_seed1
+- output\proposed-model\decoder\exp1__proposed_hybrid_finetune_lejepa_guided\20261116-150329_seed2
+- output\proposed-model\decoder\exp1__proposed_hybrid_finetune_lejepa_guided\20261116-155554_seed3
+- output\proposed-model\decoder\exp1__proposed_ocular_frozen_noenc\20261116-103956_seed1
+- output\proposed-model\decoder\exp1__proposed_ocular_frozen_noenc\20261116-105709_seed2
+- output\proposed-model\decoder\exp1__proposed_ocular_frozen_noenc\20261116-111438_seed3
+- output\proposed-model\decoder\exp1-occl__proposed_neural_finetune_lejepa_guided\20261117-003334_seed1
+- output\proposed-model\decoder\exp1-occl__proposed_hybrid_finetune_lejepa_guided\20261117-012720_seed1
+reference: output\diagnostics\final-checks\ocular\summary\20261108-115730
+setting: finetune
+encoder: lejepa_guided
+matched_source: output/proposed-model/rescoring/matched/20261126-083428
+occlusion_matched_source: null

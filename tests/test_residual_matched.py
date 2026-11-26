@@ -89,3 +89,38 @@ def test_constant_residual_is_skipped():
     t = cue(bins)
     out = residual_r_matched(y, t, t, ids, bins, np.random.default_rng(0))
     assert np.isnan(out["matched"])
+
+
+def test_verdicts_finding_only_on_matched():
+    import pandas as pd
+
+    from eegtraj.utils.rescored import verdicts
+
+    rows = []
+    for name, (d_old, p_old, d_new, p_new) in {"both": (0.1, 0.01, 0.1, 0.01), "rrs_only": (0.1, 0.01, 0.05, 0.2),
+                                               "matched_only": (0.02, 0.3, 0.05, 0.02),
+                                               "sign_flip": (0.1, 0.01, -0.1, 0.01)}.items():
+        rows += [{"a": name, "metric": "residual_r_specific", "mean_diff": d_old, "n_pos": 8, "p_wilcoxon": p_old},
+                 {"a": name, "metric": "residual_r_matched", "mean_diff": d_new, "n_pos": 8, "p_wilcoxon": p_new}]
+    v = verdicts(pd.DataFrame(rows), ["a"]).set_index("a")
+    assert v.loc["both", "reading_matched"] == "finding (+)" and not v.loc["both", "changed"]
+    assert v.loc["rrs_only", "reading_matched"] == "not shown" and v.loc["rrs_only", "changed"]
+    assert v.loc["matched_only", "reading_rrs"] == "not shown" and v.loc["matched_only", "changed"]
+    assert v.loc["sign_flip", "reading_matched"] == "finding (-)" and v.loc["sign_flip", "changed"]
+
+
+def test_subject_scores_matched_zero_for_template_shift_and_same_pairs():
+    """Runner scoring path: a rigid prediction (template_cue + constant) scores matched 0; pairs as other-trial."""
+    from eegtraj.baselines.scoring import fit_cue_template, subject_scores
+    from tests.test_channel_importance import context
+    from tests.test_screening import subject
+
+    train, test = [subject("P1", 1), subject("P2", 2)], subject("P4", 3)
+    ctx = context([*train, test])
+    template = fit_cue_template(train, ctx)
+    mask = np.ones(len(test.sample_idx), bool)
+    cue = template.predict(test, mask, ctx)
+    rigid = subject_scores(test, mask, cue + np.array([1.0, -2.0, 0.5]) * cue ** 2, template, ctx, 1, 3)
+    assert abs(rigid["residual_r_matched"]) < 1e-12 and rigid["residual_r_specific"] > 0.05  # rrs window effect
+    truth = subject_scores(test, mask, test.target[:, test.sample_idx].T, template, ctx, 1, 3)
+    assert truth["residual_r_matched"] > 0 and truth["residual_r_matched_own"] == pytest.approx(1.0)

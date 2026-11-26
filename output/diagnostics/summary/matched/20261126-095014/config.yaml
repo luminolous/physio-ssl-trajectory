@@ -1,0 +1,58 @@
+table: output/diagnostics/residual/20261126-084403/residual.csv
+configs:
+  Ridge 0.5 s: output/data-baselines/baselines/ridge_lag
+  Kalman 0.5 s: output/data-baselines/baselines/kalman
+  EEGNet 0.5 s: output/data-baselines/baselines/eegnet
+  EEGNet 1 s: output/diagnostics/history/eegnet/history_100
+  EEGNet 2 s: output/diagnostics/history/eegnet/history_200
+  EEGNet 3 s: output/diagnostics/history/eegnet/history_300
+  CNN-LSTM 0.5 s: output/data-baselines/baselines/cnn_lstm
+  CNN-LSTM 1 s: output/diagnostics/history/cnn_lstm/history_100
+  CNN-LSTM 2 s: output/diagnostics/history/cnn_lstm/history_200
+  CNN-LSTM 3 s: output/diagnostics/history/cnn_lstm/history_300
+  Onset template: output/diagnostics/baselines/onset_template
+  Template (oracle timing): output/data-baselines/baselines/template
+  CNN-LSTM residual 2 s (uncleaned): output/diagnostics/pre-design/residual/cnn_lstm
+  EEGNet residual (uncleaned): output/diagnostics/pre-design/residual/eegnet
+  CNN-LSTM direct, ICA-cleaned: output/diagnostics/final-checks/ocular/cnn_lstm_direct
+  CNN-LSTM residual, ICA-cleaned: output/diagnostics/final-checks/ocular/cnn_lstm_residual
+  CNN-LSTM prefrontal only, ICA-cleaned: output/diagnostics/final-checks/ocular/cnn_lstm_prefrontal
+  CNN-LSTM prefrontal only, uncleaned: output/diagnostics/pre-design/screening/broadband__prefrontal
+  EEGNet prefrontal CAR 0.5 s: output/diagnostics/artifact-controls/eegnet_prefrontal_car
+  EEGNet prefrontal CAR 3 s: output/diagnostics/artifact-controls/eegnet_prefrontal_car/history_300
+  Euclidean alignment CNN-LSTM: output/diagnostics/pre-design/euclidean-alignment/cnn_lstm_ea
+  Central 9 CAR direct: output/diagnostics/final-checks/electrode-reduction/ica__central9__car__direct
+  Central 9 CAR residual: output/diagnostics/final-checks/electrode-reduction/ica__central9__car__residual
+  Contralateral 6 CAR direct: output/diagnostics/final-checks/electrode-reduction/ica__contralateral__car__direct
+  Contralateral 6 CAR residual: output/diagnostics/final-checks/electrode-reduction/ica__contralateral__car__residual
+  Contralateral 6 mastoid direct: output/diagnostics/final-checks/electrode-reduction/ica__contralateral__mastoid__direct
+  Contralateral 6 mastoid residual: output/diagnostics/final-checks/electrode-reduction/ica__contralateral__mastoid__residual
+  Minimal 3 CAR direct: output/diagnostics/final-checks/electrode-reduction/ica__minimal3__car__direct
+  Minimal 3 CAR residual: output/diagnostics/final-checks/electrode-reduction/ica__minimal3__car__residual
+  Minimal 3 mastoid direct: output/diagnostics/final-checks/electrode-reduction/ica__minimal3__mastoid__direct
+  Minimal 3 mastoid residual: output/diagnostics/final-checks/electrode-reduction/ica__minimal3__mastoid__residual
+  Cz CAR direct: output/diagnostics/final-checks/electrode-reduction/ica__cz__car__direct
+  Cz CAR residual: output/diagnostics/final-checks/electrode-reduction/ica__cz__car__residual
+  Cz mastoid direct: output/diagnostics/final-checks/electrode-reduction/ica__cz__mastoid__direct
+  Cz mastoid residual: output/diagnostics/final-checks/electrode-reduction/ica__cz__mastoid__residual
+  Ring cleaned CAR direct: output/diagnostics/final-checks/electrode-reduction/ica__headband_ring__car__direct
+  Ring cleaned CAR residual: output/diagnostics/final-checks/electrode-reduction/ica__headband_ring__car__residual
+  Ring cleaned mastoid direct: output/diagnostics/final-checks/electrode-reduction/ica__headband_ring__mastoid__direct
+  Ring cleaned mastoid residual: output/diagnostics/final-checks/electrode-reduction/ica__headband_ring__mastoid__residual
+  Ring uncleaned CAR direct: output/diagnostics/final-checks/electrode-reduction/raw__headband_ring__car__direct
+  Ring uncleaned CAR residual: output/diagnostics/final-checks/electrode-reduction/raw__headband_ring__car__residual
+  Ring uncleaned mastoid direct: output/diagnostics/final-checks/electrode-reduction/raw__headband_ring__mastoid__direct
+  Ring uncleaned mastoid residual: output/diagnostics/final-checks/electrode-reduction/raw__headband_ring__mastoid__residual
+  Screening broadband all: output/diagnostics/pre-design/screening/broadband__all
+  Screening broadband contralateral: output/diagnostics/pre-design/screening/broadband__contralateral
+  Screening broadband ipsilateral: output/diagnostics/pre-design/screening/broadband__ipsilateral
+  Screening broadband no_prefrontal: output/diagnostics/pre-design/screening/broadband__no_prefrontal
+  Screening broadband sensorimotor: output/diagnostics/pre-design/screening/broadband__sensorimotor
+  Screening mrcp all: output/diagnostics/pre-design/screening/mrcp__all
+  Screening mrcp contralateral: output/diagnostics/pre-design/screening/mrcp__contralateral
+  Screening mrcp ipsilateral: output/diagnostics/pre-design/screening/mrcp__ipsilateral
+  Screening mrcp prefrontal: output/diagnostics/pre-design/screening/mrcp__prefrontal
+  Screening mrcp+env all: output/diagnostics/pre-design/screening/mrcp_env__all
+  Screening env all: output/diagnostics/pre-design/screening/env__all
+  Screening env contralateral: output/diagnostics/pre-design/screening/env__contralateral
+  Screening env ipsilateral: output/diagnostics/pre-design/screening/env__ipsilateral

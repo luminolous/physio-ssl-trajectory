@@ -627,6 +627,29 @@ These results inform the design. They do not decide it.
 - Timing of the current render: frames in file equal expected frames for all 4 videos; largest event-to-frame gap 0.018 s (half a frame is 0.02 s).
 - Run folder: `output/diagnostics/visualization/timelapse/20261109-105955/` (4 MP4, 7.2-10.3 s, 1.81 MB in total; selection.csv, timing.csv; MP4 files are tracked). The first render, with a single black ground-truth line, is `output/diagnostics/visualization/timelapse/20261109-094843/`.
 
+## Re-scoring with residual_r_matched
+
+Added on 2026-11-26 (proposed-model stage, design decision SSL-27). `residual_r_specific` subtracts the other-trial correlation on the bins two trials share from the same-trial correlation on the trial's whole scored window. The window ends at hand stop, which differs across trials, so a prediction that is one fixed function of time since LED-on (no trial-specific information) can score up to 0.17. `residual_r_matched` uses the shared bins for both terms (same trial pairs) and is exactly 0 for such a prediction. From SSL-27 on it is the main trial-specific metric; a trial-specific claim counts only if it is significant on `residual_r_matched`.
+
+Every saved test prediction in this document was re-scored (`scripts/compute_residual_metrics.py`, table `output/diagnostics/residual/20261126-084403/`; comparison `scripts/compare_diagnostics_matched.py`, `output/diagnostics/summary/matched/20261126-095014/`). The recomputed `residual_r_specific` equals the cited values (the ICA-cleaned residual row is 0.080 at seed 1 and 0.074 over 3 seeds).
+
+| Model | `residual_r_specific` | `residual_r_matched` | Subjects above 0 (matched) |
+|---|---|---|---|
+| Ridge, 0.5 s | 0.045 | 0.022 | 10/10 |
+| Kalman, 0.5 s | 0.118 | 0.067 | 10/10 |
+| EEGNet, 0.5 s / 3 s | 0.065 / 0.094 | 0.043 / 0.065 | 10/10 |
+| CNN-LSTM, 0.5 s / 2 s / 3 s | 0.093 / 0.134 / 0.135 | 0.075 / 0.104 / 0.112 | 10/10 |
+| Onset template | 0.029 | 0.016 (p 0.084) | 7/10 |
+| Template (oracle timing) | 0.195 | 0.225 | 10/10 |
+| CNN-LSTM residual, uncleaned | 0.192 | 0.149 | 10/10 |
+| CNN-LSTM direct, ICA-cleaned | 0.068 | 0.051 | 8/10 |
+| CNN-LSTM residual, ICA-cleaned (3 seeds) | 0.074 | 0.053 | 9/10 |
+| Prefrontal only, uncleaned / cleaned | 0.062 / 0.015 | 0.045 / 0.001 (p 0.38) | 10/10 / 6/10 |
+
+- Matched values are 20-50 % lower; the order of models is unchanged. Every conclusion of this document holds: decoders keep a small trial-specific signal above 0 in all 10 subjects; CNN-LSTM is above EEGNet; history helps CNN-LSTM from 0.5 s to 2 s (+0.030, 9/10) and not from 2 s to 3 s; ICA cleaning removes about half of it (CNN-LSTM direct -0.054, 10/10).
+- Readings that change: EEGNet 3 s vs 0.5 s becomes significant (+0.022, 8/10, p 0.037; was p 0.065); central 9 and Cz (CAR, residual) fall below all 32 cleaned at p 0.049 (were n.s.); the onset template (p 0.037 -> 0.084) and contralateral 6 mastoid residual (p 0.014 -> 0.084) are no longer above 0; contralateral 6 mastoid direct, Cz mastoid direct and the envelope screening (all channels) become above 0 (p 0.010, 0.049, 0.014). The cleaned prefrontal-only control, minimal 3 mastoid and ring cleaned mastoid direct were not above 0 under either metric.
+- Not re-scored (no saved predictions): inner-validation scores, channel and group occlusion drops (scored in-run, including the ocular-check occlusion and the channel-importance runs), and the calibration fine-tuning results. They stay `residual_r_specific` only and are read as such.
+
 ## Run directories
 
 Each row is one configuration, with several run IDs being seeds. r is the mean over subjects, seeds averaged first. Source tables: `output/diagnostics/summary/models.md`, `output/diagnostics/history/summary/`, `output/diagnostics/within_subject/summary/`, `output/diagnostics/artifact-controls/summary/`. Residual metrics: `output/diagnostics/residual/20261106-081026/residual.csv`.

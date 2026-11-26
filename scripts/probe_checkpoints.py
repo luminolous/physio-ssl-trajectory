@@ -32,7 +32,8 @@ from eegtraj.utils.run import setup_run
 
 OUTPUT = Path("output/proposed-model/diagnostics/probe-checkpoints")
 INPUTS = {"raw": "broadband", "ica": "broadband_ica"}
-SHOW = ["within_rrs", "within_rrs_P3", "within_rrs_P6", "within_r", "cross_rrs", "cross_r", "emb_sd_min", "eff_rank"]
+SHOW = ["within_matched", "within_matched_P3", "within_matched_P6", "within_rrs", "within_rrs_P3", "within_rrs_P6",
+        "within_r", "cross_matched", "cross_rrs", "cross_r", "emb_sd_min", "eff_rank"]
 
 
 def checkpoints(run: Path, kinds: tuple[str, ...]) -> list[tuple[str, int, Path]]:
@@ -89,7 +90,8 @@ def main() -> None:
             rep = probe_report(enc.to(device), probes, pairs, device, float(pcfg["alpha"]), int(cfg["seed"]),
                                int(pcfg["n_permutations"]))
             rows.append({"input": input_name, "encoder": name, "run": run_name, "kind": kind, "step": step, **rep})
-            print(f"{input_name:3s} {name:18s} {run_name[-14:]:14s} {kind:6s} step {step:5d} within_rrs {rep['within_rrs']:.4f} "
+            print(f"{input_name:3s} {name:18s} {run_name[-14:]:14s} {kind:6s} step {step:5d} within_matched {rep['within_matched']:.4f} "
+                  f"within_rrs {rep['within_rrs']:.4f} "
                   f"within_r {rep['within_r']:.3f} cross_rrs {rep['cross_rrs']:+.4f}")
         del probes
     table = pd.DataFrame(rows)
@@ -97,12 +99,14 @@ def main() -> None:
     rnd = table[table.kind == "init"].groupby("input")[SHOW].agg(["mean", "std"])
     rnd.columns = [f"{a}_{b}" for a, b in rnd.columns]
     pivot = table[table.kind != "init"].pivot_table(index=["encoder", "run", "kind", "step"], columns="input",
-                                                    values=["within_rrs", "within_r", "cross_rrs"])
+                                                    values=["within_matched", "within_rrs", "within_r",
+                                                            "cross_matched", "cross_rrs"])
     pivot.columns = [f"{a}_{b}" for a, b in pivot.columns]
     (run_dir / "summary.md").write_text(
         "# Probe of pretraining checkpoints on P3/P6\n\n`raw`: broadband CAR input (training input); `ica`: ICA-cleaned "
         "cache. Selection score `within_rrs` = within-subject (leave-one-series-out) probe `residual_r_specific`, "
-        "mean of P3 and P6.\n\n## Random-init encoders (mean and SD over seeds "
+        "mean of P3 and P6. `within_matched`: the same probe scored with `residual_r_matched` (design.md SSL-27)."
+        "\n\n## Random-init encoders (mean and SD over seeds "
         f"{args.random_seeds})\n\n" + rnd.round(4).to_markdown() + "\n\n## Checkpoints\n\n"
         + pivot.round(4).to_markdown() + "\n\n## All rows\n\n" + table[["input", "encoder", "run", "kind", "step"] + SHOW]
         .round(4).to_markdown(index=False) + "\n", encoding="utf-8")

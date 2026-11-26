@@ -101,7 +101,7 @@ def within_subject_scores(p: ProbeSubject, z: np.ndarray, alpha: float, seed: in
     """
     series = p.samples.trials.series.to_numpy()[p.samples.trial_row]  # per scored sample
     ser_probe = series[p.mask]
-    r, rrs, n = [], [], []
+    r, rrs, matched, n = [], [], [], []
     for k in np.unique(ser_probe):
         held = ser_probe == k
         w, st = ridge_fit(z[~held], p.target[~held], alpha)
@@ -109,8 +109,10 @@ def within_subject_scores(p: ProbeSubject, z: np.ndarray, alpha: float, seed: in
                      [(p.samples, p.mask & (series != k))], seed, n_permutations)
         r.append(sc["r"])
         rrs.append(sc["residual_r_specific"])
+        matched.append(sc["residual_r_matched"])
         n.append(np.unique(p.samples.trial_row[p.mask & (series == k)]).size)
-    return {"r": float(np.average(r, weights=n)), "rrs": float(np.average(rrs, weights=n))}
+    return {"r": float(np.average(r, weights=n)), "rrs": float(np.average(rrs, weights=n)),
+            "matched": float(np.average(matched, weights=n))}
 
 
 def probe_report(encoder: torch.nn.Module, subjects: list[ProbeSubject], pairs: list[tuple[list[str], list[str]]],
@@ -118,7 +120,8 @@ def probe_report(encoder: torch.nn.Module, subjects: list[ProbeSubject], pairs: 
     """Embedding health and probe scores of one encoder.
 
     Two probes (decided 2026-11-15; the within-subject one is the selection score):
-    - within-subject: leave-one-series-out ridge inside each probe subject (``within_r``, ``within_rrs``);
+    - within-subject: leave-one-series-out ridge inside each probe subject (``within_r``, ``within_rrs``,
+      ``within_matched`` = ``residual_r_matched``, design.md SSL-27);
     - cross-subject: ridge fitted on the first subjects of each pair, scored on the others (``cross_r``,
       ``cross_rrs``).
 
@@ -132,10 +135,11 @@ def probe_report(encoder: torch.nn.Module, subjects: list[ProbeSubject], pairs: 
     sd = embedding_std(every)
     out: dict[str, float] = {"emb_sd_min": float(sd.min()), "emb_sd_mean": float(sd.mean()),
                              "eff_rank": effective_rank(every)}
-    acc: dict[str, list[float]] = {"within_r": [], "within_rrs": [], "cross_r": [], "cross_rrs": []}
+    acc: dict[str, list[float]] = {"within_r": [], "within_rrs": [], "within_matched": [], "cross_r": [],
+                                   "cross_rrs": [], "cross_matched": []}
     for p in subjects:
         sc = within_subject_scores(p, emb[p.subject], alpha, seed, n_permutations)
-        for key in ("r", "rrs"):
+        for key in ("r", "rrs", "matched"):
             out[f"within_{key}_{p.subject}"] = sc[key]
             acc[f"within_{key}"].append(sc[key])
     for train_names, eval_names in pairs:
@@ -147,6 +151,8 @@ def probe_report(encoder: torch.nn.Module, subjects: list[ProbeSubject], pairs: 
             sc = _scores(p, p.mask, ridge_predict(emb[name], w, st), [(q.samples, q.mask) for q in train], seed,
                          n_permutations)
             out[f"cross_r_{name}"], out[f"cross_rrs_{name}"] = sc["r"], sc["residual_r_specific"]
+            out[f"cross_matched_{name}"] = sc["residual_r_matched"]
+            acc["cross_matched"].append(sc["residual_r_matched"])
             acc["cross_r"].append(sc["r"])
             acc["cross_rrs"].append(sc["residual_r_specific"])
     out.update({k: float(np.mean(v)) for k, v in acc.items()})

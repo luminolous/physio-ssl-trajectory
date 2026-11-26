@@ -1,0 +1,40 @@
+comparison,a,mean_diff_matched,mean_diff_rrs,n_pos_matched,n_pos_rrs,p_wilcoxon_matched,p_wilcoxon_rrs,reading_rrs,reading_matched,changed
+fine-tune - frozen,hybrid/finetune/jepa_unguided,0.02579076933501249,0.02404755417829673,8,7,0.01953125,0.037109375,finding (+),finding (+),False
+fine-tune - frozen,hybrid/finetune/lejepa_guided,0.027140260103088936,0.03147380663291126,10,8,0.001953125,0.009765625,finding (+),finding (+),False
+fine-tune - frozen,hybrid/finetune/lejepa_unguided,0.023799162261305525,0.02737066030815414,9,9,0.009765625,0.009765625,finding (+),finding (+),False
+fine-tune - frozen,hybrid/finetune/mae,0.037290240553356176,0.045285886460420054,9,9,0.005859375,0.013671875,finding (+),finding (+),False
+fine-tune - frozen,hybrid/finetune/random0,0.02374009381818457,0.019996867013079612,7,7,0.064453125,0.193359375,not shown,not shown,False
+fine-tune - frozen,neural/finetune/jepa_unguided,0.0427911874867334,0.04967852910776098,9,9,0.00390625,0.005859375,finding (+),finding (+),False
+fine-tune - frozen,neural/finetune/lejepa_guided,0.05115124587909432,0.06161740203635938,10,10,0.001953125,0.001953125,finding (+),finding (+),False
+fine-tune - frozen,neural/finetune/lejepa_unguided,0.04870858387766468,0.06256287916250759,10,10,0.001953125,0.001953125,finding (+),finding (+),False
+fine-tune - frozen,neural/finetune/mae,0.04095101954359536,0.03426524423453455,9,9,0.00390625,0.037109375,finding (+),finding (+),False
+fine-tune - frozen,neural/finetune/random0,0.06246754661208552,0.07463631272407144,10,10,0.001953125,0.001953125,finding (+),finding (+),False
+hybrid - ocular-only,hybrid/finetune/jepa_unguided,0.06398775128055355,0.0778894225710974,9,9,0.00390625,0.005859375,finding (+),finding (+),False
+hybrid - ocular-only,hybrid/finetune/lejepa_guided,0.025319436637297,0.03541742980856587,6,9,0.193359375,0.037109375,finding (+),not shown,True
+hybrid - ocular-only,hybrid/finetune/lejepa_unguided,0.02826289881289189,0.037947332736370555,7,8,0.048828125,0.064453125,not shown,finding (+),True
+hybrid - ocular-only,hybrid/finetune/mae,0.05119778104459871,0.07071524083586331,8,9,0.013671875,0.005859375,finding (+),finding (+),False
+hybrid - ocular-only,hybrid/finetune/random0,0.03474189461333908,0.044683575521358265,8,8,0.009765625,0.037109375,finding (+),finding (+),False
+hybrid - ocular-only,hybrid/frozen/jepa_guided,0.003530205770645534,0.005141708449037969,5,5,0.76953125,0.625,not shown,not shown,False
+hybrid - ocular-only,hybrid/frozen/jepa_unguided,0.03819698194554104,0.053841868392800675,8,9,0.009765625,0.013671875,finding (+),finding (+),False
+hybrid - ocular-only,hybrid/frozen/lejepa_guided,-0.0018208234657919333,0.0039436231756546135,4,4,0.845703125,1.0,not shown,not shown,False
+hybrid - ocular-only,hybrid/frozen/lejepa_unguided,0.004463736551586368,0.010576672428216412,5,5,0.845703125,0.6953125,not shown,not shown,False
+hybrid - ocular-only,hybrid/frozen/mae,0.013907540491242534,0.025429354375443268,5,6,0.375,0.193359375,not shown,not shown,False
+hybrid - ocular-only,hybrid/frozen/random0,0.011001800795154521,0.02468670850827866,7,7,0.375,0.193359375,not shown,not shown,False
+pretrained - random-init (frozen),hybrid/frozen/jepa_guided,-0.007471595024508987,-0.01954500005924069,3,3,0.16015625,0.083984375,not shown,not shown,False
+pretrained - random-init (frozen),hybrid/frozen/jepa_unguided,0.02719518115038653,0.029155159884522018,9,9,0.01953125,0.013671875,finding (+),finding (+),False
+pretrained - random-init (frozen),hybrid/frozen/lejepa_guided,-0.012822624260946453,-0.02074308533262404,2,3,0.048828125,0.02734375,finding (-),finding (-),False
+pretrained - random-init (frozen),hybrid/frozen/lejepa_unguided,-0.006538064243568152,-0.01411003608006225,3,2,0.431640625,0.130859375,not shown,not shown,False
+pretrained - random-init (frozen),hybrid/frozen/mae,0.0029057396960880132,0.000742645867164609,4,3,0.76953125,0.625,not shown,not shown,False
+pretrained - random-init (frozen),neural/frozen/jepa_guided,-0.023854247600523727,-0.03903721680142451,1,2,0.064453125,0.02734375,finding (-),not shown,True
+pretrained - random-init (frozen),neural/frozen/jepa_unguided,0.044229573077640257,0.04978104353131653,9,10,0.00390625,0.001953125,finding (+),finding (+),False
+pretrained - random-init (frozen),neural/frozen/lejepa_guided,0.0027878524178305817,-0.005506432681962421,6,5,0.556640625,0.6953125,not shown,not shown,False
+pretrained - random-init (frozen),neural/frozen/lejepa_unguided,0.003565170140066488,-0.007122887398085842,5,4,0.921875,0.4921875,not shown,not shown,False
+pretrained - random-init (frozen),neural/frozen/mae,0.02770393920796792,0.04015071065461079,8,10,0.009765625,0.001953125,finding (+),finding (+),False
+pretrained - scratch (fine-tune),hybrid/finetune/jepa_unguided,0.029245856667214454,0.03320584704973913,9,8,0.00390625,0.009765625,finding (+),finding (+),False
+pretrained - scratch (fine-tune),hybrid/finetune/lejepa_guided,-0.009422457976042084,-0.009266145712792394,3,4,0.193359375,0.322265625,not shown,not shown,False
+pretrained - scratch (fine-tune),hybrid/finetune/lejepa_unguided,-0.006478995800447198,-0.0067362427849877145,4,4,0.232421875,0.4921875,not shown,not shown,False
+pretrained - scratch (fine-tune),hybrid/finetune/mae,0.016455886431259625,0.02603166531450506,8,9,0.064453125,0.02734375,finding (+),not shown,True
+pretrained - scratch (fine-tune),neural/finetune/jepa_unguided,0.02455321395228812,0.024823259915006078,7,7,0.02734375,0.10546875,not shown,finding (+),True
+pretrained - scratch (fine-tune),neural/finetune/lejepa_guided,-0.008528448315160624,-0.018525343369674485,2,4,0.193359375,0.10546875,not shown,not shown,False
+pretrained - scratch (fine-tune),neural/finetune/lejepa_unguided,-0.010193792594354364,-0.019196320959649685,3,2,0.16015625,0.064453125,not shown,not shown,False
+pretrained - scratch (fine-tune),neural/finetune/mae,0.006187412139477761,-0.0002203578349260882,6,4,0.6953125,1.0,not shown,not shown,False

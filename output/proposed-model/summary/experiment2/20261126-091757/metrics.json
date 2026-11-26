@@ -1,0 +1,704 @@
+{
+  "branches": [
+    {
+      "branch": "neural",
+      "r": 0.8184245633174176,
+      "r2": 0.5267212805248989,
+      "nrmse": 0.2142756810338274,
+      "residual_r_specific": 0.14591384919781675,
+      "residual_r_matched": 0.12917413042168774,
+      "r_seed_sd": 0.0013103467295426839,
+      "residual_r_matched_seed_sd": 0.001886080038973352,
+      "residual_r_specific_seed_sd": 0.0035213050438171133
+    },
+    {
+      "branch": "hybrid",
+      "r": 0.815025987846439,
+      "r2": 0.5194817726109106,
+      "nrmse": 0.2163222631430274,
+      "residual_r_specific": 0.14012776749030767,
+      "residual_r_matched": 0.12136297857641436,
+      "r_seed_sd": 0.00299021095860889,
+      "residual_r_matched_seed_sd": 0.002961446890444597,
+      "residual_r_specific_seed_sd": 0.004547153944484247
+    },
+    {
+      "branch": "ocular",
+      "r": 0.8044899795495033,
+      "r2": 0.5183017410920321,
+      "nrmse": 0.21815024264955446,
+      "residual_r_specific": 0.1047103376817418,
+      "residual_r_matched": 0.09604354193911736,
+      "r_seed_sd": 0.006703351188348939,
+      "residual_r_matched_seed_sd": 0.00283067384959137,
+      "residual_r_specific_seed_sd": 0.014955365037179223
+    },
+    {
+      "branch": "head_floor",
+      "r": 0.8039312175868932,
+      "r2": 0.5283596184024818,
+      "nrmse": 0.21616896774458985,
+      "residual_r_specific": 0.03327917581032536,
+      "residual_r_matched": 0.0,
+      "r_seed_sd": NaN,
+      "residual_r_matched_seed_sd": NaN,
+      "residual_r_specific_seed_sd": NaN
+    },
+    {
+      "branch": "template_cue",
+      "r": 0.8026982175722764,
+      "r2": 0.5243778809019001,
+      "nrmse": 0.21643470416997931,
+      "residual_r_specific": NaN,
+      "residual_r_matched": 0.0,
+      "r_seed_sd": NaN,
+      "residual_r_matched_seed_sd": NaN,
+      "residual_r_specific_seed_sd": NaN
+    }
+  ],
+  "pairs": [
+    {
+      "a": "hybrid",
+      "b": "neural",
+      "metric": "r",
+      "mean_diff": -0.003398575470978704,
+      "n_pos": 6,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.845703125
+    },
+    {
+      "a": "hybrid",
+      "b": "neural",
+      "metric": "r2",
+      "mean_diff": -0.007239507913988319,
+      "n_pos": 5,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.76953125
+    },
+    {
+      "a": "hybrid",
+      "b": "neural",
+      "metric": "nrmse",
+      "mean_diff": 0.002046582109199999,
+      "n_pos": 7,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.431640625
+    },
+    {
+      "a": "hybrid",
+      "b": "neural",
+      "metric": "residual_r_specific",
+      "mean_diff": -0.005786081707509064,
+      "n_pos": 5,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.6953125
+    },
+    {
+      "a": "hybrid",
+      "b": "neural",
+      "metric": "residual_r_matched",
+      "mean_diff": -0.007811151845273398,
+      "n_pos": 3,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.322265625
+    },
+    {
+      "a": "hybrid",
+      "b": "ocular",
+      "metric": "r",
+      "mean_diff": 0.010536008296935729,
+      "n_pos": 5,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.556640625
+    },
+    {
+      "a": "hybrid",
+      "b": "ocular",
+      "metric": "r2",
+      "mean_diff": 0.0011800315188784521,
+      "n_pos": 5,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.76953125
+    },
+    {
+      "a": "hybrid",
+      "b": "ocular",
+      "metric": "nrmse",
+      "mean_diff": -0.001827979506527072,
+      "n_pos": 5,
+      "n_subjects": 10,
+      "p_wilcoxon": 1.0
+    },
+    {
+      "a": "hybrid",
+      "b": "ocular",
+      "metric": "residual_r_specific",
+      "mean_diff": 0.03541742980856587,
+      "n_pos": 9,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.037109375
+    },
+    {
+      "a": "hybrid",
+      "b": "ocular",
+      "metric": "residual_r_matched",
+      "mean_diff": 0.025319436637297,
+      "n_pos": 6,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.193359375
+    },
+    {
+      "a": "neural",
+      "b": "ocular",
+      "metric": "r",
+      "mean_diff": 0.013934583767914432,
+      "n_pos": 7,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.083984375
+    },
+    {
+      "a": "neural",
+      "b": "ocular",
+      "metric": "r2",
+      "mean_diff": 0.00841953943286677,
+      "n_pos": 7,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.6953125
+    },
+    {
+      "a": "neural",
+      "b": "ocular",
+      "metric": "nrmse",
+      "mean_diff": -0.0038745616157270708,
+      "n_pos": 3,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.275390625
+    },
+    {
+      "a": "neural",
+      "b": "ocular",
+      "metric": "residual_r_specific",
+      "mean_diff": 0.04120351151607494,
+      "n_pos": 8,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.037109375
+    },
+    {
+      "a": "neural",
+      "b": "ocular",
+      "metric": "residual_r_matched",
+      "mean_diff": 0.0331305884825704,
+      "n_pos": 7,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.048828125
+    },
+    {
+      "a": "neural",
+      "b": "template_cue",
+      "metric": "r",
+      "mean_diff": 0.015726345745141167,
+      "n_pos": 5,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.4921875
+    },
+    {
+      "a": "neural",
+      "b": "template_cue",
+      "metric": "r2",
+      "mean_diff": 0.0023433996229988096,
+      "n_pos": 4,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.625
+    },
+    {
+      "a": "neural",
+      "b": "template_cue",
+      "metric": "nrmse",
+      "mean_diff": -0.0021590231361519217,
+      "n_pos": 5,
+      "n_subjects": 10,
+      "p_wilcoxon": 1.0
+    },
+    {
+      "a": "neural",
+      "b": "template_cue",
+      "metric": "residual_r_matched",
+      "mean_diff": 0.12917413042168777,
+      "n_pos": 10,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.001953125
+    },
+    {
+      "a": "hybrid",
+      "b": "template_cue",
+      "metric": "r",
+      "mean_diff": 0.012327770274162464,
+      "n_pos": 3,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.845703125
+    },
+    {
+      "a": "hybrid",
+      "b": "template_cue",
+      "metric": "r2",
+      "mean_diff": -0.004896108290989509,
+      "n_pos": 3,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.4921875
+    },
+    {
+      "a": "hybrid",
+      "b": "template_cue",
+      "metric": "nrmse",
+      "mean_diff": -0.00011244102695192327,
+      "n_pos": 7,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.6953125
+    },
+    {
+      "a": "hybrid",
+      "b": "template_cue",
+      "metric": "residual_r_matched",
+      "mean_diff": 0.12136297857641436,
+      "n_pos": 10,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.001953125
+    },
+    {
+      "a": "ocular",
+      "b": "template_cue",
+      "metric": "r",
+      "mean_diff": 0.0017917619772267357,
+      "n_pos": 3,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.6953125
+    },
+    {
+      "a": "ocular",
+      "b": "template_cue",
+      "metric": "r2",
+      "mean_diff": -0.006076139809867961,
+      "n_pos": 4,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.431640625
+    },
+    {
+      "a": "ocular",
+      "b": "template_cue",
+      "metric": "nrmse",
+      "mean_diff": 0.0017155384795751489,
+      "n_pos": 6,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.431640625
+    },
+    {
+      "a": "ocular",
+      "b": "template_cue",
+      "metric": "residual_r_matched",
+      "mean_diff": 0.09604354193911736,
+      "n_pos": 10,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.001953125
+    },
+    {
+      "a": "neural",
+      "b": "head_floor",
+      "metric": "r",
+      "mean_diff": 0.014493345730524488,
+      "n_pos": 5,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.556640625
+    },
+    {
+      "a": "neural",
+      "b": "head_floor",
+      "metric": "r2",
+      "mean_diff": -0.0016383378775828544,
+      "n_pos": 4,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.625
+    },
+    {
+      "a": "neural",
+      "b": "head_floor",
+      "metric": "nrmse",
+      "mean_diff": -0.0018932867107624347,
+      "n_pos": 5,
+      "n_subjects": 10,
+      "p_wilcoxon": 1.0
+    },
+    {
+      "a": "neural",
+      "b": "head_floor",
+      "metric": "residual_r_matched",
+      "mean_diff": 0.12917413042168777,
+      "n_pos": 10,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.001953125
+    },
+    {
+      "a": "hybrid",
+      "b": "head_floor",
+      "metric": "r",
+      "mean_diff": 0.011094770259545783,
+      "n_pos": 3,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.921875
+    },
+    {
+      "a": "hybrid",
+      "b": "head_floor",
+      "metric": "r2",
+      "mean_diff": -0.008877845791571174,
+      "n_pos": 3,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.431640625
+    },
+    {
+      "a": "hybrid",
+      "b": "head_floor",
+      "metric": "nrmse",
+      "mean_diff": 0.00015329539843756402,
+      "n_pos": 7,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.625
+    },
+    {
+      "a": "hybrid",
+      "b": "head_floor",
+      "metric": "residual_r_matched",
+      "mean_diff": 0.12136297857641436,
+      "n_pos": 10,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.001953125
+    },
+    {
+      "a": "ocular",
+      "b": "head_floor",
+      "metric": "r",
+      "mean_diff": 0.0005587619626100549,
+      "n_pos": 5,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.625
+    },
+    {
+      "a": "ocular",
+      "b": "head_floor",
+      "metric": "r2",
+      "mean_diff": -0.010057877310449626,
+      "n_pos": 4,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.322265625
+    },
+    {
+      "a": "ocular",
+      "b": "head_floor",
+      "metric": "nrmse",
+      "mean_diff": 0.001981274904964636,
+      "n_pos": 6,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.375
+    },
+    {
+      "a": "ocular",
+      "b": "head_floor",
+      "metric": "residual_r_matched",
+      "mean_diff": 0.09604354193911736,
+      "n_pos": 10,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.001953125
+    }
+  ],
+  "occlusion": [
+    {
+      "branch": "hybrid",
+      "group": "prefrontal",
+      "n_subjects": 10,
+      "drop_r": 0.001310405574540785,
+      "n_pos_r": 6,
+      "p_r": 0.4921875,
+      "rel_drop_r": 0.0016094453381359614,
+      "drop_residual_r_specific": 0.007719754391646376,
+      "n_pos_residual_r_specific": 9,
+      "p_residual_r_specific": 0.005859375,
+      "rel_drop_residual_r_specific": 0.05099306388306058,
+      "drop_residual_r_matched": NaN,
+      "n_pos_residual_r_matched": 0,
+      "p_residual_r_matched": NaN,
+      "rel_drop_residual_r_matched": NaN
+    },
+    {
+      "branch": "neural",
+      "group": "prefrontal",
+      "n_subjects": 10,
+      "drop_r": 0.0023285675805738704,
+      "n_pos_r": 8,
+      "p_r": 0.130859375,
+      "rel_drop_r": 0.002841933915427785,
+      "drop_residual_r_specific": 0.011029186520410966,
+      "n_pos_residual_r_specific": 9,
+      "p_residual_r_specific": 0.005859375,
+      "rel_drop_residual_r_specific": 0.07544260654188636,
+      "drop_residual_r_matched": NaN,
+      "n_pos_residual_r_matched": 0,
+      "p_residual_r_matched": NaN,
+      "rel_drop_residual_r_matched": NaN
+    },
+    {
+      "branch": "hybrid",
+      "group": "frontal",
+      "n_subjects": 10,
+      "drop_r": 0.007240557275885406,
+      "n_pos_r": 4,
+      "p_r": 1.0,
+      "rel_drop_r": 0.00889288124194979,
+      "drop_residual_r_specific": 0.009372139127046751,
+      "n_pos_residual_r_specific": 7,
+      "p_residual_r_specific": 0.16015625,
+      "rel_drop_residual_r_specific": 0.06190793968051397,
+      "drop_residual_r_matched": NaN,
+      "n_pos_residual_r_matched": 0,
+      "p_residual_r_matched": NaN,
+      "rel_drop_residual_r_matched": NaN
+    },
+    {
+      "branch": "neural",
+      "group": "frontal",
+      "n_subjects": 10,
+      "drop_r": 0.008736156034579412,
+      "n_pos_r": 5,
+      "p_r": 0.921875,
+      "rel_drop_r": 0.010662167734475475,
+      "drop_residual_r_specific": 0.0033679822820795445,
+      "n_pos_residual_r_specific": 4,
+      "p_residual_r_specific": 0.845703125,
+      "rel_drop_residual_r_specific": 0.023037905984883447,
+      "drop_residual_r_matched": NaN,
+      "n_pos_residual_r_matched": 0,
+      "p_residual_r_matched": NaN,
+      "rel_drop_residual_r_matched": NaN
+    },
+    {
+      "branch": "hybrid",
+      "group": "occipital",
+      "n_subjects": 10,
+      "drop_r": 0.01145706834135798,
+      "n_pos_r": 9,
+      "p_r": 0.013671875,
+      "rel_drop_r": 0.014071616901634146,
+      "drop_residual_r_specific": 0.05143369465209193,
+      "n_pos_residual_r_specific": 10,
+      "p_residual_r_specific": 0.001953125,
+      "rel_drop_residual_r_specific": 0.33974677743298054,
+      "drop_residual_r_matched": NaN,
+      "n_pos_residual_r_matched": 0,
+      "p_residual_r_matched": NaN,
+      "rel_drop_residual_r_matched": NaN
+    },
+    {
+      "branch": "neural",
+      "group": "occipital",
+      "n_subjects": 10,
+      "drop_r": 0.01612841232088278,
+      "n_pos_r": 10,
+      "p_r": 0.001953125,
+      "rel_drop_r": 0.01968415362264211,
+      "drop_residual_r_specific": 0.06331491473114322,
+      "n_pos_residual_r_specific": 10,
+      "p_residual_r_specific": 0.001953125,
+      "rel_drop_residual_r_specific": 0.43309107081060927,
+      "drop_residual_r_matched": NaN,
+      "n_pos_residual_r_matched": 0,
+      "p_residual_r_matched": NaN,
+      "rel_drop_residual_r_matched": NaN
+    },
+    {
+      "branch": "hybrid",
+      "group": "contralateral",
+      "n_subjects": 10,
+      "drop_r": 0.018375650312907898,
+      "n_pos_r": 10,
+      "p_r": 0.001953125,
+      "rel_drop_r": 0.022569046794302813,
+      "drop_residual_r_specific": 0.05226113262138016,
+      "n_pos_residual_r_specific": 10,
+      "p_residual_r_specific": 0.001953125,
+      "rel_drop_residual_r_specific": 0.34521244318950284,
+      "drop_residual_r_matched": NaN,
+      "n_pos_residual_r_matched": 0,
+      "p_residual_r_matched": NaN,
+      "rel_drop_residual_r_matched": NaN
+    },
+    {
+      "branch": "neural",
+      "group": "contralateral",
+      "n_subjects": 10,
+      "drop_r": 0.01608937516326906,
+      "n_pos_r": 9,
+      "p_r": 0.01953125,
+      "rel_drop_r": 0.01963651016015047,
+      "drop_residual_r_specific": 0.05545917853707773,
+      "n_pos_residual_r_specific": 10,
+      "p_residual_r_specific": 0.001953125,
+      "rel_drop_residual_r_specific": 0.37935571927865824,
+      "drop_residual_r_matched": NaN,
+      "n_pos_residual_r_matched": 0,
+      "p_residual_r_matched": NaN,
+      "rel_drop_residual_r_matched": NaN
+    },
+    {
+      "branch": "hybrid",
+      "group": "ipsilateral",
+      "n_subjects": 10,
+      "drop_r": 0.0033567600767702597,
+      "n_pos_r": 6,
+      "p_r": 0.232421875,
+      "rel_drop_r": 0.00412278607612918,
+      "drop_residual_r_specific": 0.014574016811337864,
+      "n_pos_residual_r_specific": 8,
+      "p_residual_r_specific": 0.01953125,
+      "rel_drop_residual_r_specific": 0.09626909517970499,
+      "drop_residual_r_matched": NaN,
+      "n_pos_residual_r_matched": 0,
+      "p_residual_r_matched": NaN,
+      "rel_drop_residual_r_matched": NaN
+    },
+    {
+      "branch": "neural",
+      "group": "ipsilateral",
+      "n_subjects": 10,
+      "drop_r": 0.004154639574340891,
+      "n_pos_r": 6,
+      "p_r": 0.322265625,
+      "rel_drop_r": 0.0050705898386629485,
+      "drop_residual_r_specific": 0.017086378683566324,
+      "n_pos_residual_r_specific": 8,
+      "p_residual_r_specific": 0.10546875,
+      "rel_drop_residual_r_specific": 0.1168754324595407,
+      "drop_residual_r_matched": NaN,
+      "n_pos_residual_r_matched": 0,
+      "p_residual_r_matched": NaN,
+      "rel_drop_residual_r_matched": NaN
+    }
+  ],
+  "occlusion_hybrid_vs_neural": [
+    {
+      "group": "prefrontal",
+      "metric": "residual_r_specific",
+      "mean_diff": -0.003309432128764591,
+      "n_pos": 2,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.083984375
+    },
+    {
+      "group": "frontal",
+      "metric": "residual_r_specific",
+      "mean_diff": 0.0060041568449672065,
+      "n_pos": 7,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.232421875
+    },
+    {
+      "group": "occipital",
+      "metric": "residual_r_specific",
+      "mean_diff": -0.011881220079051283,
+      "n_pos": 6,
+      "n_subjects": 10,
+      "p_wilcoxon": 1.0
+    },
+    {
+      "group": "contralateral",
+      "metric": "residual_r_specific",
+      "mean_diff": -0.003198045915697562,
+      "n_pos": 4,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.556640625
+    },
+    {
+      "group": "ipsilateral",
+      "metric": "residual_r_specific",
+      "mean_diff": -0.0025123618722284616,
+      "n_pos": 5,
+      "n_subjects": 10,
+      "p_wilcoxon": 0.76953125
+    }
+  ],
+  "verdicts": [
+    {
+      "a": "hybrid",
+      "b": "neural",
+      "mean_diff_matched": -0.007811151845273398,
+      "mean_diff_rrs": -0.005786081707509064,
+      "n_pos_matched": 3,
+      "n_pos_rrs": 5,
+      "p_wilcoxon_matched": 0.322265625,
+      "p_wilcoxon_rrs": 0.6953125,
+      "reading_rrs": "not shown",
+      "reading_matched": "not shown",
+      "changed": false
+    },
+    {
+      "a": "hybrid",
+      "b": "ocular",
+      "mean_diff_matched": 0.025319436637297,
+      "mean_diff_rrs": 0.03541742980856587,
+      "n_pos_matched": 6,
+      "n_pos_rrs": 9,
+      "p_wilcoxon_matched": 0.193359375,
+      "p_wilcoxon_rrs": 0.037109375,
+      "reading_rrs": "finding (+)",
+      "reading_matched": "not shown",
+      "changed": true
+    },
+    {
+      "a": "neural",
+      "b": "ocular",
+      "mean_diff_matched": 0.0331305884825704,
+      "mean_diff_rrs": 0.04120351151607494,
+      "n_pos_matched": 7,
+      "n_pos_rrs": 8,
+      "p_wilcoxon_matched": 0.048828125,
+      "p_wilcoxon_rrs": 0.037109375,
+      "reading_rrs": "finding (+)",
+      "reading_matched": "finding (+)",
+      "changed": false
+    }
+  ],
+  "occlusion_verdicts": [],
+  "matched_source": "output/proposed-model/rescoring/matched/20261126-083428",
+  "occlusion_matched_source": null,
+  "reference_control": [
+    {
+      "model": "CNN-LSTM direct, all 32 channels",
+      "r": 0.587652607599617,
+      "residual_r_specific": 0.13438856129741072
+    },
+    {
+      "model": "CNN-LSTM direct, Fp1/Fp2 only",
+      "r": 0.36236486419127234,
+      "residual_r_specific": 0.06244354381981798
+    }
+  ],
+  "reference_occlusion": [
+    {
+      "occluded": "contralateral",
+      "drop_r": 0.12968532757986714,
+      "drop_residual_r_specific": 0.04999241712431751
+    },
+    {
+      "occluded": "ipsilateral",
+      "drop_r": 0.07523407586727489,
+      "drop_residual_r_specific": 0.027936481980338358
+    },
+    {
+      "occluded": "occipital",
+      "drop_r": 0.08803447753790875,
+      "drop_residual_r_specific": 0.06453924836112039
+    },
+    {
+      "occluded": "prefrontal",
+      "drop_r": 0.06101210170319151,
+      "drop_residual_r_specific": 0.043880126246737705
+    }
+  ]
+}

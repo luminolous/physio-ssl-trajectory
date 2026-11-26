@@ -1,0 +1,40 @@
+runs:
+- output\proposed-model\pretrain-sweep\lejepa_guided\20261115-092807_lam0.02_s3000
+- output\proposed-model\pretrain-sweep\lejepa_guided\20261115-093412_lam0.02_s6000
+- output\proposed-model\pretrain-sweep\lejepa_guided\20261115-094558_lam0.02_s12000
+- output\proposed-model\pretrain-sweep\lejepa_guided\20261115-100916_lam0.05_s3000
+- output\proposed-model\pretrain-sweep\lejepa_guided\20261115-101515_lam0.05_s6000
+- output\proposed-model\pretrain-sweep\lejepa_guided\20261115-102702_lam0.05_s12000
+- output\proposed-model\pretrain-sweep\lejepa_guided\20261115-105024_lam0.1_s3000
+- output\proposed-model\pretrain-sweep\lejepa_guided\20261115-105826_lam0.1_s6000
+- output\proposed-model\pretrain-sweep\lejepa_guided\20261115-111541_lam0.1_s12000
+- output\proposed-model\pretrain-sweep\lejepa_guided\20261115-114920_lam0.05_s3000
+- output\proposed-model\pretrain-sweep\lejepa_unguided\20261115-115742_lam0.05_s3000
+- output\proposed-model\pretrain\lejepa_guided\20261115-123041
+- output\proposed-model\pretrain\lejepa_unguided\20261115-124031
+- output\proposed-model\pretrain\jepa_guided\20261115-124934
+- output\proposed-model\pretrain\jepa_unguided\20261115-125922
+- output\proposed-model\pretrain\mae\20261115-130726
+random_seeds:
+- 0
+- 1
+- 2
+kinds:
+- online
+- ema
+probe:
+  cache_dir: dataset/cache/98f5fa6e66
+  subjects:
+  - P3
+  - P6
+  pairs:
+  - - - P3
+    - - P6
+  - - - P6
+    - - P3
+  stride: 20
+  alpha: 1.0
+  n_permutations: 5
+inputs:
+  raw: broadband
+  ica: broadband_ica
