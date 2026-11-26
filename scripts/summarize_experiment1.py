@@ -30,6 +30,7 @@ from scipy.stats import wilcoxon
 from eegtraj.utils.run import setup_run
 
 DECODER = Path("output/proposed-model/decoder")
+HEAD_FLOOR = Path("output/proposed-model/diagnostics/head-floor-rrs")
 OUT = Path("output/proposed-model/summary/experiment1")
 METRICS = ("r", "r2", "nrmse", "residual_r_specific")
 ENCODERS = ("lejepa_guided", "lejepa_unguided", "jepa_guided", "jepa_unguided", "mae", "random0", "noenc")
@@ -60,6 +61,23 @@ def paired(a: pd.Series, b: pd.Series) -> dict:
     p = float(wilcoxon(d).pvalue) if len(d) >= 5 and (d != 0).any() else np.nan
     return {"mean_diff": float(d.mean()), "sd_diff": float(d.std(ddof=1)), "n_subjects": int(len(d)),
             "n_pos": int((d > 0).sum()), "p_wilcoxon": p}
+
+
+def rrs_note() -> str:
+    """Head-floor rrs check: why a rigid predictor can have residual_r_specific above 0 (latest diagnostic run)."""
+    title = "\n## Note on residual_r_specific\n\n"
+    runs = sorted(p for p in HEAD_FLOOR.glob("*") if (p / "rigid_summary.csv").exists())
+    if not runs:
+        return title + "No head-floor rrs check found (scripts/diagnose_head_floor_rrs.py).\n"
+    r = pd.read_csv(runs[-1] / "rigid_summary.csv").pivot(index="group", columns="window", values="rrs")
+    c = pd.read_csv(runs[-1] / "configs.csv")
+    return (title + f"Source: {runs[-1].as_posix()}. `residual_r` uses the whole scored window, the other-trial control "
+            "only the bins two trials share. A predictor that is one function of time since LED-on therefore has rrs "
+            "different from 0 on the scored windows, and 0 on one fixed window. Cause: the variable window end "
+            "(tHandStop), see `fixed_end`. rrs above 0 alone is no evidence of trial-specific information.\n\n"
+            + r.round(4).to_markdown() + f"\n\nExperiment 1 configurations: window effect {c.window_effect.min():.3f} to "
+            f"{c.window_effect.max():.3f}; matched-bin score (0 for every rigid predictor) {c.matched.min():.3f} to "
+            f"{c.matched.max():.3f}.\n")
 
 
 def main() -> None:
@@ -126,6 +144,7 @@ def main() -> None:
           "## Configurations\n\n" + cfg[show].round(4).to_markdown(index=False) +
           "\n\n## Paired comparisons\n\n" + pv.round(4).to_markdown(index=False) +
           "\n\n## Versus template_cue and the head floor (r)\n\n" + fl.round(4).to_markdown(index=False) + "\n")
+    md += rrs_note()
     (run_dir / "summary.md").write_text(md, encoding="utf-8")
     (run_dir / "metrics.json").write_text(json.dumps({"configs": cfg.astype({"encoder": str}).to_dict(orient="records"),
                                                      "paired": pairs.to_dict(orient="records")}, indent=2, default=float)

@@ -1,0 +1,10 @@
+cache_dir: dataset/cache/98f5fa6e66
+split_config: configs/splits/default.yaml
+seed: 0
+n_permutations: 5
+n_random_functions: 20
+windows:
+- scored
+- fixed
+- fixed_start
+- fixed_end

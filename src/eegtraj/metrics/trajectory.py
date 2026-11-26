@@ -150,6 +150,57 @@ def residual_r_other_trial(y_true: np.ndarray, y_pred: np.ndarray, template: np.
             "n_nan": int(np.isnan(values).sum())}
 
 
+def residual_r_matched(y_true: np.ndarray, y_pred: np.ndarray, template: np.ndarray, trial_ids: np.ndarray,
+                       time_bins: np.ndarray, rng: np.random.Generator, n_permutations: int = 5,
+                       min_shared_bins: int = MIN_SHARED_BINS) -> dict:
+    """DIAGNOSTIC: same-trial and other-trial residual correlation on the SAME bins.
+
+    ``residual_r`` uses a trial's whole window, ``residual_r_other_trial`` only the bins two trials share, so their
+    difference also contains an effect of the window. Here both terms use the shared bins of a pair, and every pair
+    enters in both directions, so any prediction that is one function of ``time_bins`` scores exactly 0 (``matched``).
+    Trial pairs as in ``residual_r_other_trial`` (same ``rng`` state, same pairs).
+
+    Returns ``own`` (same trial, shared bins), ``cross`` (other trial, shared bins), ``matched`` = own - cross,
+    ``shared_fraction`` (shared bins / bins of the trial), and ``n_pairs`` (directed pairs used). Values are means over
+    directed pairs per axis, then over axes; a pair with a constant residual on an axis is skipped on that axis for
+    both terms and both directions.
+    """
+    true_res = np.asarray(y_true, np.float64) - np.asarray(template, np.float64)
+    pred_res = np.asarray(y_pred, np.float64) - np.asarray(template, np.float64)
+    trial_ids, time_bins = np.asarray(trial_ids), np.asarray(time_bins)
+    index = [np.flatnonzero(trial_ids == t) for t in pd.unique(trial_ids)]
+    own, cross, frac = [], [], []
+    for _ in range(n_permutations if len(index) > 1 else 0):
+        order = rng.permutation(len(index))
+        for a, b in zip(order, np.roll(order, -1)):
+            _, ia, ib = np.intersect1d(time_bins[index[a]], time_bins[index[b]], assume_unique=True, return_indices=True)
+            if ia.size < min_shared_bins:
+                continue
+            ra, rb = index[a][ia], index[b][ib]
+            frac += [ia.size / index[a].size, ib.size / index[b].size]
+            pa, pb, ta, tb = (_standardize(x) for x in (pred_res[ra], pred_res[rb], true_res[ra], true_res[rb]))
+            own += [(pa * ta).sum(axis=0), (pb * tb).sum(axis=0)]
+            cross += [(pa * tb).sum(axis=0), (pb * ta).sum(axis=0)]
+    if not own:
+        return {"own": float("nan"), "cross": float("nan"), "matched": float("nan"), "shared_fraction": float("nan"),
+                "n_pairs": 0}
+    o, c = np.array(own), np.array(cross)
+    bad = np.isnan(o + c).reshape(-1, 2, o.shape[1]).any(axis=1).repeat(2, axis=0)
+    o[bad], c[bad] = np.nan, np.nan
+    mo, mc = pd.DataFrame(o).mean(axis=0).mean(), pd.DataFrame(c).mean(axis=0).mean()  # pandas mean skips NaN
+    return {"own": float(mo), "cross": float(mc), "matched": float(mo - mc), "shared_fraction": float(np.mean(frac)),
+            "n_pairs": len(own)}
+
+
+def _standardize(x: np.ndarray) -> np.ndarray:
+    """Columns centered and scaled to unit norm; a constant column becomes NaN."""
+    constant = np.var(x, axis=0) <= CONSTANT_TOL * np.maximum(1.0, np.mean(x * x, axis=0))
+    z = x - x.mean(axis=0)
+    norm = np.sqrt((z * z).sum(axis=0))
+    norm[constant] = np.nan
+    return z / norm
+
+
 def pooled_r(y_true: np.ndarray, y_pred: np.ndarray) -> dict[str, float]:
     """SECONDARY metric: Pearson r over all concatenated samples, per axis and mean over axes."""
     out = {axis: pearson_r(y_true[:, a], y_pred[:, a]) for a, axis in enumerate(AXES[:y_true.shape[1]])}

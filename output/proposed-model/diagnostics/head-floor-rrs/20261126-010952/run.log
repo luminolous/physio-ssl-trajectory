@@ -1,0 +1,91 @@
+2026-11-26 01:09:53 INFO    eegtraj.utils.run: Run directory: output\proposed-model\diagnostics\head-floor-rrs\20261126-010952
+2026-11-26 01:09:55 INFO    eegtraj.baselines: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1335787 training samples
+2026-11-26 01:13:09 INFO    diagnose_head_floor_rrs: fold loso_P1 test ('P1',): fixed window [-0.09, 6.38] s since LED-on
+2026-11-26 01:13:09 INFO    eegtraj.baselines: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1268758 training samples
+2026-11-26 01:16:58 INFO    diagnose_head_floor_rrs: fold loso_P2 test ('P2',): fixed window [-0.13, 5.97] s since LED-on
+2026-11-26 01:16:58 INFO    eegtraj.baselines: template_cue: 1165 bins from -1.19 to 10.45 s after ev_LEDOn, 1307884 training samples
+2026-11-26 01:20:23 INFO    diagnose_head_floor_rrs: fold loso_P4 test ('P4',): fixed window [-0.09, 6.26] s since LED-on
+2026-11-26 01:20:23 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1314741 training samples
+2026-11-26 01:24:04 INFO    diagnose_head_floor_rrs: fold loso_P5 test ('P5',): fixed window [-0.11, 6.26] s since LED-on
+2026-11-26 01:24:05 INFO    eegtraj.baselines: template_cue: 1187 bins from -1.19 to 10.67 s after ev_LEDOn, 1315670 training samples
+2026-11-26 01:28:02 INFO    diagnose_head_floor_rrs: fold loso_P7 test ('P7',): fixed window [-0.11, 6.25] s since LED-on
+2026-11-26 01:28:02 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1318415 training samples
+2026-11-26 01:31:34 INFO    diagnose_head_floor_rrs: fold loso_P8 test ('P8',): fixed window [-0.11, 6.24] s since LED-on
+2026-11-26 01:31:34 INFO    eegtraj.baselines: template_cue: 1677 bins from -1.01 to 15.75 s after ev_LEDOn, 1329706 training samples
+2026-11-26 01:35:17 INFO    diagnose_head_floor_rrs: fold loso_P9 test ('P9',): fixed window [-0.07, 6.29] s since LED-on
+2026-11-26 01:35:17 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1306697 training samples
+2026-11-26 01:39:00 INFO    diagnose_head_floor_rrs: fold loso_P10 test ('P10',): fixed window [-0.08, 6.22] s since LED-on
+2026-11-26 01:39:00 INFO    eegtraj.baselines: template_cue: 1677 bins from -1.01 to 15.75 s after ev_LEDOn, 1299484 training samples
+2026-11-26 01:42:48 INFO    diagnose_head_floor_rrs: fold loso_P11 test ('P11',): fixed window [-0.10, 6.15] s since LED-on
+2026-11-26 01:42:48 INFO    eegtraj.baselines: template_cue: 1695 bins from -1.19 to 15.75 s after ev_LEDOn, 1325837 training samples
+2026-11-26 01:46:44 INFO    diagnose_head_floor_rrs: fold loso_P12 test ('P12',): fixed window [-0.08, 6.25] s since LED-on
+2026-11-26 01:47:07 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_finetune_jepa_unguided\20261118-032927_seed1
+2026-11-26 01:47:29 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_finetune_jepa_unguided\20261118-042858_seed2
+2026-11-26 01:47:52 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_finetune_jepa_unguided\20261118-053532_seed3
+2026-11-26 01:48:15 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_finetune_lejepa_guided\20261116-141400_seed1
+2026-11-26 01:48:37 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_finetune_lejepa_guided\20261116-150329_seed2
+2026-11-26 01:49:00 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_finetune_lejepa_guided\20261116-155554_seed3
+2026-11-26 01:49:23 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_finetune_lejepa_unguided\20261117-110752_seed1
+2026-11-26 01:49:46 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_finetune_lejepa_unguided\20261117-120259_seed2
+2026-11-26 01:50:08 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_finetune_lejepa_unguided\20261117-130126_seed3
+2026-11-26 01:50:31 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_finetune_mae\20261118-163653_seed1
+2026-11-26 01:50:54 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_finetune_mae\20261118-173718_seed2
+2026-11-26 01:51:17 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_finetune_mae\20261118-183611_seed3
+2026-11-26 01:51:40 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_finetune_random0\20261116-192841_seed1
+2026-11-26 01:52:02 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_finetune_random0\20261116-202226_seed2
+2026-11-26 01:52:25 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_finetune_random0\20261116-211932_seed3
+2026-11-26 01:52:47 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_frozen_jepa_guided\20261116-045038_seed1
+2026-11-26 01:53:10 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_frozen_jepa_guided\20261116-050603_seed2
+2026-11-26 01:53:33 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_frozen_jepa_guided\20261116-052432_seed3
+2026-11-26 01:53:56 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_frozen_jepa_unguided\20261116-063138_seed1
+2026-11-26 01:54:18 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_frozen_jepa_unguided\20261116-064805_seed2
+2026-11-26 01:54:41 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_frozen_jepa_unguided\20261116-070551_seed3
+2026-11-26 01:55:04 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_frozen_lejepa_guided\20261116-013640_seed1
+2026-11-26 01:55:27 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_frozen_lejepa_guided\20261116-015438_seed2
+2026-11-26 01:55:50 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_frozen_lejepa_guided\20261116-021241_seed3
+2026-11-26 01:56:12 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_frozen_lejepa_unguided\20261116-031512_seed1
+2026-11-26 01:56:35 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_frozen_lejepa_unguided\20261116-033032_seed2
+2026-11-26 01:56:58 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_frozen_lejepa_unguided\20261116-034751_seed3
+2026-11-26 01:57:21 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_frozen_mae\20261116-081138_seed1
+2026-11-26 01:57:43 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_frozen_mae\20261116-082545_seed2
+2026-11-26 01:58:06 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_frozen_mae\20261116-084432_seed3
+2026-11-26 01:58:29 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_frozen_random0\20261116-094809_seed1
+2026-11-26 01:58:51 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_frozen_random0\20261116-100451_seed2
+2026-11-26 01:59:14 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_hybrid_frozen_random0\20261116-102220_seed3
+2026-11-26 01:59:37 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_finetune_jepa_unguided\20261118-002950_seed1
+2026-11-26 01:59:59 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_finetune_jepa_unguided\20261118-012504_seed2
+2026-11-26 02:00:22 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_finetune_jepa_unguided\20261118-022731_seed3
+2026-11-26 02:00:45 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_finetune_lejepa_guided\20261116-113534_seed1
+2026-11-26 02:01:08 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_finetune_lejepa_guided\20261116-122506_seed2
+2026-11-26 02:01:31 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_finetune_lejepa_guided\20261116-132148_seed3
+2026-11-26 02:01:53 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_finetune_lejepa_unguided\20261117-081330_seed1
+2026-11-26 02:02:16 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_finetune_lejepa_unguided\20261117-091120_seed2
+2026-11-26 02:02:39 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_finetune_lejepa_unguided\20261117-100700_seed3
+2026-11-26 02:03:01 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_finetune_mae\20261118-133135_seed1
+2026-11-26 02:03:24 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_finetune_mae\20261118-143451_seed2
+2026-11-26 02:03:47 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_finetune_mae\20261118-154212_seed3
+2026-11-26 02:04:10 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_finetune_random0\20261116-164944_seed1
+2026-11-26 02:04:32 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_finetune_random0\20261116-173840_seed2
+2026-11-26 02:04:55 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_finetune_random0\20261116-183452_seed3
+2026-11-26 02:05:18 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_frozen_jepa_guided\20261116-040517_seed1
+2026-11-26 02:05:41 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_frozen_jepa_guided\20261116-041927_seed2
+2026-11-26 02:06:03 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_frozen_jepa_guided\20261116-043603_seed3
+2026-11-26 02:06:26 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_frozen_jepa_unguided\20261116-054124_seed1
+2026-11-26 02:06:49 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_frozen_jepa_unguided\20261116-055640_seed2
+2026-11-26 02:07:12 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_frozen_jepa_unguided\20261116-061352_seed3
+2026-11-26 02:07:35 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_frozen_lejepa_guided\20261115-191407_seed1
+2026-11-26 02:07:57 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_frozen_lejepa_guided\20261116-010439_seed2
+2026-11-26 02:08:20 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_frozen_lejepa_guided\20261116-012117_seed3
+2026-11-26 02:08:43 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_frozen_lejepa_unguided\20261116-022943_seed1
+2026-11-26 02:09:06 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_frozen_lejepa_unguided\20261116-024450_seed2
+2026-11-26 02:09:29 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_frozen_lejepa_unguided\20261116-025955_seed3
+2026-11-26 02:09:52 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_frozen_mae\20261116-072357_seed1
+2026-11-26 02:10:14 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_frozen_mae\20261116-073857_seed2
+2026-11-26 02:10:37 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_frozen_mae\20261116-075539_seed3
+2026-11-26 02:11:00 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_frozen_random0\20261116-090034_seed1
+2026-11-26 02:11:22 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_frozen_random0\20261116-091608_seed2
+2026-11-26 02:11:45 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_neural_frozen_random0\20261116-093247_seed3
+2026-11-26 02:12:08 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_ocular_frozen_noenc\20261116-103956_seed1
+2026-11-26 02:12:31 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_ocular_frozen_noenc\20261116-105709_seed2
+2026-11-26 02:12:54 INFO    diagnose_head_floor_rrs: run output\proposed-model\decoder\exp1__proposed_ocular_frozen_noenc\20261116-111438_seed3
+2026-11-26 02:12:54 INFO    diagnose_head_floor_rrs: reproduction: max |rrs - saved| models 0.00e+00, head floor 9.86e-09
