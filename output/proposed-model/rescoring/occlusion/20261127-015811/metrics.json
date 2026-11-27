@@ -1,0 +1,8 @@
+{
+  "n_runs": 27,
+  "checks_max_abs": {
+    "max_abs_diff_y": 0.0,
+    "r_diff": 0.0,
+    "rrs_diff": 0.0
+  }
+}

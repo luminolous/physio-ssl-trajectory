@@ -1,0 +1,4 @@
+a,b,mean_diff_matched,mean_diff_rrs,n_pos_matched,n_pos_rrs,p_wilcoxon_matched,p_wilcoxon_rrs,reading_rrs,reading_matched,changed
+hybrid,neural,-0.007811151845273398,-0.005786081707509064,3,5,0.322265625,0.6953125,not shown,not shown,False
+hybrid,ocular,0.025319436637297,0.03541742980856587,6,9,0.193359375,0.037109375,finding (+),not shown,True
+neural,ocular,0.0331305884825704,0.04120351151607494,7,8,0.048828125,0.037109375,finding (+),finding (+),False
